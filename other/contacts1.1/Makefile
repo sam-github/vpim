@@ -15,6 +15,11 @@ BUILDOPS=-buildstyle Deployment
 
 all: contacts
 
+.PHONY: tags
+tags:
+	exctags --langmap=c:.m *.m
+
+
 contacts:
 	xcodebuild $(BUILDOPS) -target contacts
 

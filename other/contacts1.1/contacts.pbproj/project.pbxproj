@@ -6,8 +6,6 @@
 	objectVersion = 39;
 	objects = {
 		014CEA4F0018CE4811CA2923 = {
-			buildRules = (
-			);
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -21,8 +19,6 @@
 			name = Development;
 		};
 		014CEA500018CE4811CA2923 = {
-			buildRules = (
-			);
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -105,8 +101,7 @@
 			sourceTree = "<group>";
 		};
 		08FB779EFE84155DC02AAC07 = {
-			fallbackIsa = PBXFileReference;
-			isa = PBXFrameworkReference;
+			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
 			name = Foundation.framework;
 			path = /System/Library/Frameworks/Foundation.framework;
@@ -478,8 +473,7 @@
 //F53
 //F54
 		F50CEE4A03CFDFA501A8016A = {
-			fallbackIsa = PBXFileReference;
-			isa = PBXFrameworkReference;
+			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
 			name = AddressBook.framework;
 			path = /System/Library/Frameworks/AddressBook.framework;

@@ -70,6 +70,7 @@
 int usage();
 
 void printPeopleWithFormat(NSArray *people, NSString *format);
+void printPeopleAsVcards(NSArray *people);
 
 void showHeader(NSArray* formatters);
 
@@ -80,6 +81,8 @@ int peopleSort(id peep1, id peep2, void *context);
 // members
 BOOL show_headers = YES;
 BOOL sort = NO;
+BOOL xport = NO;
+BOOL utf8 = NO;
 
 // These are declared in FormatHelper.m
 extern BOOL loose;
@@ -90,7 +93,7 @@ extern BOOL firstname_first;
   Prints usage and returns an error code of 2.
 */
 int usage() {
-    fprintf(stderr, "usage: contacts [-hHsmnlS] [-f format] [search]\n");
+    fprintf(stderr, "usage: contacts [-hHsmnlSx] [-f format] [search]\n");
     // I don't know if I should make it a full-fledged client.
 
     //fprintf(stderr, "       contacts -a first-name last-name phone-number\n");
@@ -103,8 +106,11 @@ int usage() {
     fprintf(stderr, "      -l loose formatting (doesn't truncate record values)\n");
     fprintf(stderr, "      -S strict formatting (doesn't add space between columns)\n");
     fprintf(stderr, "      -f accepts a format string (see man page)\n");
+    fprintf(stderr, "      -x export matching in vCard format\n");
+    fprintf(stderr, "      -8 force vCard output to be UTF-8 instead of UTF-16\n");
     fprintf(stderr, "\n");
     fprintf(stderr, "displays contacts from the AddressBook database\n");
+
     return 2;
 }
 
@@ -118,7 +124,7 @@ int main (int argc, char * argv[]) {
     char ch;
     NSString *format = @"%n %p %i %e";
 
-    while ((ch = getopt(argc, argv, "lSHsnmhf:")) != -1)
+    while ((ch = getopt(argc, argv, "lSHsnmhf:x8")) != -1)
         switch (ch) {
         case 'l':
             loose = YES;
@@ -140,6 +146,12 @@ int main (int argc, char * argv[]) {
             break;
         case 'S':
             strict = YES;
+            break;
+        case 'x':
+            xport = YES;
+            break;
+        case '8':
+             utf8 = YES;
             break;
         case 'h':
         default:
@@ -242,7 +254,10 @@ int main (int argc, char * argv[]) {
         peopleFound = [AB recordsMatchingSearchElement: criteria];
     }
 
-    printPeopleWithFormat(peopleFound, format);
+    if(xport)
+        printPeopleAsVcards(peopleFound);
+    else
+        printPeopleWithFormat(peopleFound, format);
 
     [pool release];
     return 0;
@@ -264,6 +279,98 @@ void showHeader(NSArray* formatters) {
 }
 
 /*
+
+module OSX
+  class ABPerson
+    def vCard
+      card = self.vCardRepresentation.bytes
+
+      # The card representation appears to be either ASCII, or UCS-2. If its
+      # UCS-2, then the first byte will be 0, so check for this, and convert
+      # if necessary.
+      #
+      # We know it's 0, because the first character in a vCard must be the 'B'
+      # of "BEGIN:VCARD", and in UCS-2 all ascii are encoded as a 0 byte
+      # followed by the ASCII byte, UNICODE is great.
+      if card[0] == 0
+        nsstring = OSX::NSString.alloc.initWithCharacters(card, :length, card.size/2)
+        card = nsstring.UTF8String
+
+        # TODO: is nsstring.UTF8String == nsstring.to_s  ?
+      end
+      card
+    end
+  end
+end
+*/
+
+/*
+  Prints people's vCards.
+ASCII vCards just start with "BEGIN:..."
+AB on OS X 10.2 had UCS-2, w/ no BOM. On OS X 10.3, there is a BOM.
+0xfe 0xff seems to be BOM for UCS-2 vCards
+0xef 0xbb 0xbf seems to be BOM after conversion to UTF-8
+
+*/
+void printPeopleAsVcards(NSArray *people) {
+
+    ABPerson *person; 
+    NSEnumerator *peopleEnum;
+    NSString* vcf = 0;
+    const char* bytes;
+    size_t bytesSz;
+
+    if ([people count] == 0) {
+        printf("error: no one found\n");
+        exit(1);
+    }
+  
+    peopleEnum = [people objectEnumerator];
+    
+    while((person = [peopleEnum nextObject]) != nil) {
+        NSData* data = [person vCardRepresentation];
+
+        bytes = [data bytes];
+        bytesSz = [data length];
+
+        NSStringEncoding codeIn = bytes[0] == 'B' ? NSASCIIStringEncoding : NSUnicodeStringEncoding;
+
+        NSString* str = [[NSString alloc] initWithBytes: (void*)bytes
+                                                 length: bytesSz
+                                               encoding: codeIn
+                                                 ];
+
+        if(vcf) {
+          vcf = [vcf stringByAppendingString: str];
+        } else {
+          vcf = str;
+        }
+    }
+
+    if(vcf) {
+      // ASCII if possible.
+      NSData* data = [vcf dataUsingEncoding: NSASCIIStringEncoding];
+
+      if(!data) {
+        // Otherwise 16 bit or 8 bit, as requested.
+        if(utf8) {
+          data = [vcf dataUsingEncoding: NSUTF8StringEncoding ];
+        } else {
+          data = [vcf dataUsingEncoding: NSUnicodeStringEncoding];
+        }
+      }
+      bytes = [data bytes];
+      bytesSz = [data length];
+      if(bytes && bytes[0] == '\xef') {
+        bytes += 3;
+        bytesSz -= 3;
+      }
+      write(1, bytes, bytesSz);
+    }
+}
+
+
+/*
   Prints people using the given format string.  Here's an example
   format string: "%n %ph %pw %pm".
 */
@@ -277,8 +384,8 @@ void printPeopleWithFormat(NSArray *people,
     NSArray *formatters = getFormatHelpers(format);
 
     if ([formatters count] == 0) {
-        fprintf(stderr, "error: no formatter tokens found\n");
-        exit(3);
+//        fprintf(stderr, "error: no formatter tokens found\n");
+//        exit(3);
     }
 
     if ([people count] == 0) {
