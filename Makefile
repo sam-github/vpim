@@ -6,7 +6,7 @@ SHELL:=/bin/sh
 
 do:
 	#@ruby -I . ex_mkvcard.rb
-	@ruby -I . vcf-bday-to-ics.rb < _all.vcf
+	@ruby18 -I . vcf-to-ics.rb < _all.vcf
 
 default: test
 
