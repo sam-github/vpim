@@ -1,0 +1,45 @@
+                         README for contacts
+
+The utility contacts gives you access to view and search all your records in the AddressBook database.  
+
+To install contacts, double click the contacts1.1.pkg and follow the instructions.  To uninstall contacts, run the following commands (if you're installing contacts, you should be somewhat comfortable with the command line):
+
+$ rm /usr/bin/contacts
+$ rm /usr/share/man/man1/contacts.1
+
+With version 1.1, contacts is now installed in /usr/bin instead of /usr/local/bin; the '-S' option was added; firstname first or vice versa is now handled correctly; added the notes to the search fields; added tokens to access addresses (i.e.  '%a', '%ha', etc); added '%u' token to access unique identifier for each person. 
+
+Without further ado, here are a few examples:
+
+$ contacts -h
+usage: contacts [-hHsmnlS] [-f format] [search]
+      -h displays help (this)
+      -H suppress header
+      -s sort list
+      -m show me
+      -n displays note below each record
+      -l loose formatting (doesn't truncate record values)
+      -S strict formatting (doesn't add space between columns)
+      -f accepts a format string (see man page)
+
+displays contacts from the AddressBook database
+
+$ contacts
+NAME                  PHONE        IM                  EMAIL                    
+Kim Jong Il           +82-(001)385 License2KimJongill  mrill@axisofevil.org
+George W Bush         202-276-4300 Bush43              big.dubya@whitehouse.gov
+[...]
+
+$ contacts bush
+NAME                  PHONE        IM                  EMAIL                    
+George W Bush         202-276-4300 Bush43              big.dubya@whitehouse.gov
+
+$ contacts -f "%n %w" mrill
+NAME                  HOMEPAGE
+Kim Jong Il           http://www.livejournal.com/users/kim_jong_il__/
+
+For more info and details, see the man page.  :)
+
+Contributions, patches, ideas, and criticisms are welcome.
+
+-shane (at) gnufoo (dot) org

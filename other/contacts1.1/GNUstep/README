@@ -1,0 +1,10 @@
+These Makefiles for use with GNUstep were contributed by Bjorn
+Giesler.  He created an implementation of the AddressBook framework
+for GNUstep.  To use the Makefiles, copy them to parent directory, and
+run make.
+
+The framework is available here:
+
+http://giesler.biz/bjoern/English/Software.html#Addresses
+
+-shane

@@ -1,0 +1,197 @@
+.\"Modified from man(1) of FreeBSD, the NetBSD mdoc.template, and mdoc.samples.
+.\"See Also:
+.\"man mdoc.samples for a complete listing of options
+.\"man mdoc for the short list of editing options
+.\"/usr/share/misc/mdoc.template
+.Dd Mon Jun 9 2003               \" DATE 
+.Dt contacts 1      \" Program name and manual section number 
+.Os Darwin
+.Sh NAME                 \" Section Header - required - don't modify 
+.Nm contacts
+.\" The following lines are read in generating the apropos(man -k) database. Use only key
+.\" words here as the database is built based on the words here and in the .ND line. 
+.\" Use .Nm macro to designate other names for the documented program.
+.Nd displays contacts from the AddressBook database
+.Sh SYNOPSIS             \" Section Header - required - don't modify
+.Nm
+.Op Fl hHsnmlS             \" [-abcd]
+.Op Fl f Ar format         \" [-a path] 
+.Op Ar search              \" [file]
+.Sh DESCRIPTION          \" Section Header - required - don't modify
+The utility contacts affords easy access to information in the
+AddressBook database from the shell.  
+.\".Nm
+.\"Underlining is accomplished with the .Ar macro like this:
+.\".Ar underlined text .
+.Pp
+The utility contacts accepts the following flags:
+.Bl -tag -width -indent  \" Differs from above in tag removed 
+.It Fl h                 \"-a flag as a list item
+displays help/usage
+.It Fl H
+suppresses headers from being displayed
+.It Fl s
+sorts the list before displaying it
+.It Fl m
+show the person marked as "me"
+.It Fl n
+displays note below each record (by default only one line is shown, to
+see entire note include the -l option)
+.It Fl l
+loose formatting - doesn't truncate the record values to align columns
+.It Fl S
+strict formatting - doesn't add space between the columns
+.It Fl f
+accepts a format string (see below)
+.El                      \" Ends the list
+.Pp                      \" Inserts a space
+The format string can contain the following tokens:
+.Bl -tag -width -indent  \" Begins a tagged list 
+.It %n                \" Each item preceded by .It macro
+name (order of preference: first and last name, or company name)
+.It %fn               \" Each item preceded by .It macro
+first name
+.It %ln               \" Each item preceded by .It macro
+last name
+.It %nn               \" Each item preceded by .It macro
+nick name
+.It %p                \" Each item preceded by .It macro
+phone (order of preference: home, work, mobile, main, pager, fax, other)
+.It %hp               \" Each item preceded by .It macro
+home phone
+.It %wp               \" Each item preceded by .It macro
+work phone
+.It %mp               \" Each item preceded by .It macro
+mobile phone
+.It %Mp               \" Each item preceded by .It macro
+main phone
+.It %pp               \" Each item preceded by .It macro
+pager phone
+.It %fp               \" Each item preceded by .It macro
+fax phone
+.It %op               \" Each item preceded by .It macro
+other phone
+.It %a                \" Each item preceded by .It macro
+address (order of preference: home, work, other)
+.It %ha               \" Each item preceded by .It macro
+home address
+.It %wa               \" Each item preceded by .It macro
+work address
+.It %oa               \" Each item preceded by .It macro
+other address
+.It %e                \" Each item preceded by .It macro
+email (order of preference: home, work, other)
+.It %he               \" Each item preceded by .It macro
+home email
+.It %we               \" Each item preceded by .It macro
+work email
+.It %oe               \" Each item preceded by .It macro
+other email
+.It %t               \" Each item preceded by .It macro
+title
+.It %c               \" Each item preceded by .It macro
+company
+.It %g               \" Each item preceded by .It macro
+group
+.It %w               \" Each item preceded by .It macro
+webpage/homepage
+.It %b               \" Each item preceded by .It macro
+birthday
+.It %i               \" Each item preceded by .It macro
+instant messanger name (order of preference: aim, yahoo, jabber, icq, msn)
+.It %ai               \" Each item preceded by .It macro
+AOL Instant Messenger (AIM)
+.It %yi               \" Each item preceded by .It macro
+Yahoo IM
+.It %ji               \" Each item preceded by .It macro
+Jabber IM
+.It %ii               \" Each item preceded by .It macro
+ICQ IM
+.It %mi               \" Each item preceded by .It macro
+MSN IM
+.It %u               \" Each item preceded by .It macro
+unique identifier for the person
+.It \%%N               \" Weird.  Must be some nroff thing
+displays the note on a line by itself under the person's record.  This
+token should usually be placed at the end of the formatter.
+.El                      \" Ends the list
+.Pp
+The contacts utility exits 0 on success, 1 if no one is found in the
+search, 2 for usage problem, and >0 if any other error occurs.
+.Pp
+.Sh EXAMPLES
+The command:
+.Dl $ contacts
+displays all contacts.
+.Pp
+The command:
+.Dl $ contacts -s
+displays all contacts sorted.
+.Pp
+The command:
+.Dl $ contacts -h
+displays the usage.
+.Pp
+The command:
+.Dl $ contacts fred
+displays all persons with the name "fred" somewhere in their name.
+.Pp
+The command:
+.Dl $ contacts -m
+displays person marked as me.
+.Pp
+The command:
+.Dl $ contacts -mH
+displays person marked as me with no header.
+.Pp
+The command:
+.Dl $ contacts -mH -f '%e'
+displays the-person-marked-as-me's email address with no header.
+.Pp
+The command:
+.Dl $ contacts -f '%n %hp %wp %mp'
+displays everyone's name and home phone, work phone, and mobile phone.
+.Pp
+The command:
+.Dl $ contacts -Sf '%n:%e:%p'
+displays everyone's name, email, phone in colon-delimited format.
+.Pp
+The command:
+.Dl $ contacts -f '%ln %fn %hp'
+displays everyone's last name, first name, and home phone.
+.\".El
+.\" .Sh ENVIRONMENT      \" May not be needed
+.\" .Bl -tag -width "ENV_VAR_1" -indent \" ENV_VAR_1 is width of the string ENV_VAR_1
+.\" .It Ev ENV_VAR_1
+.\" Description of ENV_VAR_1
+.\" .It Ev ENV_VAR_2
+.\" Description of ENV_VAR_2
+.\" .El                      
+.\" .Sh FILES                \" File used or created by the topic of the man page
+.\" .Bl -tag -width "/Users/joeuser/Library/really_long_file_name" -compact
+.\" .It Pa /usr/share/file_name
+.\" FILE_1description
+.\" .It Pa /Users/joeuser/Library/really_long_file_name
+.\" FILE_2 description
+.\" .Sh DIAGNOSTICS       \" May not be needed
+.\" .Bl -diag
+.\" .It Diagnostic Tag
+.\" Diagnostic informtion here.
+.\" .It Diagnostic Tag
+.\" Diagnostic informtion here.
+.\" .El
+.\".Sh SEE ALSO 
+.\" List links in ascending order by section, alphabetically within a section.
+.\" Please do not reference files that do not exist without filing a bug report
+.\".Xr b 1 ,
+.Sh BUGS              \" Document known, unremedied bugs 
+contacts only searches the first name, last name, email, company name,
+AIM name, and notes in the AddressBook, whereas the AddressBook
+application's behavior appears to search everything in the record.
+.Pp
+.Sh HISTORY           \" Document history if command behaves in a unique manner
+With version 1.1, contacts is now installed in /usr/bin instead of
+/usr/local/bin; the '-S' option was added; firstname first or vice
+versa is now handled correctly; added the notes to the search fields;
+added tokens to access addresses (i.e.  '%a', '%ha', etc); added '%u'
+token to access unique identifier for each person.

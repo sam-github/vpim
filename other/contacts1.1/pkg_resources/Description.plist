@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IFPkgDescriptionDeleteWarning</key>
+	<string></string>
+	<key>IFPkgDescriptionDescription</key>
+	<string>The utility contacts affords easy access to information in the AddressBook database from the shell.  </string>
+	<key>IFPkgDescriptionTitle</key>
+	<string>contacts</string>
+	<key>IFPkgDescriptionVersion</key>
+	<string>1.1</string>
+</dict>
+</plist>

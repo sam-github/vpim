@@ -1,0 +1,22 @@
+                  INSTALL Instructions for contacts
+
+The utility contacts uses the universally accepted unix install idiom.
+It requires the Developer Tools.  It should be as simple as running
+the following commands from the contacts directory:
+
+$ make
+$ sudo make install
+
+Why can't you just do 'sudo make install'?  Because it won't work.
+When you build as root, I've found it creates problems.  So don't do
+it.  Build it as yourself first with 'make', then install as root with
+'sudo make install'.
+
+And to uninstall:
+
+$ sudo make uninstall
+
+That's it.
+
+
+-shane

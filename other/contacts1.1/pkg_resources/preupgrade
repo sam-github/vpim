@@ -1,0 +1,12 @@
+#!/bin/sh
+# preupgrade
+
+if [ -e /usr/local/bin/contacts ]; then
+    rm /usr/local/bin/contacts
+fi
+
+if [ -e /usr/local/man/man1/contacts.1 ]; then
+    rm /usr/local/man/man1/contacts.1
+fi
+
+exit 0
