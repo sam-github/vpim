@@ -20,6 +20,17 @@ module Vpim
     class Field
       private_class_method :new
 
+      def Field.create_array(fields)
+        case fields
+          when Hash
+            fields.map do |name,value|
+              DirectoryInfo::Field.create( name, value )
+            end
+          else
+            fields.to_ary
+        end
+      end
+
       # Encode a field.
       def Field.encode0(group, name, params={}, value='') # :nodoc:
         line = ""
@@ -34,6 +45,9 @@ module Vpim
         line << name
 
         params.each do |pname, pvalues|
+
+          pp pname
+          pp pvalues
 
           unless pvalues.respond_to? :to_ary
             pvalues = [ pvalues ]
@@ -57,7 +71,13 @@ module Vpim
 
         line << ':'
 
-        # Should I set the 'VALUE' param?
+        line << Field.value_str(value)
+
+        line
+      end
+
+      def Field.value_str(value) # :nodoc:
+        line = ''
         case value
           when Date
             line << Vpim.encode_date(value)
@@ -66,10 +86,13 @@ module Vpim
             line << Vpim.encode_date_time(value)
 
           when Array
-            line << value.join(';')
+            line << value.map { |v| Field.value_str(v) }.join(';')
+
+          when Symbol
+            line << value
 
           else
-            line << value
+            line << value.to_str
         end
         line
       end
