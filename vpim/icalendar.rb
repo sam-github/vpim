@@ -175,7 +175,7 @@ module Vpim
         # First field in every component should be a "BEGIN:".
         name = component.first
         if ! name.name? 'begin'
-          raise Vpim::InvalidEncodingError, "calendar component begins with #{name.name}, instead of BEGIN!"
+          raise InvalidEncodingError, "calendar component begins with #{name.name}, instead of BEGIN!"
         end
 
         name = name.value.upcase
@@ -195,12 +195,12 @@ module Vpim
     #
     # TODO - allow hash args like Vevent.create
     def Icalendar.create(fields=[])
-      di = Vpim::DirectoryInfo.create( [ DirectoryInfo::Field.create('VERSION', '2.0') ], 'VCALENDAR' )
+      di = DirectoryInfo.create( [ DirectoryInfo::Field.create('VERSION', '2.0') ], 'VCALENDAR' )
 
-      fields.each { |f| di.push_unique f }
+      DirectoryInfo::Field.create_array(fields).each { |f| di.push_unique f }
 
-      di.push_unique Vpim::DirectoryInfo::Field.create('PRODID',   "-//Ensemble Independant//vPim #{Vpim.version}//EN")
-      di.push_unique Vpim::DirectoryInfo::Field.create('CALSCALE', "Gregorian")
+      di.push_unique DirectoryInfo::Field.create('PRODID',   "-//Ensemble Independant//vPim #{Vpim.version}//EN")
+      di.push_unique DirectoryInfo::Field.create('CALSCALE', "Gregorian")
 
       new(di.to_a)
     end
@@ -219,9 +219,9 @@ module Vpim
     # Calendar, other than the defaults, then can be supplied as +fields+, an
     # array of Field objects.
     def Icalendar.create_reply(fields=[])
-      fields << Vpim::DirectoryInfo::Field.create('METHOD', 'REPLY')
+      fields << DirectoryInfo::Field.create('METHOD', 'REPLY')
 
-      Vpim::Icalendar.create(fields)
+      Icalendar.create(fields)
     end
 
     # Encode the Calendar as a string. The width is the maximum width of the
@@ -267,7 +267,7 @@ module Vpim
 
     def Icalendar.decode_duration(str) #:nodoc:
       unless match = %r{\s*#{Bnf::DURATION}\s*}.match(str)
-        raise Vpim::InvalidEncodingError, "duration not valid (#{str})"
+        raise InvalidEncodingError, "duration not valid (#{str})"
       end
       dur = 0
 
@@ -345,7 +345,7 @@ module Vpim
       v = @properties['VERSION']
 
       unless v
-        raise Vpim::InvalidEncodingError, "Invalid calendar, no version field!"
+        raise InvalidEncodingError, "Invalid calendar, no version field!"
       end
 
       v = v.to_f * 10
@@ -538,7 +538,7 @@ module Vpim
         case r
           when /TRUE/i then true
           when /FALSE/i then false
-          else raise Vpim::InvalidEncodingError, "RSVP param value not TRUE/FALSE: #{r}"
+          else raise InvalidEncodingError, "RSVP param value not TRUE/FALSE: #{r}"
         end
       end
     end

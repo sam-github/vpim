@@ -162,18 +162,11 @@ module Vpim
       # start/duration or a start/end? Maybe I can make it easier. Ideally, I
       # would like to make it hard to encode an invalid Event.
       def Vevent.create(start = Time.now, fields=[])
-        start = [ DirectoryInfo::Field.create('DTSTART', start) ]
+        dtstart = DirectoryInfo::Field.create('DTSTART', start)
+        di = DirectoryInfo.create([ dtstart ], 'VEVENT')
 
-        case fields
-          when Hash
-            fields.each do |name,value|
-              start << DirectoryInfo::Field.create( name, value )
-            end
-          else
-            start.concat fields
-        end
+        Vpim::DirectoryInfo::Field.create_array(fields).each { |f| di.push_unique f }
 
-        di = DirectoryInfo.create(start, 'VEVENT')
         new(di.to_a)
       end
 
