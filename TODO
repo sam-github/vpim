@@ -22,6 +22,23 @@ todo: RSS
 
   - add atom to rss/
 
+http://rubyforge.org/projects/daemons
+
+== UNSORTED
+
+iTip protocol binding for IM protocols
+
+http://linux.slashdot.org/article.pl?sid=05/02/15/2228204
+
+http://jwz.livejournal.com/
+
+http://www.groupdav.org/
+
+http://en.wikipedia.org/wiki/Caldav
+
+http://www.imc.org/ietf-calendar/index.html
+
+http://ietf.webdav.org/caldav/
 
 == UTILS
 
@@ -32,6 +49,11 @@ Note:
 
   - WebDAV server-side:
     - implement a WEBRick servlet to handle server-side?
+
+todo: soap/weather-to-ics
+
+  Query weather reports using SOAP, represent as iCalendars.
+
 
 todo: ics-alarm
   A really, really fast way of adding an alarm to iCalendar, i.e., 3 min, check the kettle.
@@ -58,6 +80,8 @@ todo: ics-to-rss
   - rss versions
   - rss versions in the URL
   - implement autodiscovery with http? what does this mean...
+
+todo: rss-to-jabber
 
 todo: ics-to-ics
   split calendars by date
@@ -129,7 +153,6 @@ todo: vcf-bday-to-ics.rb
 
   Output:
   - .ics
-  - .ics
   - http
   - RSS??! maybe only see bdays within the next month, as a reminder?
   - cvt vcf file to ics file of birthdays
@@ -138,6 +161,7 @@ todo: vcf-bday-to-ics.rb
   Options:
   - bday -> VTODO
   - bday -> VEVENT
+  - bday +  VALARM
 
 
 todo:
@@ -188,6 +212,8 @@ Can I get RAA synced up to rubyforge?
 
 
 == FEATURES
+
+- deal better with BOM, and vCards: http://en.wikipedia.org/wiki/Byte_Order_Mark
 
 - complete RRULE support
 
