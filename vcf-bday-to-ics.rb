@@ -8,7 +8,9 @@ require 'vpim/vcard'
 require 'pp'
 
 HELP =<<EOF
-Usage: vcf-bday-to-mutt.rb [input] [output]
+Usage: vcf--to-ics.rb [input] [output]
+
+Converts all birthdays in the vCard(s) as repeating events in an iCalendar.
 
 Output defaults to stdout. Input defaults to stdin.
 
@@ -24,15 +26,29 @@ $out = ARGV.last ? File.open(ARGV.pop) : $stdout
 $in  = ARGV.last ? File.open(ARGV.pop) : $stdin
 
 Vpim::Vcard.decode($in).each do |card|
-  bday = card.field('BDAY') || next
-
   begin
-    d = bday.to_date
+    bday = card.field('BDAY') || next
+    date = nil
 
-    puts "#{card['fn']} -> bday #{d}"
+    begin
+      date = bday.to_date
 
-  rescue Vpim::InvalidEncodingError
-    puts "card for #{card['fn']} had invalid BDAY #{bday.value}, skipping!"
+    rescue Vpim::InvalidEncodingError
+      puts "card for #{card['fn']} had invalid BDAY #{bday.value}"
+
+      if bday.value =~ /(\d+)-(\d+)-(\d+)/
+        y = $1.to_i
+        m = $2.to_i
+        d = $3.to_i
+        if(y < 1900)
+          y = Time.now.year
+        end
+        date = Date.new(y, m, d)
+      end
+    end
+
+    puts "#{card['fn']} -> bday #{date}" if date
+
   rescue
     pp card
     raise
