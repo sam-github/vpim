@@ -4,11 +4,18 @@
 $:.unshift File.dirname($0)
 
 require 'getoptlong'
+
 require 'vpim/vcard'
+require 'vpim/icalendar'
+
 require 'pp'
 
+$stderr.sync = true
+$stdout.sync = true
+
+
 HELP =<<EOF
-Usage: vcf--to-ics.rb [input] [output]
+Usage: vcf-to-ics.rb [input] [output]
 
 Converts all birthdays in the vCard(s) as repeating events in an iCalendar.
 
@@ -25,6 +32,9 @@ opts = GetoptLong.new(
 $out = ARGV.last ? File.open(ARGV.pop) : $stdout
 $in  = ARGV.last ? File.open(ARGV.pop) : $stdin
 
+cal = Vpim::Icalendar.create #( 'X-WR-CALNAME' => "Birthdays" )
+
+
 Vpim::Vcard.decode($in).each do |card|
   begin
     bday = card.field('BDAY') || next
@@ -34,7 +44,7 @@ Vpim::Vcard.decode($in).each do |card|
       date = bday.to_date
 
     rescue Vpim::InvalidEncodingError
-      puts "card for #{card['fn']} had invalid BDAY #{bday.value}"
+      STDERR.puts "card for #{card['fn']} had invalid BDAY #{bday.value}"
 
       if bday.value =~ /(\d+)-(\d+)-(\d+)/
         y = $1.to_i
@@ -47,11 +57,21 @@ Vpim::Vcard.decode($in).each do |card|
       end
     end
 
-    puts "#{card['fn']} -> bday #{date}" if date
+    if date
+      STDERR.puts "#{card['fn']} -> bday #{date} (#{date.inspect})"
+
+      cal.push Vpim::Icalendar::Vevent.create(
+        date,
+        'SUMMARY' => "Birthday for #{card['fn']}",
+        'RRULE' => 'FREQ=YEARLY'
+        )
+    end
 
   rescue
     pp card
     raise
   end
 end
+
+puts cal.to_s
 
