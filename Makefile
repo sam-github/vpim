@@ -73,7 +73,8 @@ doc:
 	cp etc/rfc24*.txt doc/
 	chmod u=rw doc/*.txt
 	chmod go=r doc/*.txt
-	cp -r doc/* ~/Sites/
+	mkdir -p ~/Sites/vpim
+	cp -r doc/* ~/Sites/vpim/
 	open doc/index.html
 
 V=0.15
