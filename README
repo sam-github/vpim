@@ -1,0 +1,24 @@
+This is a pure-ruby library for decoding and encoding vCard and iCalendar
+data ("personal information") called vPim.
+
+= Installation
+
+The standard way, with an install.rb script.
+
+See:
+
+  ruby install.rb --help
+
+or
+
+  $ ruby install.rb config
+  $ ruby install.rb setup
+  # ruby install.rb install (may require root privilege)
+
+Please see the documentation in doc/ for more information.
+
+= Thanks
+
+- Ruby Forge - for their generous hosting of this project.
+
+

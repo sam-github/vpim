@@ -1,0 +1,405 @@
+IMPP                                                         C. Jennings
+Internet-Draft                                             Cisco Systems
+Expires: April 22, 2005                                 October 22, 2004
+
+
+
+                        vCard Extensions for IM
+                      draft-jennings-impp-vcard-04
+
+
+Status of this Memo
+
+
+   By submitting this Internet-Draft, I certify that any applicable
+   patent or other IPR claims of which I am aware have been disclosed,
+   and any of which I become aware will be disclosed, in accordance with
+   RFC 3668.
+
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF), its areas, and its working groups.  Note that
+   other groups may also distribute working documents as
+   Internet-Drafts.
+
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+
+   The list of current Internet-Drafts can be accessed at
+   http://www.ietf.org/ietf/1id-abstracts.txt.
+
+
+   The list of Internet-Draft Shadow Directories can be accessed at
+   http://www.ietf.org/shadow.html.
+
+
+   This Internet-Draft will expire on April 22, 2005.
+
+
+Copyright Notice
+
+
+   Copyright (C) The Internet Society (2004).  All Rights Reserved.
+
+
+Abstract
+
+
+   This document describes an extension to vCard to support Instant
+   Messaging (IM) and Presence Protocol (PP) applications.  IM and PP
+   are becoming increasingly common ways of communicating, and users
+   want to save this contact information in their address books.  This
+   draft allows a URI that is associated with IM or PP to be specified
+   inside of a vCard.
+
+
+1.  Conventions
+
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+
+
+
+
+Jennings                 Expires April 22, 2005                 [Page 1]
+Internet-Draft                 IMPP vCard                   October 2004
+
+
+
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in RFC 2119 [3].
+
+
+2.  Overview
+
+
+   As more and more people use various instant messaging (IM) and
+   presence protocol (PP) applications, it becomes important for them to
+   be able to share this contact address information along with the rest
+   of their contact information.  RFC 2425 [1] and RFC 2426 [2] define a
+   standard format for this information which is referred to as vCard.
+   This document defines a new type in a vCard for representing instant
+   IM and PP URIs.  It is very similar to existing types for
+   representing email address and telephone contact information.
+
+
+   The type entry to hold this new contact information is an IMPP type.
+   The IMPP entry has a single URI that indicates the address of a
+   service that provides IM, PP, or both.  Also defined are some
+   parameters that give hints as to when certain URIs would be
+   appropriate.  A given vCard can have multiple IMPP entries but each
+   entry can contain only one URI.  Each IMPP entry can contain multiple
+   parameters.  Any combination of parameters is valid, though a
+   parameter should occur at most once in a given IMPP entry.
+
+
+   The type of URI indicates what protocols might be useable for
+   accessing it, but this document does not define any of the types.
+   For example a URI type of
+
+
+      "sip"[6] indicates to use SIP/SIMPLE,
+      "xmpp"[7] indicates to use XMPP,
+      "irc"[5]  indicates to use IRC,
+      "ymsgr" indicates to use yahoo,
+      "msn" might indicate to use Microsoft messenger,
+      "aim" indicates to use AOL, and
+      "im"[9] or "pres"[8] indicates to use a CPIM or CPP gateway.
+
+
+   The normative definition of this new vCard type is given in Section
+   3, and an informational ABNF is provided in Section 4.
+
+
+3.  IMPP Type Definition
+
+
+   To: ietf-mime-direct@imc.org
+
+
+   Subject: Registration of text/directory MIME type IMPP
+
+
+   Type name: IMPP
+
+
+   Type purpose: To specify the URI for instant messaging and presence
+   protocol communication with the object the vCard represents.
+
+
+
+
+Jennings                 Expires April 22, 2005                 [Page 2]
+Internet-Draft                 IMPP vCard                   October 2004
+
+
+
+   Type encoding: 8bit
+
+
+   Type value: A single URI.  The type of the URI indicates the protocol
+   that can be used for this contact.
+
+
+   Type special notes: The type can include the type parameter "TYPE" to
+   specify an intended use for the URI.  The TYPE parameter values can
+   include:
+
+
+      An indication of the type of communication for which this URI is
+      appropriate.  This can be a value of PERSONAL or BUSINESS.
+
+
+      An indication of the location of a device associated with this
+      URI.  Values can be HOME, WORK, or MOBILE.
+
+
+      The value PREF indicates this is a preferred address and has the
+      same semantics as the PREF value in a TEL type.
+
+
+   Intended usage: COMMON
+
+
+4.  Formal Grammar
+
+
+   The following ABNF grammar[4] extends the grammar found in RFC 2425
+   [1] and RFC 2426 [2].
+
+
+
+   ;For name="IMPP"
+    param      = impp-param ; Only impp parameters are allowed
+
+
+    value      = uri
+
+
+    impp-param = "TYPE" "=" impp-type *("," impp-type)
+
+
+    impp-type  = "PERSONAL" / "BUSINESS" / ; purpose of communications
+                 "HOME" / "WORK" / "MOBILE" /
+                 "PREF" /
+                 iana-token / x-name;
+                 ; Values are case insensitive
+
+
+
+5.  Example
+
+
+
+   BEGIN:vCard
+   VERSION:3.0
+   FN:Alice Doe
+   IMPP;TYPE=personal,pref:im:alice@example.com
+   END:vCard
+
+
+
+
+Jennings                 Expires April 22, 2005                 [Page 3]
+Internet-Draft                 IMPP vCard                   October 2004
+
+
+
+6.  IANA Considerations
+
+
+   Section 3 forms the IANA registration.
+
+
+7.  Security Considerations
+
+
+   This does not introduce additional security issues beyond current
+   vCard specification.  It is worth noting that many people consider
+   their presence information more sensitive than some other address
+   information.  Any system that stores or transfers vCards needs to
+   carefully consider the privacy issues around this information.
+
+
+8.  Acknowledgments
+
+
+   Thanks to Paul Hoffman, Sam Roberts and Pekka Pessi for comments.
+
+
+9.  References
+
+
+9.1  Normative References
+
+
+   [1]  Howes, T., Smith, M. and F. Dawson, "A MIME -- --Content-Type
+        for Directory Information", RFC 2425, September 1998.
+
+
+   [2]  Dawson, F. and T. Howes, "vCard MIME Directory Profile", RFC
+        2426, September 1998.
+
+
+   [3]  Bradner, S., "Key words for use in RFCs to Indicate Requirement
+        Levels", BCP 14, RFC 2119, March 1997.
+
+
+9.2  Informational References
+
+
+   [4]  Crocker, D. and P. Overell, "Augmented BNF for Syntax
+        Specifications: ABNF", RFC 2234, November 1997.
+
+
+   [5]  Butcher, S., "Uniform Resource Locator Schemes for Internet
+        Relay Chat Entities", draft-butcher-irc-url-04 (work in
+        progress), January 2004.
+
+
+   [6]  Rosenberg, J., Schulzrinne, H., Camarillo, G., Johnston, A.,
+        Peterson, J., Sparks, R., Handley, M. and E. Schooler, "SIP:
+        Session Initiation Protocol", RFC 3261, June 2002.
+
+
+   [7]  Saint-Andre, P., "XMPP URI Format", draft-saintandre-xmpp-uri-06
+        (work in progress), October 2004.
+
+
+   [8]  Peterson, J., "Common Profile for Presence (CPP)", RFC 3859,
+        August 2004.
+
+
+
+
+
+Jennings                 Expires April 22, 2005                 [Page 4]
+Internet-Draft                 IMPP vCard                   October 2004
+
+
+
+   [9]  Peterson, J., "Common Profile for Instant Messaging (CPIM)", RFC
+        3860, August 2004.
+
+
+
+Author's Address
+
+
+   Cullen Jennings
+   Cisco Systems
+   170 West Tasman Drive
+   MS: SJC-21/2
+   San Jose, CA  95134
+   USA
+
+
+   Phone: +1 408 902-3341
+   EMail: fluffy@cisco.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Jennings                 Expires April 22, 2005                 [Page 5]
+Internet-Draft                 IMPP vCard                   October 2004
+
+
+
+Intellectual Property Statement
+
+
+   The IETF takes no position regarding the validity or scope of any
+   Intellectual Property Rights or other rights that might be claimed to
+   pertain to the implementation or use of the technology described in
+   this document or the extent to which any license under such rights
+   might or might not be available; nor does it represent that it has
+   made any independent effort to identify any such rights.  Information
+   on the procedures with respect to rights in RFC documents can be
+   found in BCP 78 and BCP 79.
+
+
+   Copies of IPR disclosures made to the IETF Secretariat and any
+   assurances of licenses to be made available, or the result of an
+   attempt made to obtain a general license or permission for the use of
+   such proprietary rights by implementers or users of this
+   specification can be obtained from the IETF on-line IPR repository at
+   http://www.ietf.org/ipr.
+
+
+   The IETF invites any interested party to bring to its attention any
+   copyrights, patents or patent applications, or other proprietary
+   rights that may cover technology that may be required to implement
+   this standard.  Please address the information to the IETF at
+   ietf-ipr@ietf.org.
+
+
+
+Disclaimer of Validity
+
+
+   This document and the information contained herein are provided on an
+   "AS IS" basis and THE CONTRIBUTOR, THE ORGANIZATION HE/SHE REPRESENTS
+   OR IS SPONSORED BY (IF ANY), THE INTERNET SOCIETY AND THE INTERNET
+   ENGINEERING TASK FORCE DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED,
+   INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE
+   INFORMATION HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED
+   WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+
+
+
+Copyright Statement
+
+
+   Copyright (C) The Internet Society (2004).  This document is subject
+   to the rights, licenses and restrictions contained in BCP 78, and
+   except as set forth therein, the authors retain all their rights.
+
+
+
+Acknowledgment
+
+
+   Funding for the RFC Editor function is currently provided by the
+   Internet Society.
+
+
+
+
+Jennings                 Expires April 22, 2005                 [Page 6] 

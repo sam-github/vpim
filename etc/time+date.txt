@@ -1,0 +1,215 @@
+
+(should I put this in as an RCR, or 3 RCRs?)
+
+What's the difference between Time and DateTime?
+
+Time is in absolute seconds since some start date (jan 1, 1970).
+
+  **Also** it inherits the C libraries knowledge of the local timezone, as well
+  as of daylight savings time.
+
+DateTime is in absolute days since some start date, with the hour/min/sec
+within that day.
+
+  **Also** it implements the Julian and Gregorian calendar, the conversion time
+  when a country switched, and can have arbitrary offsets from UTC specified.
+
+  can be used for the last few thousand years (in places where it was used,
+  basically that means Europe). The timezone offset defaults to the current
+  offset, but there is no knowledge of daylight savings time changes.
+
+
+The situation is a little confusing because there is no obvious difference
+between the two, conceptually, and the diffences in the APIs of the two classes
+are reflections of the underlying implementation technique,
+
+  - seconds vs. days as the absolute time measure
+  - implemented in ruby or uses the C library
+
+rather than differences based on what someone would want to do with a class
+that represents a date and time.
+
+
+I have 3 suggestions/requests, described in more detail below:
+
+1 - that DateTime support all the methods of Time, so that it can be used
+anywhere a Time can, with the the magic of DuckTyping
+
+2 - that using times (both Time and DateTime) be made easier by adding some
+methods to one or both classes
+
+3 - that a way of making DateTime aware of daylight savings time be thought up
+
+
+** 1
+
+I would like to request that DateTime be "duck type" compatible with Time.
+
+This may not be entirely possible, since they share some method names, but the
+methods behave differently. Perhaps these can be deprecated, or the docs can
+mark them as non-compatible, and methods that do the same thing with the same
+name can be added?
+
+The following methods are missing in DateTime, but I think would be trivial
+to implement:
+
+Instance methods --
+
+  aTime.methods - aDateTime.methods =>
+  [
+    "dst?"
+    "getgm"
+    "getlocal"
+    "getutc"
+    "gmt?"
+    "gmt_offset"
+    "gmtime"
+    "gmtoff"
+    "isdst"
+    "localtime"
+    "to_f"
+    "to_i"
+    "tv_sec"
+    "tv_usec"
+    "usec"
+    "utc"
+    "utc?"
+    "utc_offset"
+  ]
+
+Class methods --
+
+  Time.methods - DateTime.methods =>
+
+    "local"
+    "times" --> DEPRECATED
+    "mktime"
+    "at"
+    "utc"
+    "gm"
+
+
+Notes:
+
+  dst?/isdst is one exception to the "its easy to do" statement. DateTime only
+  knows the offset, it can't know if it is DST, so perhaps it should always
+  return false?
+
+  #zone()
+    Time -> some local nickname for the timezone ("EST"), useful only within a
+      country
+    DateTime -> an RFC822 style string ("+0530") of the hour and minute offset from
+      UTC
+  #to_s()
+    Time -> "Mon Mar 29 13:19:05 EST 2004"
+    DateTime -> "2004-03-29T13:18:58-0500"
+  +/-
+    Time -> add/sub a second
+    DateTime -> add/sub a day
+  succ
+    Time -> add a second
+    DateTime -> add a day
+
+  #parse()
+    DateParse#parse(), Time#parse(), and DateTime#parse() all appear to do
+    basically the same thing, with some API differences. The heuristics aren't
+    documented, so its hard to know if there is a more fundamental difference.
+
+    Time -> uses DateParse.parse, but adds some logic to do 2 digit year to 4 digit
+    conversion, and to add defaults
+
+    DateTime -> implements its own heuristics, are they better or different the DateParse?
+
+
+** 2
+
+It's hard to do things like add a week, or add a day, to a Time, or even a DateTime.
+
+I think the Time and DateTime construction methods should allow objects like this
+to be constructed more flexibly. They already wrap out-of-range values to the next
+valid value, in some cases, but not all:
+
+[ensemble] ~/p/ruby/vcard $ ruby -r date -e  "p (Date.civil(2004, 1, 31) >> 1).to_s"
+"2004-02-29"
+
+[ensemble] ~/p/ruby/vcard $ ruby -r date -e  "p (Date.civil(2004, 2, 31) >> 1).to_s"
+/usr/local/lib/ruby/1.8/date.rb:591:in `civil': invalid date (ArgumentError)
+
+
+There should be ways to add
+
+  years,
+  months,
+  days,
+  hour
+  min
+  sec
+
+to both Time and DateTime, and support for these 6 are partial in both Time and DateTime.
+
+
+Things to add that would help using DateTime and Time together:
+
+  Date#to_time - raises ArgumentError if not representable, or should it return
+  a negative number?
+
+  Time#to_datetime - maybe only defined if you require 'date'?
+
+  Time#to_date - useful?
+
+  eql?, <=> - should allow comparisons between Time and DateTime
+
+Operations that modify a Time or a DateTime could have a bang:
+
+  Time#gmtime
+  Time#utc
+  Time#localtime
+
+A number of methods of DateTime aren't in Time, perhaps they can be added?
+
+Many of the methods are useful, but you have to convert your Time to a DateTime
+to use them. Maybe Time is supposed to be "lighter weight" than DateTime?
+
+That would be OK, the docs could say that Time is a light-weight date/time
+representation, with only the range of the system time, and that for a more
+powerful representation, and many useful utility functions, require 'date', and
+convert your aTime object to a  DateTime using Time#to_datetime().
+
+But, minus the lightweight argument, there is no reason they can't both support exactly
+the same methods, both object and class!
+
+** 3
+
+Daylight savings time is painful to deal with, but it is important! Not all
+mornings in Ontario have a 2:30 AM! Even if its messy, its true.
+
+It would be really powerful if you could tell DateTime what timezone it is in,
+not just the current offset, but the rule for how the offset changes (if it
+does) with DST. Currently, ruby is as weak as ANSI C in dealing with multiple
+timezones, that are NOT your own local timezone, simultaneously in a single
+application.
+
+This is probably a just a dream... but here's my request:
+
+I'd like to see it possible for a DateTime could have it's timezone set, where
+the timezone consists of:
+
+  std -> standard offset from UTC
+  dst -> optional, DST offset from UTC, and some way of specifying the changeover
+
+This information could be in some kind of raw format, or could even be a string
+timezone name. In that case, perhaps DateTime could have a class variable that
+mapped strings to the std/dst definition.
+
+Here's a reference to a textual notation that seems good enough to specify most STD/DST
+time zone transitions, perhaps an equivalent programmatic representation would be enough:
+
+  http://www.qnx.com/developers/docs/qnx_6.1_docs/neutrino/lib_ref/global.html#TheTZEnvironmentVariable
+
+I don't know if this is widely used, or is just a QNX extension. I know OS X
+(FreeBSD?) has a zone info compiler, where you can compile textual definitions
+of timezones into a binary format.
+
+
+
+

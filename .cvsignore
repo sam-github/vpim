@@ -1,0 +1,16 @@
+.*
+*.ics
+*.tgz
+*.vcf
+tags.*
+tags
+.DS_Store
+_*
+doc
+vcard-0.?*
+cards
+changes.cvs
+rr
+ChangeLog
+rss
+nohup.out

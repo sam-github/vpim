@@ -1,0 +1,484 @@
+From RFC 2426
+
+4.  Formal Grammar
+
+   The following formal grammar is provided to assist developers in
+   building parsers for the vCard.
+
+   This syntax is written according to the form described in RFC 2234,
+   but it references just this small subset of RFC 2234 literals:
+
+   ;*******************************************
+   ; Commonly Used Literal Definition
+   ;*******************************************
+
+   ALPHA        = %x41-5A / %x61-7A
+        ; Latin Capital Letter A-Latin Capital Letter Z /
+        ; Latin Small Letter a-Latin Small Letter z
+
+   CHAR         = %x01-7F
+        ; Any C0 Controls and Basic Latin, excluding NULL from
+        ; Code Charts, pages 7-6 through 7-9 in [UNICODE]
+
+   CR           = %x0D
+        ; Carriage Return
+
+   LF           = %0A
+        ; Line Feed
+
+   CRLF         = CR LF
+        ; Internet standard newline
+
+   ;CTL         = %x00-1F / %x7F
+        ; Controls. Not used, but referenced in comments.
+
+   DIGIT        = %x30-39
+        ; Digit Zero-Digit Nine
+
+   DQUOTE       = %x22
+        ; Quotation Mark
+
+   HTAB         = %x09
+        ; Horizontal Tabulation
+
+   SP           = %x20
+        ; space
+
+   VCHAR        = %x21-7E
+        ; Visible (printing) characters
+
+   WSP          = SP / HTAB
+        ; White Space
+
+   ;*******************************************
+   ; Basic vCard Definition
+   ;*******************************************
+
+   vcard_entity = 1*(vcard)
+
+   vcard        = [group "."] "BEGIN" ":" "VCARD" 1*CRLF
+                  1*(contentline)
+        ;A vCard object MUST include the VERSION, FN and N types.
+                  [group "."] "END" ":" "VCARD" 1*CRLF
+
+   contentline  = [group "."] name *(";" param ) ":" value CRLF
+        ; When parsing a content line, folded lines must first
+        ; be unfolded according to the unfolding procedure
+        ; described above. When generating a content line, lines
+        ; longer than 75 characters SHOULD be folded according to
+        ; the folding procedure described in [MIME DIR].
+
+   group        = 1*(ALPHA / DIGIT / "-")
+
+   name         = iana-token / x-name
+        ; Parsing of the param and value is
+        ; based on the "name" or type identifier
+        ; as defined in ABNF sections below
+
+   iana-token   = 1*(ALPHA / DIGIT / "-")
+        ; vCard type or parameter identifier registered with IANA
+
+   x-name       = "X-" 1*(ALPHA / DIGIT / "-")
+        ; Reserved for non-standard use
+
+   param        = param-name "=" param-value *("," param-value)
+
+   param-name   = iana-token / x-name
+
+   param-value  = ptext / quoted-string
+
+   ptext        = *SAFE-CHAR
+
+   value        = *VALUE-CHAR
+
+   quoted-string = DQUOTE QSAFE-CHAR DQUOTE
+
+   NON-ASCII    = %x80-FF
+        ; Use is restricted by CHARSET parameter
+        ; on outer MIME object (UTF-8 preferred)
+
+   QSAFE-CHAR   = WSP / %x21 / %x23-7E / NON-ASCII
+        ; Any character except CTLs, DQUOTE
+
+   SAFE-CHAR    = WSP / %x21 / %x23-2B / %x2D-39 / %x3C-7E / NON-ASCII
+        ; Any character except CTLs, DQUOTE, ";", ":", ","
+
+   VALUE-CHAR   = WSP / VCHAR / NON-ASCII
+        ; Any textual character
+
+   ;*******************************************
+   ; vCard Type Definition
+   ;
+   ; Provides type-specific definitions for how the
+   ; "value" and "param" are defined.
+   ;*******************************************
+
+   ;For name="NAME"
+   param        = ""
+        ; No parameters allowed
+
+   value        = text-value
+
+   ;For name="PROFILE"
+   param        = ""
+        ; No parameters allowed
+
+   value        = text-value
+        ; Value MUST be the case insensitive value "VCARD
+
+   ;For name="SOURCE"
+   param        = source-param
+        ; No parameters allowed
+
+   value        = uri
+
+   source-param = ("VALUE" "=" "uri")
+                / ("CONTEXT" "=" "word")
+        ; Parameter value specifies the protocol context
+        ; for the uri value.
+                / (x-name "=" *SAFE-CHAR)
+
+   ;For name="FN"
+   ;This type MUST be included in a vCard object.
+   param        = text-param
+        ; Text parameters allowed
+
+   value        = text-value
+
+   ;For name="N"
+   ;This type MUST be included in a vCard object.
+
+   param        = text-param
+        ; Text parameters allowed
+
+   value        = n-value
+
+   n-value      = 0*4(text-value *("," text-value) ";")
+                  text-value *("," text-value)
+        ; Family; Given; Middle; Prefix; Suffix.
+        ; Example: Public;John;Quincy,Adams;Reverend Dr. III
+
+   ;For name="NICKNAME"
+   param        = text-param
+        ; Text parameters allowed
+
+   value        = text-list
+
+   ;For name="PHOTO"
+   param        = img-inline-param
+        ; Only image parameters allowed
+
+   param        =/ img-refer-param
+        ; Only image parameters allowed
+
+   value        = img-inline-value
+        ; Value and parameter MUST match
+
+   value        =/ img-refer-value
+        ; Value and parameter MUST match
+
+   ;For name="BDAY"
+   param        = ("VALUE" "=" "date")
+        ; Only value parameter allowed
+
+   param        =/ ("VALUE" "=" "date-time")
+        ; Only value parameter allowed
+
+   value        = date-value
+        ; Value MUST match value type
+
+   value        =/ date-time-value
+        ; Value MUST match value type
+
+   ;For name="ADR"
+   param        = adr-param / text-param
+        ; Only adr and text parameters allowed
+
+   value        = adr-value
+
+   ;For name="LABEL"
+   param        = adr-param / text-param
+        ; Only adr and text parameters allowed
+
+   value        = text-value
+
+   ;For name="TEL"
+   param        = tel-param
+        ; Only tel parameters allowed
+
+   value        = phone-number-value
+
+   tel-param    = "TYPE" "=" tel-type *("," tel-type)
+
+   tel-type     = "HOME" / "WORK" / "PREF" / "VOICE" / "FAX" / "MSG"
+                / "CELL" / "PAGER" / "BBS" / "MODEM" / "CAR" / "ISDN"
+                / "VIDEO" / "PCS" / iana-token / x-name
+        ; Values are case insensitive
+
+   ;For name="EMAIL"
+   param        = email-param
+        ; Only email parameters allowed
+
+   value        = text-value
+
+   email-param  = "TYPE" "=" email-type ["," "PREF"]
+        ; Value is case insensitive
+
+   email-type   = "INTERNET" / "X400" / iana-token / "X-" word
+        ; Values are case insensitive
+
+   ;For name="MAILER"
+   param        = text-param
+        ; Only text parameters allowed
+
+   value        = text-value
+
+   ;For name="TZ"
+   param        = ""
+        ; No parameters allowed
+
+   value        = utc-offset-value
+
+   ;For name="GEO"
+   param        = ""
+        ; No parameters allowed
+
+   value        = float-value ";" float-value
+
+   ;For name="TITLE"
+   param        = text-param
+        ; Only text parameters allowed
+
+   value        = text-value
+
+   ;For name="ROLE"
+   param        = text-param
+        ; Only text parameters allowed
+
+   value        = text-value
+
+   ;For name="LOGO"
+
+   param        = img-inline-param / img-refer-param
+        ; Only image parameters allowed
+
+   value        = img-inline-value / img-refer-value
+        ; Value and parameter MUST match
+
+   ;For name="AGENT"
+   param        = agent-inline-param
+
+   param        =/ agent-refer-param
+
+   value        = agent-inline-value
+        ; Value and parameter MUST match
+
+   value        =/ agent-refer-value
+        ; Value and parameter MUST match
+
+   agent-inline-param = ""
+        ; No parameters allowed
+
+   agent-refer-param = "VALUE" "=" "uri"
+        ; Only value parameter allowed
+
+   agent-inline-value = text-value
+        ; Value MUST be a valid vCard object
+
+   agent-refer-value = uri
+        ; URI MUST refer to image content of given type
+
+   ;For name="ORG"
+
+   param        = text-param
+        ; Only text parameters allowed
+
+   value        = org-value
+
+   org-value    = *(text-value ";") text-value
+        ; First is Organization Name, remainder are Organization Units.
+
+   ;For name="CATEGORIES"
+   param        = text-param
+        ; Only text parameters allowed
+
+   value        = text-list
+
+   ;For name="NOTE"
+   param        = text-param
+        ; Only text parameters allowed
+
+   value        = text-value
+
+   ;For name="PRODID"
+   param        = ""
+        ; No parameters allowed
+
+   value        = text-value
+
+   ;For name="REV"
+   param        = ["VALUE" =" "date-time"]
+        ; Only value parameters allowed. Values are case insensitive.
+
+   param        =/ "VALUE" =" "date"
+        ; Only value parameters allowed. Values are case insensitive.
+
+   value        = date-time-value
+
+   value        =/ date-value
+
+   ;For name="SORT-STRING"
+   param        = text-param
+        ; Only text parameters allowed
+
+   value        = text-value
+
+   ;For name="SOUND"
+   param        = snd-inline-param
+        ; Only sound parameters allowed
+
+   param        =/ snd-refer-param
+        ; Only sound parameters allowed
+
+   value        = snd-line-value
+        ; Value MUST match value type
+
+   value        =/ snd-refer-value
+        ; Value MUST match value type
+
+   snd-inline-value     = binary-value CRLF
+        ; Value MUST be "b" encoded audio content
+
+   snd-inline-param     = ("VALUE" "=" "binary"])
+                        / ("ENCODING" "=" "b")
+                        / ("TYPE" "=" *SAFE-CHAR)
+        ; Value MUST be an IANA registered audio type
+
+   snd-refer-value      = uri
+        ; URI MUST refer to audio content of given type
+
+   snd-refer-param      = ("VALUE" "=" "uri")
+                        / ("TYPE" "=" word)
+        ; Value MUST be an IANA registered audio type
+
+   ;For name="UID"
+   param        = ""
+        ; No parameters allowed
+
+   value        = text-value
+
+   ;For name="URL"
+   param        = ""
+        ; No parameters allowed
+
+   value        = uri
+
+   ;For name="VERSION"
+   ;This type MUST be included in a vCard object.
+   param        = ""
+        ; No parameters allowed
+
+   value        = text-value
+        ; Value MUST be "3.0"
+
+   ;For name="CLASS"
+   param        = ""
+        ; No parameters allowed
+
+   value        = "PUBLIC" / "PRIVATE" / "CONFIDENTIAL"
+                / iana-token / x-name
+        ; Value are case insensitive
+
+   ;For name="KEY"
+   param        = key-txt-param
+        ; Only value and type parameters allowed
+
+   param        =/ key-bin-param
+        ; Only value and type parameters allowed
+
+   value        = text-value
+
+   value        =/ binary-value
+
+   key-txt-param = "TYPE" "=" keytype
+
+   key-bin-param = ("TYPE" "=" keytype)
+                 / ("ENCODING" "=" "b")
+        ; Value MUST be a "b" encoded key or certificate
+
+   keytype      = "X509" / "PGP" / iana-token / x-name
+        ; Values are case insensitive
+
+   ;For name="X-" non-standard type
+   param        = text-param / (x-name "=" param-value)
+        ; Only text or non-standard parameters allowed
+
+   value        = text-value
+
+   ;*******************************************
+   ; vCard Commonly Used Parameter Definition
+   ;*******************************************
+
+   text-param   = ("VALUE" "=" "ptext")
+                / ("LANGUAGE" "=" langval)
+                / (x-name "=" param-value)
+
+   langval      = <a language string as defined in RFC 1766>
+
+   img-inline-value     = binary-value
+        ;Value MUST be "b" encoded image content
+
+   img-inline-param
+
+   img-inline-param     = ("VALUE" "=" "binary")
+                        / ("ENCODING" "=" "b")
+                        / ("TYPE" "=" param-value
+        ;TYPE value MUST be an IANA registered image type
+
+   img-refer-value = uri
+        ;URI MUST refer to image content of given type
+
+   img-refer-param      = ("VALUE" "=" "uri")
+                        / ("TYPE" "=" param-value)
+        ;TYPE value MUST be an IANA registered image type
+
+   adr-param    = ("TYPE" "=" adr-type *("," adr-type))
+                / (text-param)
+
+   adr-type     = "dom" / "intl" / "postal" / "parcel" / "home"
+                / "work" / "pref" / iana-type / x-name
+
+   adr-value    = 0*6(text-value ";") text-value
+        ; PO Box, Extended Address, Street, Locality, Region, Postal
+        ; Code, Country Name
+
+   ;*******************************************
+   ; vCard Type Value Definition
+   ;*******************************************
+
+   text-value-list      = 1*text-value *("," 1*text-value)
+
+   text-value   = *(SAFE-CHAR / ":" / DQUOTE / ESCAPED-CHAR)
+
+   ESCAPED-CHAR = "\\" / "\;" / "\," / "\n" / "\N")
+        ; \\ encodes \, \n or \N encodes newline
+        ; \; encodes ;, \, encodes ,
+
+   binary-value = <A "b" encoded text value as defined in [RFC 2047]>
+
+   date-value   = <A single date value as defined in [MIME-DIR]>
+
+   time-value   = <A single time value as defined in [MIME-DIR]>
+
+   date-time-value = <A single date-time value as defined in [MIME-DIR]
+
+   float-value  = <A single float value as defined in [MIME-DIR]>
+
+   phone-number-value = <A single text  value as defined in [CCITT
+                         E.163] and [CCITT X.121]>
+
+   uri-value    = <A uri value as defined in [MIME-DIR]>
+
+   utc-offset-value = ("+" / "-") time-hour ":" time-minute
+   time-hour    = 2DIGIT                ;00-23
+   time-minute  = 2DIGIT                ;00-59

@@ -1,0 +1,320 @@
+== 3RD PARTY
+
+todo: a OS X mail plugin that doesn't open a GUI, it just send mail....
+
+todo: cmd line tool to query KeyStore
+
+todo: cmd line tool to query AddressBook (ex: for phone numbers)
+  note: can base it on the lbdb code
+
+todo: LBDB
+
+  - search on ALL fields, not just whatever it searches on
+
+  - add module to search a .vcf file or a directory of .vcf files
+
+  - it is fprinting NULLs if there is no Last Name...! (null)
+
+  - maybe it could include names without email-addrs, so I know why the names
+  aren't showing up?
+
+todo: RSS
+
+  - add atom to rss/
+
+
+== UTILS
+
+Note:
+  - WebDAV client-side:
+    - http://raa.ruby-lang.org/project/libneon-ruby/
+    - http://www.webdav.org/neon/
+
+  - WebDAV server-side:
+    - implement a WEBRick servlet to handle server-side?
+
+todo: ics-alarm
+  A really, really fast way of adding an alarm to iCalendar, i.e., 3 min, check the kettle.
+
+  Input:
+    - a time offset, and an action
+
+  Output:
+    - .ics
+    - ical
+
+
+todo: ics-to-rss
+  Input:
+  - ~/Library/Calendars/
+  - .ics, ../*.ics
+
+  Output:
+  - CGI
+  - stdout
+  - http
+
+  Options:
+  - rss versions
+  - rss versions in the URL
+  - implement autodiscovery with http? what does this mean...
+
+todo: ics-to-ics
+  split calendars by date
+
+todo: ics-to-ics
+  Input:
+  - iCal
+  - .ics
+
+  Output:
+  - http (subscribable)
+  - CAP
+  - WebDAV
+
+  Options:
+  - particular calendars
+  - Rendezvous
+  - StartupItem
+  - all users, if they have a config file, like web pages
+  - combine different calendars, and publish to .mac
+
+todo: rss-to-rss
+
+  See: feedblender - http://feedblender.rubyforge.org
+
+todo: vcf-to-address-book
+  Input:
+  - .vcf
+  - AB
+
+  Output:
+  - LDAP?
+
+  AB can subscribe to, at least, ldap sources. Can I use this? Can the latest
+  AB have plugins?
+
+done: mutt-aliases-to-vcf
+  Input:
+  - mutt aliases
+
+  Output
+  - .vcf
+
+
+todo: rss-to-ics   convert rss feed, text or URI, to ics file of todos
+  Input:
+  - .xml
+  - http
+  - http with autodiscovery?
+
+  Output:
+  - http: a subscribable calendar
+  - .ics
+
+  Options:
+  - RSS -> VTODO
+  - RSS -> VEVENT
+  - RSS -> VJOURNAL
+  
+  Notes:
+  - will need a decent ics encoding api
+
+
+
+todo: vcf-bday-to-ics.rb
+  Input:
+  - .vcf
+  - AB
+
+  Output:
+  - .ics
+  - .ics
+  - http
+  - RSS??! maybe only see bdays within the next month, as a reminder?
+  - cvt vcf file to ics file of birthdays
+  - pull from Address Book, or from .vcf file
+
+  Options:
+  - bday -> VTODO
+  - bday -> VEVENT
+
+
+todo:
+ - an application server (with plugins?) that can do ALL of the above, live,
+   so you can see local iCal as RSS, see remote iCal as RSS, publish
+   iCal as RSS, publish iCal as http (&webdav?) (with rendezvous?)
+
+ - web-based config?
+
+ - obj-c config panel?
+
+ - don't have to do it manually, can make iCal auto-subscribe, and make
+   NetNewsWire auto-subscribe, etc.
+
+
+done: vcf-to-mutt
+  Input:
+  x .vcf
+  - AB -> DON'T DO
+
+  Output:
+  x mutt aliases
+  x Mutt query
+
+  Options:
+  - group the output into whatever the AB groups are? DON'T DO
+  x use search criteria (like only the "pref" email)
+
+
+== PACKAGING
+
+- Package:
+  - gem
+    
+  - Port
+    
+  - debian, done?
+
+Check packaging guidelines:
+
+  http://www.rubygarden.org/ruby?QuickGuideToPackaging
+
+Can I get RAA synced up to rubyforge?
+
+- ri docs during install?
+
+- html docs during install?
+
+
+== FEATURES
+
+- complete RRULE support
+
+- icalendar maker
+
+- streaming decoder
+
+- streaming encoder
+
+  maker, take OUT as a param, append fields using << ? then if it's an IO it will
+  be a push encoder, can default to Vcard#create.
+
+- valarms
+
+  - like ones that open apps: http://docs.info.apple.com/article.html?artnum=300368
+
+- vjournal
+
+- value=uri
+  -> the value isn't a URI, the URI points to the value, of unknown type! Should
+  I allow this to be handled? Maybe use open-uri()?
+
+- add way to delete a param from a Field, maybe assign nil to it? done?
+
+- encoding TEXT, and the NOTE field
+
+== QUESTIONS
+
+- What does Time.local do with the isdst, and tz arguments?
+
+- Time.local()/gm() don't raise errors for out-of-range day-of-month (Feb 31st,
+  anyone?)!
+
+- Ask about Date extensions?
+
+- Ask about Time extensions?
+
++ Ask on ietf-icalendar:
+
+  Errors in examples?
+
+
+== CLEANUPS/BUGS
+
+- allow preferred to be set to false/nil in vcard/maker
+
+- Need to deal with Date and Time comparisons, see note in time_from_rfc2425. I
+  might need to extend the date time comparisons so Date and Time can be
+  compared.
+
+- Need to document @properties
+
+- pull common implementation of ical components out into a module/mixin
+
+- Vevent has @fields, and @properties, but @properties has @fields, too.
+  Duplication necessary?
+
+- I could do this entirely differently, by adding a to_rfc2445 method to Date,
+  Time, DateTime, etc. that return string values, then anybody could add their
+  own values, and we'd handle it. But then, what about setting the value type?
+  Maybe some kind of table of handlers, per class?
+
+- Time#plusmonth/day should ask itself if it is in utc, then call Time.utc or Time.local
+  as appropriate.
+
+- bug: deal with "round down" that Date does when you add a month, and the dofmonth is not
+  in valid range -> if you have jan31 repeating monthly with iCal, you shouldn't get an
+  occurence in Feb
+
+- do coverage testing: http://rubyforge.org/project/showfiles.php?group_id=18&release_id=360
+
+- guess whether it's a date or a date-time by matching regexes, instead of
+  having to provide the default, which I hacked in, its ugly, and we can guess
+
+  Done?
+
+- deal with timezones correctly, iCalendar wants:
+
+     DTSTART:19970714T133000                  ;Local time
+     DTSTART:19970714T173000Z                 ;UTC time
+     DTSTART;TZID=US-Eastern:19970714T133000  ;Local time and time zone reference
+
+  Done?
+
+- deal with BOM (there's some test vcfs from macnerd2k@yahoo.com in =l.vcard)
+
+- don't allow quoted-printable encodings if version is 3.0
+
+- encoding values with a \n in it will break
+
+  --> generally, make sure not to generate invalid encodings
+
+- return self for true, and for methods that don't have other return values?
+
+- preserve whitespace in a Field?
+
+- support ';' list values (done on encoding, anything to do on decoding?)
+
+- value=text
+  in this value, newlines are \n or \N, deal with this when decoding
+  (as are ; and ,)
+
+- freeze everything? -> Need to test this.
+
+
+== DOCUMENTATION
+
+- document examples of how to get
+  bday as Time,
+  and email,
+  a photo,  (done)
+  etc...
+
+== VCARD VERSION INTEROP
+
+- Confirm Address Book bugs: PHOTO uses version 2 encoding field, and has too many spaces.
+
+Examine vCard 2.1 interop, and possible trans-encoding.
+
+name=  is optional in a parameter
+; can show up in a parameter value, if escaped
+
+quoted-printable can be used to encode values with line breaks
+
+a parameter without an = is usually implicitly a type=, unless
+it's one of the encoding types, deal with this on input
+
+- Is   email;internet:sroberts@uniserve.com
+valid in vCard2.1? Should I convert it to "type=internet"?
+

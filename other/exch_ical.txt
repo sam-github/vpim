@@ -1,0 +1,111 @@
+#!/usr/bin/ruby  
+ 
+require 'net/imap' 
+ 
+class ExchangeCalendar 
+  def initialize(servername, user, password) 
+    @imap = Net::IMAP.new(servername) 
+    @imap.login(user, password) 
+    @imap.examine('Calendar') 
+  end 
+ 
+  def each_calendar 
+    @imap.search("ALL").each do |sequence_id| 
+      fetchdata = @imap.fetch(sequence_id, ["UID", "BODYSTRUCTURE"])[0] 
+      # Find the calendar part. 
+      uid, bodystructure = fetchdata.attr["UID"], fetchdata.attr["BODYSTRUCTURE"] 
+      catch :nocalendar do 
+        partno = part_number_for_calendar(bodystructure) 
+        yield @imap.uid_fetch(uid, "BODY.PEEK[#{partno}]")[0].attr["BODY[#{partno}]"] 
+      end 
+    end 
+  end 
+ 
+  def finish 
+    @imap.logout 
+    @imap.disconnect 
+  end 
+ 
+  protected 
+  def part_number_for_calendar(msg) 
+    if msg.media_type == "TEXT" and msg.subtype == "CALENDAR" 
+      return 1 
+    elsif msg.multipart? 
+      i = 1 
+      msg.parts.each do |part| 
+        if part.media_type == "TEXT" and part.subtype == "CALENDAR" 
+          return i 
+        end 
+        i += 1 
+      end 
+    else 
+      throw :nocalendar 
+    end 
+  end 
+end 
+
+class IcalAccumulator 
+  def initialize() 
+    @events = [] 
+    @timezones = [] 
+    @tzids_seen = {}   end 
+ 
+  def push(calendar) 
+    calendar = clean_timezone(calendar) 
+    calendar.scan(/^BEGIN:VEVENT.*?^END:VEVENT|^BEGIN:VTIMEZONE.*?^END:VTIMEZONE/m).each do |component| 
+       
+      case component 
+      when /^BEGIN:VEVENT/ 
+        @events << component 
+      when /^BEGIN:VTIMEZONE/ 
+        component =~ /^TZID:.*/ 
+        if !@tzids_seen[$&] 
+          @tzids_seen[$&] = true 
+          @timezones << component 
+        end 
+      end 
+    end 
+  end 
+ 
+  def to_s 
+    cal = <<EOF 
+BEGIN:VCALENDAR 
+METHOD:REQUEST 
+PRODID:Exchange2Ical 
+VERSION:2.0 
+EOF 
+    cal << @timezones.join("\n") + "\n" 
+    cal << @events.join("\n") + "\n" 
+    cal << "END:VCALENDAR\n" 
+    cal 
+  end 
+ 
+  protected 
+  def clean_timezone(component) 
+    component.gsub!(/GMT -0500 \(Standard\) \/ GMT -0400 \(Daylight\)/, "US/Eastern") 
+    component.gsub!(/\(GMT-05\.00\) Eastern Time \(US & Canada\)/, "US/Eastern") 
+    component 
+  end 
+end 
+
+def main 
+  require 'cgi' 
+  cgi = CGI.new 
+   
+  server = cgi['server'].to_s 
+  user = cgi['user'].to_s 
+  password = cgi['password'].to_s 
+   
+  ec = ExchangeCalendar.new(server, user, password) 
+  ia = IcalAccumulator.new 
+   
+  ec.each_calendar do |c| 
+    ia.push(c) 
+  end 
+ 
+  ec.finish 
+ 
+  cgi.out("text/calendar") {     ia.to_s 
+  } end 
+ 
+main

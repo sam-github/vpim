@@ -1,0 +1,262 @@
+0.15 - ...
+
+- maker/vcard.rb: Added support for X-AIM, an Apple extension.
+
+0.14 - 2005-02-01
+
+- Fix: if an RRULE didn't ever yield an event (a bug in the rule) dountil was never tested.
+
+- Change: don't throw an ArgumentError with infinite events, just stop when the
+  Time is no longer representable
+
+0.13 - 2005-01-20
+
+- Was calling to_time with an arg, fixed.
+
+0.12 - 2005-01-17
+
+- Removed require of pp from the library and utilities where it wasn't needed,
+  it was causing problems because it doesn't exist on ruby 1.6 systems.
+
+- Added Field#to_date, returns field value as an array of Date objects
+  
+- Changed Field#to_time - it now auto-detects format of values
+  (DATE/DATE-TIME),  and doesn't take/require a default_kind argument.
+
+- Added IMPP support to Vpim::Maker::Vcard.
+
+- Makefile wasn't copying the Maker classes into the release.
+
+- Duration value not returned unless it was negative, fixed.
+
+- An RRULE's UNTIL was always being assumed to be a DATE-TIME, but it can be a
+  DATE. I fixed this, but is something of a hack, see comments and TODO.
+
+- Use String#scan instead of String#gsub, when appropriate (I didn't know it
+  existed when I stated the project).
+
+- Run tests on 3 ruby versions.
+
+- Don't include docs in release package, it makes it way too large.
+
+- Change: use String.unpack instead of iconv to convert UCS-2 to UTF-8,
+  removing dependency on iconv (it wasn't standard in ruby 1.6).
+
+- Change: simplified mutt_ab_query.rb, and renamed to vcf-to-mutt.
+
+- Change: reminder.rb sorts todo items by priority.
+
+- New: Vtodo#priority - the priority of the vTodo component.
+
+0.11 - 2004-11-17
+
+- Added a Vpim::Maker::Vcard class to simplify the creation of vCards, modelled
+  after the RSS maker from ruby's RSS library.
+
+0.10 - 2004-11-07
+
+- If events don't have a recurrence rule, they occur once, but they
+  were being returned even if they occurred after "dountil". Fixed.
+
+- New sample of converting tab-delimited files to a vcard file, from
+  Dane G. Avilla. Thanks!
+
+0.9a - 2004-10-31
+
+- Made sure all events occur once in rrules.
+
+- New sample of encoding: mutt-aliases-vcard.rb
+
+- Added ToDo support to reminder.rb.
+
+0.9 - 2004-06-17
+
+- Field now is mutable, you can change the group, value, params, etc.
+
+- Using the Enumerator object for DirectoryInfo now, instead of all the
+each_by_X, and field_by_X() APIs.
+
+- Moved homepage and docs to Ruby Forge.
+
+- DirectoryInfo.create: added a profile argument
+
+- DirectoryInfo#push: now pushes to 1 before the end
+
+- DirectoryInfo#push_end: pushes onto end, in case you really want to
+
+- Field.create: a Date or Time object value will now be encoded as date or time
+
+- Vpim.encode_date(): encodes an RFC2425 date
+
+- Vpim.encode_time(): encodes an RFC2425 time
+
+- Vpim.encode_date_time(): encodes an RFC2425 date-time
+
+- Icalendar#encode(): encodes an Icalendar
+
+- Icalendar#push(): pushes a calendar component onto a calendar
+
+- Vevent#accept(): accepts an event invitation
+
+- Vevent#create(): creates a new event
+
+- Address#copy(): create a copy of Address. If the original Address was frozen,
+this one won't be.
+
+- Address#partstat=(): set or change the PARTSTAT.
+
+- Field#copy(): create a copy of Field. If the original Field was frozen, this
+one won't be.
+
+0.8 - 2004-04-01
+
+- Moved DirectoryInfo::Field into it's own file, vpim/field.rb.
+
+- New: Vpim::Duration - crude way of getting days/hours/mins/secs from a
+duration in seconds.
+
+- New: Icalendar#create() and Icalendar#create_reply()
+
+- New: Icalendar#encode(), #to_s is an alias to #encode.
+
+- New: Icalendar#protocol?()
+
+- Change: Icalendar#version() raises an error if there is no VERSION
+
+- Change: made all the DirectoryInfo, Vcard, and Field .new() class methods
+private, and replaced with the 2 class methods:
+
+ - decode() decodes a string, returning a ruby object
+ - create() creates a new object
+
+and all objects now get encoded using:
+
+ - encode() takes a ruby object, and encodes it as a string
+
+They become more symetrical, and the overloaded meanings of .new() dissappear -
+with .new() are you decoding, encoding, creating...?
+
+- Change: Icalendar::Vevent#attendees() can return only attendees
+with a particular URI.
+
+- New: Icalendar::Address#==()
+
+- New: Icalendar::Vevent#attendee?()
+
+- Fixed bug: Field#encode() was adding an unexpecte NL to the line.
+
+- Change: Field#name?() can accept a symbol.
+
+- New: DirectoryInfo has an #each(), so I included Enumerable. Because of this
+#to_a() now returns all the Fields in a DirectoryInfo.
+
+- New: DirectoryInfo#push() and DirectoryInfo@push_uniq().
+
+- Change: DirectoryInfo#<<() is now an alias for  DirectoryInfo#push()
+
+- Change: DirectoryInfo#each() and DirectoryInfo#each_by() now return self
+instead of nil, I think this is more rubyish.
+
+- New: Date#to_time() - converts a Date, and maybe a DateTime, to a Time
+
+- New: Icalendar#protocol()
+
+- New: Icalendar::Address
+
+- New: Icalendar::Vevent#organizer()/attendees(), which return an
+Icalendar::Address
+
+- New: An array of all the values of fields named name, converted to text,
+using Field.to_text().
+
+
+0.7 - 2004-03-21
+
+- Bug fixes, not all files were requiring vpim.rb, which had the definition of
+the invalid encoding error.
+
+- Implemented much requested feature: ignore empty lines in input. This is an
+invalid encoding, but I'm tired of fighting it.
+
+
+0.6 - 2004-03-20
+
+WARNING: major API renamings!
+
+- Replaced the Vpim::Errors::*Error exception classes with a single exception
+class: Vpim::InvalidEncodingError. That, and a message, is all I really need.
+I don't think people need different classes for different types of encoding
+errors, either the library can decode it for them, or it can't.
+
+- Renamed project to "vpim" (to reflect vCard and vCalendar/iCalendar support),
+renamed top-level Rfc2425 module to Vpim, split vard.rb into multiple files.
+
+- Add support for iCalendar (RFC2445), see vpim/icalendar.rb. Currently only
+supports VEVENT, no VTODO or VALARM yet, but is useable to print my upcoming
+iCal events.
+
+- Implemented the iCalendar recurrence rules mini-language, which is possibly
+of more general use than just for iCalendar.
+
+- Fixed bug in time decoding where usec would be nil instead of zero when no
+usec were present in the time value.
+
+- Field#to_time now assumes that time is in local time, unless the timezone is
+"Z", meaning UTC.
+
+- Field#to_text - new method, unescapes newlines, commas, and escape
+characters.
+
+- Field#field(name) - new method, returns the first field named +name+.
+
+
+0.5 - 3003-11-23
+
+- ab-query.rb - short option for --me was mistyped as -v, instead of -m.
+
+- mutt_ab_query.rb - added a --pipe option, so that the output of an other
+script can be directly queried.
+
+- New method: Rfc2425.version
+
+- Decode vCard 2.1 abbreviated parameters (ones where the name of the parameter
+is missing, only the value is present, which only works for type and encoding).
+
+- Vcard.decode() now support UCS-2 encoded vCards, by translating anything that
+looks like UCS-2 to UTF-8 before decoding.
+
+0.4 - 2003-04-14
+
+- More support for decoding date, time, and date-time values.
+
+- New method Field#to_time().
+
+- Can pass an IO object to decode APIs, its entire contents is read as a
+string.
+
+- Field#group?() now considers nil as equivalent to no group, so you can use
+each_group(nil) to iterate through all fields without a group.
+
+0.3 -
+
+- Added description of how to use mutt_ab_query.rb
+
+- Added support for querying the kind of a value, and began support for
+decoding date and time values.
+
+0.2 -
+
+- Supports encoding.
+
+- Supports accessing values using [].
+
+- No longer have methods return an Array, or nil if the array is zero length, I
+just return an Array.
+
+- mutt_ab_query.rb - an example of using vcard.rb to do lookups in the OS X
+Address Book from Mutt
+
+0.1 -
+
+- First release.
+

@@ -1,0 +1,12 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Roberts;Sam;;;
+FN:Sam Roberts
+EMAIL;type=HOME;type=pref:sroberts@uniserve.com
+TEL;type=WORK;type=pref:905-501-3781
+TEL;type=FAX:905-907-4230
+TEL;type=HOME:416 535 5340
+ADR;type=HOME;type=pref:;;276 Westmoreland Ave.;Toronto;ON;M6H 3A5;Canada
+NOTE:CATEGORIES: Amis/Famille
+BDAY;value=date:1970-07-14
+END:VCARD

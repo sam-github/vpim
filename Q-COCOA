@@ -1,0 +1,12 @@
++ ABPerson.h documents ABPerson.properties and ABPerson.typeOfProperty, but I can't call them!
+
+[ensemble] ~/p/ruby/vcard $ irb -r osx/addressbook
+irb(main):001:0> OSX::ABAddressBook.sharedAddressBook.me
+#<OSX::ABPerson:0xade6a class='ABPerson' id=0x30ff50>
+irb(main):002:0> OSX::ABAddressBook.sharedAddressBook.me.properties
+OSX::OCMessageSendException: ABPerson#properties - methodSignature is nil.
+  from /Library/Frameworks/RubyCocoa.framework/Versions/A/Resources/ruby/osx/objc/oc_wrapper.rb:17:in `ocm_send'
+  from /Library/Frameworks/RubyCocoa.framework/Versions/A/Resources/ruby/osx/objc/oc_wrapper.rb:17:in `method_missing'
+  from (irb):2
+
+

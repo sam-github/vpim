@@ -1,0 +1,3489 @@
+From efung@acm.org Mon Mar  1 19:47:02 2004
+Return-path: <efung@acm.org>
+Envelope-to: sroberts@uniserve.com
+Received: from mx4.uniserve.ca ([216.113.192.45])
+	by mail-host.uniserve.ca with esmtp (Exim 4.22)
+	id 1Axy3q-00040j-FR
+	for sroberts@uniserve.com; Mon, 01 Mar 2004 16:47:02 -0800
+Received: from modusmail.ica.net ([209.151.129.162])
+	by mx4.uniserve.ca with esmtp (Exim 4.22)
+	id 1Axy3p-0009IY-Qk
+	for sroberts@uniserve.com; Mon, 01 Mar 2004 16:47:01 -0800
+Received: from acm.org (unverified [209.151.140.150]) by modusmail.ica.net
+ (Vircom SMTPRS 3.0.273) with ESMTP id <B0099487199@modusmail.ica.net> for <sroberts@uniserve.com>;
+ Mon, 1 Mar 2004 19:55:31 -0500
+Date: Mon, 1 Mar 2004 19:46:46 -0500
+Mime-Version: 1.0 (Apple Message framework v553)
+Content-Type: multipart/mixed; boundary=Apple-Mail-1--1050525194
+Subject: iCal event invitation: Dinner Party
+From: Eric Fung <efung@acm.org>
+To: Sam Roberts <sroberts@uniserve.com>
+Message-Id: <15082950-6BE3-11D8-B5CE-000393D6D9A2@acm.org>
+X-Mailer: Apple Mail (2.553)
+X-Scanner: OK. Scanned.
+Status: RO
+Content-Length: 1674
+Lines: 39
+
+
+--Apple-Mail-1--1050525194
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+	charset=US-ASCII;
+	format=flowed
+
+Eric Fung has invited you to the iCal event: Dinner Party, scheduled 
+for Saturday, March 6, 2004 at 6:00 PM (Canada/Eastern). To accept or 
+decline this invitation, click the link below.
+
+--Apple-Mail-1--1050525194
+Content-Disposition: attachment;
+	filename=iCal.ics
+Content-Transfer-Encoding: quoted-printable
+Content-Type: application/octet-stream;
+	x-unix-mode=0644;
+	name="iCal.ics"
+
+BEGIN:VCALENDAR=0D=0ACALSCALE:GREGORIAN=0D=0APRODID:-//Apple=20=
+Computer\,=20Inc//iCal=201.5//EN=0D=0AVERSION:2.0=0D=0AMETHOD:REQUEST=0D=0A=
+BEGIN:VTIMEZONE=0D=0ALAST-MODIFIED:20040302T004645Z=0D=0A=
+TZID:Canada/Eastern=0D=0ABEGIN:STANDARD=0D=0ADTSTART:20031026T060000=0D=0A=
+TZOFFSETTO:-0500=0D=0ATZNAME:EST=0D=0ATZOFFSETFROM:+0000=0D=0A=
+END:STANDARD=0D=0ABEGIN:DAYLIGHT=0D=0ADTSTART:20040404T010000=0D=0A=
+TZOFFSETTO:-0400=0D=0ATZNAME:EDT=0D=0ATZOFFSETFROM:-0500=0D=0A=
+END:DAYLIGHT=0D=0AEND:VTIMEZONE=0D=0ABEGIN:VEVENT=0D=0ASEQUENCE:12=0D=0A=
+ATTENDEE;CN=3D"Sam=20Roberts":mailto:sroberts@uniserve.com=0D=0A=
+ATTENDEE;CN=3D"Hans=20Oh":mailto:hans.oh@utoronto.ca=0D=0A=
+ATTENDEE;CN=3D"Andrew=20Martin":mailto:doctamartin@yahoo.ca=0D=0A=
+DTSTART;TZID=3DCanada/Eastern:20040306T180000=0D=0A=
+DTSTAMP:20040228T025404Z=0D=0ASUMMARY:Dinner=20Party=0D=0A=
+X-WR-ATTENDEE;CN=3D"Valentina=20Rodriguez":invalid:nomail=0D=0A=
+UID:479EBE72-5B03-11D8-81DF-000393D6D9A2=0D=0ASTATUS:CONFIRMED=0D=0A=
+DTEND;TZID=3DCanada/Eastern:20040306T210000=0D=0AORGANIZER;CN=3D"Eric=20=
+Fung":mailto:aa152@hwcn.org=0D=0AEND:VEVENT=0D=0AEND:VCALENDAR=0D=0A=
+
+--Apple-Mail-1--1050525194--
+
+
+From sroberts@certicom.com Fri Mar 19 16:57:26 2004
+Return-path: <sroberts@certicom.com>
+Envelope-to: sroberts@uniserve.com
+Received: from mx2.uniserve.ca ([216.113.192.43])
+	by mail-host.uniserve.ca with esmtp (Exim 4.22)
+	id 1B4Rza-000PTH-9N
+	for sroberts@uniserve.com; Fri, 19 Mar 2004 13:57:26 -0800
+Received: from ns.ca.certicom.com ([66.48.18.197] helo=mail.ca.certicom.com)
+	by mx2.uniserve.ca with esmtp (Exim 4.22)
+	id 1B4RzZ-000HzL-JZ
+	for sroberts@uniserve.com; Fri, 19 Mar 2004 13:57:25 -0800
+Received: from spamfilter.certicom.com (storm [127.0.0.1])
+	by mail.ca.certicom.com (Postfix) with ESMTP id CF5271028B
+	for <sroberts@uniserve.com>; Fri, 19 Mar 2004 16:57:22 -0500 (EST)
+Received: from mail.ca.certicom.com ([127.0.0.1])
+ by spamfilter.certicom.com (storm [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 08576-56 for <sroberts@uniserve.com>;
+ Fri, 19 Mar 2004 16:57:10 -0500 (EST)
+Received: from certicom1.certicom.com (domino1.certicom.com [10.0.1.24])
+	by mail.ca.certicom.com (Postfix) with ESMTP id E84AD10218
+	for <sroberts@uniserve.com>; Fri, 19 Mar 2004 16:57:09 -0500 (EST)
+Received: from sroberts ([10.0.2.195])
+          by certicom1.certicom.com (Lotus Domino Release 6.0.1)
+          with ESMTP id 2004031916512674-14144 ;
+          Fri, 19 Mar 2004 16:51:26 -0500 
+Received: from domino1.certicom.com [10.0.1.24]
+	by localhost with POP3 (fetchmail-6.2.5)
+	for sroberts@localhost (single-drop); Fri, 19 Mar 2004 15:56:37 -0500 (EST)
+X-Notes-Item: 1;
+ name=$PublicAccess
+X-Notes-Item: ;
+ flags=2; name=Notes
+X-Notes-Item: CN=Gary Pope/O=Certicom;
+ name=$AltPrincipal
+X-Notes-Item: ;
+ name=$LangPrincipal
+X-Notes-Item: 1;
+ name=$SMTPKeepNotesItems
+X-Notes-Item: 1;
+ name=WebDateTimeInit
+X-Notes-Item: Thu, 15 Apr 2004 13:00:00 -0700;
+ type=400; name=$NoPurge
+X-Notes-Item: Send Request by Notes Client on Gary Pope/Certicom(Release 6.0.1|February
+ 07,
+	2003) at 03/19/2004 12:58:02 PM,
+		Prepare Request by Notes Client on Gary Pope/Certicom(Release 6.0.1|February
+ 07,
+	2003) at 03/19/2004 12:58:02 PM,
+		CS Notice converted to iCalendar format by POP3 Server on Certicom1/Certicom(Release
+ 6.0.1|February 07,
+	2003) at 03/19/2004 03:50:55 PM;
+ type=501; name=$CSTrack
+X-Notes-Item: Mike Harvey/Certicom@Certicom,
+		rgallant@emilpost.certicom.com,
+		Sam Roberts/Certicom@Certicom,
+		Tony Walters/Certicom@Certicom;
+ type=501; flags=44; name=REQUIREDATTENDEES
+X-Notes-Item: Mike Harvey/Certicom@Certicom,
+		rgallant@emilpost.certicom.com,
+		Sam Roberts/Certicom@Certicom,
+		Tony Walters/Certicom@Certicom;
+ type=501; flags=44; name=AltRequiredNames
+X-Notes-Item: .,
+		.,
+		.,
+		.;
+ type=501; flags=44; name=INetRequiredNames
+X-Notes-Item: .,
+		.,
+		.,
+		.;
+ type=501; flags=44; name=StorageRequiredNames
+X-Notes-Item: 1;
+ name=$HFFlags
+X-Notes-Item: 3;
+ name=$ExpandGroups
+X-Notes-Item: stdNotesLtr0;
+ name=Logo
+X-Notes-Item: ;
+ name=MailOptions
+X-Notes-Item: 0;
+ name=Sign
+X-Notes-Item: en-US;
+ name=$FromPreferredLanguage
+X-Notes-Item: ;
+ flags=44; name=OnlinePlace
+X-Notes-Item: ;
+ name=$LangChair
+X-Notes-Item: CN=Gary Pope/O=Certicom;
+ flags=44; name=AltChair
+X-Notes-Item: ;
+ name=Alarms
+Subject: Invitation: hjold intyel (Apr 15 12:00 PM PDT)
+X-Notes-Item: ;
+ name=OrganizerInclude
+X-Notes-Item: ;
+ name=Location
+X-Notes-Item: ;
+ name=OnlineMeeting
+X-Notes-Item: 1;
+ name=MeetingType
+X-Notes-Item: ;
+ flags=44; name=Presenters
+X-Notes-Item: ;
+ flags=44; name=OnlinePlaceToReserve
+X-Notes-Item: ;
+ name=AudioVideoFlags
+X-Notes-Item: ;
+ name=SendAttachments
+X-Notes-Item: 1;
+ name=SchedulerSwitcher
+X-Notes-Item: D2DCDC;
+ name=$BorderColor
+X-Notes-Item: CN=Mike Harvey/O=Certicom@Certicom,
+	.,
+	CN=Sam Roberts/O=Certicom@Certicom,
+	CN=Tony Walters/O=Certicom@Certicom;
+ type=501; name=OriginalTo
+X-Notes-Item: en;
+ type=501; name=$NameLanguageTags
+To: Mike Harvey <MHarvey@certicom.com>, rgallant@certicom.com,
+	Sam Roberts <SRoberts@certicom.com>,
+	Tony Walters <TWalters@certicom.com>
+X-Notes-Item: ;
+ flags=45; name=INetCopyTo
+X-Notes-Item: CN=Mike Harvey/O=Certicom@Certicom,
+		rgallant@emilpost.certicom.com,
+		CN=Sam Roberts/O=Certicom@Certicom,
+		Tony Walters/Certicom@Certicom;
+ type=501; flags=45; name=AltSendTo
+X-Notes-Item: ;
+ flags=45; name=AltCopyTo
+X-Notes-Item: .,
+		.,
+		.,
+		.;
+ type=501; name=$StorageTo
+X-Notes-Item: ;
+ name=$StorageCc
+X-Mailer: Lotus Notes Release 6.0.1 February 07, 2003
+Message-ID: <OF3E192040.63C93D23-ON88256E5C.006BF8D9-88256E5C.00732D9C@certicom.com>
+Date: Fri, 19 Mar 2004 12:50:45 -0800
+X-Notes-Item: ;
+ name=Encrypt
+X-Notes-Item: ;
+ name=FromCategories
+X-Notes-Item: ;
+ type=501; name=Categories
+X-Notes-Item: CN=Certicom1/O=Certicom;
+ type=501; flags=0; name=RouteServers
+X-Notes-Item: 19-Mar-2004 15:50:43 EST/19-Mar-2004 15:50:45 EST;
+ type=401; flags=0; name=RouteTimes
+X-Notes-Item: Fri, 19 Mar 2004 15:50:45 -0500;
+ type=400; name=DeliveredDate
+X-Notes-Item: 1;
+ name=$MiniView
+MIME-Version: 1.0
+X-Notes-Item: Memo;
+ name=Form
+From: Gary Pope <gpope@certicom.com>
+X-MIMETrack: Serialize by POP3 Server on Certicom1/Certicom(Release 6.0.1|February 07, 2003) at
+ 03/19/2004 03:50:55 PM,
+	Serialize complete at 03/19/2004 03:50:55 PM,
+	Itemize by SMTP Server on Certicom1/Certicom(Release 6.0.1|February 07, 2003) at
+ 03/19/2004 04:51:26 PM,
+	Serialize by Router on Certicom1/Certicom(Release 6.0.1|February 07, 2003) at
+ 03/19/2004 04:51:27 PM
+X-Spam: NO
+X-Spam-Rating: 78
+Resent-From: Sam Roberts <sroberts@certicom.com>
+Resent-Date: Fri, 19 Mar 2004 16:57:08 -0500
+Resent-To: Sam <sroberts@uniserve.com>
+X-Notes-Item: 1;
+ name=$NoteContainsIcal
+X-Notes-Item: ;
+ name=RoutingState
+X-Notes-Item: ;
+ name=DeadFailureReason
+X-Notes-Item: CN=Certicom1/O=Certicom;
+ type=501; flags=44; name=$UpdatedBy
+X-Notes-Item: 19-Mar-2004 16:51:26 EST;
+ type=401; name=$Revisions
+X-Notes-Item: 0;
+ name=$MsgTrackFlags
+X-Notes-Item: certicom.com;
+ name=FromDomain
+X-Notes-Item: 22;
+ type=300; name=$Hops
+X-Notes-Item: 1;
+ name=$NoteHasNativeMIME
+X-Notes-Item: CN=Gary Pope/O=Certicom;
+ name=OriginalFrom
+Content-Type: multipart/mixed; boundary="=_mixed 007286BC85256E5C_="
+Resent-Message-Id: <20040319215709.E84AD10218@mail.ca.certicom.com>
+X-Scanner: OK. Scanned.
+Status: RO
+Content-Length: 23337
+Lines: 566
+
+
+--=_mixed 007286BC85256E5C_=
+Content-Type: multipart/related; boundary="=_related 007286BC85256E5C_="
+
+
+--=_related 007286BC85256E5C_=
+Content-Type: multipart/alternative; boundary="=_alternative 007286BC85256E5C_="
+
+
+--=_alternative 007286BC85256E5C_=
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+
+
+                                                         
+                                                         
+                                                         
+                                                         
+                                                         
+   Calendar Entry                                        
+                                                         
+                                                         
+                                                         
+                                                         
+                                                         
+ ----------------------------------------------------------------------=
+------------- 
+                                                                       =
+              
+                                                                       =
+              
+    Subject                                         Chair              =
+              
+                                                                       =
+              
+                                                                       =
+              
+             hjold intyel                                     Gary Pope=
+/Certicom     
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                    Invitees           =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+              Date                                  Required (to)      =
+              
+                     04/15/2004                               Mike     =
+              
+                                                              Harvey/Ce=
+rticom@Cert   
+                                                              icom,    =
+              
+              Time                                            rgallant@=
+emilpost.ce   
+                   03:00 PM - 04:00 PM   (1                   rticom.co=
+m, Sam        
+                   hour)                                      Roberts/C=
+erticom@Cer   
+                                                              ticom, To=
+ny            
+                                                              Walters/C=
+erticom@Cer   
+                                                              ticom    =
+              
+             Show time zone details                                    =
+              
+                  This meeting occurs in a                             =
+              
+                  different time zone               Optional (cc)      =
+              
+              Proposed start                                           =
+              
+                         -1    at                                      =
+              
+                                                                       =
+              
+                                                                       =
+              
+              Proposed end                                             =
+              
+                                                                       =
+              
+                         -1    at                                      =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+              Original start                                           =
+              
+                           04/15/2004  at  12:00                       =
+              
+                         PM PDT                                        =
+              
+                                                                       =
+              
+                                                                       =
+              
+              Original end                                             =
+              
+                           04/15/2004  at  01:00                       =
+              
+                         PM PDT                                        =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+             Show time zone details                                    =
+              
+                         This meeting occurs in                        =
+              
+                         a different time zone                         =
+              
+                                                                       =
+              
+                                                                       =
+              
+
+
+
+                                                         
+                                                         
+                                                         
+                                                         
+                                                         
+
+
+
+
+
+
+
+=
+
+--=_alternative 007286BC85256E5C_=
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=US-ASCII
+Content-Disposition: inline
+
+<html><body>
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"12" alt=3D""><br>
+</td><td width=3D"100%" valign=3D"middle"><img src=3D"cid:10__=3D07BBE4=
+CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"=
+1" alt=3D""><br>
+</td><td width=3D"1%" valign=3D"middle"><img src=3D"cid:10__=3D07BBE4CF=
+DFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"12=
+" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"12" alt=3D""><br>
+</td><td width=3D"100%" valign=3D"middle"><img src=3D"cid:10__=3D07BBE4=
+CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"=
+1" alt=3D""><br>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"100%" valign=3D"middle"><font size=3D"2=
+" color=3D"#4B6A85">Calendar Entry</font><br>
+</td></tr>
+</table>
+</td><td width=3D"1%" valign=3D"middle"><img src=3D"cid:10__=3D07BBE4CF=
+DFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"12=
+" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"12" alt=3D""><br>
+</td><td width=3D"100%" valign=3D"middle"><img src=3D"cid:10__=3D07BBE4=
+CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"=
+1" alt=3D""><br>
+</td><td width=3D"1%" valign=3D"middle"><img src=3D"cid:10__=3D07BBE4CF=
+DFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"12=
+" alt=3D""><br>
+</td></tr>
+</table>
+
+<table width=3D"100%" border=3D"1">
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#FFFFFF" valign=3D"middl=
+e"><img src=3D"cid:10__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"12" alt=3D""><br>
+</td><td width=3D"59%" bgcolor=3D"#FFFFFF"><img src=3D"cid:10__=3D07BBE=
+4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+<img src=3D"cid:20__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" width=3D=
+"250" height=3D"1" alt=3D"">
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"77" alt=3D""><br>
+<b><font size=3D"2" color=3D"#4B6A85">Subject</font></b></td><td width=3D=
+"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D07B=
+BE4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+
+<table width=3D"100%" border=3D"1">
+<tr valign=3D"top"><td width=3D"100%" bgcolor=3D"#FFFFFF" valign=3D"mid=
+dle"><font size=3D"2">hjold intyel</font></td></tr>
+</table>
+</td></tr>
+</table>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"77" alt=3D""><br>
+<b><font size=3D"2" color=3D"#4B6A85">When</font></b></td><td width=3D"=
+100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D07BB=
+E4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+
+<table id=3D"WhenSwitcher" width=3D"100%" border=3D"0" cellspacing=3D"0=
+" cellpadding=3D"0">
+<tr valign=3D"top"><td width=3D"100%">
+<table width=3D"100%" border=3D"1">
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"38" alt=3D""><br>
+<font size=3D"2" color=3D"#4B6A85">Date</font></td><td width=3D"100%" b=
+gcolor=3D"#FFFFFF" valign=3D"middle"><img src=3D"cid:10__=3D07BBE4CFDFF=
+87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"1" al=
+t=3D""><br>
+<font size=3D"2">  04/15/2004</font></td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"38" alt=3D""><br>
+</td><td width=3D"100%" valign=3D"middle"><img src=3D"cid:10__=3D07BBE4=
+CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"=
+1" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"38" alt=3D""><br>
+<font size=3D"2" color=3D"#4B6A85">Time</font></td><td width=3D"100%" b=
+gcolor=3D"#FFFFFF" valign=3D"middle"><img src=3D"cid:10__=3D07BBE4CFDFF=
+87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"1" al=
+t=3D""><br>
+<font size=3D"2">03:00 PM - 04:00 PM   (1 hour)</font></td></tr>
+</table>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"38" alt=3D""><br>
+
+<map name=3D"n5C7D2.$$TempCDData.0.1E68">
+<area shape=3D"rect" coords=3D"0,0,27,13" id=3D"DefaultHotspot1_1" href=
+=3D"" onclick=3D"return _doClick('8525695B0053F888.3e19204063c93d238825=
+6e5c006bf8d9/$$TempCDData/0.1EDA', this, null)" alt=3D""></map>
+<img src=3D"cid:30__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" width=3D=
+"27" height=3D"13" alt=3D"Show time zone details" onmouseover=3D"if (th=
+is.well) this.src =3D this.well[1].src;" onmouseout=3D"if (this.well) t=
+his.src =3D this.well[0].src;" onload=3D"if(null=3D=3Dthis.well) domino=
+WellLoad(this, 'cid:40__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com', 2=
+);" usemap=3D"#n5C7D2.$$TempCDData.0.1E68" border=3D"0"></td><td width=3D=
+"100%" valign=3D"middle"><img src=3D"cid:10__=3D07BBE4CFDFF87E498f9e8a9=
+3df9@certicom.com" border=3D"0" height=3D"1" width=3D"1" alt=3D""><br>
+<font size=3D"2" color=3D"#4B6A85">This meeting occurs in a different t=
+ime zone</font></td></tr>
+</table>
+</td></tr>
+</table>
+</td></tr>
+</table>
+</td><td width=3D"0%" bgcolor=3D"#FFFFFF"><img src=3D"cid:10__=3D07BBE4=
+CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"=
+1" alt=3D""><br>
+</td><td width=3D"41%" bgcolor=3D"#FFFFFF"><img src=3D"cid:10__=3D07BBE=
+4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+<img src=3D"cid:50__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" width=3D=
+"250" height=3D"1" alt=3D"">
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+<b><font size=3D"2" color=3D"#4B6A85">Chair</font></b></td><td width=3D=
+"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D07B=
+BE4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"100%" valign=3D"middle"><font size=3D"2=
+">Gary Pope/Certicom</font></td></tr>
+</table>
+</td></tr>
+</table>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+<b><font size=3D"2" color=3D"#4B6A85">Invitees</font></b></td><td width=
+=3D"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D=
+07BBE4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"1" wid=
+th=3D"1" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+</td><td width=3D"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D=
+"cid:10__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" heig=
+ht=3D"1" width=3D"1" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+<font size=3D"2" color=3D"#4B6A85">Required (to)</font></td><td width=3D=
+"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D07B=
+BE4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+<font size=3D"2">Mike Harvey/Certicom@Certicom, rgallant@emilpost.certi=
+com.com, Sam Roberts/Certicom@Certicom, Tony Walters/Certicom@Certicom<=
+/font></td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+</td><td width=3D"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D=
+"cid:10__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" heig=
+ht=3D"1" width=3D"1" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+<font size=3D"2" color=3D"#4B6A85">Optional (cc)</font></td><td width=3D=
+"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D07B=
+BE4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8"><img src=3D"cid=
+:10__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D=
+"1" width=3D"82" alt=3D""><br>
+</td><td width=3D"100%" bgcolor=3D"#E6EFF4"><img src=3D"cid:10__=3D07BB=
+E4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+</td></tr>
+</table>
+</td><td width=3D"0%" bgcolor=3D"#FFFFFF" valign=3D"middle"><img src=3D=
+"cid:10__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" heig=
+ht=3D"1" width=3D"1" alt=3D""><br>
+</td></tr>
+</table>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"0%"><img src=3D"cid:10__=3D07BBE4CFDFF8=
+7E498f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"1" alt=
+=3D""></td><td width=3D"100%"><img src=3D"cid:10__=3D07BBE4CFDFF87E498f=
+9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"1" alt=3D"">=
+<br>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"77" alt=3D""><br>
+</td><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middle"><img src=3D=
+"cid:10__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" heig=
+ht=3D"1" width=3D"24" alt=3D""><br>
+</td><td width=3D"100%" bgcolor=3D"#C8DEE8" valign=3D"middle"><img src=3D=
+"cid:10__=3D07BBE4CFDFF87E498f9e8a93df9@certicom.com" border=3D"0" heig=
+ht=3D"1" width=3D"1" alt=3D""><br>
+</td></tr>
+</table>
+</td><td width=3D"0%"><img src=3D"cid:10__=3D07BBE4CFDFF87E498f9e8a93df=
+9@certicom.com" border=3D"0" height=3D"1" width=3D"1" alt=3D""><br>
+</td></tr>
+</table>
+</body></html>=
+
+
+--=_alternative 007286BC85256E5C_=
+Content-Type: text/calendar; method="REQUEST"; charset="UTF-8"
+
+BEGIN:VCALENDAR
+X-LOTUS-CHARSET:UTF-8
+VERSION:2.0
+PRODID:-//Lotus Development Corporation//NONSGML Notes 6.0//EN
+METHOD:REQUEST
+BEGIN:VTIMEZONE
+TZID:Pacific
+BEGIN:STANDARD
+DTSTART:19501029T020000
+TZOFFSETFROM:-0700
+TZOFFSETTO:-0800
+RRULE:FREQ=YEARLY;BYMINUTE=0;BYHOUR=2;BYDAY=-1SU;BYMONTH=10
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:19500402T020000
+TZOFFSETFROM:-0800
+TZOFFSETTO:-0700
+RRULE:FREQ=YEARLY;BYMINUTE=0;BYHOUR=2;BYDAY=1SU;BYMONTH=4
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTART;TZID="Pacific":20040415T120000
+DTEND;TZID="Pacific":20040415T130000
+TRANSP:OPAQUE
+DTSTAMP:20040319T205045Z
+SEQUENCE:0
+ATTENDEE;ROLE=CHAIR;PARTSTAT=ACCEPTED;CN="Gary Pope/Certicom"
+ ;RSVP=FALSE:mailto:gpope@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Mike Harvey/Certicom";RSVP=TRUE:mailto:MHarvey@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE
+ :mailto:rgallant@emilpost.certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Sam Roberts/Certicom";RSVP=TRUE:mailto:SRoberts@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Tony Walters/Certicom";RSVP=TRUE:mailto:TWalters@certicom.com
+CLASS:PUBLIC
+SUMMARY:hjold intyel
+ORGANIZER;CN="Gary Pope/Certicom":mailto:gpope@certicom.com
+UID:3E19204063C93D2388256E5C006BF8D9-Lotus_Notes_Generated
+X-LOTUS-BROADCAST:FALSE
+X-LOTUS-UPDATE-SEQ:1
+X-LOTUS-UPDATE-WISL:$S:1;$L:1;$B:1;$R:1;$E:1
+X-LOTUS-NOTESVERSION:2
+X-LOTUS-NOTICETYPE:I
+X-LOTUS-CHILD_UID:3E19204063C93D2388256E5C006BF8D9
+END:VEVENT
+END:VCALENDAR
+
+--=_alternative 007286BC85256E5C_=--
+--=_related 007286BC85256E5C_=
+Content-Type: image/gif; name=ecblank.gif
+Content-Disposition: inline; filename=ecblank.gif
+Content-ID: <10__=07BBE4CFDFF87E498f9e8a93df9@certicom.com>
+Content-Transfer-Encoding: base64
+
+R0lGODlhEAABAIAAAAAAAP///yH5BAEAAAEALAAAAAAQAAEAAAIEjI8ZBQA7
+
+--=_related 007286BC85256E5C_=
+Content-Type: image/gif; name=pic29808.gif
+Content-Disposition: inline; filename=pic29808.gif
+Content-ID: <20__=07BBE4CFDFF87E498f9e8a93df9@certicom.com>
+Content-Transfer-Encoding: base64
+
+R0lGODlh+gABAID/AMDAwAAAACH5BAEAAAAALAAAAAD6AAEAAAINhI+py+0Po5y02ovzLQA7
+
+--=_related 007286BC85256E5C_=
+Content-Type: image/gif; name=pic15586.gif
+Content-Disposition: inline; filename=pic15586.gif
+Content-ID: <30__=07BBE4CFDFF87E498f9e8a93df9@certicom.com>
+Content-Transfer-Encoding: base64
+
+R0lGODlhNwANAKL/AOfu9Y+is7jN14auv6zK16PAzMDAwAAAACH5BAEAAAYALAAAAAA3AA0AQAOn
+aGrUIysqIKsq+FkVaG3EIIpgIwFCGkhYMYotJgUYHYGDE75nKniL1iDj4kVoNeCttDEom7FBc4p7
+iSC9ZzBj1cwKHUnVGiL0fL9t0eoqfFthRWnH7K0ssWKsErBZxiMWAFoRQlYWfYQOLwKBZ4RcI2t8
+SUs6i44LKD5KUYaZHDFxgCQgZyqFkZItb2BuCyUjdRGbdyyfe19+YrE5ZhUAtnhRQ69fFgkAOw==
+
+--=_related 007286BC85256E5C_=
+Content-Type: image/gif; name=pic02229.gif
+Content-Disposition: inline; filename=pic02229.gif
+Content-ID: <40__=07BBE4CFDFF87E498f9e8a93df9@certicom.com>
+Content-Transfer-Encoding: base64
+
+R0lGODlhNwANAKL/AOfu9Y+is7jN14auv6zK16PAzMDAwAAAACH5BAEAAAYALAAAAAA3AA0AQAOn
+aGrUIysqIKsq+FkVaG3EIIpgIwFCGkhYMYotJgUYHYGDE75nKniL1iDj4kVoNeCttDEom7FBc4p7
+iSC9ZzBj1cwKHUnVGiL0fL9t0eoqfFthRWnH7K0ssWKsErBZxiMWAFoRQlYWfYQOLwKBZ4RcI2t8
+SUs6i44LKD5KUYaZHDFxgCQgZyqFkZItb2BuCyUjdRGbdyyfe19+YrE5ZhUAtnhRQ69fFgkAOw==
+
+--=_related 007286BC85256E5C_=
+Content-Type: image/gif; name=pic09267.gif
+Content-Disposition: inline; filename=pic09267.gif
+Content-ID: <50__=07BBE4CFDFF87E498f9e8a93df9@certicom.com>
+Content-Transfer-Encoding: base64
+
+R0lGODlh+gABAID/AMDAwAAAACH5BAEAAAAALAAAAAD6AAEAAAINhI+py+0Po5y02ovzLQA7
+
+--=_related 007286BC85256E5C_=--
+--=_mixed 007286BC85256E5C_=
+Content-Type: text/calendar; method="REQUEST"; charset="UTF-8"; name="c155055.ics"
+Content-Disposition: attachment; filename="c155055.ics"
+
+BEGIN:VCALENDAR
+X-LOTUS-CHARSET:UTF-8
+VERSION:2.0
+PRODID:-//Lotus Development Corporation//NONSGML Notes 6.0//EN
+METHOD:REQUEST
+BEGIN:VTIMEZONE
+TZID:Pacific
+BEGIN:STANDARD
+DTSTART:19501029T020000
+TZOFFSETFROM:-0700
+TZOFFSETTO:-0800
+RRULE:FREQ=YEARLY;BYMINUTE=0;BYHOUR=2;BYDAY=-1SU;BYMONTH=10
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:19500402T020000
+TZOFFSETFROM:-0800
+TZOFFSETTO:-0700
+RRULE:FREQ=YEARLY;BYMINUTE=0;BYHOUR=2;BYDAY=1SU;BYMONTH=4
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTART;TZID="Pacific":20040415T120000
+DTEND;TZID="Pacific":20040415T130000
+TRANSP:OPAQUE
+DTSTAMP:20040319T205045Z
+SEQUENCE:0
+ATTENDEE;ROLE=CHAIR;PARTSTAT=ACCEPTED;CN="Gary Pope/Certicom"
+ ;RSVP=FALSE:mailto:gpope@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Mike Harvey/Certicom";RSVP=TRUE:mailto:MHarvey@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE
+ :mailto:rgallant@emilpost.certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Sam Roberts/Certicom";RSVP=TRUE:mailto:SRoberts@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Tony Walters/Certicom";RSVP=TRUE:mailto:TWalters@certicom.com
+CLASS:PUBLIC
+SUMMARY:hjold intyel
+ORGANIZER;CN="Gary Pope/Certicom":mailto:gpope@certicom.com
+UID:3E19204063C93D2388256E5C006BF8D9-Lotus_Notes_Generated
+X-LOTUS-BROADCAST:FALSE
+X-LOTUS-UPDATE-SEQ:1
+X-LOTUS-UPDATE-WISL:$S:1;$L:1;$B:1;$R:1;$E:1
+X-LOTUS-NOTESVERSION:2
+X-LOTUS-NOTICETYPE:I
+X-LOTUS-CHILD_UID:3E19204063C93D2388256E5C006BF8D9
+END:VEVENT
+END:VCALENDAR
+
+--=_mixed 007286BC85256E5C_=--
+
+From sroberts@uniserve.com Sun Mar 21 00:01:37 2004
+Return-path: <sroberts@uniserve.com>
+Envelope-to: sroberts@uniserve.com
+Received: from mx1.uniserve.ca ([216.113.192.42])
+	by mail-host.uniserve.ca with esmtp (Exim 4.22)
+	id 1B4v5d-000JfW-Gy
+	for sroberts@uniserve.com; Sat, 20 Mar 2004 21:01:37 -0800
+Received: from tomts20.bellnexxia.net ([209.226.175.74] helo=tomts20-srv.bellnexxia.net)
+	by mx1.uniserve.ca with esmtp (Exim 4.22)
+	id 1B4v5c-000KrJ-R4
+	for sroberts@uniserve.com; Sat, 20 Mar 2004 21:01:36 -0800
+Received: from ensemble.local ([64.229.81.82])
+          by tomts20-srv.bellnexxia.net
+          (InterMail vM.5.01.06.05 201-253-122-130-105-20030824) with ESMTP
+          id <20040321050135.LIUD7291.tomts20-srv.bellnexxia.net@ensemble.local>
+          for <sroberts@uniserve.com>; Sun, 21 Mar 2004 00:01:35 -0500
+Received: from uniserve.com (localhost [127.0.0.1])
+	by ensemble.local (8.12.9/8.12.6) with ESMTP id i2L51XH3011635
+	for <sroberts@uniserve.com>; Sun, 21 Mar 2004 00:01:33 -0500 (EST)
+Date: Sat, 20 Mar 2004 23:59:19 -0500
+Resent-Date: Sun, 21 Mar 2004 00:01:32 -0500
+Subject: Event accepted: hjold intyel
+Content-Type: multipart/mixed; boundary=Apple-Mail-3-606361441
+Mime-Version: 1.0 (Apple Message framework v553)
+From: Sam Roberts <sroberts@uniserve.com>
+To: Gary Pope/Certicom <gpope@certicom.com>
+Resent-To: sroberts@uniserve.com
+Resent-Message-Id: <8327D8E6-7AF4-11D8-9210-000393AD088C@uniserve.com>
+Resent-From: Sam Roberts <sroberts@uniserve.com>
+Message-Id: <D26E923B-7AF4-11D8-9210-000393AD088C@uniserve.com>
+X-Mailer: Apple Mail (2.553)
+X-Scanner: OK. Scanned.
+Status: RO
+Content-Length: 1393
+Lines: 36
+
+
+--Apple-Mail-3-606361441
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+	charset=US-ASCII;
+	format=flowed
+
+Sam Roberts has accepted your iCal event invitation to the event: hjold 
+intyel, scheduled for Thursday, April 15, 2004 at 12:00 PM ((null)).
+
+--Apple-Mail-3-606361441
+Content-Disposition: attachment;
+	filename=iCal.ics
+Content-Transfer-Encoding: quoted-printable
+Content-Type: application/octet-stream;
+	x-unix-mode=0644;
+	name="iCal.ics"
+
+BEGIN:VCALENDAR=0D=0ACALSCALE:GREGORIAN=0D=0APRODID:-//Apple=20=
+Computer\,=20Inc//iCal=201.5//EN=0D=0AVERSION:2.0=0D=0AMETHOD:REPLY=0D=0A=
+BEGIN:VEVENT=0D=0ASEQUENCE:0=0D=0A=
+X-LOTUS-UPDATE-WISL:$S:1\;$L:1\;$B:1\;$R:1\;$E:1=0D=0A=
+DTSTAMP:20040319T205045Z=0D=0AX-LOTUS-NOTICETYPE:I=0D=0A=
+DTSTART;TZID=3DPacific:20040415T120000=0D=0AX-LOTUS-BROADCAST:FALSE=0D=0A=
+UID:3E19204063C93D2388256E5C006BF8D9-Lotus_Notes_Generated=0D=0A=
+X-LOTUS-UPDATE-SEQ:1=0D=0AATTENDEE;CN=3D"Sam=20=
+Roberts/Certicom";PARTSTAT=3DACCEPTED;ROLE=3DREQ-PARTICIPAN=0D=0A=20=
+T;RSVP=3DTRUE:mailto:SRoberts@certicom.com=0D=0A=
+DTEND;TZID=3DPacific:20040415T130000=0D=0ASUMMARY:hjold=20intyel=0D=0A=
+X-LOTUS-NOTESVERSION:2=0D=0AORGANIZER;CN=3D"Gary=20=
+Pope/Certicom":mailto:gpope@certicom.com=0D=0ACLASS:PUBLIC=0D=0A=
+TRANSP:OPAQUE=0D=0AX-LOTUS-CHILDUID:3E19204063C93D2388256E5C006BF8D9=0D=0A=
+END:VEVENT=0D=0AEND:VCALENDAR=0D=0A=
+
+--Apple-Mail-3-606361441--
+
+
+From sroberts@certicom.com Thu May  6 11:34:21 2004
+Return-path: <sroberts@certicom.com>
+Envelope-to: sroberts@uniserve.com
+Received: from mx4.uniserve.ca ([216.113.192.45])
+	by mail-host.uniserve.ca with esmtp (Exim 4.22)
+	id 1BLktB-0006v4-Iw
+	for sroberts@uniserve.com; Thu, 06 May 2004 08:34:21 -0700
+Received: from ns.ca.certicom.com ([66.48.18.197] helo=mail.ca.certicom.com)
+	by mx4.uniserve.ca with esmtp (Exim 4.22)
+	id 1BLkt7-000Otd-Tx
+	for sroberts@uniserve.com; Thu, 06 May 2004 08:34:18 -0700
+Received: from spamfilter.certicom.com (storm [127.0.0.1])
+	by mail.ca.certicom.com (Postfix) with ESMTP id 5CC1510133
+	for <sroberts@uniserve.com>; Thu,  6 May 2004 11:34:16 -0400 (EDT)
+Received: from mail.ca.certicom.com ([127.0.0.1])
+ by spamfilter.certicom.com (storm [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 26367-11 for <sroberts@uniserve.com>;
+ Thu,  6 May 2004 11:34:03 -0400 (EDT)
+Received: from certicom1.certicom.com (domino1.certicom.com [10.0.1.24])
+	by mail.ca.certicom.com (Postfix) with ESMTP id 496EE10170
+	for <sroberts@uniserve.com>; Thu,  6 May 2004 11:34:03 -0400 (EDT)
+Received: from sroberts ([10.0.2.195])
+          by certicom1.certicom.com (Lotus Domino Release 6.0.1)
+          with ESMTP id 2004050611274880-1638 ;
+          Thu, 6 May 2004 11:27:48 -0400 
+Received: from domino1.certicom.com [10.0.1.24]
+	by localhost with POP3 (fetchmail-6.2.5)
+	for sroberts@localhost (single-drop); Thu, 06 May 2004 10:54:59 -0400 (EDT)
+X-Notes-Item: 1;
+ name=$PublicAccess
+X-Notes-Item: ;
+ flags=2; name=Notes
+X-Notes-Item: CN=Scott Perry/O=Certicom;
+ name=$AltPrincipal
+X-Notes-Item: ;
+ name=$LangPrincipal
+X-Notes-Item: 1;
+ name=$SMTPKeepNotesItems
+X-Notes-Item: 1;
+ name=WebDateTimeInit
+X-Notes-Item: Invite Rooms/Resources by Notes Client on Scott Perry/Certicom(Release
+ 6.0.1|February 07,
+	2003) at 05/06/2004 10:55:40 AM,
+		Send Request by Notes Client on Scott Perry/Certicom(Release 6.0.1|February
+ 07,
+	2003) at 05/06/2004 10:55:40 AM,
+		Prepare Request by Notes Client on Scott Perry/Certicom(Release 6.0.1|February
+ 07,
+	2003) at 05/06/2004 10:55:40 AM,
+		CS Notice converted to iCalendar format by POP3 Server on Certicom1/Certicom(Release
+ 6.0.1|February 07,
+	2003) at 05/06/2004 10:48:46 AM;
+ type=501; name=$CSTrack
+X-Notes-Item: Mon, 10 May 2004 12:00:00 -0400;
+ type=400; name=$NoPurge
+X-Notes-Item: Aman Sawrup/Certicom@Certicom,
+		Eric Fung/Certicom@Certicom,
+		Ettan Romm/Certicom@Certicom,
+		Mike Harvey/Certicom,
+		rlambert@emilpost.certicom.com,
+		Sam Roberts/Certicom@Certicom;
+ type=501; flags=44; name=REQUIREDATTENDEES
+X-Notes-Item: Aman Sawrup/Certicom@Certicom,
+		Eric Fung/Certicom@Certicom,
+		Ettan Romm/Certicom@Certicom,
+		Mike Harvey/Certicom,
+		rlambert@emilpost.certicom.com,
+		Sam Roberts/Certicom@Certicom;
+ type=501; flags=44; name=AltRequiredNames
+X-Notes-Item: ASawrup@certicom.com,
+		EFung@certicom.com,
+		ERomm@certicom.com,
+		.,
+		rlambert@certicom.com,
+		SRoberts@certicom.com;
+ type=501; flags=44; name=INetRequiredNames
+X-Notes-Item: 1,
+		1,
+		1,
+		.,
+		1,
+		1;
+ type=501; flags=44; name=StorageRequiredNames
+X-Notes-Item: 1;
+ name=$HFFlags
+X-Notes-Item: 3;
+ name=$ExpandGroups
+X-Notes-Item: StdNotesLtr0;
+ name=Logo
+X-Notes-Item: ;
+ name=MailOptions
+X-Notes-Item: 0;
+ name=Sign
+X-Notes-Item: en-US;
+ name=$FromPreferredLanguage
+X-Notes-Item: ;
+ flags=44; name=OnlinePlace
+X-Notes-Item: ;
+ name=$LangChair
+X-Notes-Item: CN=Scott Perry/O=Certicom;
+ flags=44; name=AltChair
+X-Notes-Item: 1;
+ name=Alarms
+Subject: Invitation: HULA design doc review (May 10 10:00 AM EDT in Classroom B/Mississauga
+ Office@Certicom)
+X-Notes-Item: ;
+ name=OrganizerInclude
+X-Notes-Item: ;
+ name=Location
+X-Notes-Item: ;
+ name=OnlineMeeting
+X-Notes-Item: 1;
+ name=MeetingType
+X-Notes-Item: ;
+ flags=44; name=Presenters
+X-Notes-Item: ;
+ flags=44; name=OnlinePlaceToReserve
+X-Notes-Item: ;
+ name=AudioVideoFlags
+X-Notes-Item: ;
+ name=SendAttachments
+X-Notes-Item: 1;
+ name=SchedulerSwitcher
+X-Notes-Item: D2DCDC;
+ name=$BorderColor
+X-Notes-Item: CN=Aman Sawrup/O=Certicom@Certicom,
+	CN=Eric Fung/O=Certicom@Certicom,
+	CN=Ettan Romm/O=Certicom@Certicom,
+	CN=Mike Harvey/O=Certicom,
+	.,
+	CN=Sam Roberts/O=Certicom@Certicom;
+ type=501; name=OriginalTo
+X-Notes-Item: en;
+ type=501; name=$NameLanguageTags
+To: Aman Sawrup <ASawrup@certicom.com>,
+	Eric Fung <EFung@certicom.com>, Ettan Romm <ERomm@certicom.com>,
+	Mike Harvey <MHarvey@certicom.com>, rlambert@certicom.com,
+	Sam Roberts <SRoberts@certicom.com>
+X-Notes-Item: ;
+ flags=45; name=INetCopyTo
+X-Notes-Item: Aman Sawrup/Certicom@Certicom,
+		CN=Eric Fung/O=Certicom@Certicom,
+		CN=Ettan Romm/O=Certicom@Certicom,
+		CN=Mike Harvey/O=Certicom,
+		rlambert@emilpost.certicom.com,
+		Sam Roberts/Certicom@Certicom;
+ type=501; flags=45; name=AltSendTo
+X-Notes-Item: ;
+ flags=45; name=AltCopyTo
+X-Notes-Item: 1,
+		.,
+		.,
+		.,
+		1,
+		1;
+ type=501; name=$StorageTo
+X-Notes-Item: ;
+ name=$StorageCc
+X-Mailer: Lotus Notes Release 6.0.1 February 07, 2003
+Message-ID: <OF9D86CC3C.2EE850EB-ON85256E8C.0050CFF2-85256E8C.00520090@certicom.com>
+Date: Thu, 6 May 2004 10:48:28 -0400
+X-Notes-Item: ;
+ name=Encrypt
+X-Notes-Item: ;
+ name=FromCategories
+X-Notes-Item: ;
+ type=501; name=Categories
+X-Notes-Item: CN=Certicom1/O=Certicom;
+ type=501; flags=0; name=RouteServers
+X-Notes-Item: 06-May-2004 10:48:29 EDT/06-May-2004 10:48:30 EDT;
+ type=401; flags=0; name=RouteTimes
+X-Notes-Item: Thu, 6 May 2004 10:48:30 -0400;
+ type=400; name=DeliveredDate
+X-Notes-Item: 1;
+ name=$MiniView
+MIME-Version: 1.0
+X-Notes-Item: Memo;
+ name=Form
+From: Scott Perry <SPerry@certicom.com>
+X-MIMETrack: Serialize by POP3 Server on Certicom1/Certicom(Release 6.0.1|February 07, 2003) at
+ 05/06/2004 10:48:46 AM,
+	Serialize complete at 05/06/2004 10:48:46 AM,
+	Itemize by SMTP Server on Certicom1/Certicom(Release 6.0.1|February 07, 2003) at
+ 05/06/2004 11:27:48 AM,
+	Serialize by Router on Certicom1/Certicom(Release 6.0.1|February 07, 2003) at
+ 05/06/2004 11:27:50 AM
+X-Spam: NO
+X-Spam-Rating: 80
+Resent-From: Sam Roberts <sroberts@certicom.com>
+Resent-Date: Thu, 6 May 2004 11:34:01 -0400
+Resent-To: Sam <sroberts@uniserve.com>
+X-Notes-Item: 1;
+ name=$NoteContainsIcal
+X-Notes-Item: ;
+ name=RoutingState
+X-Notes-Item: ;
+ name=DeadFailureReason
+X-Notes-Item: CN=Certicom1/O=Certicom;
+ type=501; flags=44; name=$UpdatedBy
+X-Notes-Item: 06-May-2004 11:27:48 EDT;
+ type=401; name=$Revisions
+X-Notes-Item: 0;
+ name=$MsgTrackFlags
+X-Notes-Item: certicom.com;
+ name=FromDomain
+X-Notes-Item: 22;
+ type=300; name=$Hops
+X-Notes-Item: 1;
+ name=$NoteHasNativeMIME
+X-Notes-Item: CN=Scott Perry/O=Certicom;
+ name=OriginalFrom
+Content-Type: multipart/mixed; boundary="=_mixed 00515E8585256E8C_="
+Resent-Message-Id: <20040506153403.496EE10170@mail.ca.certicom.com>
+X-Scanner: OK. Scanned.
+X-Uniserve-Spam-Score: 1.4 14 (+)
+X-Uniserve-Spam-Report: Spam detection software, running on this mail system has
+	identified this incoming email as possible spam.  An
+	analysis of the message is below.
+	Content analysis details:   (1.4 points)
+	pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	0.4 HTML_70_80             BODY: Message is 70% to 80% HTML
+	0.1 HTML_COMMENT_8BITS     BODY: HTML comment has 3 consecutive 8-bit chars
+	0.7 HTML_TAG_BALANCE_TABLE BODY: HTML is missing "table" close tags
+	0.2 HTML_MESSAGE           BODY: HTML included in message
+	0.1 HTML_FONTCOLOR_UNSAFE  BODY: HTML font color not in safe 6x6x6 palette
+Status: RO
+Content-Length: 25995
+Lines: 618
+
+
+--=_mixed 00515E8585256E8C_=
+Content-Type: multipart/related; boundary="=_related 00515E8585256E8C_="
+
+
+--=_related 00515E8585256E8C_=
+Content-Type: multipart/alternative; boundary="=_alternative 00515E8585256E8C_="
+
+
+--=_alternative 00515E8585256E8C_=
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+
+
+                                                         
+                                                         
+                                                         
+                                                         
+                                                         
+   Calendar Entry                                        
+                                                         
+                                                         
+                                                         
+                                                         
+                                                         
+ ----------------------------------------------------------------------=
+------------- 
+                                                                       =
+              
+                                                                       =
+              
+    Subject                                         Chair              =
+              
+                                                                       =
+              
+                                                                       =
+              
+             HULA design doc review                           Scott Per=
+ry/Certicom   
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                    Invitees           =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+              Date                                  Required (to)      =
+              
+                     05/10/2004                               Aman     =
+              
+                                                              Sawrup/Ce=
+rticom@Cert   
+                                                              icom, Eri=
+c             
+              Time                                            Fung/Cert=
+icom@Certic   
+                   10:00 AM - 12:00 PM   (2                   om, Ettan=
+              
+                   hours)                                     Romm/Cert=
+icom@Certic   
+                                                              om, Mike =
+              
+                                                              Harvey/Ce=
+rticom,       
+                                                              rlambert@=
+emilpost.ce   
+              Proposed start                                  rticom.co=
+m, Sam        
+                         -1    at                             Roberts/C=
+erticom@Cer   
+                                                              ticom    =
+              
+                                                                       =
+              
+              Proposed end                                             =
+              
+                                                    Optional (cc)      =
+              
+                         -1    at                                      =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+              Original start                                           =
+              
+                           05/10/2004  at  10:00                       =
+              
+                         AM                                            =
+              
+                                                                       =
+              
+                                                                       =
+              
+              Original end                                             =
+              
+                           05/10/2004  at  12:00                       =
+              
+                         PM                                            =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+    Where                                                              =
+              
+                                                                       =
+              
+                                                                       =
+              
+             Classroom B/Mississauga                                   =
+              
+             Office@Certicom                                           =
+              
+                                                                       =
+              
+                                                                       =
+              
+
+
+
+                                                         
+                                                         
+                                                         
+                                                         
+                                                         
+
+
+
+
+
+
+
+
+Agenda:
+
+-review the latest design doc
+-present a first draft of a schedule based upon this doc
+-discuss the next step (sign-off the doc or send it back to the drawing=
+
+board for another revision; start plotting out when to start the work)
+
+I had preferred to meet in the PM, however, both Mike & Ettan already
+appointments in the afternoon.  If the morning timings above are not
+sutiable, let me know now so we can find a better time.   Same goes if =
+you
+feel that Monday is too soon to absorb all the data.  I would rather no=
+t
+rush this process for the sake of simply getting it done.  If anyone ne=
+eds
+more time to review, then we will postpone the meeting until all are re=
+ady;
+within a reasonable timeframe.=
+
+--=_alternative 00515E8585256E8C_=
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=US-ASCII
+Content-Disposition: inline
+
+<html><body>
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"12" alt=3D""><br>
+</td><td width=3D"100%" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE4=
+1FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"=
+1" alt=3D""><br>
+</td><td width=3D"1%" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE41F=
+DFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"12=
+" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"12" alt=3D""><br>
+</td><td width=3D"100%" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE4=
+1FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"=
+1" alt=3D""><br>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"100%" valign=3D"middle"><font size=3D"2=
+" color=3D"#4B6A85">Calendar Entry</font><br>
+</td></tr>
+</table>
+</td><td width=3D"1%" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE41F=
+DFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"12=
+" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"12" alt=3D""><br>
+</td><td width=3D"100%" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE4=
+1FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"=
+1" alt=3D""><br>
+</td><td width=3D"1%" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE41F=
+DFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"12=
+" alt=3D""><br>
+</td></tr>
+</table>
+
+<table width=3D"100%" border=3D"1">
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#FFFFFF" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"12" alt=3D""><br>
+</td><td width=3D"59%" bgcolor=3D"#FFFFFF"><img src=3D"cid:10__=3D0ABBE=
+41FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+<img src=3D"cid:20__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" width=3D=
+"250" height=3D"1" alt=3D"">
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"77" alt=3D""><br>
+<b><font size=3D"2" color=3D"#4B6A85">Subject</font></b></td><td width=3D=
+"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D0AB=
+BE41FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+
+<table width=3D"100%" border=3D"1">
+<tr valign=3D"top"><td width=3D"100%" bgcolor=3D"#FFFFFF" valign=3D"mid=
+dle"><font size=3D"2">HULA design doc review</font></td></tr>
+</table>
+</td></tr>
+</table>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"77" alt=3D""><br>
+<b><font size=3D"2" color=3D"#4B6A85">When</font></b></td><td width=3D"=
+100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D0ABB=
+E41FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+
+<table id=3D"WhenSwitcher" width=3D"100%" border=3D"0" cellspacing=3D"0=
+" cellpadding=3D"0">
+<tr valign=3D"top"><td width=3D"100%">
+<table width=3D"100%" border=3D"1">
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"38" alt=3D""><br>
+<font size=3D"2" color=3D"#4B6A85">Date</font></td><td width=3D"100%" b=
+gcolor=3D"#FFFFFF" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE41FDFC=
+349628f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"1" al=
+t=3D""><br>
+<font size=3D"2">  05/10/2004</font></td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"38" alt=3D""><br>
+</td><td width=3D"100%" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE4=
+1FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"=
+1" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"38" alt=3D""><br>
+<font size=3D"2" color=3D"#4B6A85">Time</font></td><td width=3D"100%" b=
+gcolor=3D"#FFFFFF" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE41FDFC=
+349628f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"1" al=
+t=3D""><br>
+<font size=3D"2">10:00 AM - 12:00 PM   (2 hours)</font></td></tr>
+</table>
+</td></tr>
+</table>
+</td></tr>
+</table>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"77" alt=3D""><br>
+<b><font size=3D"2" color=3D"#4B6A85">Where</font></b></td><td width=3D=
+"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D0AB=
+BE41FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+
+<table width=3D"100%" border=3D"1">
+<tr valign=3D"top"><td width=3D"100%" bgcolor=3D"#FFFFFF" valign=3D"mid=
+dle"><font size=3D"2">Classroom B/Mississauga Office@Certicom</font></t=
+d></tr>
+</table>
+</td></tr>
+</table>
+</td><td width=3D"0%" bgcolor=3D"#FFFFFF"><img src=3D"cid:10__=3D0ABBE4=
+1FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"=
+1" alt=3D""><br>
+</td><td width=3D"41%" bgcolor=3D"#FFFFFF"><img src=3D"cid:10__=3D0ABBE=
+41FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+<img src=3D"cid:30__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" width=3D=
+"250" height=3D"1" alt=3D"">
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+<b><font size=3D"2" color=3D"#4B6A85">Chair</font></b></td><td width=3D=
+"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D0AB=
+BE41FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"100%" valign=3D"middle"><font size=3D"2=
+">Scott Perry/Certicom</font></td></tr>
+</table>
+</td></tr>
+</table>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+<b><font size=3D"2" color=3D"#4B6A85">Invitees</font></b></td><td width=
+=3D"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D=
+0ABBE41FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"1" wid=
+th=3D"1" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+</td><td width=3D"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D=
+"cid:10__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" border=3D"0" heig=
+ht=3D"1" width=3D"1" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+<font size=3D"2" color=3D"#4B6A85">Required (to)</font></td><td width=3D=
+"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D0AB=
+BE41FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+<font size=3D"2">Aman Sawrup/Certicom@Certicom, Eric Fung/Certicom@Cert=
+icom, Ettan Romm/Certicom@Certicom, Mike Harvey/Certicom, rlambert@emil=
+post.certicom.com, Sam Roberts/Certicom@Certicom</font></td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+</td><td width=3D"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D=
+"cid:10__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" border=3D"0" heig=
+ht=3D"1" width=3D"1" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+<font size=3D"2" color=3D"#4B6A85">Optional (cc)</font></td><td width=3D=
+"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D0AB=
+BE41FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8"><img src=3D"cid=
+:10__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D=
+"1" width=3D"82" alt=3D""><br>
+</td><td width=3D"100%" bgcolor=3D"#E6EFF4"><img src=3D"cid:10__=3D0ABB=
+E41FDFC349628f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+</td></tr>
+</table>
+</td><td width=3D"0%" bgcolor=3D"#FFFFFF" valign=3D"middle"><img src=3D=
+"cid:10__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" border=3D"0" heig=
+ht=3D"1" width=3D"1" alt=3D""><br>
+</td></tr>
+</table>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"0%"><img src=3D"cid:10__=3D0ABBE41FDFC3=
+49628f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"1" alt=
+=3D""></td><td width=3D"100%"><img src=3D"cid:10__=3D0ABBE41FDFC349628f=
+9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"1" alt=3D"">=
+<br>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"77" alt=3D""><br>
+</td><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middle"><img src=3D=
+"cid:10__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" border=3D"0" heig=
+ht=3D"1" width=3D"24" alt=3D""><br>
+</td><td width=3D"100%" bgcolor=3D"#C8DEE8" valign=3D"middle"><img src=3D=
+"cid:10__=3D0ABBE41FDFC349628f9e8a93df9@certicom.com" border=3D"0" heig=
+ht=3D"1" width=3D"1" alt=3D""><br>
+</td></tr>
+</table>
+</td><td width=3D"0%"><img src=3D"cid:10__=3D0ABBE41FDFC349628f9e8a93df=
+9@certicom.com" border=3D"0" height=3D"1" width=3D"1" alt=3D""><br>
+</td></tr>
+</table>
+<br>
+<font size=3D"2">Agenda:</font><br>
+<br>
+<font size=3D"2">-review the latest design doc</font><br>
+<font size=3D"2">-present a first draft of a schedule based upon this d=
+oc</font><br>
+<font size=3D"2">-discuss the next step (sign-off the doc or send it ba=
+ck to the drawing board for another revision; start plotting out when t=
+o start the work)</font><br>
+<br>
+<font size=3D"2">I had preferred to meet in the PM, however, both Mike =
+&amp; Ettan already appointments in the afternoon.  If the morning timi=
+ngs above are not sutiable, let me know now so we can find a better tim=
+e.   Same goes if you feel that Monday is too soon to absorb all the da=
+ta.  I would rather not rush this process for the sake of simply gettin=
+g it done.  If anyone needs more time to review, then we will postpone =
+the meeting until all are ready; within a reasonable timeframe.</font><=
+/body></html>=
+
+
+--=_alternative 00515E8585256E8C_=
+Content-Type: text/calendar; method="REQUEST"; charset="UTF-8"
+
+BEGIN:VCALENDAR
+X-LOTUS-CHARSET:UTF-8
+VERSION:2.0
+PRODID:-//Lotus Development Corporation//NONSGML Notes 6.0//EN
+METHOD:REQUEST
+BEGIN:VTIMEZONE
+TZID:Eastern
+BEGIN:STANDARD
+DTSTART:19501029T020000
+TZOFFSETFROM:-0400
+TZOFFSETTO:-0500
+RRULE:FREQ=YEARLY;BYMINUTE=0;BYHOUR=2;BYDAY=-1SU;BYMONTH=10
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:19500402T020000
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0400
+RRULE:FREQ=YEARLY;BYMINUTE=0;BYHOUR=2;BYDAY=1SU;BYMONTH=4
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTART;TZID="Eastern":20040510T100000
+DTEND;TZID="Eastern":20040510T120000
+TRANSP:OPAQUE
+DTSTAMP:20040506T144828Z
+SEQUENCE:0
+ATTENDEE;ROLE=CHAIR;PARTSTAT=ACCEPTED;CN="Scott Perry/Certicom"
+ ;RSVP=FALSE:mailto:SPerry@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Aman Sawrup/Certicom";RSVP=TRUE:mailto:ASawrup@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Eric Fung/Certicom";RSVP=TRUE:mailto:EFung@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Ettan Romm/Certicom";RSVP=TRUE:mailto:ERomm@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Mike Harvey/Certicom";RSVP=TRUE:mailto:MHarvey@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE
+ :mailto:rlambert@emilpost.certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Sam Roberts/Certicom";RSVP=TRUE:mailto:SRoberts@certicom.com
+ATTENDEE;CUTYPE=ROOM;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Classroom B/Mississauga Office";RSVP=TRUE
+ :mailto:Classroom_B/Mississauga_Office@certicom1.certicom.com
+CLASS:PUBLIC
+DESCRIPTION:Agenda
+ :\n\n-review the latest design doc\n-present a first draft of a schedu
+ le based upon this doc\n-discuss the next step (sign-off the doc or se
+ nd it back to the drawing board for another revision\; start plotting 
+ out when to start the work)\n\nI had preferred to meet in the PM\, how
+ ever\, both Mike & Ettan already appointments in the afternoon.  If th
+ e morning timings above are not sutiable\, let me know now so we can f
+ ind a better time.   Same goes if you feel that Monday is too soon to 
+ absorb all the data.  I would rather not rush this process for the sak
+ e of simply getting it done.  If anyone needs more time to review\, th
+ en we will postpone the meeting until all are ready\; within a reasona
+ ble timeframe.
+SUMMARY:HULA design doc review
+ORGANIZER;CN="Scott Perry/Certicom":mailto:SPerry@certicom.com
+UID:9D86CC3C2EE850EB85256E8C0050CFF2-Lotus_Notes_Generated
+X-LOTUS-BROADCAST:FALSE
+X-LOTUS-UPDATE-SEQ:1
+X-LOTUS-UPDATE-WISL:$S:1;$L:1;$B:1;$R:1;$E:1
+X-LOTUS-NOTESVERSION:2
+X-LOTUS-NOTICETYPE:I
+X-LOTUS-CHILD_UID:9D86CC3C2EE850EB85256E8C0050CFF2
+END:VEVENT
+END:VCALENDAR
+
+--=_alternative 00515E8585256E8C_=--
+--=_related 00515E8585256E8C_=
+Content-Type: image/gif; name=ecblank.gif
+Content-Disposition: inline; filename=ecblank.gif
+Content-ID: <10__=0ABBE41FDFC349628f9e8a93df9@certicom.com>
+Content-Transfer-Encoding: base64
+
+R0lGODlhEAABAIAAAAAAAP///yH5BAEAAAEALAAAAAAQAAEAAAIEjI8ZBQA7
+
+--=_related 00515E8585256E8C_=
+Content-Type: image/gif; name=pic20037.gif
+Content-Disposition: inline; filename=pic20037.gif
+Content-ID: <20__=0ABBE41FDFC349628f9e8a93df9@certicom.com>
+Content-Transfer-Encoding: base64
+
+R0lGODlh+gABAID/AMDAwAAAACH5BAEAAAAALAAAAAD6AAEAAAINhI+py+0Po5y02ovzLQA7
+
+--=_related 00515E8585256E8C_=
+Content-Type: image/gif; name=pic12859.gif
+Content-Disposition: inline; filename=pic12859.gif
+Content-ID: <30__=0ABBE41FDFC349628f9e8a93df9@certicom.com>
+Content-Transfer-Encoding: base64
+
+R0lGODlh+gABAID/AMDAwAAAACH5BAEAAAAALAAAAAD6AAEAAAINhI+py+0Po5y02ovzLQA7
+
+--=_related 00515E8585256E8C_=--
+--=_mixed 00515E8585256E8C_=
+Content-Type: text/calendar; method="REQUEST"; charset="UTF-8"; name="c104846.ics"
+Content-Disposition: attachment; filename="c104846.ics"
+
+BEGIN:VCALENDAR
+X-LOTUS-CHARSET:UTF-8
+VERSION:2.0
+PRODID:-//Lotus Development Corporation//NONSGML Notes 6.0//EN
+METHOD:REQUEST
+BEGIN:VTIMEZONE
+TZID:Eastern
+BEGIN:STANDARD
+DTSTART:19501029T020000
+TZOFFSETFROM:-0400
+TZOFFSETTO:-0500
+RRULE:FREQ=YEARLY;BYMINUTE=0;BYHOUR=2;BYDAY=-1SU;BYMONTH=10
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:19500402T020000
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0400
+RRULE:FREQ=YEARLY;BYMINUTE=0;BYHOUR=2;BYDAY=1SU;BYMONTH=4
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTART;TZID="Eastern":20040510T100000
+DTEND;TZID="Eastern":20040510T120000
+TRANSP:OPAQUE
+DTSTAMP:20040506T144828Z
+SEQUENCE:0
+ATTENDEE;ROLE=CHAIR;PARTSTAT=ACCEPTED;CN="Scott Perry/Certicom"
+ ;RSVP=FALSE:mailto:SPerry@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Aman Sawrup/Certicom";RSVP=TRUE:mailto:ASawrup@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Eric Fung/Certicom";RSVP=TRUE:mailto:EFung@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Ettan Romm/Certicom";RSVP=TRUE:mailto:ERomm@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Mike Harvey/Certicom";RSVP=TRUE:mailto:MHarvey@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE
+ :mailto:rlambert@emilpost.certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Sam Roberts/Certicom";RSVP=TRUE:mailto:SRoberts@certicom.com
+ATTENDEE;CUTYPE=ROOM;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Classroom B/Mississauga Office";RSVP=TRUE
+ :mailto:Classroom_B/Mississauga_Office@certicom1.certicom.com
+CLASS:PUBLIC
+DESCRIPTION:Agenda
+ :\n\n-review the latest design doc\n-present a first draft of a schedu
+ le based upon this doc\n-discuss the next step (sign-off the doc or se
+ nd it back to the drawing board for another revision\; start plotting 
+ out when to start the work)\n\nI had preferred to meet in the PM\, how
+ ever\, both Mike & Ettan already appointments in the afternoon.  If th
+ e morning timings above are not sutiable\, let me know now so we can f
+ ind a better time.   Same goes if you feel that Monday is too soon to 
+ absorb all the data.  I would rather not rush this process for the sak
+ e of simply getting it done.  If anyone needs more time to review\, th
+ en we will postpone the meeting until all are ready\; within a reasona
+ ble timeframe.
+SUMMARY:HULA design doc review
+ORGANIZER;CN="Scott Perry/Certicom":mailto:SPerry@certicom.com
+UID:9D86CC3C2EE850EB85256E8C0050CFF2-Lotus_Notes_Generated
+X-LOTUS-BROADCAST:FALSE
+X-LOTUS-UPDATE-SEQ:1
+X-LOTUS-UPDATE-WISL:$S:1;$L:1;$B:1;$R:1;$E:1
+X-LOTUS-NOTESVERSION:2
+X-LOTUS-NOTICETYPE:I
+X-LOTUS-CHILD_UID:9D86CC3C2EE850EB85256E8C0050CFF2
+END:VEVENT
+END:VCALENDAR
+
+--=_mixed 00515E8585256E8C_=--
+
+From sroberts@certicom.com Thu Jun  3 13:29:00 2004
+Return-path: <sroberts@certicom.com>
+Envelope-to: sroberts@uniserve.com
+Received: from mx3.uniserve.ca ([216.113.192.44])
+	by mail-host.uniserve.ca with esmtp (Exim 4.22)
+	id 1BVw1U-0006TW-5A
+	for sroberts@uniserve.com; Thu, 03 Jun 2004 10:29:00 -0700
+Received: from ns.ca.certicom.com ([66.48.18.197] helo=mail.ca.certicom.com)
+	by mx3.uniserve.ca with esmtp (Exim 4.22)
+	id 1BVw1Q-000Dtw-C7
+	for sroberts@uniserve.com; Thu, 03 Jun 2004 10:28:56 -0700
+Received: from spamfilter.certicom.com (storm [127.0.0.1])
+	by mail.ca.certicom.com (Postfix) with ESMTP id 1C638105FD
+	for <sroberts@uniserve.com>; Thu,  3 Jun 2004 13:28:54 -0400 (EDT)
+Received: from mail.ca.certicom.com ([127.0.0.1])
+ by spamfilter.certicom.com (storm [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 20553-57 for <sroberts@uniserve.com>;
+ Thu,  3 Jun 2004 13:28:40 -0400 (EDT)
+Received: from certicom1.certicom.com (domino1.certicom.com [10.0.1.24])
+	by mail.ca.certicom.com (Postfix) with ESMTP id 4902210773
+	for <sroberts@uniserve.com>; Thu,  3 Jun 2004 11:46:24 -0400 (EDT)
+Received: from sroberts ([10.0.2.195])
+          by certicom1.certicom.com (Lotus Domino Release 6.0.1)
+          with ESMTP id 2004060311400750-51941 ;
+          Thu, 3 Jun 2004 11:40:07 -0400 
+Received: from domino1.certicom.com [10.0.1.24]
+	by localhost with POP3 (fetchmail-6.2.5)
+	for sroberts@localhost (single-drop); Thu, 03 Jun 2004 11:22:23 -0400 (EDT)
+X-Notes-Item: 1;
+ name=$PublicAccess
+X-Notes-Item: ;
+ flags=2; name=Notes
+X-Notes-Item: CN=Scott Perry/O=Certicom;
+ name=$AltPrincipal
+X-Notes-Item: ;
+ name=$LangPrincipal
+X-Notes-Item: 1;
+ name=$SMTPKeepNotesItems
+X-Notes-Item: 1;
+ name=WebDateTimeInit
+X-Notes-Item: Invite Rooms/Resources by Notes Client on Scott Perry/Certicom(Release
+ 6.0.1|February 07,
+	2003) at 06/03/2004 11:23:49 AM,
+		Send Request by Notes Client on Scott Perry/Certicom(Release 6.0.1|February
+ 07,
+	2003) at 06/03/2004 11:23:49 AM,
+		Prepare Request by Notes Client on Scott Perry/Certicom(Release 6.0.1|February
+ 07,
+	2003) at 06/03/2004 11:23:49 AM,
+		CS Notice converted to iCalendar format by POP3 Server on Certicom1/Certicom(Release
+ 6.0.1|February 07,
+	2003) at 06/03/2004 11:15:55 AM;
+ type=501; name=$CSTrack
+X-Notes-Item: Mon, 7 Jun 2004 16:00:00 -0400;
+ type=400; name=$NoPurge
+X-Notes-Item: Aman Sawrup/Certicom@Certicom,
+		Eric Fung/Certicom@Certicom,
+		Ettan Romm/Certicom@Certicom,
+		Hugh Dagg/Certicom@Certicom,
+		James Zhou/Certicom@Certicom,
+		Mike Harvey/Certicom,
+		rlambert@emilpost.certicom.com,
+		Sam Roberts/Certicom@Certicom,
+		Tim Howie/Certicom@Certicom;
+ type=501; flags=44; name=REQUIREDATTENDEES
+X-Notes-Item: Aman Sawrup/Certicom@Certicom,
+		Eric Fung/Certicom@Certicom,
+		Ettan Romm/Certicom@Certicom,
+		Hugh Dagg/Certicom@Certicom,
+		James Zhou/Certicom@Certicom,
+		Mike Harvey/Certicom,
+		rlambert@emilpost.certicom.com,
+		Sam Roberts/Certicom@Certicom,
+		Tim Howie/Certicom@Certicom;
+ type=501; flags=44; name=AltRequiredNames
+X-Notes-Item: ASawrup@certicom.com,
+		EFung@certicom.com,
+		ERomm@certicom.com,
+		HDagg@certicom.com,
+		JZhou@certicom.com,
+		.,
+		rlambert@certicom.com,
+		SRoberts@certicom.com,
+		THowie@certicom.com;
+ type=501; flags=44; name=INetRequiredNames
+X-Notes-Item: 1,
+		1,
+		1,
+		1,
+		1,
+		.,
+		1,
+		1,
+		1;
+ type=501; flags=44; name=StorageRequiredNames
+X-Notes-Item: 1;
+ name=$HFFlags
+X-Notes-Item: 3;
+ name=$ExpandGroups
+X-Notes-Item: StdNotesLtr0;
+ name=Logo
+X-Notes-Item: ;
+ name=MailOptions
+X-Notes-Item: 0;
+ name=Sign
+X-Notes-Item: en-US;
+ name=$FromPreferredLanguage
+X-Notes-Item: ;
+ flags=44; name=OnlinePlace
+X-Notes-Item: ;
+ name=$LangChair
+X-Notes-Item: CN=Scott Perry/O=Certicom;
+ flags=44; name=AltChair
+X-Notes-Item: 1;
+ name=Alarms
+Subject: Invitation: Hula PM meeting (Jun 7 03:00 PM EDT in PoolRoom/Mississauga
+ Office@Certicom)
+X-Notes-Item: ;
+ name=OrganizerInclude
+X-Notes-Item: ;
+ name=Location
+X-Notes-Item: ;
+ name=OnlineMeeting
+X-Notes-Item: 1;
+ name=MeetingType
+X-Notes-Item: ;
+ flags=44; name=Presenters
+X-Notes-Item: ;
+ flags=44; name=OnlinePlaceToReserve
+X-Notes-Item: ;
+ name=AudioVideoFlags
+X-Notes-Item: ;
+ name=SendAttachments
+X-Notes-Item: 1;
+ name=SchedulerSwitcher
+X-Notes-Item: D2DCDC;
+ name=$BorderColor
+X-Notes-Item: CN=Aman Sawrup/O=Certicom@Certicom,
+	CN=Eric Fung/O=Certicom@Certicom,
+	CN=Ettan Romm/O=Certicom@Certicom,
+	CN=Hugh Dagg/O=Certicom@Certicom,
+	CN=James Zhou/O=Certicom@Certicom,
+	CN=Mike Harvey/O=Certicom,
+	.,
+	CN=Sam Roberts/O=Certicom@Certicom,
+	CN=Tim Howie/O=Certicom@Certicom;
+ type=501; name=OriginalTo
+X-Notes-Item: en;
+ type=501; name=$NameLanguageTags
+To: Aman Sawrup <ASawrup@certicom.com>,
+	Eric Fung <EFung@certicom.com>, Ettan Romm <ERomm@certicom.com>,
+	Hugh Dagg <HDagg@certicom.com>, James Zhou <JZhou@certicom.com>,
+	Mike Harvey <MHarvey@certicom.com>, rlambert@certicom.com,
+	Sam Roberts <SRoberts@certicom.com>, Tim Howie <THowie@certicom.com>
+X-Notes-Item: ;
+ flags=45; name=INetCopyTo
+X-Notes-Item: Aman Sawrup/Certicom@Certicom,
+		CN=Eric Fung/O=Certicom@Certicom,
+		CN=Ettan Romm/O=Certicom@Certicom,
+		CN=Hugh Dagg/O=Certicom@Certicom,
+		CN=James Zhou/O=Certicom@Certicom,
+		CN=Mike Harvey/O=Certicom,
+		rlambert@emilpost.certicom.com,
+		Sam Roberts/Certicom@Certicom,
+		CN=Tim Howie/O=Certicom@Certicom;
+ type=501; flags=45; name=AltSendTo
+X-Notes-Item: ;
+ flags=45; name=AltCopyTo
+X-Notes-Item: 1,
+		.,
+		.,
+		.,
+		.,
+		.,
+		1,
+		1,
+		.;
+ type=501; name=$StorageTo
+X-Notes-Item: ;
+ name=$StorageCc
+X-Mailer: Lotus Notes Release 6.0.1 February 07, 2003
+Message-ID: <OF6D43C230.7149A43E-ON85256EA8.0053A7FF-85256EA8.0054942D@certicom.com>
+Date: Thu, 3 Jun 2004 11:15:44 -0400
+X-Notes-Item: ;
+ name=Encrypt
+X-Notes-Item: P;
+ name=FromCategories
+X-Notes-Item: ;
+ type=501; name=Categories
+X-Notes-Item: CN=Certicom1/O=Certicom;
+ type=501; flags=0; name=RouteServers
+X-Notes-Item: 03-Jun-2004 11:15:45 EDT/03-Jun-2004 11:15:45 EDT;
+ type=401; flags=0; name=RouteTimes
+X-Notes-Item: Thu, 3 Jun 2004 11:15:45 -0400;
+ type=400; name=DeliveredDate
+X-Notes-Item: 1;
+ name=$MiniView
+MIME-Version: 1.0
+X-Notes-Item: Memo;
+ name=Form
+From: Scott Perry <SPerry@certicom.com>
+X-MIMETrack: Serialize by POP3 Server on Certicom1/Certicom(Release 6.0.1|February 07, 2003) at
+ 06/03/2004 11:15:55 AM,
+	Serialize complete at 06/03/2004 11:15:55 AM,
+	Itemize by SMTP Server on Certicom1/Certicom(Release 6.0.1|February 07, 2003) at
+ 06/03/2004 11:40:07 AM,
+	Serialize by Router on Certicom1/Certicom(Release 6.0.1|February 07, 2003) at
+ 06/03/2004 11:40:08 AM
+X-Spam: NO
+X-Spam-Rating: 75
+Resent-From: Sam Roberts <sroberts@certicom.com>
+Resent-Date: Thu, 3 Jun 2004 11:46:35 -0400
+Resent-To: Sam <sroberts@uniserve.com>
+X-Notes-Item: 1;
+ name=$NoteContainsIcal
+X-Notes-Item: ;
+ name=RoutingState
+X-Notes-Item: ;
+ name=DeadFailureReason
+X-Notes-Item: CN=Certicom1/O=Certicom;
+ type=501; flags=44; name=$UpdatedBy
+X-Notes-Item: 03-Jun-2004 11:40:07 EDT;
+ type=401; name=$Revisions
+X-Notes-Item: 0;
+ name=$MsgTrackFlags
+X-Notes-Item: certicom.com;
+ name=FromDomain
+X-Notes-Item: 22;
+ type=300; name=$Hops
+X-Notes-Item: 1;
+ name=$NoteHasNativeMIME
+X-Notes-Item: CN=Scott Perry/O=Certicom;
+ name=OriginalFrom
+Content-Type: multipart/mixed; boundary="=_mixed 0053DB1285256EA8_="
+Resent-Message-Id: <20040603154624.4902210773@mail.ca.certicom.com>
+X-Scanner: OK. Scanned.
+X-Uniserve-Spam-Score: 2.0 20 (++)
+X-Uniserve-Spam-Report: Spam detection software, running on this mail system has
+	identified this incoming email as possible spam.  An
+	analysis of the message is below.
+	Content analysis details:   (2.0 points)
+	pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	0.4 HTML_70_80             BODY: Message is 70% to 80% HTML
+	0.7 HTML_TAG_BALANCE_TABLE BODY: HTML is missing "table" close tags
+	0.2 HTML_MESSAGE           BODY: HTML included in message
+	0.1 HTML_FONTCOLOR_UNSAFE  BODY: HTML font color not in safe 6x6x6 palette
+	0.7 UPPERCASE_25_50        message body is 25-50% uppercase
+Status: RO
+Content-Length: 23628
+Lines: 572
+
+
+--=_mixed 0053DB1285256EA8_=
+Content-Type: multipart/related; boundary="=_related 0053DB1285256EA8_="
+
+
+--=_related 0053DB1285256EA8_=
+Content-Type: multipart/alternative; boundary="=_alternative 0053DB1285256EA8_="
+
+
+--=_alternative 0053DB1285256EA8_=
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+
+
+                                                         
+                                                         
+                                                         
+                                                         
+                                                         
+   Calendar Entry                                        
+                                                         
+                                                         
+                                                         
+                                                         
+                                                         
+ ----------------------------------------------------------------------=
+------------- 
+                                                                       =
+              
+                                                                       =
+              
+    Subject                                         Chair              =
+              
+                                                                       =
+              
+                                                                       =
+              
+             Hula PM meeting                                  Scott Per=
+ry/Certicom   
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                    Invitees           =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+              Date                                  Required (to)      =
+              
+                     06/07/2004                               Aman     =
+              
+                                                              Sawrup/Ce=
+rticom@Cert   
+                                                              icom, Eri=
+c             
+              Time                                            Fung/Cert=
+icom@Certic   
+                   03:00 PM - 04:00 PM   (1                   om, Ettan=
+              
+                   hour)                                      Romm/Cert=
+icom@Certic   
+                                                              om, Hugh =
+              
+                                                              Dagg/Cert=
+icom@Certic   
+                                                              om, James=
+              
+              Proposed start                                  Zhou/Cert=
+icom@Certic   
+                         -1    at                             om, Mike =
+              
+                                                              Harvey/Ce=
+rticom,       
+                                                              rlambert@=
+emilpost.ce   
+              Proposed end                                    rticom.co=
+m, Sam        
+                                                              Roberts/C=
+erticom@Cer   
+                         -1    at                             ticom, Ti=
+m             
+                                                              Howie/Cer=
+ticom@Certi   
+                                                              com      =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                    Optional (cc)      =
+              
+                                                                       =
+              
+              Original start                                           =
+              
+                           06/07/2004  at  03:00                       =
+              
+                         PM                                            =
+              
+                                                                       =
+              
+                                                                       =
+              
+              Original end                                             =
+              
+                           06/07/2004  at  04:00                       =
+              
+                         PM                                            =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+    Where                                                              =
+              
+                                                                       =
+              
+                                                                       =
+              
+             PoolRoom/Mississauga                                      =
+              
+             Office@Certicom                                           =
+              
+                                                                       =
+              
+                                                                       =
+              
+
+
+
+                                                         
+                                                         
+                                                         
+                                                         
+                                                         
+
+
+
+
+
+
+
+=
+
+--=_alternative 0053DB1285256EA8_=
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=US-ASCII
+Content-Disposition: inline
+
+<html><body>
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"12" alt=3D""><br>
+</td><td width=3D"100%" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE4=
+3BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"=
+1" alt=3D""><br>
+</td><td width=3D"1%" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE43B=
+DFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"12=
+" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"12" alt=3D""><br>
+</td><td width=3D"100%" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE4=
+3BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"=
+1" alt=3D""><br>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"100%" valign=3D"middle"><font size=3D"2=
+" color=3D"#4B6A85">Calendar Entry</font><br>
+</td></tr>
+</table>
+</td><td width=3D"1%" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE43B=
+DFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"12=
+" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"12" alt=3D""><br>
+</td><td width=3D"100%" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE4=
+3BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"=
+1" alt=3D""><br>
+</td><td width=3D"1%" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE43B=
+DFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"12=
+" alt=3D""><br>
+</td></tr>
+</table>
+
+<table width=3D"100%" border=3D"1">
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#FFFFFF" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"12" alt=3D""><br>
+</td><td width=3D"59%" bgcolor=3D"#FFFFFF"><img src=3D"cid:10__=3D0ABBE=
+43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+<img src=3D"cid:20__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" width=3D=
+"250" height=3D"1" alt=3D"">
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"77" alt=3D""><br>
+<b><font size=3D"2" color=3D"#4B6A85">Subject</font></b></td><td width=3D=
+"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D0AB=
+BE43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+
+<table width=3D"100%" border=3D"1">
+<tr valign=3D"top"><td width=3D"100%" bgcolor=3D"#FFFFFF" valign=3D"mid=
+dle"><font size=3D"2">Hula PM meeting</font></td></tr>
+</table>
+</td></tr>
+</table>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"77" alt=3D""><br>
+<b><font size=3D"2" color=3D"#4B6A85">When</font></b></td><td width=3D"=
+100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D0ABB=
+E43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+
+<table id=3D"WhenSwitcher" width=3D"100%" border=3D"0" cellspacing=3D"0=
+" cellpadding=3D"0">
+<tr valign=3D"top"><td width=3D"100%">
+<table width=3D"100%" border=3D"1">
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"38" alt=3D""><br>
+<font size=3D"2" color=3D"#4B6A85">Date</font></td><td width=3D"100%" b=
+gcolor=3D"#FFFFFF" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE43BDFC=
+0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"1" al=
+t=3D""><br>
+<font size=3D"2">  06/07/2004</font></td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"38" alt=3D""><br>
+</td><td width=3D"100%" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE4=
+3BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"=
+1" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"38" alt=3D""><br>
+<font size=3D"2" color=3D"#4B6A85">Time</font></td><td width=3D"100%" b=
+gcolor=3D"#FFFFFF" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE43BDFC=
+0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"1" al=
+t=3D""><br>
+<font size=3D"2">03:00 PM - 04:00 PM   (1 hour)</font></td></tr>
+</table>
+</td></tr>
+</table>
+</td></tr>
+</table>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"77" alt=3D""><br>
+<b><font size=3D"2" color=3D"#4B6A85">Where</font></b></td><td width=3D=
+"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D0AB=
+BE43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+
+<table width=3D"100%" border=3D"1">
+<tr valign=3D"top"><td width=3D"100%" bgcolor=3D"#FFFFFF" valign=3D"mid=
+dle"><font size=3D"2">PoolRoom/Mississauga Office@Certicom</font></td><=
+/tr>
+</table>
+</td></tr>
+</table>
+</td><td width=3D"0%" bgcolor=3D"#FFFFFF"><img src=3D"cid:10__=3D0ABBE4=
+3BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"=
+1" alt=3D""><br>
+</td><td width=3D"41%" bgcolor=3D"#FFFFFF"><img src=3D"cid:10__=3D0ABBE=
+43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+<img src=3D"cid:30__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" width=3D=
+"250" height=3D"1" alt=3D"">
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+<b><font size=3D"2" color=3D"#4B6A85">Chair</font></b></td><td width=3D=
+"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D0AB=
+BE43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"100%" valign=3D"middle"><font size=3D"2=
+">Scott Perry/Certicom</font></td></tr>
+</table>
+</td></tr>
+</table>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+<b><font size=3D"2" color=3D"#4B6A85">Invitees</font></b></td><td width=
+=3D"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D=
+0ABBE43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"1" wid=
+th=3D"1" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+</td><td width=3D"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D=
+"cid:10__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" heig=
+ht=3D"1" width=3D"1" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+<font size=3D"2" color=3D"#4B6A85">Required (to)</font></td><td width=3D=
+"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D0AB=
+BE43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+<font size=3D"2">Aman Sawrup/Certicom@Certicom, Eric Fung/Certicom@Cert=
+icom, Ettan Romm/Certicom@Certicom, Hugh Dagg/Certicom@Certicom, James =
+Zhou/Certicom@Certicom, Mike Harvey/Certicom, rlambert@emilpost.certico=
+m.com, Sam Roberts/Certicom@Certicom, Tim Howie/Certicom@Certicom</font=
+></td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+</td><td width=3D"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D=
+"cid:10__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" heig=
+ht=3D"1" width=3D"1" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+<font size=3D"2" color=3D"#4B6A85">Optional (cc)</font></td><td width=3D=
+"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D0AB=
+BE43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8"><img src=3D"cid=
+:10__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D=
+"1" width=3D"82" alt=3D""><br>
+</td><td width=3D"100%" bgcolor=3D"#E6EFF4"><img src=3D"cid:10__=3D0ABB=
+E43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+</td></tr>
+</table>
+</td><td width=3D"0%" bgcolor=3D"#FFFFFF" valign=3D"middle"><img src=3D=
+"cid:10__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" heig=
+ht=3D"1" width=3D"1" alt=3D""><br>
+</td></tr>
+</table>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"0%"><img src=3D"cid:10__=3D0ABBE43BDFC0=
+216F8f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"1" alt=
+=3D""></td><td width=3D"100%"><img src=3D"cid:10__=3D0ABBE43BDFC0216F8f=
+9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"1" alt=3D"">=
+<br>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"77" alt=3D""><br>
+</td><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middle"><img src=3D=
+"cid:10__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" heig=
+ht=3D"1" width=3D"24" alt=3D""><br>
+</td><td width=3D"100%" bgcolor=3D"#C8DEE8" valign=3D"middle"><img src=3D=
+"cid:10__=3D0ABBE43BDFC0216F8f9e8a93df9@certicom.com" border=3D"0" heig=
+ht=3D"1" width=3D"1" alt=3D""><br>
+</td></tr>
+</table>
+</td><td width=3D"0%"><img src=3D"cid:10__=3D0ABBE43BDFC0216F8f9e8a93df=
+9@certicom.com" border=3D"0" height=3D"1" width=3D"1" alt=3D""><br>
+</td></tr>
+</table>
+</body></html>=
+
+
+--=_alternative 0053DB1285256EA8_=
+Content-Type: text/calendar; method="REQUEST"; charset="UTF-8"
+
+BEGIN:VCALENDAR
+X-LOTUS-CHARSET:UTF-8
+VERSION:2.0
+PRODID:-//Lotus Development Corporation//NONSGML Notes 6.0//EN
+METHOD:REQUEST
+BEGIN:VTIMEZONE
+TZID:Eastern
+BEGIN:STANDARD
+DTSTART:19501029T020000
+TZOFFSETFROM:-0400
+TZOFFSETTO:-0500
+RRULE:FREQ=YEARLY;BYMINUTE=0;BYHOUR=2;BYDAY=-1SU;BYMONTH=10
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:19500402T020000
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0400
+RRULE:FREQ=YEARLY;BYMINUTE=0;BYHOUR=2;BYDAY=1SU;BYMONTH=4
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTART;TZID="Eastern":20040607T150000
+DTEND;TZID="Eastern":20040607T160000
+TRANSP:OPAQUE
+DTSTAMP:20040603T151544Z
+SEQUENCE:0
+ATTENDEE;ROLE=CHAIR;PARTSTAT=ACCEPTED;CN="Scott Perry/Certicom"
+ ;RSVP=FALSE:mailto:SPerry@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Aman Sawrup/Certicom";RSVP=TRUE:mailto:ASawrup@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Eric Fung/Certicom";RSVP=TRUE:mailto:EFung@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Ettan Romm/Certicom";RSVP=TRUE:mailto:ERomm@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Hugh Dagg/Certicom";RSVP=TRUE:mailto:HDagg@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="James Zhou/Certicom";RSVP=TRUE:mailto:JZhou@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Mike Harvey/Certicom";RSVP=TRUE:mailto:MHarvey@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE
+ :mailto:rlambert@emilpost.certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Sam Roberts/Certicom";RSVP=TRUE:mailto:SRoberts@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Tim Howie/Certicom";RSVP=TRUE:mailto:THowie@certicom.com
+ATTENDEE;CUTYPE=ROOM;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="PoolRoom/Mississauga Office";RSVP=TRUE
+ :mailto:PoolRoom/Mississauga_Office@certicom1.certicom.com
+CLASS:PUBLIC
+SUMMARY:Hula PM meeting
+ORGANIZER;CN="Scott Perry/Certicom":mailto:SPerry@certicom.com
+UID:6D43C2307149A43E85256EA80053A7FF-Lotus_Notes_Generated
+X-LOTUS-BROADCAST:FALSE
+X-LOTUS-UPDATE-SEQ:1
+X-LOTUS-UPDATE-WISL:$S:1;$L:1;$B:1;$R:1;$E:1
+X-LOTUS-NOTESVERSION:2
+X-LOTUS-NOTICETYPE:I
+X-LOTUS-CHILD_UID:6D43C2307149A43E85256EA80053A7FF
+END:VEVENT
+END:VCALENDAR
+
+--=_alternative 0053DB1285256EA8_=--
+--=_related 0053DB1285256EA8_=
+Content-Type: image/gif; name=ecblank.gif
+Content-Disposition: inline; filename=ecblank.gif
+Content-ID: <10__=0ABBE43BDFC0216F8f9e8a93df9@certicom.com>
+Content-Transfer-Encoding: base64
+
+R0lGODlhEAABAIAAAAAAAP///yH5BAEAAAEALAAAAAAQAAEAAAIEjI8ZBQA7
+
+--=_related 0053DB1285256EA8_=
+Content-Type: image/gif; name=pic22764.gif
+Content-Disposition: inline; filename=pic22764.gif
+Content-ID: <20__=0ABBE43BDFC0216F8f9e8a93df9@certicom.com>
+Content-Transfer-Encoding: base64
+
+R0lGODlh+gABAID/AMDAwAAAACH5BAEAAAAALAAAAAD6AAEAAAINhI+py+0Po5y02ovzLQA7
+
+--=_related 0053DB1285256EA8_=
+Content-Type: image/gif; name=pic10271.gif
+Content-Disposition: inline; filename=pic10271.gif
+Content-ID: <30__=0ABBE43BDFC0216F8f9e8a93df9@certicom.com>
+Content-Transfer-Encoding: base64
+
+R0lGODlh+gABAID/AMDAwAAAACH5BAEAAAAALAAAAAD6AAEAAAINhI+py+0Po5y02ovzLQA7
+
+--=_related 0053DB1285256EA8_=--
+--=_mixed 0053DB1285256EA8_=
+Content-Type: text/calendar; method="REQUEST"; charset="UTF-8"; name="c111555.ics"
+Content-Disposition: attachment; filename="c111555.ics"
+
+BEGIN:VCALENDAR
+X-LOTUS-CHARSET:UTF-8
+VERSION:2.0
+PRODID:-//Lotus Development Corporation//NONSGML Notes 6.0//EN
+METHOD:REQUEST
+BEGIN:VTIMEZONE
+TZID:Eastern
+BEGIN:STANDARD
+DTSTART:19501029T020000
+TZOFFSETFROM:-0400
+TZOFFSETTO:-0500
+RRULE:FREQ=YEARLY;BYMINUTE=0;BYHOUR=2;BYDAY=-1SU;BYMONTH=10
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:19500402T020000
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0400
+RRULE:FREQ=YEARLY;BYMINUTE=0;BYHOUR=2;BYDAY=1SU;BYMONTH=4
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTART;TZID="Eastern":20040607T150000
+DTEND;TZID="Eastern":20040607T160000
+TRANSP:OPAQUE
+DTSTAMP:20040603T151544Z
+SEQUENCE:0
+ATTENDEE;ROLE=CHAIR;PARTSTAT=ACCEPTED;CN="Scott Perry/Certicom"
+ ;RSVP=FALSE:mailto:SPerry@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Aman Sawrup/Certicom";RSVP=TRUE:mailto:ASawrup@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Eric Fung/Certicom";RSVP=TRUE:mailto:EFung@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Ettan Romm/Certicom";RSVP=TRUE:mailto:ERomm@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Hugh Dagg/Certicom";RSVP=TRUE:mailto:HDagg@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="James Zhou/Certicom";RSVP=TRUE:mailto:JZhou@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Mike Harvey/Certicom";RSVP=TRUE:mailto:MHarvey@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE
+ :mailto:rlambert@emilpost.certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Sam Roberts/Certicom";RSVP=TRUE:mailto:SRoberts@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Tim Howie/Certicom";RSVP=TRUE:mailto:THowie@certicom.com
+ATTENDEE;CUTYPE=ROOM;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="PoolRoom/Mississauga Office";RSVP=TRUE
+ :mailto:PoolRoom/Mississauga_Office@certicom1.certicom.com
+CLASS:PUBLIC
+SUMMARY:Hula PM meeting
+ORGANIZER;CN="Scott Perry/Certicom":mailto:SPerry@certicom.com
+UID:6D43C2307149A43E85256EA80053A7FF-Lotus_Notes_Generated
+X-LOTUS-BROADCAST:FALSE
+X-LOTUS-UPDATE-SEQ:1
+X-LOTUS-UPDATE-WISL:$S:1;$L:1;$B:1;$R:1;$E:1
+X-LOTUS-NOTESVERSION:2
+X-LOTUS-NOTICETYPE:I
+X-LOTUS-CHILD_UID:6D43C2307149A43E85256EA80053A7FF
+END:VEVENT
+END:VCALENDAR
+
+--=_mixed 0053DB1285256EA8_=--
+
+From sroberts@certicom.com Thu Jun  3 13:29:02 2004
+Return-path: <sroberts@certicom.com>
+Envelope-to: sroberts@uniserve.com
+Received: from mx1.uniserve.ca ([216.113.192.42])
+	by mail-host.uniserve.ca with esmtp (Exim 4.22)
+	id 1BVw1W-0006UY-Mx
+	for sroberts@uniserve.com; Thu, 03 Jun 2004 10:29:02 -0700
+Received: from ns.ca.certicom.com ([66.48.18.197] helo=mail.ca.certicom.com)
+	by mx1.uniserve.ca with esmtp (Exim 4.22)
+	id 1BVw1S-000FSF-BS
+	for sroberts@uniserve.com; Thu, 03 Jun 2004 10:28:58 -0700
+Received: from spamfilter.certicom.com (storm [127.0.0.1])
+	by mail.ca.certicom.com (Postfix) with ESMTP id BFD1510665
+	for <sroberts@uniserve.com>; Thu,  3 Jun 2004 13:28:57 -0400 (EDT)
+Received: from mail.ca.certicom.com ([127.0.0.1])
+ by spamfilter.certicom.com (storm [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 20524-71 for <sroberts@uniserve.com>;
+ Thu,  3 Jun 2004 13:28:44 -0400 (EDT)
+Received: from certicom1.certicom.com (domino1.certicom.com [10.0.1.24])
+	by mail.ca.certicom.com (Postfix) with ESMTP id 5571D10B71
+	for <sroberts@uniserve.com>; Thu,  3 Jun 2004 11:46:24 -0400 (EDT)
+Received: from sroberts ([10.0.2.195])
+          by certicom1.certicom.com (Lotus Domino Release 6.0.1)
+          with ESMTP id 2004060311400756-51942 ;
+          Thu, 3 Jun 2004 11:40:07 -0400 
+Received: from domino1.certicom.com [10.0.1.24]
+	by localhost with POP3 (fetchmail-6.2.5)
+	for sroberts@localhost (single-drop); Thu, 03 Jun 2004 11:23:00 -0400 (EDT)
+X-Notes-Item: CN=Scott Perry/O=Certicom;
+ name=AltChair
+X-Notes-Item: ;
+ name=$LangChair
+X-Notes-Item: CN=Scott Perry/O=Certicom;
+ name=$AltPrincipal
+X-Notes-Item: ;
+ name=$LangPrincipal
+X-Notes-Item: 1;
+ name=$SMTPKeepNotesItems
+X-Notes-Item: CN=Aman Sawrup/O=Certicom@Certicom,
+	CN=Eric Fung/O=Certicom@Certicom,
+	CN=Ettan Romm/O=Certicom@Certicom,
+	CN=Hugh Dagg/O=Certicom@Certicom,
+	CN=James Zhou/O=Certicom@Certicom,
+	CN=Mike Harvey/O=Certicom,
+	.,
+	CN=Sam Roberts/O=Certicom@Certicom,
+	CN=Tim Howie/O=Certicom@Certicom;
+ type=501; name=OriginalTo
+X-Notes-Item: 1;
+ name=$PublicAccess
+X-Notes-Item: Mon, 7 Jun 2004 16:00:00 -0400;
+ type=400; name=$NoPurge
+X-Notes-Item: en-US;
+ name=$FromPreferredLanguage
+X-Notes-Item: Aman Sawrup/Certicom@Certicom,
+		Eric Fung/Certicom@Certicom,
+		Ettan Romm/Certicom@Certicom,
+		Hugh Dagg/Certicom@Certicom,
+		James Zhou/Certicom@Certicom,
+		Mike Harvey/Certicom,
+		rlambert@emilpost.certicom.com,
+		Sam Roberts/Certicom@Certicom,
+		Tim Howie/Certicom@Certicom;
+ type=501; flags=44; name=REQUIREDATTENDEES
+X-Notes-Item: Aman Sawrup/Certicom@Certicom,
+		Eric Fung/Certicom@Certicom,
+		Ettan Romm/Certicom@Certicom,
+		Hugh Dagg/Certicom@Certicom,
+		James Zhou/Certicom@Certicom,
+		Mike Harvey/Certicom,
+		rlambert@emilpost.certicom.com,
+		Sam Roberts/Certicom@Certicom,
+		Tim Howie/Certicom@Certicom;
+ type=501; flags=44; name=AltRequiredNames
+X-Notes-Item: 1,
+		1,
+		1,
+		1,
+		1,
+		.,
+		1,
+		1,
+		1;
+ type=501; flags=44; name=StorageRequiredNames
+X-Notes-Item: ASawrup@certicom.com,
+		EFung@certicom.com,
+		ERomm@certicom.com,
+		HDagg@certicom.com,
+		JZhou@certicom.com,
+		.,
+		rlambert@certicom.com,
+		SRoberts@certicom.com,
+		THowie@certicom.com;
+ type=501; flags=44; name=INetRequiredNames
+X-Notes-Item: ;
+ name=Location
+Subject: Information Update - Description has changed: Hula PM meeting
+Message-ID: <OFE7F4A510.9F54A293-ON85256EA8.0053E391-85256EA8.0054A1A6@certicom.com>
+Date: Thu, 3 Jun 2004 11:16:18 -0400
+X-Notes-Item: ;
+ name=Encrypt
+X-Notes-Item: ;
+ type=501; name=Categories
+X-Notes-Item: CN=Certicom1/O=Certicom;
+ type=501; flags=0; name=RouteServers
+X-Notes-Item: 03-Jun-2004 11:16:19 EDT/03-Jun-2004 11:16:20 EDT;
+ type=401; flags=0; name=RouteTimes
+X-Notes-Item: Thu, 3 Jun 2004 11:16:20 -0400;
+ type=400; name=DeliveredDate
+X-Notes-Item: 1;
+ name=$MiniView
+X-Notes-Item: Owner Action(Update) by Notes Client on Scott Perry/Certicom(Release 6.0.1|February
+ 07,
+	2003) at 06/03/2004 11:24:21 AM,
+		CS Notice converted to iCalendar format by POP3 Server on Certicom1/Certicom(Release
+ 6.0.1|February 07,
+	2003) at 06/03/2004 11:16:32 AM;
+ type=501; name=$CSTrack
+MIME-Version: 1.0
+X-Notes-Item: Memo;
+ name=Form
+To: Aman Sawrup <ASawrup@certicom.com>,
+	Eric Fung <EFung@certicom.com>, Ettan Romm <ERomm@certicom.com>,
+	Hugh Dagg <HDagg@certicom.com>, James Zhou <JZhou@certicom.com>,
+	Mike Harvey <MHarvey@certicom.com>, rlambert@certicom.com,
+	Sam Roberts <SRoberts@certicom.com>, Tim Howie <THowie@certicom.com>
+From: Scott Perry <SPerry@certicom.com>
+X-MIMETrack: Serialize by POP3 Server on Certicom1/Certicom(Release 6.0.1|February 07, 2003) at
+ 06/03/2004 11:16:32 AM,
+	Serialize complete at 06/03/2004 11:16:32 AM,
+	Itemize by SMTP Server on Certicom1/Certicom(Release 6.0.1|February 07, 2003) at
+ 06/03/2004 11:40:08 AM,
+	Serialize by Router on Certicom1/Certicom(Release 6.0.1|February 07, 2003) at
+ 06/03/2004 11:40:08 AM
+X-Spam: NO
+X-Spam-Rating: 73
+Resent-From: Sam Roberts <sroberts@certicom.com>
+Resent-Date: Thu, 3 Jun 2004 11:46:35 -0400
+Resent-To: Sam <sroberts@uniserve.com>
+X-Notes-Item: 1;
+ name=$NoteContainsIcal
+X-Notes-Item: ;
+ name=RoutingState
+X-Notes-Item: ;
+ name=DeadFailureReason
+X-Notes-Item: CN=Certicom1/O=Certicom;
+ type=501; flags=44; name=$UpdatedBy
+X-Notes-Item: 03-Jun-2004 11:40:08 EDT;
+ type=401; name=$Revisions
+X-Notes-Item: 0;
+ name=$MsgTrackFlags
+X-Notes-Item: certicom.com;
+ name=FromDomain
+X-Notes-Item: 22;
+ type=300; name=$Hops
+X-Notes-Item: 1;
+ name=$NoteHasNativeMIME
+X-Notes-Item: CN=Scott Perry/O=Certicom;
+ name=OriginalFrom
+Content-Type: multipart/mixed; boundary="=_mixed 0053E97685256EA8_="
+Resent-Message-Id: <20040603154624.5571D10B71@mail.ca.certicom.com>
+X-Scanner: OK. Scanned.
+X-Uniserve-Spam-Score: 2.1 21 (++)
+X-Uniserve-Spam-Report: Spam detection software, running on this mail system has
+	identified this incoming email as possible spam.  An
+	analysis of the message is below.
+	Content analysis details:   (2.1 points)
+	pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	0.0 HTML_80_90             BODY: Message is 80% to 90% HTML
+	0.7 HTML_TAG_BALANCE_HTML  BODY: HTML has unbalanced "html" tags
+	0.1 HTML_COMMENT_8BITS     BODY: HTML comment has 3 consecutive 8-bit chars
+	0.7 HTML_TAG_BALANCE_TABLE BODY: HTML is missing "table" close tags
+	0.2 HTML_MESSAGE           BODY: HTML included in message
+	0.4 HTML_TAG_BALANCE_BODY  BODY: HTML has unbalanced "body" tags
+	0.1 HTML_FONTCOLOR_UNSAFE  BODY: HTML font color not in safe 6x6x6 palette
+Status: RO
+Content-Length: 24176
+Lines: 587
+
+
+--=_mixed 0053E97685256EA8_=
+Content-Type: multipart/related; boundary="=_related 0053E97685256EA8_="
+
+
+--=_related 0053E97685256EA8_=
+Content-Type: multipart/alternative; boundary="=_alternative 0053E97685256EA8_="
+
+
+--=_alternative 0053E97685256EA8_=
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+
+
+                                                         
+                                                         
+                                                         
+                                                         
+                                                         
+   Calendar Entry                                        
+                                                         
+                                                         
+                                                         
+                                                         
+                                                         
+                                                         
+ ----------------------------------------------------------------------=
+------------- 
+                                                                       =
+              
+                                                                       =
+              
+    Subject                                         Chair              =
+              
+                                                                       =
+              
+                                                                       =
+              
+             Hula PM meeting                                  Scott Per=
+ry/Certicom   
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                    Invitees           =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+              Date                                  Required (to)      =
+              
+                     06/07/2004                               Aman     =
+              
+                                                              Sawrup/Ce=
+rticom@Cert   
+                                                              icom, Eri=
+c             
+              Time                                            Fung/Cert=
+icom@Certic   
+                   03:00 PM - 04:00 PM   (1                   om, Ettan=
+              
+                   hour)                                      Romm/Cert=
+icom@Certic   
+                                                              om, Hugh =
+              
+                                                              Dagg/Cert=
+icom@Certic   
+                                                              om, James=
+              
+              Proposed start                                  Zhou/Cert=
+icom@Certic   
+                         -1    at                             om, Mike =
+              
+                                                              Harvey/Ce=
+rticom,       
+                                                              rlambert@=
+emilpost.ce   
+              Proposed end                                    rticom.co=
+m, Sam        
+                                                              Roberts/C=
+erticom@Cer   
+                         -1    at                             ticom, Ti=
+m             
+                                                              Howie/Cer=
+ticom@Certi   
+                                                              com      =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                    Optional (cc)      =
+              
+                                                                       =
+              
+              Original start                                           =
+              
+                           06/07/2004  at  03:00                       =
+              
+                         PM                                            =
+              
+                                                                       =
+              
+                                                                       =
+              
+              Original end                                             =
+              
+                           06/07/2004  at  04:00                       =
+              
+                         PM                                            =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+                                                                       =
+              
+    Where                                                              =
+              
+                                                                       =
+              
+                                                                       =
+              
+             PoolRoom/Mississauga                                      =
+              
+             Office@Certicom                                           =
+              
+                                                                       =
+              
+                                                                       =
+              
+
+
+
+                                                         
+                                                         
+                                                         
+                                                         
+                                                         
+
+
+
+
+
+
+
+
+Agenda:
+
+to follow=
+
+--=_alternative 0053E97685256EA8_=
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=US-ASCII
+Content-Disposition: inline
+
+<html><body>
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"12" alt=3D""><br>
+</td><td width=3D"100%" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE4=
+3BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"=
+1" alt=3D""><br>
+</td><td width=3D"1%" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE43B=
+DFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"12=
+" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"12" alt=3D""><br>
+</td><td width=3D"100%" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE4=
+3BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"=
+1" alt=3D""><br>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"100%" valign=3D"middle"><font size=3D"2=
+" color=3D"#4B6A85">Calendar Entry</font><br>
+<br>
+<font size=3D"2" color=3D"#4B6A85"><br>
+</font></td></tr>
+</table>
+</td><td width=3D"1%" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE43B=
+DFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"12=
+" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"12" alt=3D""><br>
+</td><td width=3D"100%" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE4=
+3BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"=
+1" alt=3D""><br>
+</td><td width=3D"1%" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE43B=
+DFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"12=
+" alt=3D""><br>
+</td></tr>
+</table>
+
+<table width=3D"100%" border=3D"1">
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#FFFFFF" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"12" alt=3D""><br>
+</td><td width=3D"59%" bgcolor=3D"#FFFFFF"><img src=3D"cid:10__=3D0ABBE=
+43BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+<img src=3D"cid:20__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" width=3D=
+"250" height=3D"1" alt=3D"">
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"77" alt=3D""><br>
+<b><font size=3D"2" color=3D"#4B6A85">Subject</font></b></td><td width=3D=
+"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D0AB=
+BE43BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+
+<table width=3D"100%" border=3D"1">
+<tr valign=3D"top"><td width=3D"100%" bgcolor=3D"#FFFFFF" valign=3D"mid=
+dle"><font size=3D"2">Hula PM meeting</font></td></tr>
+</table>
+</td></tr>
+</table>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"77" alt=3D""><br>
+<b><font size=3D"2" color=3D"#4B6A85">When</font></b></td><td width=3D"=
+100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D0ABB=
+E43BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+
+<table id=3D"WhenSwitcher" width=3D"100%" border=3D"0" cellspacing=3D"0=
+" cellpadding=3D"0">
+<tr valign=3D"top"><td width=3D"100%">
+<table width=3D"100%" border=3D"1">
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"38" alt=3D""><br>
+<font size=3D"2" color=3D"#4B6A85">Date</font></td><td width=3D"100%" b=
+gcolor=3D"#FFFFFF" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE43BDFC=
+065018f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"1" al=
+t=3D""><br>
+<font size=3D"2">  06/07/2004</font></td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"38" alt=3D""><br>
+</td><td width=3D"100%" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE4=
+3BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"=
+1" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" valign=3D"middle"><img src=3D"cid:1=
+0__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"=
+1" width=3D"38" alt=3D""><br>
+<font size=3D"2" color=3D"#4B6A85">Time</font></td><td width=3D"100%" b=
+gcolor=3D"#FFFFFF" valign=3D"middle"><img src=3D"cid:10__=3D0ABBE43BDFC=
+065018f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"1" al=
+t=3D""><br>
+<font size=3D"2">03:00 PM - 04:00 PM   (1 hour)</font></td></tr>
+</table>
+</td></tr>
+</table>
+</td></tr>
+</table>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"77" alt=3D""><br>
+<b><font size=3D"2" color=3D"#4B6A85">Where</font></b></td><td width=3D=
+"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D0AB=
+BE43BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+
+<table width=3D"100%" border=3D"1">
+<tr valign=3D"top"><td width=3D"100%" bgcolor=3D"#FFFFFF" valign=3D"mid=
+dle"><font size=3D"2">PoolRoom/Mississauga Office@Certicom</font></td><=
+/tr>
+</table>
+</td></tr>
+</table>
+</td><td width=3D"0%" bgcolor=3D"#FFFFFF"><img src=3D"cid:10__=3D0ABBE4=
+3BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"=
+1" alt=3D""><br>
+</td><td width=3D"41%" bgcolor=3D"#FFFFFF"><img src=3D"cid:10__=3D0ABBE=
+43BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+<img src=3D"cid:30__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" width=3D=
+"250" height=3D"1" alt=3D"">
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+<b><font size=3D"2" color=3D"#4B6A85">Chair</font></b></td><td width=3D=
+"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D0AB=
+BE43BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"100%" valign=3D"middle"><font size=3D"2=
+">Scott Perry/Certicom</font></td></tr>
+</table>
+</td></tr>
+</table>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+<b><font size=3D"2" color=3D"#4B6A85">Invitees</font></b></td><td width=
+=3D"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D=
+0ABBE43BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"1" wid=
+th=3D"1" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+</td><td width=3D"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D=
+"cid:10__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" border=3D"0" heig=
+ht=3D"1" width=3D"1" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+<font size=3D"2" color=3D"#4B6A85">Required (to)</font></td><td width=3D=
+"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D0AB=
+BE43BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+<font size=3D"2">Aman Sawrup/Certicom@Certicom, Eric Fung/Certicom@Cert=
+icom, Ettan Romm/Certicom@Certicom, Hugh Dagg/Certicom@Certicom, James =
+Zhou/Certicom@Certicom, Mike Harvey/Certicom, rlambert@emilpost.certico=
+m.com, Sam Roberts/Certicom@Certicom, Tim Howie/Certicom@Certicom</font=
+></td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+</td><td width=3D"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D=
+"cid:10__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" border=3D"0" heig=
+ht=3D"1" width=3D"1" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"82" alt=3D""><br>
+<font size=3D"2" color=3D"#4B6A85">Optional (cc)</font></td><td width=3D=
+"100%" bgcolor=3D"#E6EFF4" valign=3D"middle"><img src=3D"cid:10__=3D0AB=
+BE43BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+</td></tr>
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8"><img src=3D"cid=
+:10__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D=
+"1" width=3D"82" alt=3D""><br>
+</td><td width=3D"100%" bgcolor=3D"#E6EFF4"><img src=3D"cid:10__=3D0ABB=
+E43BDFC065018f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D=
+"1" alt=3D""><br>
+</td></tr>
+</table>
+</td><td width=3D"0%" bgcolor=3D"#FFFFFF" valign=3D"middle"><img src=3D=
+"cid:10__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" border=3D"0" heig=
+ht=3D"1" width=3D"1" alt=3D""><br>
+</td></tr>
+</table>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"0%"><img src=3D"cid:10__=3D0ABBE43BDFC0=
+65018f9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"1" alt=
+=3D""></td><td width=3D"100%"><img src=3D"cid:10__=3D0ABBE43BDFC065018f=
+9e8a93df9@certicom.com" border=3D"0" height=3D"1" width=3D"1" alt=3D"">=
+<br>
+
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=
+
+<tr valign=3D"top"><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middl=
+e"><img src=3D"cid:10__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" bor=
+der=3D"0" height=3D"1" width=3D"77" alt=3D""><br>
+</td><td width=3D"1%" bgcolor=3D"#C8DEE8" valign=3D"middle"><img src=3D=
+"cid:10__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" border=3D"0" heig=
+ht=3D"1" width=3D"24" alt=3D""><br>
+</td><td width=3D"100%" bgcolor=3D"#C8DEE8" valign=3D"middle"><img src=3D=
+"cid:10__=3D0ABBE43BDFC065018f9e8a93df9@certicom.com" border=3D"0" heig=
+ht=3D"1" width=3D"1" alt=3D""><br>
+</td></tr>
+</table>
+</td><td width=3D"0%"><img src=3D"cid:10__=3D0ABBE43BDFC065018f9e8a93df=
+9@certicom.com" border=3D"0" height=3D"1" width=3D"1" alt=3D""><br>
+</td></tr>
+</table>
+<br>
+<font size=3D"2">Agenda:</font><br>
+<br>
+<font size=3D"2">to follow</font></body></html>=
+
+
+--=_alternative 0053E97685256EA8_=
+Content-Type: text/calendar; method="REQUEST"; charset="UTF-8"
+
+BEGIN:VCALENDAR
+X-LOTUS-CHARSET:UTF-8
+VERSION:2.0
+PRODID:-//Lotus Development Corporation//NONSGML Notes 6.0//EN
+METHOD:REQUEST
+BEGIN:VTIMEZONE
+TZID:Eastern
+BEGIN:STANDARD
+DTSTART:19501029T020000
+TZOFFSETFROM:-0400
+TZOFFSETTO:-0500
+RRULE:FREQ=YEARLY;BYMINUTE=0;BYHOUR=2;BYDAY=-1SU;BYMONTH=10
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:19500402T020000
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0400
+RRULE:FREQ=YEARLY;BYMINUTE=0;BYHOUR=2;BYDAY=1SU;BYMONTH=4
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTART;TZID="Eastern":20040607T150000
+DTEND;TZID="Eastern":20040607T160000
+TRANSP:OPAQUE
+DTSTAMP:20040603T151618Z
+SEQUENCE:0
+ATTENDEE;ROLE=CHAIR;PARTSTAT=ACCEPTED;CN="Scott Perry/Certicom"
+ ;RSVP=FALSE:mailto:Scott_Perry/Certicom@certicom1.certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Aman Sawrup/Certicom";RSVP=TRUE:mailto:ASawrup@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Eric Fung/Certicom";RSVP=TRUE:mailto:EFung@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Ettan Romm/Certicom";RSVP=TRUE:mailto:ERomm@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Hugh Dagg/Certicom";RSVP=TRUE:mailto:HDagg@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="James Zhou/Certicom";RSVP=TRUE:mailto:JZhou@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Mike Harvey/Certicom";RSVP=TRUE:mailto:MHarvey@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE
+ :mailto:rlambert@emilpost.certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Sam Roberts/Certicom";RSVP=TRUE:mailto:SRoberts@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Tim Howie/Certicom";RSVP=TRUE:mailto:THowie@certicom.com
+ATTENDEE;CUTYPE=ROOM;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="PoolRoom/Mississauga Office";RSVP=TRUE
+ :mailto:PoolRoom/Mississauga_Office@certicom1.certicom.com
+CLASS:PUBLIC
+DESCRIPTION:Agenda:\n\nto follow\n
+SUMMARY:Hula PM meeting
+X-LOTUS-UPDATE-SUBJECT:Information Update - Description has changed: Hula PM meeting
+ORGANIZER;CN="Scott Perry/Certicom"
+ :mailto:Scott_Perry/Certicom@certicom1.certicom.com
+UID:6D43C2307149A43E85256EA80053A7FF-Lotus_Notes_Generated
+X-LOTUS-BROADCAST:FALSE
+X-LOTUS-UPDATE-SEQ:2
+X-LOTUS-UPDATE-WISL:$S:1;$L:1;$R:1;$E:1;$B:2
+X-LOTUS-NOTESVERSION:2
+X-LOTUS-NOTICETYPE:E
+X-LOTUS-CHILD_UID:E7F4A5109F54A29385256EA80053E391
+END:VEVENT
+END:VCALENDAR
+
+--=_alternative 0053E97685256EA8_=--
+--=_related 0053E97685256EA8_=
+Content-Type: image/gif; name=ecblank.gif
+Content-Disposition: inline; filename=ecblank.gif
+Content-ID: <10__=0ABBE43BDFC065018f9e8a93df9@certicom.com>
+Content-Transfer-Encoding: base64
+
+R0lGODlhEAABAIAAAAAAAP///yH5BAEAAAEALAAAAAAQAAEAAAIEjI8ZBQA7
+
+--=_related 0053E97685256EA8_=
+Content-Type: image/gif; name=pic10242.gif
+Content-Disposition: inline; filename=pic10242.gif
+Content-ID: <20__=0ABBE43BDFC065018f9e8a93df9@certicom.com>
+Content-Transfer-Encoding: base64
+
+R0lGODlh+gABAID/AMDAwAAAACH5BAEAAAAALAAAAAD6AAEAAAINhI+py+0Po5y02ovzLQA7
+
+--=_related 0053E97685256EA8_=
+Content-Type: image/gif; name=pic25113.gif
+Content-Disposition: inline; filename=pic25113.gif
+Content-ID: <30__=0ABBE43BDFC065018f9e8a93df9@certicom.com>
+Content-Transfer-Encoding: base64
+
+R0lGODlh+gABAID/AMDAwAAAACH5BAEAAAAALAAAAAD6AAEAAAINhI+py+0Po5y02ovzLQA7
+
+--=_related 0053E97685256EA8_=--
+--=_mixed 0053E97685256EA8_=
+Content-Type: text/calendar; method="REQUEST"; charset="UTF-8"; name="c111632.ics"
+Content-Disposition: attachment; filename="c111632.ics"
+
+BEGIN:VCALENDAR
+X-LOTUS-CHARSET:UTF-8
+VERSION:2.0
+PRODID:-//Lotus Development Corporation//NONSGML Notes 6.0//EN
+METHOD:REQUEST
+BEGIN:VTIMEZONE
+TZID:Eastern
+BEGIN:STANDARD
+DTSTART:19501029T020000
+TZOFFSETFROM:-0400
+TZOFFSETTO:-0500
+RRULE:FREQ=YEARLY;BYMINUTE=0;BYHOUR=2;BYDAY=-1SU;BYMONTH=10
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:19500402T020000
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0400
+RRULE:FREQ=YEARLY;BYMINUTE=0;BYHOUR=2;BYDAY=1SU;BYMONTH=4
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTART;TZID="Eastern":20040607T150000
+DTEND;TZID="Eastern":20040607T160000
+TRANSP:OPAQUE
+DTSTAMP:20040603T151618Z
+SEQUENCE:0
+ATTENDEE;ROLE=CHAIR;PARTSTAT=ACCEPTED;CN="Scott Perry/Certicom"
+ ;RSVP=FALSE:mailto:Scott_Perry/Certicom@certicom1.certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Aman Sawrup/Certicom";RSVP=TRUE:mailto:ASawrup@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Eric Fung/Certicom";RSVP=TRUE:mailto:EFung@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Ettan Romm/Certicom";RSVP=TRUE:mailto:ERomm@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Hugh Dagg/Certicom";RSVP=TRUE:mailto:HDagg@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="James Zhou/Certicom";RSVP=TRUE:mailto:JZhou@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Mike Harvey/Certicom";RSVP=TRUE:mailto:MHarvey@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE
+ :mailto:rlambert@emilpost.certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Sam Roberts/Certicom";RSVP=TRUE:mailto:SRoberts@certicom.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="Tim Howie/Certicom";RSVP=TRUE:mailto:THowie@certicom.com
+ATTENDEE;CUTYPE=ROOM;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION
+ ;CN="PoolRoom/Mississauga Office";RSVP=TRUE
+ :mailto:PoolRoom/Mississauga_Office@certicom1.certicom.com
+CLASS:PUBLIC
+DESCRIPTION:Agenda:\n\nto follow\n
+SUMMARY:Hula PM meeting
+X-LOTUS-UPDATE-SUBJECT:Information Update - Description has changed: Hula PM meeting
+ORGANIZER;CN="Scott Perry/Certicom"
+ :mailto:Scott_Perry/Certicom@certicom1.certicom.com
+UID:6D43C2307149A43E85256EA80053A7FF-Lotus_Notes_Generated
+X-LOTUS-BROADCAST:FALSE
+X-LOTUS-UPDATE-SEQ:2
+X-LOTUS-UPDATE-WISL:$S:1;$L:1;$R:1;$E:1;$B:2
+X-LOTUS-NOTESVERSION:2
+X-LOTUS-NOTICETYPE:E
+X-LOTUS-CHILD_UID:E7F4A5109F54A29385256EA80053E391
+END:VEVENT
+END:VCALENDAR
+
+--=_mixed 0053E97685256EA8_=--
+
+From sroberts@uniserve.com Mon Nov  8 20:35:24 2004
+Return-path: <sroberts@uniserve.com>
+Envelope-to: sroberts@uniserve.com
+Received: from mx1.uniserve.ca ([216.113.192.42])
+	by mail-host.uniserve.ca with esmtp (Exim 4.22)
+	id 1CRKuq-000Myu-Sp
+	for sroberts@uniserve.com; Mon, 08 Nov 2004 17:35:24 -0800
+Received: from tomts16.bellnexxia.net ([209.226.175.4] helo=tomts16-srv.bellnexxia.net)
+	by mx1.uniserve.ca with esmtp (Exim 4.22)
+	id 1CRKuq-000NJa-6K
+	for sroberts@uniserve.com; Mon, 08 Nov 2004 17:35:24 -0800
+Received: from ensemble.local ([64.229.200.249])
+          by tomts16-srv.bellnexxia.net
+          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
+          id <20041109013518.LKXH15612.tomts16-srv.bellnexxia.net@ensemble.local>
+          for <sroberts@uniserve.com>; Mon, 8 Nov 2004 20:35:18 -0500
+Received: from uniserve.com (localhost [127.0.0.1])
+	by ensemble.local (8.12.9/8.12.6) with ESMTP id iA91ZD5o000501
+	for <sroberts@uniserve.com>; Mon, 8 Nov 2004 20:35:13 -0500 (EST)
+Date: Mon, 8 Nov 2004 20:35:13 -0500
+Mime-Version: 1.0 (Apple Message framework v553)
+Content-Type: multipart/mixed; boundary=Apple-Mail-1--749654738
+Subject: iCal event invitation: Reg Smart Slideshow
+From: Sam Roberts <sroberts@uniserve.com>
+To: Sam Roberts <sroberts@uniserve.com>
+Message-Id: <99CC6E04-31EF-11D9-8B1F-000393AD088C@uniserve.com>
+X-Mailer: Apple Mail (2.553)
+X-Scanner: OK. Scanned.
+Status: RO
+Content-Length: 1457
+Lines: 36
+
+
+--Apple-Mail-1--749654738
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+	charset=US-ASCII;
+	format=flowed
+
+Sam Roberts has invited you to the iCal event: Reg Smart Slideshow, 
+scheduled for Saturday, November 20, 2004 at 9:00 PM (Canada/Eastern). 
+To accept or decline this invitation, click the link below.
+
+--Apple-Mail-1--749654738
+Content-Disposition: attachment;
+	filename=iCal.ics
+Content-Transfer-Encoding: quoted-printable
+Content-Type: application/octet-stream;
+	x-unix-mode=0644;
+	name="iCal.ics"
+
+BEGIN:VCALENDAR=0D=0ACALSCALE:GREGORIAN=0D=0APRODID:-//Apple=20=
+Computer\,=20Inc//iCal=201.5//EN=0D=0AVERSION:2.0=0D=0AMETHOD:REQUEST=0D=0A=
+BEGIN:VTIMEZONE=0D=0ALAST-MODIFIED:20041109T013512Z=0D=0A=
+TZID:Canada/Eastern=0D=0ABEGIN:STANDARD=0D=0ADTSTART:20041031T060000=0D=0A=
+TZOFFSETTO:-0500=0D=0ATZNAME:EST=0D=0ATZOFFSETFROM:+0000=0D=0A=
+END:STANDARD=0D=0ABEGIN:DAYLIGHT=0D=0ADTSTART:20050403T010000=0D=0A=
+TZOFFSETTO:-0400=0D=0ATZNAME:EDT=0D=0ATZOFFSETFROM:-0500=0D=0A=
+END:DAYLIGHT=0D=0AEND:VTIMEZONE=0D=0ABEGIN:VEVENT=0D=0ASEQUENCE:2=0D=0A=
+ATTENDEE;CN=3D"Sam=20Roberts":mailto:sroberts@uniserve.com=0D=0A=
+DTSTAMP:20041109T013424Z=0D=0ASUMMARY:Reg=20Smart=20Slideshow=0D=0A=
+DTSTART;TZID=3DCanada/Eastern:20041120T210000=0D=0AORGANIZER;CN=3D"Sam=20=
+Roberts":mailto:sroberts@uniserve.com=0D=0A=
+UID:2B6E94A0-31EC-11D9-BD91-000393AD088C=0D=0ADURATION:PT1H=0D=0A=
+END:VEVENT=0D=0AEND:VCALENDAR=0D=0A=
+
+--Apple-Mail-1--749654738--
+
+
+From sroberts@uniserve.com Mon Nov  8 23:45:24 2004
+Return-path: <sroberts@uniserve.com>
+Envelope-to: sroberts@uniserve.com
+Received: from mx4.uniserve.ca ([216.113.192.45])
+	by mail-host.uniserve.ca with esmtp (Exim 4.22)
+	id 1CRNsi-0002L7-3R
+	for sroberts@uniserve.com; Mon, 08 Nov 2004 20:45:24 -0800
+Received: from tomts20.bellnexxia.net ([209.226.175.74] helo=tomts20-srv.bellnexxia.net)
+	by mx4.uniserve.ca with esmtp (Exim 4.22)
+	id 1CRNsh-000G7T-BC
+	for sroberts@uniserve.com; Mon, 08 Nov 2004 20:45:23 -0800
+Received: from ensemble.local ([64.229.200.249])
+          by tomts20-srv.bellnexxia.net
+          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
+          id <20041109044521.GLXB25820.tomts20-srv.bellnexxia.net@ensemble.local>
+          for <sroberts@uniserve.com>; Mon, 8 Nov 2004 23:45:21 -0500
+Received: from uniserve.com (localhost [127.0.0.1])
+	by ensemble.local (8.12.9/8.12.6) with ESMTP id iA94jG5o014157
+	for <sroberts@uniserve.com>; Mon, 8 Nov 2004 23:45:17 -0500 (EST)
+Date: Mon, 8 Nov 2004 23:45:16 -0500
+Mime-Version: 1.0 (Apple Message framework v553)
+Content-Type: multipart/mixed; boundary=Apple-Mail-2--738251630
+Subject: iCal event invitation: Reg Smart Slideshow
+From: Sam Roberts <sroberts@uniserve.com>
+To: Sam Roberts <sroberts@uniserve.com>
+Message-Id: <269498AB-320A-11D9-8B1F-000393AD088C@uniserve.com>
+X-Mailer: Apple Mail (2.553)
+X-Scanner: OK. Scanned.
+Status: RO
+Content-Length: 1656
+Lines: 39
+
+
+--Apple-Mail-2--738251630
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+	charset=US-ASCII;
+	format=flowed
+
+Sam Roberts has invited you to the iCal event: Reg Smart Slideshow, 
+scheduled for Saturday, November 20, 2004 at 9:00 PM (Canada/Eastern). 
+To accept or decline this invitation, click the link below.
+
+--Apple-Mail-2--738251630
+Content-Disposition: attachment;
+	filename=iCal.ics
+Content-Transfer-Encoding: quoted-printable
+Content-Type: application/octet-stream;
+	x-unix-mode=0644;
+	name="iCal.ics"
+
+BEGIN:VCALENDAR=0D=0ACALSCALE:GREGORIAN=0D=0APRODID:-//Apple=20=
+Computer\,=20Inc//iCal=201.5//EN=0D=0AVERSION:2.0=0D=0AMETHOD:REQUEST=0D=0A=
+BEGIN:VTIMEZONE=0D=0ALAST-MODIFIED:20041109T044514Z=0D=0A=
+TZID:Canada/Eastern=0D=0ABEGIN:STANDARD=0D=0ADTSTART:20041031T060000=0D=0A=
+TZOFFSETTO:-0500=0D=0ATZNAME:EST=0D=0ATZOFFSETFROM:+0000=0D=0A=
+END:STANDARD=0D=0ABEGIN:DAYLIGHT=0D=0ADTSTART:20050403T010000=0D=0A=
+TZOFFSETTO:-0400=0D=0ATZNAME:EDT=0D=0ATZOFFSETFROM:-0500=0D=0A=
+END:DAYLIGHT=0D=0AEND:VTIMEZONE=0D=0ABEGIN:VEVENT=0D=0ASEQUENCE:2=0D=0A=
+DTSTAMP:20041109T044512Z=0D=0AURL;VALUE=3DURI:url://here/there=0D=0A=
+LOCATION:located=20here\,=20ath=20the=20blay=20blay=20blay=20blay=0D=0A=
+UID:2B6E94A0-31EC-11D9-BD91-000393AD088C=0D=0ADESCRIPTION:Here's=20some=20=
+notes.\n\nand=20more\n\nand=20more\n\nand=20more\n=0D=0A=
+DTSTART;TZID=3DCanada/Eastern:20041120T210000=0D=0ADURATION:PT1H=0D=0A=
+ATTENDEE;CN=3D"Sam=20Roberts":mailto:sroberts@uniserve.com=0D=0A=
+SUMMARY:Reg=20Smart=20Slideshow=0D=0AORGANIZER;CN=3D"Sam=20=
+Roberts":mailto:sroberts@uniserve.com=0D=0AEND:VEVENT=0D=0AEND:VCALENDAR=0D=
+=0A=
+
+--Apple-Mail-2--738251630--
+
+
