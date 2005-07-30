@@ -4,11 +4,10 @@ SHELL:=/bin/sh
 
 .PHONY: default doc test other
 
-do:
-	#@ruby -I . ex_mkvcard.rb
-	@ruby18 -I . vcf-to-ics.rb < _all.vcf
-
 default: test
+
+do:
+	@ruby18 -I . vcf-to-ics.rb < _all.vcf | tee _bday.ics
 
 doc-upload:
 	cd doc; scp -r . sam@rubyforge.org:/var/www/gforge-projects/vpim/
@@ -19,7 +18,6 @@ RDFLAGS = -w2
 # --main doc/foo.html
 
 TEST=test_all.rb
-#TEST=test_field.rb test_invalid_fields
 
 dcal:
 	sh -c "./ical-dump.rb ~/Library/Calendars/Play.ics"
@@ -27,8 +25,8 @@ dcal:
 
 test:
 	/usr/local/bin/ruby18 -w -I . $(TEST)
-	/usr/bin/ruby -w -I . $(TEST)
-	/opt/local/bin/ruby -w -I . $(TEST)
+	#/usr/bin/ruby -w -I . $(TEST)
+	#/opt/local/bin/ruby -w -I . $(TEST)
 
 changes:
 	cvs-changelog -r -f changes.cvs
@@ -59,11 +57,12 @@ SAMPLES := \
  ical-dump.rb \
  ics-to-rss.rb\
  mutt-aliases-to-vcf.rb \
- vcf-to-mutt.rb \
  reminder.rb \
  rrule.rb \
  tabbed-file-to-vcf.rb \
  vcard-dump.rb \
+ vcf-to-mutt.rb \
+ vcf-to-ics.rb \
 
 
 doc:
@@ -73,8 +72,8 @@ doc:
 	cp etc/rfc24*.txt doc/
 	chmod u=rw doc/*.txt
 	chmod go=r doc/*.txt
-	mkdir -p ~/Sites/vpim
-	cp -r doc/* ~/Sites/vpim/
+	mkdir -p $HOME/Sites/vpim
+	cp -r doc/* $HOME/Sites/vpim/
 	open doc/index.html
 
 V=0.15

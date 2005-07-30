@@ -63,8 +63,9 @@
 # - link:vcf-to-mutt.txt: query vCards for matches, output in formats useful
 #   with Mutt (see link:README.mutt for details)
 # - link:vcard-dump.txt: dump all the fields in a vCard
-# - link:tabbed-file-to-vcf.txt: convert a tab-delimited file to vCards. This
-#   is a (small but) complete application contributed by Dane G. Avilla, thanks!
+# - link:tabbed-file-to-vcf.txt: convert a tab-delimited file to vCards, a
+#   (small but) complete application contributed by Dane G. Avilla, thanks!
+# - link:vcf-to-ics.rb: example of how to create calendars of birthdays from vcards
 # 
 # iCalendar examples are:
 # - link:ics-to-rss.txt: prints todos as RSS, or starts a WEBrick servlet

@@ -1,6 +1,28 @@
-0.15 - ...
+0.15 - 2005-07-29
 
-- Icalendar.create() is like Vevent.create(), it will take arrays of Fields, or
+- Fixed bug with param values with quoted strings, particularly a quoted string
+  containing a : character, like
+    name;param="file:///":value
+
+  Thanks to Tamiji Homma for reporting this and sending me an example calendar.
+
+- Vtodo.create - new
+- Icalendar#push - allow Vtodos to be added
+
+  Thanks to Maximillian Dornseif for contributing the above two Vtodo patches.
+
+- Vevent.duration - bug fixes so duration can be calculated from begin/end, and
+  end can be calculated from begin/duration
+
+- Vcard#nickname that strips whitespace to see if there really is a nickname
+
+- Vcard#birthday - returns birthday as a date
+
+- Vevent#create_yearly - easy, cheesy way to create yearly recurring events
+
+- vcf-to-ics.rb: example of how to create calendars of bdays from vcards
+
+- Icalendar.create()  like Vevent.create(), it will take arrays of Fields, or
   Hashes of String => value.
 
 - maker/vcard.rb: Added support for X-AIM, an Apple extension.
