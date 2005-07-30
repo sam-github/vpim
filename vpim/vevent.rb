@@ -188,6 +188,15 @@ module Vpim
         new(di.to_a)
       end
 
+      # Creates a yearly repeating event, such as for a birthday.
+      def Vevent.create_yearly(date, summary)
+        create(
+          date,
+          'SUMMARY' => summary.to_str,
+          'RRULE' => 'FREQ=YEARLY'
+          )
+      end
+
       attr_reader :description, :summary, :comment, :location
       attr_reader :properties, :fields # :nodoc:
 

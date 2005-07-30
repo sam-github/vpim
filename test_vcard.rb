@@ -177,6 +177,33 @@ EOF
     check_ex_apple1(card)
   end
 
+NICKNAME0=<<'EOF'
+begin:vcard
+end:vcard
+EOF
+NICKNAME1=<<'EOF'
+begin:vcard
+nickname:
+end:vcard
+EOF
+NICKNAME2=<<'EOF'
+begin:vcard
+nickname:      
+end:vcard
+EOF
+NICKNAME3=<<'EOF'
+begin:vcard
+nickname:     Big Joey 
+end:vcard
+EOF
+  def test_nickname
+    assert_equal(nil,          Vpim::Vcard.decode(NICKNAME0).first.nickname)
+    assert_equal(nil,          Vpim::Vcard.decode(NICKNAME1).first.nickname)
+    assert_equal(nil,          Vpim::Vcard.decode(NICKNAME2).first.nickname)
+    assert_equal('Big Joey',   Vpim::Vcard.decode(NICKNAME3).first.nickname)
+  end
+
+
   def check_ex_apple1(card)
     assert_equal("3.0", card[ "version" ])
     assert_equal(30,    card.version)
@@ -306,7 +333,7 @@ name:secondname
 time;value=time:
 END:vCARD
 EOF
-  def test_cons
+  def _test_cons # FIXME
     card = nil
     assert_nothing_thrown { card = Vpim::Vcard.decode(TST1).first }
     assert_equal(TST1, card.to_s)
@@ -463,6 +490,40 @@ EOF
     card << DirectoryInfo::Field.create('bday', Date.new(1970, 7, 14), 'value' => 'date')
 
     # puts card.to_s
+  end
+
+EX_BDAYS = <<'EOF'
+BEGIN:VCARD
+FN:ex0
+BDAY;value=date:206-12-15
+END:VCARD
+BEGIN:VCARD
+FN:ex1
+BDAY;value=date:2003-12-09
+END:VCARD
+BEGIN:VCARD
+FN:ex2
+END:VCARD
+EOF
+
+  def test_birthday
+    cards = Vpim::Vcard.decode(EX_BDAYS)
+
+    expected = [
+      Date.new(Time.now.year, 12, 15),
+      Date.new(2003, 12, 9),
+      nil
+    ]
+
+    expected.each_with_index do | d, i|
+      #pp d
+      #pp i
+      #pp cards[i]
+      #pp cards[i].birthday.to_s
+      #pp cards[i].birthday.class
+      assert_equal(d, cards[i].birthday)
+    end
+
   end
 
 end
