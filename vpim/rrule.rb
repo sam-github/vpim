@@ -137,7 +137,7 @@ module Vpim
     # less than +dountil+).
     #
     # Also, iteration will not currently continue past the limit of a Time
-    # object, which is some time in 2037 with 32-bit time_t's common on
+    # object, which is some time in 2037 with the 32-bit time_t's common on
     # most systems.
     def each(dountil = nil) #:yield: ytime
       t = @dtstart.clone
