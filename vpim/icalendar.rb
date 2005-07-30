@@ -255,6 +255,8 @@ module Vpim
       case component
         when Vevent
           @vevents << component
+        when Vtodo
+          @vtodos << component
         else
           raise ArgumentError, "can't add component type #{component.type} to a calendar"
       end
@@ -438,6 +440,10 @@ module Vpim
       #
       # TODO - make private, and split into the encode/decode/create trinity.
       def initialize(field)
+        unless field.value
+          raise ArgumentError
+        end
+
         @field = field
       end
 
@@ -468,6 +474,8 @@ module Vpim
       def cn
         return nil unless n = @field.param('CN')
 
+        # FIXME = the CN param may have no value, which is an error, but don't try
+        # to decode it, return either nil, or InvalidEncoding
         Vpim.decode_text(n.first)
       end
 
