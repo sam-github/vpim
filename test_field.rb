@@ -10,6 +10,31 @@ Field=Vpim::DirectoryInfo::Field
 
 class TestField < Test::Unit::TestCase
 
+  def test_field3
+    line = 't;e=a,b:4'
+    part = Field.decode0(line)
+    assert_equal("4", part[ 3 ])
+    assert_equal( {'e' => [ 'a','b' ] }, part[ 2 ])
+  end
+
+  def test_field2
+    line = 'tel;type=work,voice,msg:+1 313 747-4454'
+    part = Field.decode0(line)
+    assert_equal("+1 313 747-4454", part[ 3 ])
+    assert_equal( {'type' => [ 'work','voice','msg' ] }, part[ 2 ])
+  end
+
+  def test_field1
+    line = 'ORGANIZER;CN="xxxx, xxxx [SC100:370:EXCH]":MAILTO:xxxx@americasm01.nt.com'
+    parts = Field.decode0(line)
+
+    assert_equal(nil, parts[0])
+    assert_equal('ORGANIZER', parts[1])
+    assert_equal({ 'cn' => [ "xxxx, xxxx [SC100:370:EXCH]" ] }, parts[2])
+    assert_equal('MAILTO:xxxx@americasm01.nt.com', parts[3])
+
+  end
+
   def test_field0
     assert_equal('name:', line = Field.encode0(nil, 'name'))
     assert_equal([ nil, 'name', {}, ''], Field.decode0(line))
@@ -31,6 +56,11 @@ class TestField < Test::Unit::TestCase
     ].each do |line|
       assert_raises(Vpim::InvalidEncodingError) { Field.decode0(line) }
     end
+  end
+
+  def test_date_encode
+    assert_equal("DTSTART:20040101\n", Field.create('DTSTART',  Date.new(2004, 1, 1) ).to_s)
+    assert_equal("DTSTART:20040101\n", Field.create('DTSTART', [Date.new(2004, 1, 1)]).to_s)
   end
 
   def test_field_modify

@@ -14,29 +14,32 @@ module Vpim
   # Contains regular expression strings for the EBNF of RFC 2425.
   module Bnf #:nodoc:
 
-    # 1*(ALPHA / DIGIT / "=")
-    NAME    = '[-a-z0-9]+'
+    # 1*(ALPHA / DIGIT / "-")
+    # Note: I think I can add A-Z here, and get rid of the "i" matches elsewhere.
+    # Note: added '_' to allowed because its produced by Notes - X-LOTUS-CHILD_UID
+    NAME    = '[-a-z0-9_]+'
 
     # <"> <Any character except CTLs, DQUOTE> <">
-    QSTR    = '"[^"]*"'
+    QSTR    = '"([^"]*)"'
      
     # *<Any character except CTLs, DQUOTE, ";", ":", ",">
-    PTEXT   = '[^";:,]*'
+    PTEXT   = '([^";:,]+)'
       
     # param-value = ptext / quoted-string
-    PVALUE  = "#{PTEXT}|#{QSTR}"
+    PVALUE  = "(?:#{QSTR}|#{PTEXT})"
     
-    # V3.0: contentline  =   [group "."]  name *(";" param) ":" value
-    # V2.1: contentline  = *( group "." ) name *(";" param) ":" value
-    #
-    # We accept the V2.1 syntax for backwards compatibility.
-    LINE = "((?:#{NAME}\\.)*)?(#{NAME})([^:]*)\:(.*)"
-
     # param = name "=" param-value *("," param-value)
     # Note: v2.1 allows a type or encoding param-value to appear without the type=
     # or the encoding=. This is hideous, but we try and support it, if there
     # is no "=", then $2 will be "", and we will treat it as a v2.1 param.
-    PARAM = ";(#{NAME})(=?)((?:#{PVALUE})(?:,#{PVALUE})*)"
+    PARAM = ";(#{NAME})(=?)((?:#{PVALUE})?(?:,#{PVALUE})*)"
+
+    # V3.0: contentline  =   [group "."]  name *(";" param) ":" value
+    # V2.1: contentline  = *( group "." ) name *(";" param) ":" value
+    #
+    # We accept the V2.1 syntax for backwards compatibility.
+    #LINE = "((?:#{NAME}\\.)*)?(#{NAME})([^:]*)\:(.*)"
+    LINE = "^((?:#{NAME}\\.)*)?(#{NAME})((?:#{PARAM})*):(.*)$"
 
     # date = date-fullyear ["-"] date-month ["-"] date-mday
     # date-fullyear = 4 DIGIT

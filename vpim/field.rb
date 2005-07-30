@@ -46,9 +46,6 @@ module Vpim
 
         params.each do |pname, pvalues|
 
-          pp pname
-          pp pvalues
-
           unless pvalues.respond_to? :to_ary
             pvalues = [ pvalues ]
           end
@@ -106,7 +103,7 @@ module Vpim
         atgroup = $1
         atname = $2
         paramslist = $3
-        atvalue = $4
+        atvalue = $~[-1]
 
         if atgroup.length > 0
           atgroup.chomp!('.')
@@ -119,16 +116,12 @@ module Vpim
         # Collect the params, if any.
         if paramslist.size > 1
 
-          #p paramslist
-      
           # v3.0 and v2.1 params
           paramslist.scan( %r{#{Bnf::PARAM}}i ) do
 
             # param names are case-insensitive, and multi-valued
             name = $1.downcase
             params = $3
-
-            # puts "#2 is #{$2.inspect}"
 
             # v2.1 params have no '=' sign, figure out what kind of param it
             # is (either its a known encoding, or we treat it as a 'type'
@@ -148,17 +141,15 @@ module Vpim
               end
             end
 
+            # TODO - In ruby1.8 I can give an initial value to the atparams
+            # hash values instead of this.
             unless atparams.key? name
               atparams[name] = []
             end
 
-            params.scan( %r{(#{Bnf::PVALUE})} ) do
-              if $1.size > 0
-                atparams[name] << $1.downcase
-              end
+            params.scan( %r{#{Bnf::PVALUE}} ) do
+              atparams[name] << ($1 || $2) # Used to do this, want to stop! .downcase
             end
-
-            #p atparams['type']
           end
         end
 
