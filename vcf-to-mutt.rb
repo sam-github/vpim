@@ -6,6 +6,12 @@
 # informational line
 # <email>TAB<name>[TAB<other info>]
 # ...
+#
+# For an alias command, mutt expects output of the form:
+# alias NICKNAME EMAIL
+#
+# NICKNAME shouldn't have spaces, and EMAIL can be either "user@example.com",
+# "<user@example.com>", or "User <user@example.com>".
 
 $:.unshift File.dirname($0)
 
@@ -79,7 +85,7 @@ module Mutt
       |vcard|
       # find the email addresses
       vcard.enum_by_name("email").each do |f|
-        nn = vcard['nickname']
+        nn = vcard.nickname
         nn = nn ? "\t#{nn}" : ""
         puts "#{f.value}\t#{vcard['fn']}#{nn}"
       end
@@ -93,7 +99,7 @@ module Mutt
       vcard.enum_by_name("email").each do |f|
         em = f.value
         fn = vcard['fn']
-        nn = vcard['nickname'] || fn.gsub(/\s+/,'')
+        nn = vcard.nickname || fn.gsub(/\s+/,'')
         puts "alias #{nn} #{fn} <#{em}>"
       end
     end
