@@ -7,7 +7,7 @@ require 'test/unit'
 
 include Vpim
 
-Req_1 =<<EOS
+Req_1 =<<___
 BEGIN:VCALENDAR
 METHOD:REQUEST
 PRODID:-//Lotus Development Corporation//NONSGML Notes 6.0//EN
@@ -56,9 +56,9 @@ X-LOTUS-UPDATE-SEQ:1
 X-LOTUS-UPDATE-WISL:$S:1;$L:1;$B:1;$R:1;$E:1
 END:VEVENT
 END:VCALENDAR
-EOS
+___
 
-Rep_1 =<<EOS
+Rep_1 =<<___
 BEGIN:VCALENDAR
 CALSCALE:GREGORIAN
 PRODID:-//Apple Computer\, Inc//iCal 1.5//EN
@@ -84,7 +84,7 @@ X-LOTUS-UPDATE-SEQ:1
 X-LOTUS-UPDATE-WISL:$S:1\;$L:1\;$B:1\;$R:1\;$E:1
 END:VEVENT
 END:VCALENDAR
-EOS
+___
 
 class TestIcal < Test::Unit::TestCase
 
@@ -129,6 +129,22 @@ class TestIcal < Test::Unit::TestCase
     cal.push event
 
     #puts cal.encode
+  end
+
+  # FIXME - test bad durations, like 'PT1D'
+
+  def test_duration
+    event = Icalendar::Vevent.create(Date.new(2000, 1, 21))
+    assert_equal(nil,  event.duration)
+    assert_equal(nil,  event.dtend)
+
+    event = Icalendar::Vevent.create(Date.new(2000, 1, 21),
+                                    'DURATION' => 'PT1H')
+    assert_equal(Time.gm(2000, 1, 21, 1),  event.dtend)
+
+    event = Icalendar::Vevent.create(Date.new(2000, 1, 21),
+                                    'DTEND' => Date.new(2000, 1, 22))
+    assert_equal(24*60*60, event.duration)
   end
 
   def test_decode_duration_four_weeks
