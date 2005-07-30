@@ -76,6 +76,25 @@ module Vpim
       attr_reader :description, :summary, :comment, :location
       attr_reader :properties, :fields # :nodoc:
 
+      # Create a new Vtodo object.
+      #
+      # If specified, +fields+ must be either an array of Field objects to
+      # add, or a Hash of String names to values that will be used to build
+      # Field objects. The latter is a convenient short-cut allowing the Field
+      # objects to be created for you when called like:
+      #
+      #   Vtodo.create('SUMMARY' => "buy mangos")
+      #
+      # TODO - maybe todos are usually created in a particular way? I can
+      # make it easier. Ideally, I would like to make it hard to encode an invalid
+      # Event.
+      def Vtodo.create(fields=[])
+        di = DirectoryInfo.create([], 'VTODO')
+
+        Vpim::DirectoryInfo::Field.create_array(fields).each { |f| di.push_unique f }
+
+        new(di.to_a)
+      end
 
 =begin
 I think that the initialization shouldn't be done in the #initialize, so, for example,
@@ -84,7 +103,6 @@ should be in the method below.
 
 That way, I can construct a Vtodo by just including a module for each field that is allowed
 in a Vtodo, simply.
-
 =end
       def status
         if(!@status); return nil; end
@@ -261,13 +279,12 @@ module Vpim
       # DURATION field is not present. Durations of zero seconds are possible.
       def duration
         if(!@duration)
+          return nil unless @dtend
+
           b = dtstart
           e = dtend
-          if(!e)
-            return 0
-          end
 
-          return (e - b).to_i;
+          return (e - b).to_i
         end
 
         Icalendar.decode_duration(@duration.value_raw)
