@@ -1,5 +1,8 @@
 0.15 - ...
 
+- Icalendar.create() is like Vevent.create(), it will take arrays of Fields, or
+  Hashes of String => value.
+
 - maker/vcard.rb: Added support for X-AIM, an Apple extension.
 
 0.14 - 2005-02-01
