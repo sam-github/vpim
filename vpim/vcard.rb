@@ -9,6 +9,7 @@
 =end
 
 require 'vpim/dirinfo'
+require 'vpim/vevent'
 require 'vpim/vpim'
 
 module Vpim
@@ -146,6 +147,62 @@ module Vpim
 
       fields.first ? fields.first.value : nil
     end
+
+    # The nickname or nil if there is none.
+    def nickname
+      nn = self['nickname']
+      if nn
+        nn = nn.sub(/^\s+/, '')
+        nn = nn.sub(/\s+$/, '')
+        nn = nil if nn == ''
+      end
+      nn
+    end
+
+    # Adds birthday as a repeating event to the Icalendar +cal+.
+    #
+    # Returns +cal+ on success, nil if there was no birthday field, and raises
+    # an error if the birthday field could not be expressed as a recurring
+    # event.
+    #
+    # Also, I have a lot of vcards, with dates that look like:
+    #   678-09-23
+    # The 678 is garbage, but 09-23 is really the birthday. This substitute the
+    # current year for the 3 digit year, and then converts to a Date.
+    #
+    # TODO - this would better be a Vevent.create_bday(card) that took
+    # a Vcard and created an event...
+    def bday_as_event(cal)
+      bday = self.field('BDAY')
+
+      return nil unless bday
+
+      begin
+        date = bday.to_date
+
+      rescue Vpim::InvalidEncodingError
+        if bday.value =~ /(\d+)-(\d+)-(\d+)/
+          y = $1.to_i
+          m = $2.to_i
+          d = $3.to_i
+          if(y < 1900)
+            y = Time.now.year
+          end
+          date = Date.new(y, m, d)
+        else
+          raise
+        end
+      end
+
+      cal.push Vpim::Icalendar::Vevent.create(
+        date,
+        'SUMMARY' => "Birthday for #{self['fn'].strip}",
+        'RRULE' => 'FREQ=YEARLY'
+        )
+
+      cal
+    end
+
   end
 end
 
