@@ -3,11 +3,11 @@
 # Call with --print to print RSS to stdout, otherwise it runs as a WEBrick
 # servelet on port 8080.
 #
-# This comes from an idea of Dave Thomas' that he desribed here:
+# This comes from an idea of Dave Thomas' that he described here:
 #
 #   http://pragprog.com/pragdave/Tech/Blog/ToDos.rdoc
 #
-# He generously sent me his code, and I completely rewrote it for fun.
+# He generously sent me his code, and I reimplemented it with vPim and rss/maker.
 #
 # RSS Content-Types:
 #
