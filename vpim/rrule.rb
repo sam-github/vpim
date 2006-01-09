@@ -278,7 +278,7 @@ module Vpim
                   end
                   # We are also done if current time is past the
                   # caller-requested until.
-                  if dountil && (y > dountil)
+                  if dountil && (y >= dountil)
                     return self
                   end
                   yield y
