@@ -45,7 +45,7 @@ module Vpim
 
       public
 
-      # Add an arbitrary field, +field+.
+      # Add an arbitrary Field, +field+.
       def add_field(field)
         @card << field
       end
