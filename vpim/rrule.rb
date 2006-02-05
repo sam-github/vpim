@@ -233,8 +233,8 @@ module Vpim
             when 'WEEKLY'
               # dates = byday_in_weekly(t.year, wkstart, t.month, t.day, byday)
             when 'DAILY', 'HOURLY', 'MINUTELY', 'SECONDLY'
-              # Reuse the bday_in_monthly. Current day is already specified,
-              # so this will just eliminate the current day if its no allowed
+              # Reuse the byday_in_monthly. Current day is already specified,
+              # so this will just eliminate the current day if its not allowed
               # in BYDAY.
               dates = byday_in_monthly(t.year, t.month, byday)
           end
