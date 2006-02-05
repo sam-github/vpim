@@ -70,16 +70,23 @@ module Vpim
     # They may or may not be related. For example, AddressBook.app (the OS X
     # contact manager) will export multiple selected cards in this format.
     #
-    # The card data must be UTF-8 (ASCII is valid UTF-8) or UCS-2 (2 byte
-    # Unicode). All valid vCards must begin with "BEGIN:VCARD", and the UCS-2
-    # encoding of 'B' is a the nul character (0x00) followed by the ASCII
-    # value of 'B', so the input is considered to be UCS-2 if the first
-    # character in the string is nul, and converted to UTF-8.
+    # Input data will be converted from unicode if it is detected. The heuristic
+    # is based on the first bytes in the string:
+    # - 0xEF 0xBB 0xBF: UTF-8 with a BOM, the BOM is stripped
+    # - 0xFE 0xFF: UTF-16 with a BOM (big-endian), the BOM is stripped and string
+    #   is converted to UTF-8
+    # - 0xFF 0xFE: UTF-16 with a BOM (little-endian), the BOM is stripped and string
+    #   is converted to UTF-8
+    # - 0x00 'B' or 0x00 'b': UTF-16 (big-endian), the string is converted to UTF-8
+    # - 'B' 0x00 or 'b' 0x00: UTF-16 (little-endian), the string is converted to UTF-8
     #
     # If you know that you have only one vCard, then you can decode that
     # single vCard by doing something like:
     #
     #   vcard = Vcard.decode(card_data).first
+    #
+    # Note: Should the import encoding be remembered, so that it can be reencoded in
+    # the same format?
     def Vcard.decode(card)
       if card.respond_to? :to_str
         string = card.to_str
@@ -89,15 +96,21 @@ module Vpim
         raise ArgumentError, "Vcard.decode cannot be called with a #{card.type}"
       end
 
-      # The card representation can be either UTF-8, or UCS-2. If its
-      # UCS-2, then the first byte will be 0, so check for this, and convert
-      # if necessary.
-      #
-      # We know it's 0, because the first character in a vCard must be the 'B'
-      # of "BEGIN:VCARD", and in UCS-2 all ascii are encoded as a 0 byte
-      # followed by the ASCII byte, UNICODE is great.
-      if string[0] == 0
-        string = string.unpack('n*').pack('U*')
+      case string
+        when /^\xEF\xBB\xBF/
+          string = string.sub("\xEF\xBB\xBF", '')
+        when /^\xFE\xFF/
+          arr = string.unpack('n*')
+          arr.shift
+          string = arr.pack('U*')
+        when /^\xFF\xFE/
+          arr = string.unpack('v*')
+          arr.shift
+          string = arr.pack('U*')
+        when /^\x00\x62/i
+          string = string.unpack('n*').pack('U*')
+        when /^\x62\x00/i
+          string = string.unpack('v*').pack('U*')
       end
 
       entities = Vpim.expand(Vpim.decode(string))

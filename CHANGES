@@ -1,3 +1,11 @@
+0.16 - ...
+
+- Read vCards in UTF-8 or UTF-16, big or little endian, with or without a byte
+  order mark (BOM).
+
+- Fixed bug with rrule occurences containing the end of the interval. Reported
+  with patch by Brad Ediger.
+
 0.15 - 2005-07-29
 
 - Fixed bug with param values with quoted strings, particularly a quoted string
