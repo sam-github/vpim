@@ -76,7 +76,7 @@ doc:
 	cp -r doc/* $HOME/Sites/vpim/
 	open doc/index.html
 
-V=0.15
+V=0.16
 P=vpim-$V
 R=releases/$P
 
