@@ -14,7 +14,7 @@
 # Author::     Sam Roberts <sroberts@uniserve.com>
 # Copyright::  Copyright (C) 2005 Sam Roberts
 # License::    May be distributed under the same terms as Ruby
-# Version::    0.15
+# Version::    0.16
 # Homepage::   http://vpim.rubyforge.org
 #
 # An implementation of the MIME Content-Type for Directory Information (RFC
@@ -65,7 +65,7 @@
 # - link:vcard-dump.txt: dump all the fields in a vCard
 # - link:tabbed-file-to-vcf.txt: convert a tab-delimited file to vCards, a
 #   (small but) complete application contributed by Dane G. Avilla, thanks!
-# - link:vcf-to-ics.rb: example of how to create calendars of birthdays from vcards
+# - link:vcf-to-ics.txt: example of how to create calendars of birthdays from vcards
 # 
 # iCalendar examples are:
 # - link:ics-to-rss.txt: prints todos as RSS, or starts a WEBrick servlet
@@ -80,7 +80,7 @@
 # - link:rrule.txt: utility for printing recurrence rules
 # - link:ical-dump.txt: utility for dumping contents of .ics files
 module Vpim
-  VERSION = "0.15"
+  VERSION = "0.16"
 
   # Return the API version as a string.
   def Vpim.version
