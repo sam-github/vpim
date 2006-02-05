@@ -14,7 +14,7 @@ Vpim::Vcard.decode($in).each do |card|
       card.birthday,
       "Birthday for #{card['fn'].strip}"
       )
-    STDERR.puts "#{card['fn']} -> bday #{cal.events.last.dtstart}"
+    $stderr.puts "#{card['fn']} -> bday #{cal.events.last.dtstart}"
   end
 end
 
