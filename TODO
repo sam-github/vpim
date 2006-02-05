@@ -1,22 +1,11 @@
 == 3RD PARTY
 
-todo: a OS X mail plugin that doesn't open a GUI, it just send mail....
+todo: a OS X mail plugin that doesn't open a GUI, it just sends mail....
 
 todo: cmd line tool to query KeyStore
 
 todo: cmd line tool to query AddressBook (ex: for phone numbers)
   note: can base it on the lbdb code
-
-todo: LBDB
-
-  - search on ALL fields, not just whatever it searches on
-
-  - add module to search a .vcf file or a directory of .vcf files
-
-  - it is fprinting NULLs if there is no Last Name...! (null)
-
-  - maybe it could include names without email-addrs, so I know why the names
-  aren't showing up?
 
 todo: RSS
 
@@ -73,6 +62,14 @@ todo: ics-alarm
     - .ics
     - ical
 
+todo: local-to-rss
+
+  Represent any collection of local files as a podcast, so it can be imported
+  into iTunes as a podcast.
+ 
+todo: http-to-rss
+
+  Also, any web location, crawl it for audio, and represent as a podcast.
 
 todo: ics-to-rss
   Input:
@@ -110,6 +107,15 @@ todo: ics-to-ics
   - StartupItem
   - all users, if they have a config file, like web pages
   - combine different calendars, and publish to .mac
+
+    /etc/rc finally launches /sbin/SystemStarter to handle startup items from
+    locations such as /System/Library/StartupItems and /Library/StartupItems. A
+    StartupItem is a program, usually a shell script, whose name matches the
+    folder name. The folder contains a property list file containing key-value
+    pairs such as Description, Provides, Requires, OrderPreference, start/stop
+    messages etc.  You can run SystemStarter -n -D as root to have the program
+    print debugging and dependency information (without actually running
+    anything).
 
 todo: rss-to-rss
 
