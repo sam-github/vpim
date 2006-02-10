@@ -1,9 +1,38 @@
 #!/opt/local/bin/ruby -w
 
+require 'etc'
 require 'webrick'
 require 'rss/maker'
 require 'vpim/icalendar'
 require 'vpim/vcard'
+
+# Login Windows will run Login Hooks as root, with first argument being the
+# user's login name. Drop priviledges.
+if ARGV[0] && Process.uid == 0
+  # Set environment up based on specified user
+  pw = Etc.getpwnam(ARGV[0])
+
+  ENV['HOME'] = pw.dir
+  ENV['USER'] = pw.name
+  # ENV['SHELL'] = pw.shell
+  # ENV['PATH'] = ?
+  Dir.chdir pw.dir
+  Process::Sys.setgid pw.gid
+  Process::Sys.setuid pw.uid
+
+  # Reopen stdio to somewhere useful.
+  unless STDOUT.isatty
+    STDOUT.reopen(pw.dir + "/vpimd.log", "w")
+  end
+  unless STDERR.isatty
+    STDERR.reopen(STDOUT)
+  end
+
+  puts "Start for #{pw.inspect}"
+
+  system "id"
+  system "env"
+end
 
 # Notes on debugging with dnssd API: check system.log, it should give info.
 
@@ -15,6 +44,7 @@ require 'vpim/vcard'
 #    s
 #  end
 #end
+
 
 #--------------------------------------------------------------------------------
 # Load DNSSD support, if possible.
@@ -36,23 +66,27 @@ rescue LoadError
   end
 end
 
-@services = []
-
-$stuff = []
-
-def register(name, path, protocol = 'http')
-  #@services << DNSSD.register(name, '_http._tcp', 'local', $port, 'path' => path )
-  puts "register #{name.inspect} on path #{path.inspect} with #{protocol}"
-
-  $stuff << [name, path, protocol]
-end
+#--------------------------------------------------------------------------------
+# Set up server environment.
 
 # Find the user's name and host.
 
 require 'etc'
 
-$user = Etc.getpwnam(Etc.getlogin).gecos
+$user = Etc.getpwuid(Process.uid).gecos
 $host = Socket.gethostname
+
+$services = []
+
+$stuff = []
+
+def register(name, path, protocol = 'http')
+  # $services << DNSSD.register(name, '_http._tcp', 'local', $port, 'path' => path )
+
+  puts "register #{name.inspect} on path #{path.inspect} with #{protocol}"
+
+  $stuff << [name, path, protocol]
+end
 
 # Create a HTTP server, possibly on a dynamic port.
 #   - Dynamic ports don't actually work well. While it is true we can advertise them,
@@ -93,7 +127,7 @@ server.config[:MimeTypes]['vcf'] = 'text/directory'
 
 ##### Vcard Birthdays as iCalendar
 
-$vcf_bday_file = '_all.vcf'
+$vcf_bday_file = 'vpim-bday.vcf'
 $vcf_bday_path = '/vcf/bday.ics'
 
 class VcfBdayIcsServlet < WEBrick::HTTPServlet::AbstractServlet
@@ -131,8 +165,14 @@ server.mount( $vcf_bday_path, VcfBdayIcsServlet )
 register( "Calendar for all the Birthdays in my vCards", $vcf_bday_path, 'webcal' )
 
 ##### iCalendar as calendars
+# Export local calendars two different ways
 
 $ical_folder = File.expand_path( "~/Library/Calendars" )
+
+#
+# Here we write a servlet to display all the allowed calendars with
+# webcal links, so they open in iCal.
+#
 $ical_include = /^[A-Z]/
 $ical_title = "My Calendars"
 
@@ -163,7 +203,7 @@ class IcalIcsServlet < WEBrick::HTTPServlet::AbstractServlet
       body << "<ul>\n"
       all.each do |f|
         n = f.sub('.ics', '')
-        body << "<li><a href=\"webcal://#{$host}:#{$port}/x/#{f}\">#{n}</a>\n"
+        body << "<li><a href=\"webcal://#{$host}:#{$port}/calfiles/#{f}\">#{n}</a>\n"
       end
       body << "</ul>\n"
     end
@@ -174,17 +214,23 @@ class IcalIcsServlet < WEBrick::HTTPServlet::AbstractServlet
   end
 end
 
-server.mount( '/x', IcalIcsServlet, $ical_folder, $ical_include)
+server.mount( '/calweb', IcalIcsServlet, $ical_folder, $ical_include)
 
-register( "Other", '/x', 'webcal' )
+register( "My Calendars as webcal:// Feeds", '/calweb' )
 
-server.mount( '/ical', WEBrick::HTTPServlet::FileHandler, $ical_folder, :FancyIndexing=>true )
+#
+# We use the WEBrick file servlet to actually serve calendar files.
+# FIXME - this means that if you guess someone's calendar name, you can
+# download it, despite the rudimentary secruity.
+#
+server.mount( '/calfile', WEBrick::HTTPServlet::FileHandler, $ical_folder, :FancyIndexing=>true )
 
-register( $ical_title, '/ical' )
+# For debugging...
+register( 'My Calendar Folder', '/calfile' )
 
 ##### iCalendar/todo as RSS
 
-$ics_todo_title = 'The "todo" items from my Calendars'
+$ics_todo_title = 'My Todo Items as an RSS Feed'
 $ics_todo_path  = "/ics/todo.rss"
 
 class IcalTodoRssServlet < WEBrick::HTTPServlet::AbstractServlet
@@ -238,8 +284,6 @@ class VpimServlet < WEBrick::HTTPServlet::AbstractServlet
     body = <<"EOF"
 <h1>#{$vpim_title}</h1>
 
-This the virtual "personal information" page for #{$user}.
-
 You can access:
 <ul>
 EOF
@@ -258,15 +302,15 @@ end
 
 server.mount( '/', VpimServlet )
 
-@services << DNSSD.register($vpim_title, '_http._tcp', 'local', $port, 'path' => '/' )
-
 #--------------------------------------------------------------------------------
 # Run server
+
+$services << DNSSD.register($vpim_title, '_http._tcp', 'local', $port, 'path' => '/' )
 
 ['INT', 'TERM'].each do |signal| 
   trap(signal) do
     server.shutdown
-    @services.each do |s|
+    $services.each do |s|
       s.stop
     end
   end
