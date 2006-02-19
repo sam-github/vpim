@@ -4,14 +4,9 @@ todo: a OS X mail plugin that doesn't open a GUI, it just sends mail....
 
 todo: cmd line tool to query KeyStore
 
-todo: cmd line tool to query AddressBook (ex: for phone numbers)
-  note: can base it on the lbdb code
-
 todo: RSS
 
   - add atom to rss/
-
-http://rubyforge.org/projects/daemons
 
 == UNSORTED
 
@@ -27,8 +22,6 @@ http://en.wikipedia.org/wiki/Caldav
 
 http://www.imc.org/ietf-calendar/index.html
 
-http://ietf.webdav.org/caldav/
-
 == Data Sources
 
 * SOAP Weather
@@ -36,6 +29,14 @@ http://ietf.webdav.org/caldav/
 * Evolution
   http://revolution.rubyforge.org/
 
+== UTILS - vpim.rb
+
+Todo:
+
+- Doesn't shut down on logout..., the LoginHook thing just isn't such a great
+	idea.
+
+- Being an "agent": see BPRuntimeConfig.pdf: LSUIElement, LSUIPresentationMode.
 
 == UTILS
 
@@ -46,6 +47,14 @@ Note:
 
   - WebDAV server-side:
     - implement a WEBRick servlet to handle server-side?
+
+todo: growl-to-*
+
+todo: *-to-growl
+
+Q: should growls go to all servers, or just specific ones?
+
+  - http://raa.ruby-lang.org/project/ruby-growl/
 
 todo: soap/weather-to-ics
 
@@ -62,14 +71,17 @@ todo: ics-alarm
     - .ics
     - ical
 
+
 todo: local-to-rss
 
   Represent any collection of local files as a podcast, so it can be imported
   into iTunes as a podcast.
- 
+
+
 todo: http-to-rss
 
   Also, any web location, crawl it for audio, and represent as a podcast.
+
 
 todo: ics-to-rss
   Input:
@@ -86,14 +98,18 @@ todo: ics-to-rss
   - rss versions in the URL
   - implement autodiscovery with http? what does this mean...
 
+
 todo: rss-to-jabber
+
 
 todo: ics-to-ics
   split calendars by date
 
+
 todo: ics-to-ics
   Input:
-  - iCal
+  x iCal 1
+  - iCal 2
   - .ics
 
   Output:
@@ -103,23 +119,16 @@ todo: ics-to-ics
 
   Options:
   - particular calendars
-  - Rendezvous
+  x Rendezvous
   - StartupItem
   - all users, if they have a config file, like web pages
   - combine different calendars, and publish to .mac
 
-    /etc/rc finally launches /sbin/SystemStarter to handle startup items from
-    locations such as /System/Library/StartupItems and /Library/StartupItems. A
-    StartupItem is a program, usually a shell script, whose name matches the
-    folder name. The folder contains a property list file containing key-value
-    pairs such as Description, Provides, Requires, OrderPreference, start/stop
-    messages etc.  You can run SystemStarter -n -D as root to have the program
-    print debugging and dependency information (without actually running
-    anything).
 
 todo: rss-to-rss
 
   See: feedblender - http://feedblender.rubyforge.org
+
 
 todo: vcf-to-address-book
   Input:
@@ -131,6 +140,7 @@ todo: vcf-to-address-book
 
   AB can subscribe to, at least, ldap sources. Can I use this? Can the latest
   AB have plugins?
+
 
 done: mutt-aliases-to-vcf
   Input:
@@ -159,7 +169,6 @@ todo: rss-to-ics   convert rss feed, text or URI, to ics file of todos
   - will need a decent ics encoding api
 
 
-
 todo: vcf-bday-to-ics.rb
   Input:
   - .vcf
@@ -179,9 +188,9 @@ todo: vcf-bday-to-ics.rb
 
 
 todo:
- - an application server (with plugins?) that can do ALL of the above, live,
-   so you can see local iCal as RSS, see remote iCal as RSS, publish
-   iCal as RSS, publish iCal as http (&webdav?) (with rendezvous?)
+ - an application server (with plugins?) that can do ALL of the above
+
+ - http://raa.ruby-lang.org/project/plist/
 
  - web-based config?
 
