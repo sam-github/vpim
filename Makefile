@@ -38,13 +38,13 @@ other:
 
 .PHONY: tags
 tags:
-	exctags -R vpim #rss
-	RUBYLIB=/Users/sam/p/ruby/ruby/lib rdoc18 -f tags vpim #rss
+	exctags -R lib #rss
+	RUBYLIB=/Users/sam/p/ruby/ruby/lib rdoc18 -f tags lib
 	mv tags tags.ctags
 	sort tags.ctags tags.rdoc > tags
 
 ri:
-	rdoc18 -f ri vpim
+	rdoc18 -f ri lib
 
 open:
 	open doc/index.html
@@ -67,7 +67,7 @@ SAMPLES := \
 
 doc:
 	rm -rf doc/
-	rdoc18 $(RDFLAGS) vpim CHANGES COPYING README README.mutt
+	rdoc18 $(RDFLAGS) lib CHANGES COPYING README README.mutt
 	for s in $(SAMPLES); do cp $$s doc/`basename $$s .rb`.txt; done
 	cp etc/rfc24*.txt doc/
 	chmod u=rw doc/*.txt
@@ -86,7 +86,7 @@ install:
 	for r in /usr/bin/ruby /opt/local/bin/ruby ruby18; do (cd $R; $$r install.rb config; sudo $$r install.rb install); done
 
 stamp:
-	ruby -pi~ -e '$$_.gsub!(/0\.\d+(bis|[a-z])?/, "$V")' vpim/vpim.rb
+	ruby -pi~ -e '$$_.gsub!(/0\.\d+(bis|[a-z])?/, "$V")' lib/vpim/vpim.rb
 
 pkg:
 	rm -rf $R/*
@@ -97,8 +97,8 @@ pkg:
 	mkdir -p $R/samples
 	mkdir -p $R/etc
 	cp COPYING README CHANGES install.rb $R/
-	cp vpim/*.rb           $R/lib/vpim/
-	cp vpim/maker/*.rb     $R/lib/vpim/maker/
+	cp lib/vpim/*.rb           $R/lib/vpim/
+	cp lib/vpim/maker/*.rb     $R/lib/vpim/maker/
 	cp etc/rfc2425.txt     $R/etc
 	cp etc/rfc2426.txt     $R/etc
 	cp etc/rfc2445.txt     $R/etc
