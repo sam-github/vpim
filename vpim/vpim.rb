@@ -12,7 +12,7 @@
 #:title:vpim - a library to manipulate vCards and iCalendars
 #
 # Author::     Sam Roberts <sroberts@uniserve.com>
-# Copyright::  Copyright (C) 2005 Sam Roberts
+# Copyright::  Copyright (C) 2006 Sam Roberts
 # License::    May be distributed under the same terms as Ruby
 # Version::    0.16
 # Homepage::   http://vpim.rubyforge.org
