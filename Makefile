@@ -80,13 +80,17 @@ V=0.16
 P=vpim-$V
 R=releases/$P
 
-release: stamp doc pkg
+release: stamp doc pkg gem
 
 install:
 	for r in /usr/bin/ruby /opt/local/bin/ruby ruby18; do (cd $R; $$r install.rb config; sudo $$r install.rb install); done
 
 stamp:
-	ruby -pi~ -e '$$_.gsub!(/0\.\d+(bis|[a-z])?/, "$V")' lib/vpim/vpim.rb
+	ruby -pi~ -e '$$_.gsub!(/0\.\d+(bis|[a-z])?/, "$V")' lib/vpim/vpim.rb vpim.gemspec
+
+gem:
+	ruby18 vpim.gemspec
+	mv vpim-$V.gem releases/
 
 pkg:
 	rm -rf $R/*

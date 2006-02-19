@@ -1,4 +1,6 @@
-0.16 - ...
+0.16 - 2006-02-19
+
+- Packaged in gem format, experimental.
 
 - Read vCards in UTF-8 or UTF-16, big or little endian, with or without a byte
   order mark (BOM).
