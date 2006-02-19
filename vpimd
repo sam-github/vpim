@@ -6,33 +6,54 @@ require 'rss/maker'
 require 'vpim/icalendar'
 require 'vpim/vcard'
 
-# Login Windows will run Login Hooks as root, with first argument being the
-# user's login name. Drop priviledges.
+# Can we redirect IO to syslog?
+
+STDOUT.reopen("/Users/sam/vpimd.err", "w")
+STDERR.reopen(STDOUT)
+
+puts "here 0"
+
+# OS X Login Windows will run Login Hooks as root, with first argument being
+# the user's login name. Drop root-privilege.
+#
+# Notes:
+# - LoginHook must be set system-wide (with sudo), or it won't run. From OS 10.? on.
+# - LoginHook must return to the Login Window for login to resume.
 if ARGV[0] && Process.uid == 0
   # Set environment up based on specified user
   pw = Etc.getpwnam(ARGV[0])
 
   ENV['HOME'] = pw.dir
   ENV['USER'] = pw.name
-  # ENV['SHELL'] = pw.shell
+  # ENV['SHELL'] = pw.shell?
   # ENV['PATH'] = ?
   Dir.chdir pw.dir
+
   Process::Sys.setgid pw.gid
   Process::Sys.setuid pw.uid
+  # or perhaps:
+  # Process.initgroups
+  # Process.gid=
+  # Process.uid=
 
-  # Reopen stdio to somewhere useful.
-  unless STDOUT.isatty
-    STDOUT.reopen(pw.dir + "/vpimd.log", "w")
+  if pid = Kernel.fork
+    puts "Child #{pid}"
+    exit 0
   end
-  unless STDERR.isatty
-    STDERR.reopen(STDOUT)
-  end
-
-  puts "Start for #{pw.inspect}"
-
-  system "id"
-  system "env"
 end
+
+$LOG = Dir.getwd + "/vpimd.log"
+
+puts "Open log: #{$LOG}"
+
+# Reopen io to somewhere useful.
+unless STDOUT.isatty
+  STDOUT.reopen($LOG, "w")
+  STDERR.reopen(STDOUT)
+end
+
+system "/usr/bin/id"
+system "/usr/bin/env"
 
 # Notes on debugging with dnssd API: check system.log, it should give info.
 
@@ -203,7 +224,7 @@ class IcalIcsServlet < WEBrick::HTTPServlet::AbstractServlet
       body << "<ul>\n"
       all.each do |f|
         n = f.sub('.ics', '')
-        body << "<li><a href=\"webcal://#{$host}:#{$port}/calfiles/#{f}\">#{n}</a>\n"
+        body << "<li><a href=\"webcal://#{$host}:#{$port}/calfile/#{f}\">#{n}</a>\n"
       end
       body << "</ul>\n"
     end
@@ -221,7 +242,7 @@ register( "My Calendars as webcal:// Feeds", '/calweb' )
 #
 # We use the WEBrick file servlet to actually serve calendar files.
 # FIXME - this means that if you guess someone's calendar name, you can
-# download it, despite the rudimentary secruity.
+# download it, despite the rudimentary security.
 #
 server.mount( '/calfile', WEBrick::HTTPServlet::FileHandler, $ical_folder, :FancyIndexing=>true )
 
@@ -317,4 +338,7 @@ $services << DNSSD.register($vpim_title, '_http._tcp', 'local', $port, 'path' =>
 end
 
 server.start
+
+# TODO - cleanup err.log on success
+
 
