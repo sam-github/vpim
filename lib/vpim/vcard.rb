@@ -30,7 +30,7 @@ module Vpim
   #
   # TODO - an open question is what exactly "vcard 2.1" support means. While I
   # decode vCard 2.1 correctly, I don't encode it. Should I implement a
-  # transcoder, to vCards can be decoded from either version, and then written
+  # transcoder, so vCards can be decoded from either version, and then written
   # to either version? Maybe an option to Field#encode()?
   #
   # TODO - there are very few methods that Vcard has that DirectoryInfo
@@ -44,9 +44,9 @@ module Vpim
   # Here's an example of encoding a simple vCard using the low-level API:
   #
   #   card = Vpim::Vcard.create
-  #   card << Vpim::DirectoryInfo::Field.create('email', user.name@example.com, 'type' => "internet" )
-  #   card << Vpim::DirectoryInfo::Field.create('url', "http://www.example.com/user" )
-  #   card << Vpim::DirectoryInfo::Field.create('fn', "User Name" )
+  #   card << Vpim::DirectoryInfo::Field.create('email', 'user.name@example.com', 'type' => 'internet' )
+  #   card << Vpim::DirectoryInfo::Field.create('url', 'http://www.example.com/user' )
+  #   card << Vpim::DirectoryInfo::Field.create('fn', 'User Name' )
   #   puts card.to_s
   #
   # New! Use the Vpim::Maker::Vcard to make vCards!
