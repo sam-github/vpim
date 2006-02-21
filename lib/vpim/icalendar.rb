@@ -313,17 +313,10 @@ module Vpim
     # END:VCALENDAR), multiple iCalendars can be concatenated into a single
     # file.
     #
-    # cal must be either a string, or an IO object.
-    def Icalendar.decode(cal)
-      if cal.respond_to? :to_str
-        string = cal.to_str
-      elsif cal.kind_of? IO
-        string = cal.read(nil)
-      else
-        raise ArgumentError, "Icalendar.decode cannot be called with a #{cal.type}"
-      end
-
-      entities = Vpim.expand(Vpim.decode(string))
+    # cal must be String or IO, or implement #each by returning
+    # each line in the input as those classes do.
+    def Icalendar.decode(cal, e = nil)
+      entities = Vpim.expand(Vpim.decode(cal))
 
       # Since all iCalendars must have a begin/end, the top-level should
       # consist entirely of entities/arrays, even if its a single iCalendar.

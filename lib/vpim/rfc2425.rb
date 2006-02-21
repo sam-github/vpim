@@ -62,19 +62,18 @@ module Vpim
   # Split on \r\n or \n to get the lines, unfold continued lines (they
   # start with ' ' or \t), and return the array of unfolded lines.
   #
-  # This also implements the (invalid) encoding convention of allowing empty
-  # lines to be inserted for readability - it does this by dropping
-  # zero-length lines.
+  # This also supports the (invalid) encoding convention of allowing empty
+  # lines to be inserted for readability - it does this by dropping zero-length
+  # lines.
   def Vpim.unfold(card) #:nodoc:
       unfolded = []
 
-      card.split(/\r?\n/).each do
-        |line|
-
+      card.each do |line|
+        line.chomp!
         # If it's a continuation line, add it to the last.
         # If it's an empty line, drop it from the input.
         if( line =~ /^[ \t]/ )
-            unfolded << unfolded.pop + line[1, line.size-1]
+          unfolded[-1] << line[1, line.size-1]
         elsif( line =~ /^$/ )
         else
           unfolded << line
