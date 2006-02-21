@@ -237,15 +237,13 @@ Can I get RAA synced up to rubyforge?
 
 == FEATURES
 
-- deal better with BOM, and vCards: http://en.wikipedia.org/wiki/Byte_Order_Mark
-
 - complete RRULE support
 
 - icalendar maker
 
-- streaming decoder
+- streaming decoder?
 
-- streaming encoder
+- streaming encoder?
 
   maker, take OUT as a param, append fields using << ? then if it's an IO it will
   be a push encoder, can default to Vcard#create.
@@ -300,6 +298,7 @@ I need to keep my own date/time, and not use Time as the basic object in my iter
 
 Then, I can eliminate non-existent times before yielding them.
 
+- the rrule tests depended on being in EST/EDT, so no longer pass...
 
 - when encoding a Date or Time, set value=date/value=date-time parameter.
 

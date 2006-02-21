@@ -1,4 +1,4 @@
-#!/usr/bin/ruby -w
+#!/usr/bin/env ruby
 
 $:.unshift File.dirname($0)
 
@@ -90,8 +90,6 @@ class TestRrule < Test::Unit::TestCase
       t.strftime("(%Y %I:%M %p %Z)%B %d")
     }
 
-    pp got
-
     if expected && got != expected
       puts "length: got=#{got.length} expected=#{expected.length}"
       (0..expected.length).each do |i|
@@ -99,12 +97,10 @@ class TestRrule < Test::Unit::TestCase
           puts sprintf("%d: %34s %s %s", i, got[i], got[i] == expected[i] ? '==' : '!=', expected[i])
         end
       end
-      raise "!! got != expected"
+      p got
+      p expected
     end
-
-    puts
-
-    got
+    assert_equal(expected, got)
   end
 
 def test_rfc2445_examples

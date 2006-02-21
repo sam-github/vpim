@@ -269,7 +269,7 @@ class IcalTodoRssServlet < WEBrick::HTTPServlet::AbstractServlet
       maker.image.title = "maker.image.title"
 
       Dir[ $ical_folder + "/*.ics" ].each do |file|
-        # todo: use the open with a block variant
+        # TODO: use the open with a block variant
         Vpim::Icalendar.decode(File.open(file)).each do |cal|
           cal.todos.each do |todo|
             if !todo.status || todo.status.upcase != "COMPLETED"

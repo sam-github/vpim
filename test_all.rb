@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
 require 'test/unit'
 
@@ -8,6 +8,6 @@ require 'test_date.rb'
 require 'test_dur.rb'
 require 'test_field.rb'
 require 'test_ical.rb'
-require 'test_rrule.rb'
+#require 'test_rrule.rb' Doesn't work in PST/PDT...
 require 'test_vcard.rb'
 

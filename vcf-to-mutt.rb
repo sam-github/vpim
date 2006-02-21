@@ -1,5 +1,4 @@
-#!/usr/bin/ruby -w
-# $Id: vcf-to-mutt.rb,v 1.1 2004/12/04 23:12:18 sam Exp $
+#!/usr/bin/env ruby
 #
 # For a query command, mutt expects output of the form:
 #

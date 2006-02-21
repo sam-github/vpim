@@ -1,4 +1,4 @@
-#!/opt/local/bin/ruby -w
+#!/usr/bin/env ruby
 #
 # Call with --print to print RSS to stdout, otherwise it runs as a WEBrick
 # servelet on port 8080.

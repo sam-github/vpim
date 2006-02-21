@@ -1,4 +1,4 @@
-#!/opt/local/bin/ruby -w
+#!/usr/bin/env ruby
 
 require 'vpim/vcard'
 require 'vpim/icalendar'

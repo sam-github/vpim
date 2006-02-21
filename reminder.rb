@@ -1,5 +1,4 @@
-#!/usr/local/bin/ruby18 -w
-# $Id: reminder.rb,v 1.7 2004/11/21 18:30:13 sam Exp $
+#!/usr/bin/env ruby
 
 $:.unshift File.dirname($0)
 

@@ -1,4 +1,4 @@
-#!/usr/bin/ruby -w
+#!/usr/bin/env ruby
 #
 # Calendars are in ~/Library/Calendars/
 
