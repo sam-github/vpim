@@ -1,6 +1,4 @@
 =begin
-  $Id: field.rb,v 1.11 2005/01/07 03:32:16 sam Exp $
-
   Copyright (C) 2005 Sam Roberts
 
   This library is free software; you can redistribute it and/or modify it

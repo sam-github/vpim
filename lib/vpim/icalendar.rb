@@ -1,6 +1,4 @@
 =begin
-  $Id: icalendar.rb,v 1.24 2005/01/07 03:32:44 sam Exp $
-
   Copyright (C) 2005 Sam Roberts
 
   This library is free software; you can redistribute it and/or modify it

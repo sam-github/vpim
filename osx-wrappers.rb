@@ -1,6 +1,3 @@
-# $Id: osx-wrappers.rb,v 1.3 2005/01/01 17:16:07 sam Exp $
-# $Name: HEAD $
-#
 # OSX wrapper methods.
 #
 # The OSX classes are mirrored fairly directly into ruby by ruby/cocoa. Too

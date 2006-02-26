@@ -1,6 +1,4 @@
 =begin
-  $Id: vevent.rb,v 1.12 2005/01/21 04:09:55 sam Exp $
-
   Copyright (C) 2005 Sam Roberts
 
   This library is free software; you can redistribute it and/or modify it

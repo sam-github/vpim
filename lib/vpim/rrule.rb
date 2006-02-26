@@ -1,6 +1,4 @@
 =begin
-  $Id: rrule.rb,v 1.18 2005/01/23 22:19:48 sam Exp $
-
   Copyright (C) 2005 Sam Roberts
 
   This library is free software; you can redistribute it and/or modify it

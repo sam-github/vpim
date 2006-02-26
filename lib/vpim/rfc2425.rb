@@ -1,6 +1,4 @@
 =begin
-  $Id: rfc2425.rb,v 1.10 2005/01/01 17:17:01 sam Exp $
-
   Copyright (C) 2005 Sam Roberts
 
   This library is free software; you can redistribute it and/or modify it

@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-# $Id: ab-query.rb,v 1.5 2004/03/21 15:07:41 sam Exp $
 
 $:.unshift File.dirname($0)
 

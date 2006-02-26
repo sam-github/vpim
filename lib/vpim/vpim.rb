@@ -1,6 +1,4 @@
 =begin
-  $Id: vpim.rb,v 1.20 2005/02/04 21:31:12 sam Exp $
-
   Copyright (C) 2005 Sam Roberts
 
   This library is free software; you can redistribute it and/or modify it

@@ -1,5 +1,3 @@
-# $Id: ex_mkvcard.rb,v 1.5 2005/02/04 21:32:31 sam Exp $
-
 require 'vpim/maker/vcard'
 
 card = Vpim::Maker::Vcard.make('Jimmy Death') do |card|

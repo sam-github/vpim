@@ -1,6 +1,4 @@
 =begin
-  $Id: vcard.rb,v 1.13 2004/12/05 03:16:33 sam Exp $
-
   Copyright (C) 2005 Sam Roberts
 
   This library is free software; you can redistribute it and/or modify it

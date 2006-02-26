@@ -1,6 +1,4 @@
 =begin
-  $Id: date.rb,v 1.8 2004/11/17 05:06:27 sam Exp $
-
   Copyright (C) 2005 Sam Roberts
 
   This library is free software; you can redistribute it and/or modify it
