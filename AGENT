@@ -1,0 +1,216 @@
+== 3RD PARTY
+
+todo: a OS X mail plugin that doesn't open a GUI, it just sends mail....
+
+todo: cmd line tool to query KeyStore
+
+todo: RSS
+
+  - add atom to rss/
+
+== UNSORTED
+
+iTip protocol binding for IM protocols
+
+http://linux.slashdot.org/article.pl?sid=05/02/15/2228204
+
+http://jwz.livejournal.com/
+
+http://www.groupdav.org/
+
+http://en.wikipedia.org/wiki/Caldav
+
+http://www.imc.org/ietf-calendar/index.html
+
+== Data Sources
+
+* SOAP Weather
+
+* Evolution
+  http://revolution.rubyforge.org/
+
+== UTILS - vpim.rb
+
+Todo:
+
+- Doesn't shut down on logout..., the LoginHook thing just isn't such a great
+	idea.
+
+- Being an "agent": see BPRuntimeConfig.pdf: LSUIElement, LSUIPresentationMode.
+
+== UTILS
+
+Note:
+  - WebDAV client-side:
+    - http://raa.ruby-lang.org/project/libneon-ruby/
+    - http://www.webdav.org/neon/
+
+  - WebDAV server-side:
+    - implement a WEBRick servlet to handle server-side?
+
+todo: growl-to-*
+
+todo: *-to-growl
+
+Q: should growls go to all servers, or just specific ones?
+
+  - http://raa.ruby-lang.org/project/ruby-growl/
+
+todo: soap/weather-to-ics
+
+  Query weather reports using SOAP, represent as iCalendars.
+
+
+todo: ics-alarm
+  A really, really fast way of adding an alarm to iCalendar, i.e., 3 min, check the kettle.
+
+  Input:
+    - a time offset, and an action
+
+  Output:
+    - .ics
+    - ical
+
+
+todo: local-to-rss
+
+  Represent any collection of local files as a podcast, so it can be imported
+  into iTunes as a podcast.
+
+
+todo: http-to-rss
+
+  Also, any web location, crawl it for audio, and represent as a podcast.
+
+
+todo: ics-to-rss
+  Input:
+  - ~/Library/Calendars/
+  - .ics, ../*.ics
+
+  Output:
+  - CGI
+  - stdout
+  - http
+
+  Options:
+  - rss versions
+  - rss versions in the URL
+  - implement autodiscovery with http? what does this mean...
+
+
+todo: rss-to-jabber
+
+
+todo: ics-to-ics
+  split calendars by date
+
+
+todo: ics-to-ics
+  Input:
+  x iCal 1
+  - iCal 2
+  - .ics
+
+  Output:
+  - http (subscribable)
+  - CAP
+  - WebDAV
+
+  Options:
+  - particular calendars
+  x Rendezvous
+  - StartupItem
+  - all users, if they have a config file, like web pages
+  - combine different calendars, and publish to .mac
+
+
+todo: rss-to-rss
+
+  See: feedblender - http://feedblender.rubyforge.org
+
+
+todo: vcf-to-address-book
+  Input:
+  - .vcf
+  - AB
+
+  Output:
+  - LDAP?
+
+  AB can subscribe to, at least, ldap sources. Can I use this? Can the latest
+  AB have plugins?
+
+
+done: mutt-aliases-to-vcf
+  Input:
+  - mutt aliases
+
+  Output
+  - .vcf
+
+
+todo: rss-to-ics   convert rss feed, text or URI, to ics file of todos
+  Input:
+  - .xml
+  - http
+  - http with autodiscovery?
+
+  Output:
+  - http: a subscribable calendar
+  - .ics
+
+  Options:
+  - RSS -> VTODO
+  - RSS -> VEVENT
+  - RSS -> VJOURNAL
+  
+  Notes:
+  - will need a decent ics encoding api
+
+
+todo: vcf-bday-to-ics.rb
+  Input:
+  - .vcf
+  - AB
+
+  Output:
+  - .ics
+  - http
+  - RSS??! maybe only see bdays within the next month, as a reminder?
+  - cvt vcf file to ics file of birthdays
+  - pull from Address Book, or from .vcf file
+
+  Options:
+  - bday -> VTODO
+  - bday -> VEVENT
+  - bday +  VALARM
+
+
+todo:
+ - an application server (with plugins?) that can do ALL of the above
+
+ - http://raa.ruby-lang.org/project/plist/
+
+ - web-based config?
+
+ - obj-c config panel?
+
+ - don't have to do it manually, can make iCal auto-subscribe, and make
+   NetNewsWire auto-subscribe, etc.
+
+
+done: vcf-to-mutt
+  Input:
+  x .vcf
+  - AB -> DON'T DO
+
+  Output:
+  x mutt aliases
+  x Mutt query
+
+  Options:
+  - group the output into whatever the AB groups are? DON'T DO
+  x use search criteria (like only the "pref" email)
+
+
