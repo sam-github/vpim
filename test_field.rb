@@ -10,18 +10,24 @@ Field=Vpim::DirectoryInfo::Field
 
 class TestField < Test::Unit::TestCase
 
+  def test_field4
+    line = 't;e=a,b: 4 '
+    part = Field.decode0(line)
+    assert_equal("4", part[ 3 ])
+  end
+
   def test_field3
     line = 't;e=a,b:4'
     part = Field.decode0(line)
     assert_equal("4", part[ 3 ])
-    assert_equal( {'e' => [ 'a','b' ] }, part[ 2 ])
+    assert_equal( {'E' => [ 'a','b' ] }, part[ 2 ])
   end
 
   def test_field2
     line = 'tel;type=work,voice,msg:+1 313 747-4454'
     part = Field.decode0(line)
     assert_equal("+1 313 747-4454", part[ 3 ])
-    assert_equal( {'type' => [ 'work','voice','msg' ] }, part[ 2 ])
+    assert_equal( {'TYPE' => [ 'work','voice','msg' ] }, part[ 2 ])
   end
 
   def test_field1
@@ -30,23 +36,39 @@ class TestField < Test::Unit::TestCase
 
     assert_equal(nil, parts[0])
     assert_equal('ORGANIZER', parts[1])
-    assert_equal({ 'cn' => [ "xxxx, xxxx [SC100:370:EXCH]" ] }, parts[2])
+    assert_equal({ 'CN' => [ "xxxx, xxxx [SC100:370:EXCH]" ] }, parts[2])
     assert_equal('MAILTO:xxxx@americasm01.nt.com', parts[3])
-
   end
+
+=begin this can not be done :-(
+  def test_case_equiv
+    line = 'ORGANIZER;CN="xxxx, xxxx [SC100:370:EXCH]":MAILTO:xxxx@americasm01.nt.com'
+    field = Field.decode(line)
+    assert_equal(true, field.name?('organIZER'))
+    assert_equal(true, field === 'organIZER')
+
+    b = nil
+    case field
+    when 'organIZER'
+      b = true
+    end
+
+    assert_equal(true, b)
+  end
+=end
 
   def test_field0
     assert_equal('name:', line = Field.encode0(nil, 'name'))
-    assert_equal([ nil, 'name', {}, ''], Field.decode0(line))
+    assert_equal([ nil, 'NAME', {}, ''], Field.decode0(line))
 
     assert_equal('name:value', line = Field.encode0(nil, 'name', {}, 'value'))
-    assert_equal([ nil, 'name', {}, 'value'], Field.decode0(line))
+    assert_equal([ nil, 'NAME', {}, 'value'], Field.decode0(line))
 
     assert_equal('name;encoding=b:dmFsdWU=', line = Field.encode0(nil, 'name', { 'encoding'=>:b64 }, 'value'))
-    assert_equal([ nil, 'name', { 'encoding'=>['b']}, ['value'].pack('m').chomp ], Field.decode0(line))
+    assert_equal([ nil, 'NAME', { 'ENCODING'=>['b']}, ['value'].pack('m').chomp ], Field.decode0(line))
 
     assert_equal('group.name:value', line = Field.encode0('group', 'name', {}, 'value'))
-    assert_equal([ 'group', 'name', {}, 'value'], Field.decode0(line))
+    assert_equal([ 'GROUP', 'NAME', {}, 'value'], Field.decode0(line))
   end
 
   def tEst_invalid_fields
@@ -73,31 +95,31 @@ class TestField < Test::Unit::TestCase
     assert_equal('z', f.value)
 
     f.group = 'z.b'
-    assert_equal('z.b', f.group)
-    assert_equal("z.b.name:z\n", f.encode)
+    assert_equal('Z.B', f.group)
+    assert_equal("z.b.NAME:z\n", f.encode)
 
     assert_raises(TypeError) { f.value = :group }
 
-    assert_equal('z.b', f.group)
+    assert_equal('Z.B', f.group)
 
-    assert_equal("z.b.name:z\n", f.encode)
+    assert_equal("z.b.NAME:z\n", f.encode)
 
     assert_raises(TypeError) { f.group = :group }
 
-    assert_equal("z.b.name:z\n", f.encode)
-    assert_equal('z.b', f.group)
+    assert_equal("z.b.NAME:z\n", f.encode)
+    assert_equal('Z.B', f.group)
 
     f['p0'] = "hi julie"
 
-    assert_equal("z.b.name;p0=hi julie:z\n", f.encode)
+    assert_equal("Z.B.NAME;P0=hi julie:z\n", f.encode)
     assert_equal(['hi julie'], f.param('p0'))
     assert_equal(['hi julie'], f['p0'])
-    assert_equal('name', f.name)
-    assert_equal('z.b', f.group)
+    assert_equal('NAME', f.name)
+    assert_equal('Z.B', f.group)
 
     # FAIL   assert_raises(ArgumentError) { f.group = 'z.b:' }
 
-    assert_equal('z.b', f.group)
+    assert_equal('Z.B', f.group)
 
     f.value = 'some text'
     

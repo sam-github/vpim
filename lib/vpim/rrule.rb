@@ -84,7 +84,7 @@ module Vpim
 
            case key
            when 'FREQ'
-             @freq = value.upcase
+             @freq = value
 
            when 'UNTIL'
              if @count

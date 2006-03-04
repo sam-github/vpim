@@ -2,6 +2,9 @@ ensemble:~/p/ruby/vpim/trunk % ruby -I lib profile.rb
   %   cumulative   self              self     total
  time   seconds   seconds    calls  ms/call  ms/call  name
  21.81    68.34     68.34    79313     0.86     1.33  Vpim::DirectoryInfo::Field#name?
+
+Ruby1.8 has #casecmp! Make Vpim.casecmp() that uses it, if available?
+
  19.56   129.63     61.29    16916     3.62    42.75  Array#each
   7.98   154.64     25.01    66300     0.38     1.78  Proc#call
   6.76   175.83     21.19   167734     0.13     0.13  String#downcase

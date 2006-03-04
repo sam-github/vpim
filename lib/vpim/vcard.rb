@@ -148,27 +148,84 @@ module Vpim
     def [](name, type=nil)
       fields = enum_by_name(name).find_all { |f| type == nil || f.type?(type) }
 
-      # limit to preferred, if possible
-      pref = fields.find_all { |f| f.pref? }
+      valued = fields.select { |f| f.value != '' }
+      if valued.first
+        fields = valued
+      end
 
-      if(pref.first)
+      # limit to preferred, if possible
+      pref = fields.select { |f| f.pref? }
+
+      if pref.first
         fields = pref
       end
 
       fields.first ? fields.first.value : nil
     end
 
+    # The name from a vCard, including all the components of the N: and FN:
+    # fields.
+
+    class Name
+      # family name from N:
+      attr_reader :family
+      # given name from N:
+      attr_reader :given
+      # additional names from N:
+      attr_reader :additional
+      # such as "Ms." or "Dr.", from N:
+      attr_reader :prefix
+      # such as "BFA", from N:
+      attr_reader :suffix
+      # all the components of N: formtted as "#{prefix} #{given} #{additional} #{family}, #{suffix}"
+      attr_reader :formatted
+      # full name, the FN: field, a formatted version of the N: field, probably
+      # in a form more align with the cultural conventions of the vCard owner
+      # than +formatted+ is
+      attr_reader :fullname
+
+      def initialize(n, fn) #:nodoc:
+        n = Vpim.decode_list(n, ';') do |item|
+          item.strip
+        end
+
+        @family     = n[0] || ""
+        @given      = n[1] || ""
+        @additional = n[2] || ""
+        @prefix     = n[3] || ""
+        @suffix     = n[4] || ""
+        @formatted = [ @prefix, @given, @additional, @family ].map{|i| i == '' ? nil : i}.compact.join(' ')
+        if @suffix != ''
+          @formatted << ', ' << @suffix
+        end
+
+        # FIXME - make calls to #fullname fail if fn is nil
+        @fullname = fn
+      end
+
+    end
+
+    # Returns the +name+ fields, N: and FN:, as a Name.
+    def name
+      unless instance_variables.include? '@name'
+        @name = Name.new(self['N'], self['FN'])
+      end
+      @name
+    end
+
     # The nickname or nil if there is none.
     def nickname
       nn = self['nickname']
-      if nn
-        nn = nn.sub(/^\s+/, '')
-        nn = nn.sub(/\s+$/, '')
-        nn = nil if nn == ''
+      if nn && nn == ''
+        nn = nil
       end
       nn
     end
 
+    # All the nicknames, [] if there are none.
+    def nicknames
+      enum_by_name('NICKNAME').select{|f| f.value != ''}.collect{|f| f.value}
+    end
 
     # Returns the birthday as a Date on success, nil if there was no birthday
     # field, and raises an error if the birthday field could not be expressed

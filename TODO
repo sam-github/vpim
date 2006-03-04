@@ -217,18 +217,9 @@ done: vcf-to-mutt
 
 == PACKAGING
 
-- Package:
-  - gem
-    
-  - Port
-    
-  - debian, done?
-
 Check packaging guidelines:
 
   http://www.rubygarden.org/ruby?QuickGuideToPackaging
-
-Can I get RAA synced up to rubyforge?
 
 - ri docs during install?
 
@@ -247,6 +238,9 @@ Can I get RAA synced up to rubyforge?
 
   maker, take OUT as a param, append fields using << ? then if it's an IO it will
   be a push encoder, can default to Vcard#create.
+
+	---> nice idea, but it breaks the check for duplicates I'm doing...
+
 
 - valarms
 
@@ -279,6 +273,9 @@ Can I get RAA synced up to rubyforge?
 
 
 == CLEANUPS/BUGS
+
+- perfect round trip decode/encode - make Field take the entire line, with
+	embedded newlines?
 
 -
 
@@ -341,8 +338,6 @@ Then, I can eliminate non-existent times before yielding them.
      DTSTART;TZID=US-Eastern:19970714T133000  ;Local time and time zone reference
 
   Done?
-
-- deal with BOM (there's some test vcfs from macnerd2k@yahoo.com in =l.vcard)
 
 - don't allow quoted-printable encodings if version is 3.0
 

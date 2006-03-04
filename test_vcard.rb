@@ -10,6 +10,14 @@ require 'pp'
 
 include Vpim
 
+# Test equivalence where whitespace is compressed.
+def assert_equal_nospace(expected, got)
+  expected = expected.gsub(/\s+/,'')
+  got = expected.gsub(/\s+/,'')
+  assert_equal(expected, got)
+end
+
+
 # Test cases: multiple occurences of type
 =begin
 begin:VCARD
@@ -36,6 +44,7 @@ class TestVcard < Test::Unit::TestCase
   # RFC2425 - 8.1. Example 1
   # Note that this is NOT a valid vCard, it lacks BEGIN/END.
   EX1 =<<'EOF'
+cn:  
 cn:Babs Jensen
 cn:Barbara J Jensen
 sn:Jensen
@@ -47,7 +56,7 @@ EOF
     card = nil
     ex1 = EX1
     assert_nothing_thrown { card = Vpim::DirectoryInfo.decode(ex1) }
-    assert_equal(EX1, card.to_s)
+    assert_equal_nospace(EX1, card.to_s)
 
     assert_equal("Babs Jensen", card["cn"])
     assert_equal("Jensen",      card["sn"])
@@ -79,6 +88,11 @@ end:VCARD
     assert_equal(EX2, card.encode(0))
     assert_raises(InvalidEncodingError) { card.version }
 
+    assert_equal("Bj=F8rn Jensen", card.name.fullname)
+    assert_equal("Jensen",  card.name.family)
+    assert_equal("Bj=F8rn", card.name.given)
+    assert_equal("",        card.name.prefix)
+
     assert_equal("Bj=F8rn Jensen", card[ "fn" ])
     assert_equal("+1 313 747-4454", card[ "tEL" ])
 
@@ -90,7 +104,7 @@ end:VCARD
     assert_equal(["internet"], card.enum_by_name("Email").entries.first.param("Type"))
     assert_equal(nil,          card.enum_by_name("Email").entries[0].param("foo"))
 
-    assert_equal(["b"],        card.enum_by_name("kEy").to_a.first.param("encoding"))
+    assert_equal(["B"],        card.enum_by_name("kEy").to_a.first.param("encoding"))
     assert_equal("b",          card.enum_by_name("kEy").entries[0].encoding)
 
     assert_equal(["work", "voice", "msg"], card.enum_by_name("tel").entries[0].param("Type"))
@@ -106,7 +120,6 @@ end:VCARD
     assert_equal("dGhpcyBjb3VsZCBiZSAKbXkgY2VydGlmaWNhdGUK", card.enum_by_name("key").entries.first.value_raw)
 
     assert_equal("this could be \nmy certificate\n", card.enum_by_name("key").entries.first.value)
-
   end
 
 =begin
@@ -172,6 +185,12 @@ EOF
     card = nil
     assert_nothing_thrown { card = Vpim::Vcard.decode(EX_APPLE1).first }
 
+    assert_equal("Roberts Sam", card.name.fullname)
+    assert_equal("Roberts",  card.name.family)
+    assert_equal("Sam", card.name.given)
+    assert_equal("",        card.name.prefix)
+    assert_equal("",        card.name.suffix)
+
     assert_equal(EX_APPLE1, card.to_s(64))
 
     check_ex_apple1(card)
@@ -196,11 +215,26 @@ begin:vcard
 nickname:     Big Joey 
 end:vcard
 EOF
+NICKNAME4=<<'EOF'
+begin:vcard
+nickname:    
+nickname:     Big Joey 
+end:vcard
+EOF
+NICKNAME5=<<'EOF'
+begin:vcard
+nickname:    
+nickname:     Big Joey 
+nickname:Bob
+end:vcard
+EOF
   def test_nickname
     assert_equal(nil,          Vpim::Vcard.decode(NICKNAME0).first.nickname)
     assert_equal(nil,          Vpim::Vcard.decode(NICKNAME1).first.nickname)
     assert_equal(nil,          Vpim::Vcard.decode(NICKNAME2).first.nickname)
     assert_equal('Big Joey',   Vpim::Vcard.decode(NICKNAME3).first.nickname)
+    assert_equal('Big Joey',   Vpim::Vcard.decode(NICKNAME4).first['nickname'])
+    assert_equal(['Big Joey', 'Bob'],   Vpim::Vcard.decode(NICKNAME5).first.nicknames)
   end
 
 
@@ -209,12 +243,12 @@ EOF
     assert_equal(30,    card.version)
 
     assert_equal("sroberts@uniserve.com",  card[ "email" ])
-    assert_equal(["home", "pref"],         card.enum_by_name("email").entries.first.param("type"))
+    assert_equal(["HOME", "pref"],         card.enum_by_name("email").entries.first.param("type"))
     assert_equal(nil,                      card.enum_by_name("email").entries.first.group)
 
-    assert_equal(["work","pref"],  card.enum_by_name("tel").entries[0].param("type"))
-    assert_equal(["fax"],          card.enum_by_name("tel").entries[1].param("type"))
-    assert_equal(["home"],         card.enum_by_name("tel").entries[2].param("type"))
+    assert_equal(["WORK","pref"],  card.enum_by_name("tel").entries[0].param("type"))
+    assert_equal(["FAX"],          card.enum_by_name("tel").entries[1].param("type"))
+    assert_equal(["HOME"],         card.enum_by_name("tel").entries[2].param("type"))
 
     assert_equal(nil,              card.enum_by_name("bday").entries[0].param("type"))
     assert_equal(["date"],         card.enum_by_name("bday").entries[0].param("value"))
@@ -246,11 +280,11 @@ EOF
     dst = Vpim.expand(src)
 
     assert_equal('a',   dst[0][0].value)
-    assert_equal('a1',  dst[0][1].name)
+    assert_equal('A1',  dst[0][1].name)
     assert_equal('b',   dst[0][2][0].value)
     assert_equal('c',   dst[0][2][1][0].value)
-    assert_equal('c1',  dst[0][2][1][1].name)
-    assert_equal('c2',  dst[0][2][1][2].name)
+    assert_equal('C1',  dst[0][2][1][1].name)
+    assert_equal('C2',  dst[0][2][1][2].name)
     assert_equal('c',   dst[0][2][1][3].value)
 
     cards = Vpim::Vcard.decode(EX_APPLE1)

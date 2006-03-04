@@ -1,6 +1,7 @@
 require 'vpim/maker/vcard'
 
-card = Vpim::Maker::Vcard.make('Jimmy Death') do |card|
+# FIXME - don't require the arg, if no add_fn, concatenate the N.
+card = Vpim::Maker::Vcard.make do |card|
   card.add_name do |name|
     name.family = 'Death'
     name.given = 'Jimmy'
@@ -25,7 +26,6 @@ card = Vpim::Maker::Vcard.make('Jimmy Death') do |card|
 
   card.nickname = "The Good Doctor"
 
-  card.birthday = Time.now
   card.birthday = Date.today
 
   card.add_photo do |photo|
@@ -61,5 +61,5 @@ card = Vpim::Maker::Vcard.make('Jimmy Death') do |card|
 
 end
 
-puts card.to_s
+puts card.to_s # FIXME - .to_s required?
 

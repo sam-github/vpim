@@ -262,7 +262,7 @@ module Vpim
 
     # Check if the protocol method is +method+
     def protocol?(method)
-      protocol == method.upcase
+      Vpim::Methods.casecmp?(protocol, method)
     end
 
     def Icalendar.decode_duration(str) #:nodoc:
@@ -456,8 +456,11 @@ module Vpim
 
       # Return true if the +uri+ is == to this address' URI. The comparison
       # is case-insensitive.
+      #
+      # FIXME - why case insensitive? Email addresses. Should use a URI library
+      # if I can find one and it knows how to do URI comparisons.
       def ==(uri)
-        self.uri.downcase == uri.downcase
+        Vpim::Methods.casecmp?(self.uri.to_str, uri.to_str)
       end
 
       # The common or displayable name associated with the calendar address,

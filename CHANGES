@@ -1,3 +1,42 @@
+0.17 -
+
+- Profiled decoding of a huge iCalendar file. Performance appears to be
+	dominated by overhead of String#downcase (20% of time spent in Field#name?).
+	Keeping the field group, field name, and field's parameter's names internally
+	in uppercase and using ruby 1.8's String#casecmp? is a first attempt at
+	optimization. This is a change in the default case returned, but it aligns
+	with the RFC and common usage.
+
+- Maker::Vcard.make -  full_name is now optional, it will be derived from name/N:
+
+- Maker::Vcard#add_field -  better argument checking
+
+- Maker::Vcard#copy - new
+
+- Vcard#[] -  now limits return to fields with values
+
+- Vcard#name - new 
+
+- Vcard::Name - new 
+
+- Vcard#nicknames - new 
+
+- Field#params and Field#param - deprecated and undocumented, I could never
+  remember the difference
+
+- Field#pnames - new
+
+- Field#pvalues - new
+
+- Methods.casecmp? - new
+
+- Field#pref= - new
+
+- Field@pvalue_idel - new
+
+- Field@pvalue_iadd - new
+
+
 0.16 - 2006-02-19
 
 - Packaged in gem format, experimental.

@@ -15,6 +15,18 @@ module Vpim
   class DirectoryInfo
 
     # A field in a directory info object.
+    #
+    # TODO
+    # - Field should know which param values and field vales are
+    # case-insensitive, configurably, so it can down case them
+    # - perhaps should have pvalue_set/del/add, perhaps case-insensitive, or
+    # pvalue_iset/idel/iadd, where set sets them all, add adds if not present,
+    # and del deletes any that are present
+    # - I really, really, need a case-insensitive string...
+    # - should allow nil as a field value, its not the same as '', if there is
+    # more than one pvalue, the empty string will show up. This isn't strictly
+    # disallowed, but its odd. Should also strip empty strings on decoding, if
+    # I don't already.
     class Field
       private_class_method :new
 
@@ -54,7 +66,7 @@ module Vpim
 
           pvalues.each do |pvalue|
             # check if we need to do any encoding
-            if pname.downcase == 'encoding' && pvalue == :b64
+            if Vpim::Methods.casecmp?(pname, 'ENCODING') && pvalue == :b64
               pvalue = 'b' # the RFC definition of the base64 param value
               value = [ value.to_str ].pack('m').gsub("\n", '')
             end
@@ -98,10 +110,15 @@ module Vpim
           raise Vpim::InvalidEncodingError, atline
         end
 
-        atgroup = $1
-        atname = $2
+        atgroup = $1.upcase
+        atname = $2.upcase
         paramslist = $3
         atvalue = $~[-1]
+
+        # I've seen space that shouldn't be there, as in "BEGIN:VCARD ", so
+        # strip it. I'm not absolutely sure this is allowed... it certainly
+        # breaks round-trip encoding.
+        atvalue.strip!
 
         if atgroup.length > 0
           atgroup.chomp!('.')
@@ -118,7 +135,7 @@ module Vpim
           paramslist.scan( %r{#{Bnf::PARAM}}i ) do
 
             # param names are case-insensitive, and multi-valued
-            name = $1.downcase
+            name = $1.upcase
             params = $3
 
             # v2.1 params have no '=' sign, figure out what kind of param it
@@ -146,7 +163,7 @@ module Vpim
             end
 
             params.scan( %r{#{Bnf::PVALUE}} ) do
-              atparams[name] << ($1 || $2) # Used to do this, want to stop! .downcase
+              atparams[name] << ($1 || $2)
             end
           end
         end
@@ -157,6 +174,10 @@ module Vpim
       def initialize(line) # :nodoc:
         @line = line.to_str
         @group, @name, @params, @value = Field.decode0(@line)
+
+        @params.each do |pname,pvalues|
+          pvalues.freeze
+        end
         self
       end
 
@@ -204,12 +225,13 @@ module Vpim
       # maximum line width of +width+, where +0+ means no wrapping, and nil is
       # to accept the default wrapping (75, recommended by RFC2425).
       #
-      # Note: Apple's Address Book 3.0.3 neither understands to unwrap lines
-      # when it imports vCards (it treats them as raw new-line characters), nor
-      # wraps long lines on export. On import, this is mostly a cosmetic
-      # problem, but wrapping can be disabled by setting width to +0+, if
-      # desired. On export, its a more serious bug, since Address Book wil
-      # encode the entire Note: section as a single, very long, line.
+      # Note: AddressBook.app 3.0.3 neither understands to unwrap lines when it
+      # imports vCards (it treats them as raw new-line characters), nor wraps
+      # long lines on export. This is mostly a cosmetic problem, but wrapping
+      # can be disabled by setting width to +0+, if desired.
+      #
+      # FIXME - breaks round-trip encoding, need to change this to not wrap
+      # fields that are already wrapped.
       def encode(width=nil)
         width = 75 unless width
         l = @line
@@ -234,28 +256,22 @@ module Vpim
       end
 
       # An Array of all the param names.
-      def params
+      def pnames
         @params.keys
       end
 
-      # The Array of all values of the param +name+, or nil if there is no
-      # such param.
-      #
-      # TODO - this doesn't return [] if the param isn't found, because then
-      # you can't distinguish between a param with no values, and a param that
-      # isn't defined. But maybe it isn't useful? You can always do
-      # params.include?(a_name) if you want to know if it exists. Maybe this
-      # should take a block specifying the default value, even?
-      def param(name)
-        v = @params[name.downcase]
-        if v
-          v = v.collect do |p|
-            p.downcase.freeze
-          end
-          v.freeze
-        end
-        v
+      # FIXME - remove my own uses of #params
+      alias params pnames # :nodoc:
+
+      # The Array of all values of the param +name+,  nil if there is no such
+      # param, [] if the param has no values. If the Field isn't frozen, the
+      # Array is mutable.
+      def pvalues(name)
+        @params[name.upcase]
       end
+
+      # FIXME - remove my own uses of #param
+      alias param pvalues # :nodoc:
 
       alias [] param
 
@@ -285,21 +301,20 @@ module Vpim
 
           when 'quoted-printable'  then @value.unpack('M*').first
 
-          else raise Vpim::InvalidEncodingError, "unrecognized encoding (#{encoding})"
+          else
+            raise Vpim::InvalidEncodingError, "unrecognized encoding (#{encoding})"
         end
       end
 
       # Is the #name of this Field +name+? Names are case insensitive.
       def name?(name)
-        name.to_s.downcase == @name.downcase
+        Vpim::Methods.casecmp?(@name, name)
       end
 
       # Is the #group of this field +group+? Group names are case insensitive.
       # A +group+ of nil matches if the field has no group.
       def group?(group)
-        g1 = @group ? @group.downcase : nil
-        g2 =  group ?  group.downcase : nil
-        g1 == g2
+        Vpim::Methods.casecmp?(@group, group)
       end
 
       # Is the value of this field of type +kind+? RFC2425 allows the type of
@@ -319,7 +334,7 @@ module Vpim
       # - boolean:
       # - float:
       def kind?(kind)
-        kind.downcase == self.kind
+        Vpim::Methods.casecmp?(self.kind == kind)
       end
 
       # Is one of the values of the TYPE parameter of this field +type+? The
@@ -329,10 +344,12 @@ module Vpim
       # TYPE parameters are used for general categories, such as
       # distinguishing between an email address used at home or at work.
       def type?(type)
+        type = type.to_str
+
         types = param('type')
 
         if types
-          types = types.include?(type.to_str.downcase)
+          types = types.detect { |t| Vpim::Methods.casecmp?(t, type) }
         end
       end
 
@@ -340,12 +357,22 @@ module Vpim
       # #type?('pref'). This method is not necessarily meaningful for
       # non-vCard profiles.
       def pref?
-        type?('pref')
+        type? 'pref'
+      end
+
+      # Set whether a field is marked as preferred. See #pref?
+      def pref=(ispref)
+        if ispref
+          pvalue_iadd('type', 'pref')
+        else
+          pvalue_idel('type', 'pref')
+        end
       end
 
       # Is the value of this field +value+? The check is case insensitive.
+      # FIXME - it shouldn't be insensitive, make a #casevalue? method.
       def value?(value)
-         @value && @value.downcase == value.downcase
+         Vpim::Methods.casecmp?(@value, value.to_str)
       end
 
       # The value of the ENCODING parameter, if present, or nil if not
@@ -357,7 +384,7 @@ module Vpim
           if e.length > 1
             raise Vpim::InvalidEncodingError, "multi-valued param 'encoding' (#{e})"
           end
-          e = e.first
+          e = e.first.downcase
         end
         e
       end
@@ -372,7 +399,7 @@ module Vpim
           end
           v = v.first
         end
-        v
+        v.downcase
       end
 
       # The value as an array of Time objects (all times and dates in
@@ -451,7 +478,7 @@ module Vpim
       end
 
       def inspect # :nodoc:
-        @line
+        "<#{self.class}: #{@line.inspect}>"
       end
 
       # TODO def pretty_print() ...
@@ -475,21 +502,85 @@ module Vpim
       def text=(text)
       end
 
-      # Set a the param +param+'s value to +pvalue+. Valid values are as in
-      # Field.create().
-      def []=(param,pvalue)
+      # Set a the param +pname+'s value to +pvalue+, replacing any value it
+      # currently has. See Field.create() for a description of +pvalue+.
+      #
+      # Example:
+      #  if field['type']
+      #    field['type'] << 'home'
+      #  else
+      #    field['type'] = [ 'home'
+      #  end
+      #
+      # TODO - this could be an alias to #pvalue_set
+      def []=(pname,pvalue)
         unless pvalue.respond_to?(:to_ary)
           pvalue = [ pvalue ]
         end
 
         h = @params.dup
 
-        h[param.downcase] = pvalue
+        h[pname.upcase] = pvalue
 
         mutate(@group, @name, h, @value)
         pvalue
       end
 
+      # Add +pvalue+ to the param +pname+'s value. The values are treated as a
+      # set so duplicate values won't occur, and String values are case
+      # insensitive.  See Field.create() for a description of +pvalue+.
+      def pvalue_iadd(pname, pvalue)
+        pname = pname.upcase
+
+        # Get a uniq set, where strings are compared case-insensitively.
+        values = [ pvalue, @params[pname] ].flatten.compact
+        values = values.collect do |v|
+          if v.respond_to? :to_str
+            v = v.to_str.upcase
+          end
+          v
+        end
+        values.uniq!
+
+        h = @params.dup
+
+        h[pname] = values
+
+        mutate(@group, @name, h, @value)
+        values
+      end
+
+      # Delete +pvalue+ from the param +pname+'s value. The values are treated
+      # as a set so duplicate values won't occur, and String values are case
+      # insensitive.  +pvalue+ must be a single String or Symbol.
+      def pvalue_idel(pname, pvalue)
+        pname = pname.upcase
+        if pvalue.respond_to? :to_str
+          pvalue = pvalue.to_str.downcase
+        end
+
+        # Get a uniq set, where strings are compared case-insensitively.
+        values = [ nil, @params[pname] ].flatten.compact
+        values = values.collect do |v|
+          if v.respond_to? :to_str
+            v = v.to_str.downcase
+          end
+          v
+        end
+        values.uniq!
+        values.delete pvalue
+
+        h = @params.dup
+
+        h[pname] = values
+
+        mutate(@group, @name, h, @value)
+        values
+      end
+
+      # FIXME - should change this so it doesn't assign to @line here, so @line
+      # is used to preserve original encoding. That way, #encode can only wrap
+      # new fields, not old fields.
       def mutate(g, n, p, v) #:nodoc:
         line = Field.encode0(g, n, p, v)
 

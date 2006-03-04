@@ -12,22 +12,32 @@ module Vpim
   module Maker
     # A helper class to assist in building a vCard.
     #
-    # This idea is modelled after ruby 1.8's rss/maker classes. Perhaps all these methods
-    # should be added to Vpim::Vcard?
+    # Examples:
+    # - link:ex_mkvcard.txt: an example of making a vCard
+    # - link:ex_cpvcard.txt: an example of copying and modifying a vCard
+    #
+    # Note - The Maker module is modelled after rss/maker, but if a Vcard was
+    # mutable these methods could be added to Vpim::Vcard. Hm.
     class Vcard
-      # Make a vCard for +full_name+.
+      # Make a vCard.
+      #
+      # If set, the FN: field will be set to +full_name+. Otherwise, FN: will be
+      # set from the values in #add_name.
       #
       # Yields +card+, a Vpim::Maker::Vcard to which fields can be added, and returns a Vpim::Vcard.
       #
       # Note that calling #add_name is required, all other fields are optional.
-      def Vcard.make(full_name, &block) # :yields: +card+
+      def Vcard.make(full_name = nil, &block) # :yields: +card+
         new(full_name).make(&block)
       end
 
       def make # :nodoc:
         yield self
-        if !@initialized_N
-          raise Vpim::InvalidEncodingError, 'It is mandatory to have a N field, see #add_name.'
+        unless @card['N']
+          raise Vpim::InvalidEncodingError, 'It is mandatory to have a name field, see #add_name.'
+        end
+        unless @card['FN']
+          @card << Vpim::DirectoryInfo::Field.create('FN', Vpim::Vcard::Name.new(@card['N'], '').formatted)
         end
         @card
       end
@@ -36,22 +46,14 @@ module Vpim
 
       def initialize(full_name) # :nodoc:
         @card = Vpim::Vcard::create
-        @card << Vpim::DirectoryInfo::Field.create('FN', full_name )
-        @initialized_N = false
-        # pp @card
+        if full_name
+          @card << Vpim::DirectoryInfo::Field.create('FN', full_name )
+        end
       end
 
       public
 
-      # Add an arbitrary Field, +field+.
-      def add_field(field)
-        @card << field
-      end
-
       # Add a name field, N.
-      #
-      # Warning: This is the only mandatory field, besides the full name, which
-      # is added from Vcard.make's +full_name+.
       #
       # Attributes of N are:
       # - family: family name
@@ -61,6 +63,10 @@ module Vpim
       # - suffix: such as "BFA", or "Sensei"
       #
       # All attributes are optional.
+      #
+      # Warning: This is the only mandatory field besides the full name, FN,
+      # but FN: can be set in #make, and if not set will be constucted as the
+      # string "#{prefix} #{given} #{additional} #{family}, #{suffix}".
       #
       # FIXME: is it possible to deduce given/family from the full_name?
       # 
@@ -74,7 +80,6 @@ module Vpim
           'N',
           x.map { |s| s ? s.to_str : '' }
           )
-        @initialized_N = true
         self
       end
 
@@ -328,6 +333,56 @@ TODO - need text=() implemented in Field
         @card << Vpim::DirectoryInfo::Field.create( 'PHOTO', value, params )
         self
       end
+
+      # Add a Field, +field+.
+      def add_field(field)
+        fieldname = field.name.upcase
+        case
+        when [ 'BEGIN', 'END', 'VERSION' ].include?(fieldname)
+          raise Vpim::InvalidEncodingError, "Not allowed to manually add #{field.name} to a vCard."
+
+        when [ 'N', 'FN' ].include?(fieldname)
+          if @card.field(fieldname)
+            raise Vpim::InvalidEncodingError, "Not allowed to add more than one #{fieldname} to a vCard."
+          end
+          @card << field
+
+        else
+          @card << field
+        end
+      end
+
+      # Copy the fields from +card+ into self using #add_field. If a block is
+      # provided, each Field from +card+ is yielded. The block should return a
+      # Field to add, or nil.  The Field doesn't have to be the one yielded,
+      # this allows modified fields to be copied in (use Field#copy), or fields
+      # to be filtered out (if the block yields nil).
+      #
+      # The vCard fields BEGIN, END, VERSION aren't copied, and N and FN aren't copied
+      # if the target already has them
+      def copy(card) # :yields: Field
+        card.each do |field|
+          fieldname = field.name.upcase
+          case
+          when [ 'BEGIN', 'END', 'VERSION' ].include?(fieldname)
+            # Never copy these
+            # FIXME - allow VERSION to be copied if it isn't there already
+
+          when [ 'N', 'FN' ].include?(fieldname) && @card.field(fieldname)
+            # Copy these only if they don't already exist.
+
+          else
+            if block_given?
+              field = yield field
+            end
+
+            if field
+              add_field(field)
+            end
+          end
+        end
+      end
+
 
     end
   end

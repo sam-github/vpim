@@ -15,28 +15,25 @@
 # Version::    0.16
 # Homepage::   http://vpim.rubyforge.org
 #
-# An implementation of the MIME Content-Type for Directory Information (RFC
-# 2425), and profiles of this format. The basic RFC 2425 format is implemented
-# by the DirectoryInfo class.
+# vCard (RFC 2426) is a format for personal information, see Vpim::Vcard and
+# Vpim::Maker::Vcard.
 #
-# Currently the only IETF-defined profile is vCard (RFC 2426), implemented by
-# the Vcard class.
+# iCalendar (RFC 2445) is a format for calendar related information, see
+# Vpim::Icalendar.
 #
-# iCalendar (RFC 2445) was not specified as a profile of RFC 2425, could have
-# been, and is implemented by the Icalendar class.
+# iCalendar was called vCalendar pre-IETF standaradization, and since both of
+# these "v-formats" are commonly used personal information management, the
+# library is called "vpim".
 #
-# Both of these "v-formats" are for personal information management, thus the
-# name "vPim".
+# vCard and iCalendar support is built on top of an implementation of the MIME
+# Content-Type for Directory Information (RFC 2425). The basic RFC 2425 format
+# is implemented by  Vpim::DirectoryInfo and Vpim::DirectoryInfo::Field.
 #
-# This is my first Ruby library, and I would love to have feedback on
-# useability. In particular, if anybody using this library could send me
-# any code showing how they call vPim, that would be very useful to me. It
-# doesn't have to be complete, I would just like to see how the APIs are
-# being called, to give me ideas for how to improve them.
-#
-# Particularly, I'm interested in examples of encoding.
-#
-# Sam Roberts <sroberts@uniserve.com>
+# I am interested in having feedback on useability. In particular, if anybody
+# using this library could send me any code showing how they call vPim, that
+# would be very useful to me. It doesn't have to be complete, I would just like
+# to see how the APIs are being called, to give me ideas for how to improve
+# them.  Particularly, I'm interested in examples of encoding.
 #
 # = Project Information
 #
@@ -55,6 +52,7 @@
 # 
 # vCard examples are:
 # - link:ex_mkvcard.txt: an example of making a vCard
+# - link:ex_cpvcard.txt: an example of copying and modifying a vCard
 # - link:mutt-aliases-to-vcf.txt: convert a mutt aliases file to vCards
 # - link:ex_get_vcard_photo.txt: pull photo data from a vCard
 # - link:ab-query.txt: query the OS X Address Book to find vCards
@@ -90,5 +88,40 @@ module Vpim
   # Exception used to indicate that data being decoded is invalid, the message
   # usually gives some clue as to exactly what is invalid.
   class InvalidEncodingError < StandardError; end
+end
+
+module Vpim::Methods
+  module_function
+
+  # Case-insensitive comparison of +str0+ to +str1+, returns true or false.
+  # Either argument can be nil, where nil compares not equal to anything other
+  # than nil.
+  #
+  # This is available both as a module function:
+  #   Vpim::Methods.casecmp?("yes", "YES")
+  # and an instance method:
+  #   include Vpim::Methods
+  #   casecmp?("yes", "YES")
+  #
+  # Will work with ruby1.6 and ruby 1.8.
+  #
+  # TODO - could make this be more efficient, but I'm supporting 1.6, not
+  # optimizing for it.
+  def casecmp?(str0, str1)
+    if str0 == nil
+      if str1 == nil
+      return true
+      else
+        return fasle
+      end
+    end
+
+    begin
+      str0.casecmp(str1) == 0
+    rescue NoMethodError
+      str0.downcase == str1.downcase
+    end
+  end
+
 end
 

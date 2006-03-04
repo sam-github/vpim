@@ -85,10 +85,10 @@ module Vpim
   def Vpim.decode_list(value, sep = ',') # :nodoc:
     list = []
     
-    value.each(sep) {
-      |item|
-      list << yield(item) unless item =~ %r{^\s*#{sep}?$}
-    }
+    value.each(sep) do |item|
+      item.chomp!(sep)
+      list << yield(item)
+    end
     list
   end
 
@@ -157,17 +157,32 @@ module Vpim
 
   # Convert a RFC 2425 date-list into an array of dates.
   def Vpim.decode_date_list(v) # :nodoc:
-    dates = Vpim.decode_list(v) { |date| Vpim.decode_date(date) }
+    Vpim.decode_list(v) do |date|
+      date.strip!
+      if date.length > 0
+        Vpim.decode_date(date)
+      end
+    end.compact
   end
 
   # Convert a RFC 2425 time-list into an array of times.
   def Vpim.decode_time_list(v) # :nodoc:
-    times = Vpim.decode_list(v) { |time| Vpim.decode_time(time) }
+    Vpim.decode_list(v) do |time|
+      time.strip!
+      if time.length > 0
+        Vpim.decode_time(time)
+      end
+    end.compact
   end
 
   # Convert a RFC 2425 date-time-list into an array of date-times.
   def Vpim.decode_date_time_list(v) # :nodoc:
-    datetimes = Vpim.decode_list(v) { |datetime| Vpim.decode_date_time(datetime) }
+    Vpim.decode_list(v) do |datetime|
+      datetime.strip!
+      if datetime.length > 0
+        Vpim.decode_date_time(datetime)
+      end
+    end.compact
   end
 
   # Convert RFC 2425 text into a String.
@@ -176,6 +191,7 @@ module Vpim
   # \N -> NL
   # \, -> ,
   def Vpim.decode_text(v) # :nodoc:
+    # FIXME - this will fail for "\\,"!
     v.gsub(/\\[nN]/, "\n").gsub(/\\,/, ",").gsub(/\\\\/) { |m| "\\" }
   end
 

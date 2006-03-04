@@ -98,6 +98,7 @@ module Vpim
     # The value of the first field named +name+, or nil if no
     # match is found.
     def [](name)
+      enum_by_name(name).each { |f| return f.value if f.value != ''}
       enum_by_name(name).each { |f| return f.value }
       nil
     end
@@ -134,10 +135,18 @@ module Vpim
 
     # Returns an Enumerator for each Field for which #name?(+name+) is true.
     #
-    # For example, to get an Array of all the email addresses in the card, you
-    # could do:
+    # An Enumerator supports all the methods of Enumerable, so it allows iteration,
+    # collection, mapping, etc.
     #
-    #   card.enum_by_name('email').collect { |f| f.value }
+    # Examples:
+    #
+    # Print all the nicknames in a card:
+    #  
+    #   card.enum_by_name('NICKNAME') { |f| puts f.value }
+    #
+    # Print an Array of the preferred email addresses in the card:
+    #
+    #   pref_emails = card.enum_by_name('EMAIL').select { |f| f.pref? }
     def enum_by_name(name)
       Enumerator.new(self, Proc.new { |field| field.name?(name) })
     end
@@ -146,15 +155,15 @@ module Vpim
     #
     # For example, to print all the fields, sorted by group, you could do:
     #
-    #  card.groups.sort.each do |group|
-    #    card.enum_by_group(group).each do |field|
-    #    puts "#{group} -> #{field.name}"
-    #    end
-    #  end
+    #   card.groups.sort.each do |group|
+    #     card.enum_by_group(group).each do |field|
+    #       puts "#{group} -> #{field.name}"
+    #     end
+    #   end
     #
     # or to get an array of all the fields in group 'agroup', you could do:
     # 
-    #  card.enum_by_group('agroup').to_a
+    #   card.enum_by_group('agroup').to_a
     def enum_by_group(group)
       Enumerator.new(self, Proc.new { |field| field.group?(group) })
     end
@@ -188,6 +197,9 @@ module Vpim
       self
     end
 
+    def delete(field)
+    end
+
     # The string encoding of the DirectoryInfo. See Field#encode for information
     # about the width parameter.
     def encode(width=nil)
@@ -206,14 +218,14 @@ module Vpim
       unless @fields.first
         raise "No fields to check"
       end
-      unless @fields.first.name? "begin"
+      unless @fields.first.name? 'BEGIN'
         raise "Needs BEGIN, found: #{@fields.first.encode nil}"
       end
-      unless @fields.last.name? "end"
+      unless @fields.last.name? 'END'
         raise "Needs END, found: #{@fields.last.encode nil}"
       end
       unless @fields.last.value? @fields.first.value
-        raise "BEGIN/END mismatch: (#{@fields.first.value.downcase} != #{@fields.last.value.downcase}"
+        raise "BEGIN/END mismatch: (#{@fields.first.value} != #{@fields.last.value}"
       end
       if profile
         if ! @fields.first.value? profile

@@ -4,9 +4,12 @@ SHELL:=/bin/sh
 
 .PHONY: default doc test other
 
+do:
+	ruby -w -I lib ex_cpvcard.rb
+
 default: test
 
-do:
+bday:
 	@ruby18 -I . vcf-to-ics.rb < _all.vcf | tee _bday.ics
 
 doc-upload:
@@ -24,9 +27,9 @@ dcal:
 	sh -c "./ical-dump.rb ~/Library/Calendars/Events.ics"
 
 test:
-	/usr/local/bin/ruby18 -w -I . $(TEST)
-	#/usr/bin/ruby -w -I . $(TEST)
-	#/opt/local/bin/ruby -w -I . $(TEST)
+	/usr/local/bin/ruby18 -w -I lib $(TEST)
+	#/usr/bin/ruby -w -I lib $(TEST)
+	#/opt/local/bin/ruby -w -I lib $(TEST)
 
 changes:
 	cvs-changelog -r -f changes.cvs
@@ -53,6 +56,7 @@ SAMPLES := \
  ab-query.rb \
  cmd-itip.rb \
  ex_get_vcard_photo.rb \
+ ex_cpvcard.rb \
  ex_mkvcard.rb \
  ical-dump.rb \
  ics-to-rss.rb\
