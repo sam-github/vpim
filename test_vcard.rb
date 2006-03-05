@@ -589,6 +589,7 @@ END:VCARD
     assert_equal(card0.version, card1.version)
     assert_equal(card0.version, card2.version)
   end
+
   def test_v21_versioned_copy
     card0 = Vpim::Vcard.decode(EX_21).first
     card1 = Vpim::Maker::Vcard.make2(Vpim::DirectoryInfo.create([], 'VCARD')) do |maker|
@@ -597,6 +598,31 @@ END:VCARD
     card2 = Vpim::Vcard.decode(card1.encode).first
 
     assert_equal(card0.version, card2.version)
+  end
+
+  def test_v21_strip_version
+    card0 = Vpim::Vcard.decode(EX_21).first
+
+    card0.delete card0.field('VERSION')
+    card0.delete card0.field('TEL')
+    card0.delete card0.field('TEL')
+    card0.delete card0.field('TEL')
+    card0.delete card0.field('TEL')
+
+    assert_raises(ArgumentError) do
+      card0.delete card0.field('END')
+    end
+    assert_raises(ArgumentError) do
+      card0.delete card0.field('BEGIN')
+    end
+
+    card1 = Vpim::Maker::Vcard.make2(Vpim::DirectoryInfo.create([], 'VCARD')) do |maker|
+      maker.copy card0
+    end
+    card2 = Vpim::Vcard.decode(card1.encode).first
+
+    assert_equal(30,            card2.version)
+    assert_equal(nil,           card2.field('TEL'))
   end
 
 end

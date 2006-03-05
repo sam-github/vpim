@@ -203,7 +203,23 @@ module Vpim
       self
     end
 
+    # Delete +field+.
+    #
+    # Warning: You can't delete BEGIN: or END: fields, but other
+    # profile-specific fields can be deleted, including mandatory ones. For
+    # vCards in particular, in order to avoid destroying them, I suggest
+    # creating a new Vcard, and copying over all the fields that you still
+    # want, rather than using #delete. This is easy with Maker::Vcard#copy, see
+    # the Maker::Vcard examples.
     def delete(field)
+      case
+      when field.name?('BEGIN'), field.name?('END')
+        raise ArgumentError, 'Cannot delete BEGIN or END fields.'
+      else
+        @fields.delete field
+      end
+
+      self
     end
 
     # The string encoding of the DirectoryInfo. See Field#encode for information

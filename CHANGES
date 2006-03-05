@@ -1,5 +1,7 @@
 0.17 -
 
+- DirectoryInfo#delete - new
+
 - Maker::Vcard#fullname - new
 
 - Provide an example of how to create, copy, and modify version 2.1 vCards.

@@ -273,7 +273,7 @@ module Vpim
       # FIXME - remove my own uses of #param
       alias param pvalues # :nodoc:
 
-      alias [] param
+      alias [] pvalues
 
       # Yield once for each param, +name+ is the parameter name, +value+ is an
       # array of the parameter values.
@@ -407,7 +407,7 @@ module Vpim
       # birthday). The time will be UTC if marked as so (with a timezone of
       # "Z"), and in localtime otherwise.
       #
-      # TODO: support timezone offsets
+      # TODO - support timezone offsets
       #
       # TODO - if year is before 1970, this won't work... but some people
       # are generating calendars saying Canada Day started in 1753!
