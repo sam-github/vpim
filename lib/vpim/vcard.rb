@@ -37,7 +37,20 @@ module Vpim
   # get the email addresses, or the name, or perhaps to set fields, like
   # email=. What would be useful?
   #
-  # = Example
+  # = Examples
+  #
+  # - link:ex_mkvcard.txt: example of creating a vCard
+  # - link:ex_cpvcard.txt: example of copying and them modifying a vCard
+  # - link:ex_mkv21vcard.txt: example of creating version 2.1 vCard
+  # - link:mutt-aliases-to-vcf.txt: convert a mutt aliases file to vCards
+  # - link:ex_get_vcard_photo.txt: pull photo data from a vCard
+  # - link:ab-query.txt: query the OS X Address Book to find vCards
+  # - link:vcf-to-mutt.txt: query vCards for matches, output in formats useful
+  #   with Mutt (see link:README.mutt for details)
+  # - link:tabbed-file-to-vcf.txt: convert a tab-delimited file to vCards, a
+  #   (small but) complete application contributed by Dane G. Avilla, thanks!
+  # - link:vcf-to-ics.txt: example of how to create calendars of birthdays from vCards
+  # - link:vcf-dump.txt: utility for dumping contents of .vcf files
   #
   # Here's an example of encoding a simple vCard using the low-level API:
   #
@@ -46,8 +59,6 @@ module Vpim
   #   card << Vpim::DirectoryInfo::Field.create('url', 'http://www.example.com/user' )
   #   card << Vpim::DirectoryInfo::Field.create('fn', 'User Name' )
   #   puts card.to_s
-  #
-  # New! Use the Vpim::Maker::Vcard to make vCards!
   class Vcard < DirectoryInfo
 
     private_class_method :new
@@ -213,8 +224,8 @@ module Vpim
       @name
     end
 
-    # The nickname or nil if there is none.
-    def nickname
+    # Deprecated.
+    def nickname #:nodoc:
       nn = self['nickname']
       if nn && nn == ''
         nn = nil

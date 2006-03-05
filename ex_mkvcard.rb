@@ -1,14 +1,13 @@
 require 'vpim/maker/vcard'
 
-# FIXME - don't require the arg, if no add_fn, concatenate the N.
-card = Vpim::Maker::Vcard.make do |card|
-  card.add_name do |name|
-    name.family = 'Death'
-    name.given = 'Jimmy'
+card = Vpim::Maker::Vcard.make2 do |maker|
+  maker.add_name do |name|
     name.prefix = 'Dr.'
+    name.given = 'Jimmy'
+    name.family = 'Death'
   end
 
-  card.add_addr do |addr|
+  maker.add_addr do |addr|
     addr.preferred = true
     addr.location = 'work'
     addr.street = '12 Last Row, 13th Section'
@@ -16,7 +15,7 @@ card = Vpim::Maker::Vcard.make do |card|
     addr.country = 'Cinema'
   end
 
-  card.add_addr do |addr|
+  maker.add_addr do |addr|
     addr.location = [ 'home', 'zoo' ]
     addr.delivery = [ 'snail', 'stork', 'camel' ]
     addr.street = '12 Last Row, 13th Section'
@@ -24,42 +23,42 @@ card = Vpim::Maker::Vcard.make do |card|
     addr.country = 'Cinema'
   end
 
-  card.nickname = "The Good Doctor"
+  maker.nickname = "The Good Doctor"
 
-  card.birthday = Date.today
+  maker.birthday = Date.today
 
-  card.add_photo do |photo|
+  maker.add_photo do |photo|
     photo.link = 'http://example.com/image.png'
   end
 
-  card.add_photo do |photo|
+  maker.add_photo do |photo|
     photo.image = "File.open('drdeath.jpg').read # a fake string, real data is too large :-)"
     photo.type = 'jpeg'
   end
 
-  card.add_tel('+416 123 1111')
+  maker.add_tel('+416 123 1111')
 
-  card.add_tel('+416 123 2222') { |t| t.location = 'home'; t.preferred = true }
+  maker.add_tel('+416 123 2222') { |t| t.location = 'home'; t.preferred = true }
 
-  card.add_impp('joe') do |impp|
+  maker.add_impp('joe') do |impp|
     impp.preferred = 'yes'
     impp.location = 'mobile'
   end
 
-  card.add_x_aim('example') do |xaim|
+  maker.add_x_aim('example') do |xaim|
     xaim.location = 'row12'
   end
 
-  card.add_tel('+416+123+3333') do |tel|
+  maker.add_tel('+416+123+3333') do |tel|
     tel.location = 'work'
     tel.capability = 'fax'
   end
 
-  card.add_email('drdeath@work.com') { |e| e.location = 'work' }
+  maker.add_email('drdeath@work.com') { |e| e.location = 'work' }
 
-  card.add_email('drdeath@home.net') { |e| e.preferred = 'yes' }
+  maker.add_email('drdeath@home.net') { |e| e.preferred = 'yes' }
 
 end
 
-puts card.to_s # FIXME - .to_s required?
+puts card
 

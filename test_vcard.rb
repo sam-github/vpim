@@ -3,6 +3,7 @@
 $:.unshift File.dirname($0)
 
 require 'vpim/vcard'
+require 'vpim/maker/vcard'
 require 'test/unit'
 require 'date'
 
@@ -558,6 +559,44 @@ EOF
       assert_equal(d, cards[i].birthday)
     end
 
+  end
+
+EX_21=<<'---'
+BEGIN:VCARD
+VERSION:2.1
+X-EVOLUTION-FILE-AS:AAA Our Fax
+FN:AAA Our Fax
+N:AAA Our Fax
+ADR;WORK;PREF:
+LABEL;WORK;PREF:
+TEL;WORK;FAX:925 833-7660
+TEL;HOME;FAX:925 833-7660
+TEL;VOICE:
+TEL;FAX:
+EMAIL;INTERNET:
+TITLE:
+NOTE:
+UID:pas-id-3F93E22900000001
+END:VCARD
+---
+  def test_v21_modification
+    card0 = Vpim::Vcard.decode(EX_21).first
+    card1 = Vpim::Maker::Vcard.make2(card0) do |maker|
+      maker.nickname = 'nickname'
+    end
+    card2 = Vpim::Vcard.decode(card1.encode).first
+
+    assert_equal(card0.version, card1.version)
+    assert_equal(card0.version, card2.version)
+  end
+  def test_v21_versioned_copy
+    card0 = Vpim::Vcard.decode(EX_21).first
+    card1 = Vpim::Maker::Vcard.make2(Vpim::DirectoryInfo.create([], 'VCARD')) do |maker|
+      maker.copy card0
+    end
+    card2 = Vpim::Vcard.decode(card1.encode).first
+
+    assert_equal(card0.version, card2.version)
   end
 
 end

@@ -2,11 +2,20 @@
 
 require 'vpim/vcard'
 
-d = File.new(ARGV[0]).read
+vcf = open(ARGV[0] || 'samples/Sam Roberts.vcf')
 
-v = Vpim::Vcard.decode(d).first
+card = Vpim::Vcard.decode(vcf).first
 
-f = v.field('photo')
+photo = card['PHOTO']
 
-$stdout.write(f.value)
+file = '_photo.'
+
+if card.field('PHOTO')['TYPE']
+  file += card.field('PHOTO')['TYPE'].first
+else
+  # AddressBook.app exports TIFF, but doesn't set the type. Argh.
+  file += 'tiff'
+end
+
+open(file, 'w').write photo
 

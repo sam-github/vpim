@@ -4,7 +4,7 @@ Gem.manage_gems
 
 spec = Gem::Specification.new do |s|
   s.name              = "vpim"
-  s.version           = "0.16"
+  s.version           = "0.17"
   s.author            = "Sam Roberts"
   s.email             = "sroberts@uniserve.com"
   s.homepage          = "http://vpim.rubyforge.org"

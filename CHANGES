@@ -1,5 +1,13 @@
 0.17 -
 
+- Maker::Vcard#fullname - new
+
+- Provide an example of how to create, copy, and modify version 2.1 vCards.
+
+- Maker::Vcard.make2 - new
+
+- Maker::Vcard.make - deprecated
+
 - Profiled decoding of a huge iCalendar file. Performance appears to be
 	dominated by overhead of String#downcase (20% of time spent in Field#name?).
 	Keeping the field group, field name, and field's parameter's names internally

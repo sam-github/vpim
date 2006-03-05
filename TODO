@@ -12,6 +12,9 @@ Check packaging guidelines:
 
 == FEATURES
 
+- DirectoryInfo#delete_if
+- DirectoryInfo#delete
+
 - don't encode TYPE= if there are no values
 
 - complete RRULE support

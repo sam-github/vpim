@@ -23,11 +23,12 @@ RDFLAGS = -w2
 TEST=test_all.rb
 
 dcal:
-	sh -c "./ical-dump.rb ~/Library/Calendars/Play.ics"
-	sh -c "./ical-dump.rb ~/Library/Calendars/Events.ics"
+	sh -c "./ics-dump.rb ~/Library/Calendars/Play.ics"
+	sh -c "./ics-dump.rb ~/Library/Calendars/Events.ics"
 
 test:
 	/usr/local/bin/ruby18 -w -I lib $(TEST)
+	for e in ex_*.rb; do /usr/local/bin/ruby18 -w -I lib $$e; done >/dev/null
 	#/usr/bin/ruby -w -I lib $(TEST)
 	#/opt/local/bin/ruby -w -I lib $(TEST)
 
@@ -58,13 +59,14 @@ SAMPLES := \
  ex_get_vcard_photo.rb \
  ex_cpvcard.rb \
  ex_mkvcard.rb \
- ical-dump.rb \
+ ex_mkv21vcard.rb \
+ ics-dump.rb \
  ics-to-rss.rb\
  mutt-aliases-to-vcf.rb \
  reminder.rb \
  rrule.rb \
  tabbed-file-to-vcf.rb \
- vcard-dump.rb \
+ vcf-dump.rb \
  vcf-to-mutt.rb \
  vcf-to-ics.rb \
 
@@ -76,11 +78,11 @@ doc:
 	cp etc/rfc24*.txt doc/
 	chmod u=rw doc/*.txt
 	chmod go=r doc/*.txt
-	mkdir -p $HOME/Sites/vpim
-	cp -r doc/* $HOME/Sites/vpim/
+	mkdir -p $(HOME)/Sites/vpim
+	cp -r doc/* $(HOME)/Sites/vpim/
 	open doc/index.html
 
-V=0.16
+V=0.17
 P=vpim-$V
 R=releases/$P
 

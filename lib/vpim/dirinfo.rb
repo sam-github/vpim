@@ -173,9 +173,15 @@ module Vpim
       Enumerator.new(self, cond )
     end
 
+    # Force card to be reencoded from the fields.
+    def dirty #:nodoc:
+      #string = nil
+    end
+
     # Append +field+ to the fields. Note that it won't be literally appended
     # to the fields, it will be inserted before the closing END field.
     def push(field)
+      dirty
       @fields[-1,0] = field
       self
     end

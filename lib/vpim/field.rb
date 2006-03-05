@@ -146,13 +146,13 @@ module Vpim
               params = $1
               case $1
                 when /quoted-printable/i
-                  name = 'encoding'
+                  name = 'ENCODING'
 
                 when /base64/i
-                  name = 'encoding'
+                  name = 'ENCODING'
 
                 else
-                  name = 'type'
+                  name = 'TYPE'
               end
             end
 
@@ -475,10 +475,6 @@ module Vpim
       # The undecoded value, see +value+.
       def value_raw
         @value
-      end
-
-      def inspect # :nodoc:
-        "<#{self.class}: #{@line.inspect}>"
       end
 
       # TODO def pretty_print() ...

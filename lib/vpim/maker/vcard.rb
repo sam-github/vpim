@@ -9,26 +9,39 @@
 require 'vpim/vcard'
 
 module Vpim
-  module Maker
+  module Maker #:nodoc:
     # A helper class to assist in building a vCard.
     #
     # Examples:
-    # - link:ex_mkvcard.txt: an example of making a vCard
-    # - link:ex_cpvcard.txt: an example of copying and modifying a vCard
-    #
-    # Note - The Maker module is modelled after rss/maker, but if a Vcard was
-    # mutable these methods could be added to Vpim::Vcard. Hm.
+    # - link:ex_mkvcard.txt: example of creating a vCard
+    # - link:ex_cpvcard.txt: example of copying and them modifying a vCard
+    # - link:ex_mkv21vcard.txt: example of creating version 2.1 vCard
     class Vcard
       # Make a vCard.
       #
-      # If set, the FN: field will be set to +full_name+. Otherwise, FN: will be
-      # set from the values in #add_name.
+      # Yields +maker+, a Vpim::Maker::Vcard which allows fields to be added to
+      # +card+, and returns +card+, a Vpim::Vcard.
       #
-      # Yields +card+, a Vpim::Maker::Vcard to which fields can be added, and returns a Vpim::Vcard.
+      # If +card+ is nil or not provided a new Vpim::Vcard is created and the
+      # fields are added to it.
       #
-      # Note that calling #add_name is required, all other fields are optional.
-      def Vcard.make(full_name = nil, &block) # :yields: +card+
-        new(full_name).make(&block)
+      # Defaults:
+      # - vCards must have both an N: and an FN: field, #make2 will fail if there
+      #   is no FN: field in the +card+ when your block is finished adding fields.
+      # - If there is an FN: field, but no N: field, N: will be set from the information
+      #   in FN:, see Vcard::Name#preformatted for more information.
+      # - vCards must have a VERSION: field. If one does not exist when your block is
+      #   is finished adding fields then it will be set to 3.0.
+      def Vcard.make2(card = Vpim::Vcard.create, &block) # :yields: maker
+        new(nil, card).make(&block)
+      end
+
+      # Deprecated, use #make2.
+      #
+      # If set, the FN: field will be set to +full_name+. Otherwise, FN: will
+      # be set from the values in #add_name.
+      def Vcard.make(full_name = nil, &block) # :yields: maker
+        new(full_name, Vpim::Vcard.create).make(&block)
       end
 
       def make # :nodoc:
@@ -39,13 +52,16 @@ module Vpim
         unless @card['FN']
           @card << Vpim::DirectoryInfo::Field.create('FN', Vpim::Vcard::Name.new(@card['N'], '').formatted)
         end
+        unless @card['VERSION']
+          @card << Vpim::DirectoryInfo::Field.create('VERSION', "3.0")
+        end
         @card
       end
 
       private
 
-      def initialize(full_name) # :nodoc:
-        @card = Vpim::Vcard::create
+      def initialize(full_name, card) # :nodoc:
+        @card = card || Vpim::Vcard::create
         if full_name
           @card << Vpim::DirectoryInfo::Field.create('FN', full_name )
         end
@@ -53,7 +69,7 @@ module Vpim
 
       public
 
-      # Add a name field, N.
+      # Add a name field, N:.
       #
       # Attributes of N are:
       # - family: family name
@@ -83,9 +99,20 @@ module Vpim
         self
       end
 
-      # Add a address field, ADR.
+      # Add a full name field, FN.
       #
-      # Attributes of ADR that describe the address are:
+      # Normally the FN field value is derived from the N: field value, but
+      # it can be explicitly set.
+      def fullname=(fullname)
+        if @card.field('FN')
+          raise Vpim::InvalidEncodingError, "Not allowed to add more than one FN field to a vCard."
+        end
+        @card << Vpim::DirectoryInfo::Field.create( 'FN', fullname );
+      end
+
+      # Add a address field, ADR:.
+      #
+      # Attributes of ADR: that describe the address are:
       # - pobox: post office box
       # - extended: seldom used, its not clear what it is for
       # - street: street address, multiple components should be separated by a comma, ','
@@ -102,9 +129,9 @@ module Vpim
       # All attributes are optional. #location and #home can be set to arrays of
       # strings.
       #
-      # TODO: Add #label to support LABEL.
+      # TODO - Add #label to support LABEL.
       #
-      # FIXME: Need to escape specials in the String.
+      # FIXME - Need to escape specials in the String.
       def add_addr # :yield: adr
         x = Struct.new(
           :location, :preferred, :delivery,
@@ -127,12 +154,12 @@ module Vpim
         self
       end
 
-      # Add a telephone number field, TEL.
+      # Add a telephone number field, TEL:.
       #
       # +number+ is supposed to be a "X.500 Telephone Number" according to RFC 2426, if you happen
       # to be familiar with that. Otherwise, anything that looks like a phone number should be OK.
       # 
-      # Attributes of TEL are:
+      # Attributes of TEL: are:
       # - location: home, work, msg, cell, car, pager - often used, can be set to other values
       # - preferred: true - often used, set if this is the preferred telephone number
       # - capability: voice,fax,video,bbs,modem,isdn,pcs - fax is useful, the others are rarely used
@@ -156,9 +183,9 @@ module Vpim
         self
       end
 
-      # Add a email address field, EMAIL.
+      # Add a email address field, EMAIL:.
       #
-      # Attributes of EMAIL are:
+      # Attributes of EMAIL: are:
       # - location: home, work - often used, can be set to other values
       # - preferred: true - often used, set if this is the preferred email address
       # - protocol: internet,x400 - internet is the default, set this for other kinds
@@ -182,12 +209,12 @@ module Vpim
         self
       end
 
-      # Add a nickname field, NICKNAME.
+      # Add a nickname field, NICKNAME:.
       def nickname=(nickname)
         @card << Vpim::DirectoryInfo::Field.create( 'NICKNAME', nickname );
       end
 
-      # Add a birthday field, BDAY.
+      # Add a birthday field, BDAY:.
       #
       # +birthday+ must be a time or date object.
       #
@@ -208,10 +235,10 @@ TODO - need text=() implemented in Field
       end
 =end
 
-      # Add an instant-messaging/point of presence address field, IMPP. The address
+      # Add an instant-messaging/point of presence address field, IMPP:. The address
       # is a URL, with the syntax depending on the protocol.
       #
-      # Attributes of IMPP are:
+      # Attributes of IMPP: are:
       # - preferred: true - set if this is the preferred address
       # - location: home, work, mobile - location of address
       # - purpose: personal,business - purpose of communications
@@ -223,7 +250,7 @@ TODO - need text=() implemented in Field
       # the user to know the URL for their own address, hopefully not too much
       # of a burden.
       #
-      # IMPP is defined in draft-jennings-impp-vcard-04.txt. It refers to the
+      # IMPP: is defined in draft-jennings-impp-vcard-04.txt. It refers to the
       # URI scheme of a number of messaging protocols, but doesn't give
       # references to all of them:
       # - "xmpp" indicates to use XMPP, draft-saintandre-xmpp-uri-06.txt
@@ -253,13 +280,13 @@ TODO - need text=() implemented in Field
         self
       end
 
-      # Add an Apple style AIM account name, +xaim+ is an AIM screen name.
+      # Add an X-AIM: account name where +xaim+ is an AIM screen name.
       #
       # I don't know if this is conventional, or supported by anything other
       # than AddressBook.app, but an example is:
       #   X-AIM;type=HOME;type=pref:exampleaccount
       #
-      # Attributes of X-AIM are:
+      # Attributes of X-AIM: are:
       # - preferred: true - set if this is the preferred address
       # - location: home, work, mobile - location of address
       #
@@ -284,10 +311,10 @@ TODO - need text=() implemented in Field
       end
 
 
-      # Add a photo field, PHOTO.
+      # Add a photo field, PHOTO:.
       #
-      # Attributes of PHOTO are:
-      # - image: set to image data to inclue inline
+      # Attributes of PHOTO: are:
+      # - image: set to image data to include inline
       # - link: set to the URL of the image data
       # - type: string identifying the image type, supposed to be an "IANA registered image format",
       #     or a non-registered image format (usually these start with an x-)
@@ -338,10 +365,10 @@ TODO - need text=() implemented in Field
       def add_field(field)
         fieldname = field.name.upcase
         case
-        when [ 'BEGIN', 'END', 'VERSION' ].include?(fieldname)
+        when [ 'BEGIN', 'END' ].include?(fieldname)
           raise Vpim::InvalidEncodingError, "Not allowed to manually add #{field.name} to a vCard."
 
-        when [ 'N', 'FN' ].include?(fieldname)
+        when [ 'VERSION', 'N', 'FN' ].include?(fieldname)
           if @card.field(fieldname)
             raise Vpim::InvalidEncodingError, "Not allowed to add more than one #{fieldname} to a vCard."
           end
@@ -355,20 +382,19 @@ TODO - need text=() implemented in Field
       # Copy the fields from +card+ into self using #add_field. If a block is
       # provided, each Field from +card+ is yielded. The block should return a
       # Field to add, or nil.  The Field doesn't have to be the one yielded,
-      # this allows modified fields to be copied in (use Field#copy), or fields
-      # to be filtered out (if the block yields nil).
+      # allowing the field to be copied and modified (see Field#copy) before adding, or 
+      # not added at all if the block yields nil.
       #
-      # The vCard fields BEGIN, END, VERSION aren't copied, and N and FN aren't copied
-      # if the target already has them
+      # The vCard fields BEGIN: and END: aren't copied, and VERSION:, N:, and FN: are copied
+      # only if the card doesn't have them already.
       def copy(card) # :yields: Field
         card.each do |field|
           fieldname = field.name.upcase
           case
-          when [ 'BEGIN', 'END', 'VERSION' ].include?(fieldname)
+          when [ 'BEGIN', 'END' ].include?(fieldname)
             # Never copy these
-            # FIXME - allow VERSION to be copied if it isn't there already
 
-          when [ 'N', 'FN' ].include?(fieldname) && @card.field(fieldname)
+          when [ 'VERSION', 'N', 'FN' ].include?(fieldname) && @card.field(fieldname)
             # Copy these only if they don't already exist.
 
           else
@@ -382,7 +408,6 @@ TODO - need text=() implemented in Field
           end
         end
       end
-
 
     end
   end
