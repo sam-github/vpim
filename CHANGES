@@ -1,4 +1,4 @@
-0.17 -
+0.17 - 2006-03-08
 
 - DirectoryInfo#delete - new
 
@@ -42,9 +42,9 @@
 
 - Field#pref= - new
 
-- Field@pvalue_idel - new
+- Field#pvalue_idel - new
 
-- Field@pvalue_iadd - new
+- Field#pvalue_iadd - new
 
 
 0.16 - 2006-02-19

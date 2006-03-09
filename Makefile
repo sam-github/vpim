@@ -32,6 +32,14 @@ test:
 	#/usr/bin/ruby -w -I lib $(TEST)
 	#/opt/local/bin/ruby -w -I lib $(TEST)
 
+test_new:
+	for r in /opt/local/bin/ruby /usr/local/bin/ruby18; do $$r -w $(TEST); done
+
+test_old:
+	for r in /usr/bin/ruby; do $$r -w $(TEST); done
+
+
+
 changes:
 	cvs-changelog -r -f changes.cvs
 
