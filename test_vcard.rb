@@ -625,5 +625,28 @@ END:VCARD
     assert_equal(nil,           card2.field('TEL'))
   end
 
+
+EX_21_CASE0=<<'---'
+BEGIN:VCARD
+VERSION:2.1
+N:Middle Family;Ny_full
+TEL;PREF;HOME;VOICE:0123456789
+TEL;FAX:0123456789
+TEL;CELL;VOICE:0123456789
+TEL;HOME;VOICE:0123456789
+TEL;WORK;VOICE:0123456789
+EMAIL:email@email.com
+EMAIL:work@work.com
+URL:www.email.com
+URL:www.work.com
+LABEL;CHARSET=ISO-8859-1;ENCODING=QUOTED-PRINTABLE:Box 1234=0AWorkv=E4gen =
+  2=0AWorkv=E4gen 1=0AUme=E5=0AV=E4sterbotten=0A12345=0AS
+END:VCARD
+---
+  def test_v21_case0
+    card = Vpim::Vcard.decode(EX_21_CASE0).first
+    # pp card.field('LABEL').value_raw
+    # pp card.field('LABEL').value
+  end
 end
 
