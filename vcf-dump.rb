@@ -51,7 +51,7 @@ ARGV.each do |file|
 
   cards.each do |card|
     card.each do |field|
-      puts "..#{field.name.capitalize}=#{field.value_raw}"
+      puts "..#{field.name.capitalize}=#{field.value.inspect}"
 
       if field.group
         puts " group=#{field.group}"
