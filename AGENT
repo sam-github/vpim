@@ -48,6 +48,8 @@ Note:
   - WebDAV server-side:
     - implement a WEBRick servlet to handle server-side?
 
+todo: Exchange/IMAP calendar downloads...
+
 todo: growl-to-*
 
 todo: *-to-growl
