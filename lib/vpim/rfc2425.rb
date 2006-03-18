@@ -216,13 +216,13 @@ module Vpim
     current = [ dst ]
 
     for f in src
-      if f.name? 'begin'
+      if f.name? 'BEGIN'
         e = [ f ]
 
         current.last.push(e)
         current.push(e)
 
-      elsif f.name? 'end'
+      elsif f.name? 'END'
         current.last.push(f)
 
         unless current.last.first.value? current.last.last.value
@@ -243,6 +243,7 @@ module Vpim
   # an array of all the inner arrays of fields. Return the array [outer,
   # inner].
   def Vpim.outer_inner(fields) #:nodoc:
+    # FIXME - use Enumerable#partition
     # seperate into the outer-level fields, and the arrays of component
     # fields
     outer = []

@@ -47,24 +47,41 @@ module Vpim
 
         @elements = inner
 
-        # TODO - don't get properties here, put the accessor in a module,
-        # which can cache the results.
+        # TODO - see Vevent
 
-        @summary       = @properties.text('SUMMARY').first
-        @description   = @properties.text('DESCRIPTION').first
-        @comment       = @properties.text('COMMENT').first
-        @location      = @properties.text('LOCATION').first
-        @status        = @properties.text('STATUS').first
-        @uid           = @properties.text('UID').first
-        @priority      = @properties.text('PRIORITY').first
+        @summary = nil
+        @description = nil
+        @comment = nil
+        @location = nil
+        @status = nil
+        @uid = nil
+        @priority = nil
+        @dtstamp = nil
+        @dtstart = nil
+        @dtend = nil
+        @duration = nil
+        @due = nil
+        @rrule = nil
 
-        # See "TODO - fields" in dirinfo.rb
-        @dtstamp       = @properties.field('dtstamp')
-        @dtstart       = @properties.field('dtstart')
-        @dtend         = @properties.field('dtend')
-        @duration      = @properties.field('duration')
-        @due           = @properties.field('due')
-        @rrule         = @properties['rrule']
+        @properties.each do |f|
+          case f.name
+          when 'SUMMARY'       then @summary = f.to_text
+          when 'DESCRIPTION'   then @description = f.to_text
+          when 'COMMENT'       then @comment = f.to_text
+          when 'LOCATION'      then @location = f.to_text
+          when 'STATUS'        then @status = f.to_text
+          when 'UID'           then @uid = f.to_text
+          when 'PRIORITY'      then @priority = f.to_text
+
+          when 'DTSTAMP'       then @dtstamp = f
+          when 'DTSTART'       then @dtstart = f
+          when 'DTEND'         then @dtend = f
+          when 'DURATION'      then @duration = f
+          when 'DUE'           then @due = f
+
+          when 'RRULE'         then @rrule = f.value
+          end
+        end
 
         # Need to seperate status-handling out into a module...
         @status_values = [ 'COMPLETED' ];
@@ -132,6 +149,14 @@ end
 module Vpim
   class Icalendar
     class Vevent
+      def proptext(name) #:nodoc:
+        text = @properties.detect { |f| f.name? name }
+        if text
+          text = text.to_text
+        end
+        text
+      end
+
       def initialize(fields) #:nodoc:
         @fields = fields
 
@@ -141,22 +166,42 @@ module Vpim
 
         @elements = inner
 
-        # TODO - don't get properties here, put the accessor in a module,
-        # which can cache the results.
+        # TODO - don't get properties here, put the accessor in a module, which
+        # can cache the results. Caching is important, it allows much faster
+        # processing of large calendars, because you don't have to decode
+        # fields you aren't interested in. And besides, this code is hideous.
 
-        @summary       = @properties.text('SUMMARY').first
-        @description   = @properties.text('DESCRIPTION').first
-        @comment       = @properties.text('COMMENT').first
-        @location      = @properties.text('LOCATION').first
-        @status        = @properties.text('STATUS').first
-        @uid           = @properties.text('UID').first
+        @summary = nil
+        @description = nil
+        @comment = nil
+        @location = nil
+        @status = nil
+        @uid = nil
+        @dtstamp = nil
+        @dtstart = nil
+        @dtend = nil
+        @duration = nil
+        @rrule = nil
+
+        @properties.each do |f|
+          case f.name
+          when 'SUMMARY'       then @summary = f.to_text
+          when 'DESCRIPTION'   then @description = f.to_text
+          when 'COMMENT'       then @comment = f.to_text
+          when 'LOCATION'      then @location = f.to_text
+          when 'STATUS'        then @status = f.to_text
+          when 'UID'           then @uid = f.to_text
+
+          when 'DTSTAMP'       then @dtstamp = f
+          when 'DTSTART'       then @dtstart = f
+          when 'DTEND'         then @dtend = f
+          when 'DURATION'      then @duration = f
+
+          when 'RRULE'         then @rrule = f.value
+          end
+        end
 
         # See "TODO - fields" in dirinfo.rb
-        @dtstamp       = @properties.field('dtstamp')
-        @dtstart       = @properties.field('dtstart')
-        @dtend         = @properties.field('dtend')
-        @duration      = @properties.field('duration')
-        @rrule         = @properties['rrule']
 
         # Need to seperate status-handling out into a module...
         @status_values = [ 'TENTATIVE', 'CONFIRMED', 'CANCELLED' ];

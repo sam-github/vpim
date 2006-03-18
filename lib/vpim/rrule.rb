@@ -144,7 +144,7 @@ module Vpim
       # Time.to_a => [ sec, min, hour, day, month, year, wday, yday, isdst, zone ]
 
       # Every event occurs at least once, at its start time, but only if the start
-      # time is earlier than 'dountil'...
+      # time is earlier than DOUNTIL...
       if !@rrule
         if !dountil || t < dountil
           yield t

@@ -67,7 +67,7 @@ module Vpim
           pvalues.each do |pvalue|
             # check if we need to do any encoding
             if Vpim::Methods.casecmp?(pname, 'ENCODING') && pvalue == :b64
-              pvalue = 'b' # the RFC definition of the base64 param value
+              pvalue = 'B' # the RFC definition of the base64 param value
               value = [ value.to_str ].pack('m').gsub("\n", '')
             end
 
@@ -139,7 +139,7 @@ module Vpim
             params = $3
 
             # v2.1 params have no '=' sign, figure out what kind of param it
-            # is (either its a known encoding, or we treat it as a 'type'
+            # is (either its a known encoding, or we treat it as a 'TYPE'
             # param).
            
             if $2 == ""
@@ -192,9 +192,9 @@ module Vpim
       # name (a String) to either a single string or symbol, or an array of
       # strings and symbols (parameters can be multi-valued).
       #
-      # If 'encoding' => :b64 is specified as a parameter, the value will be
+      # If 'ENCODING' => :b64 is specified as a parameter, the value will be
       # base-64 encoded. If it's already base-64 encoded, then use String
-      # values ('encoding' => 'b'), and no further encoding will be done by
+      # values ('ENCODING' => 'B'), and no further encoding will be done by
       # this routine.
       #
       # Currently handled value types are:
@@ -292,14 +292,14 @@ module Vpim
       # "7bit") are supported.
       def value
         case encoding
-          when nil, '8bit', '7bit' then @value
+          when nil, '8BIT', '7BIT' then @value
 
           # Hack - if the base64 lines started with 2 SPC chars, which is invalid,
           # there will be extra spaces in @value. Since no SPC chars show up in
           # b64 encodings, they can be safely stripped out before unpacking.
-          when 'b', 'base64'       then @value.gsub(' ', '').unpack('m*').first
+          when 'B', 'BASE64'       then @value.gsub(' ', '').unpack('m*').first
 
-          when 'quoted-printable'  then @value.unpack('M*').first
+          when 'QUOTED-PRINTABLE'  then @value.unpack('M*').first
 
           else
             raise Vpim::InvalidEncodingError, "unrecognized encoding (#{encoding})"
@@ -346,7 +346,7 @@ module Vpim
       def type?(type)
         type = type.to_str
 
-        types = param('type')
+        types = param('TYPE')
 
         if types
           types = types.detect { |t| Vpim::Methods.casecmp?(t, type) }
@@ -354,18 +354,18 @@ module Vpim
       end
 
       # Is this field marked as preferred? A vCard field is preferred if
-      # #type?('pref'). This method is not necessarily meaningful for
+      # #type?('PREF'). This method is not necessarily meaningful for
       # non-vCard profiles.
       def pref?
-        type? 'pref'
+        type? 'PREF'
       end
 
       # Set whether a field is marked as preferred. See #pref?
       def pref=(ispref)
         if ispref
-          pvalue_iadd('type', 'pref')
+          pvalue_iadd('TYPE', 'PREF')
         else
-          pvalue_idel('type', 'pref')
+          pvalue_idel('TYPE', 'PREF')
         end
       end
 
@@ -378,13 +378,13 @@ module Vpim
       # The value of the ENCODING parameter, if present, or nil if not
       # present.
       def encoding
-        e = param("encoding")
+        e = param('ENCODING')
 
         if e
           if e.length > 1
-            raise Vpim::InvalidEncodingError, "multi-valued param 'encoding' (#{e})"
+            raise Vpim::InvalidEncodingError, "multi-valued param 'ENCODING' (#{e})"
           end
-          e = e.first.downcase
+          e = e.first.upcase
         end
         e
       end
@@ -392,10 +392,10 @@ module Vpim
       # The type of the value, as specified by the VALUE parameter, nil if
       # unspecified.
       def kind
-        v = param('value')
+        v = param('VALUE')
         if v
           if v.size > 1
-            raise InvalidEncodingError, "multi-valued param 'value' (#{values})"
+            raise InvalidEncodingError, "multi-valued param 'VALUE' (#{values})"
           end
           v = v.first
         end
@@ -465,7 +465,7 @@ module Vpim
       # characters, this method will strip them, if present.
       #
       # In theory, #value could also do this, but it would need to know that
-      # the value is of type 'text', and often for text values the 'type'
+      # the value is of type 'TEXT', and often for text values the 'TYPE'
       # parameter is not present, so knowledge of the expected type of the
       # field is required from the decoder.
       def to_text
@@ -502,10 +502,10 @@ module Vpim
       # currently has. See Field.create() for a description of +pvalue+.
       #
       # Example:
-      #  if field['type']
-      #    field['type'] << 'home'
+      #  if field['TYPE']
+      #    field['TYPE'] << 'HOME'
       #  else
-      #    field['type'] = [ 'home'
+      #    field['TYPE'] = [ 'HOME' ]
       #  end
       #
       # TODO - this could be an alias to #pvalue_set

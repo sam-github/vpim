@@ -55,9 +55,9 @@ module Vpim
   # Here's an example of encoding a simple vCard using the low-level API:
   #
   #   card = Vpim::Vcard.create
-  #   card << Vpim::DirectoryInfo::Field.create('email', 'user.name@example.com', 'type' => 'internet' )
-  #   card << Vpim::DirectoryInfo::Field.create('url', 'http://www.example.com/user' )
-  #   card << Vpim::DirectoryInfo::Field.create('fn', 'User Name' )
+  #   card << Vpim::DirectoryInfo::Field.create('EMAIL', 'user.name@example.com', 'TYPE' => 'INTERNET' )
+  #   card << Vpim::DirectoryInfo::Field.create('URL', 'http://www.example.com/user' )
+  #   card << Vpim::DirectoryInfo::Field.create('FN', 'User Name' )
   #   puts card.to_s
   class Vcard < DirectoryInfo
 
@@ -154,7 +154,7 @@ module Vpim
 
     # The value of the field named +name+, optionally limited to fields of
     # type +type+. If no match is found, nil is returned, if multiple matches
-    # are found, the first match to have one of its type values be 'pref'
+    # are found, the first match to have one of its type values be 'PREF'
     # (preferred) is returned, otherwise the first match is returned.
     def [](name, type=nil)
       fields = enum_by_name(name).find_all { |f| type == nil || f.type?(type) }
@@ -226,7 +226,7 @@ module Vpim
 
     # Deprecated.
     def nickname #:nodoc:
-      nn = self['nickname']
+      nn = self['NICKNAME']
       if nn && nn == ''
         nn = nil
       end

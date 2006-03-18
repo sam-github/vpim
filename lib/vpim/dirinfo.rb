@@ -108,7 +108,13 @@ module Vpim
     #
     # TODO - call this #texts(), as in the plural?
     def text(name)
-      enum_by_name(name).map { |f| f.to_text }
+      accum = []
+      each do |f|
+        if f.name? name
+          accum << f.to_text
+        end
+      end
+      accum
     end
 
     # Array of all the Field#group()s.
@@ -161,9 +167,9 @@ module Vpim
     #     end
     #   end
     #
-    # or to get an array of all the fields in group 'agroup', you could do:
+    # or to get an array of all the fields in group 'AGROUP', you could do:
     # 
-    #   card.enum_by_group('agroup').to_a
+    #   card.enum_by_group('AGROUP').to_a
     def enum_by_group(group)
       Enumerator.new(self, Proc.new { |field| field.group?(group) })
     end

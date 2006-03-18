@@ -64,8 +64,8 @@ class TestField < Test::Unit::TestCase
     assert_equal('name:value', line = Field.encode0(nil, 'name', {}, 'value'))
     assert_equal([ nil, 'NAME', {}, 'value'], Field.decode0(line))
 
-    assert_equal('name;encoding=b:dmFsdWU=', line = Field.encode0(nil, 'name', { 'encoding'=>:b64 }, 'value'))
-    assert_equal([ nil, 'NAME', { 'ENCODING'=>['b']}, ['value'].pack('m').chomp ], Field.decode0(line))
+    assert_equal('name;encoding=B:dmFsdWU=', line = Field.encode0(nil, 'name', { 'encoding'=>:b64 }, 'value'))
+    assert_equal([ nil, 'NAME', { 'ENCODING'=>['B']}, ['value'].pack('m').chomp ], Field.decode0(line))
 
     assert_equal('group.name:value', line = Field.encode0('group', 'name', {}, 'value'))
     assert_equal([ 'GROUP', 'NAME', {}, 'value'], Field.decode0(line))

@@ -172,7 +172,7 @@ module Vpim
       inner.each do |component|
         # First field in every component should be a "BEGIN:".
         name = component.first
-        if ! name.name? 'begin'
+        if ! name.name? 'BEGIN'
           raise InvalidEncodingError, "calendar component begins with #{name.name}, instead of BEGIN!"
         end
 
@@ -359,7 +359,8 @@ module Vpim
     # transport a snapshot of some calendar information; without the intention
     # of conveying a scheduling semantic.
     #
-    # Note that this can't be called 'method', that name is reserved.
+    # Note that this method can't be called +method+, thats already a method of
+    # Object.
     def protocol
       m = @properties['METHOD']
       m ? m.upcase : m
@@ -526,7 +527,7 @@ module Vpim
       #
       # See #partstat.
       def partstat=(status)
-        @field['partstat'] = status.to_str
+        @field['PARTSTAT'] = status.to_str
         status
       end
 

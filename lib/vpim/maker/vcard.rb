@@ -143,12 +143,12 @@ module Vpim
 
         # All these attributes go into the TYPE parameter.
         params = [ x[:location], x[:delivery] ]
-        params << 'pref' if x[:preferred]
+        params << 'PREF' if x[:preferred]
         params = params.flatten.uniq.compact.map { |s| s.to_str }
 
         paramshash = {}
 
-        paramshash['type'] = params if params.first
+        paramshash['TYPE'] = params if params.first
 
         @card << Vpim::DirectoryInfo::Field.create( 'ADR', values, paramshash)
         self
@@ -172,11 +172,11 @@ module Vpim
 
           yield x
 
-          x[:preferred] = 'pref' if x[:preferred]
+          x[:preferred] = 'PREF' if x[:preferred]
 
           types = x.to_a.flatten.uniq.compact.map { |s| s.to_str }
 
-          params['type'] = types if types.first
+          params['TYPE'] = types if types.first
         end
 
         @card << Vpim::DirectoryInfo::Field.create( 'TEL', number, params)
@@ -198,11 +198,11 @@ module Vpim
 
           yield x
 
-          x[:preferred] = 'pref' if x[:preferred]
+          x[:preferred] = 'PREF' if x[:preferred]
 
           types = x.to_a.flatten.uniq.compact.map { |s| s.to_str }
 
-          params['type'] = types if types.first
+          params['TYPE'] = types if types.first
         end
 
         @card << Vpim::DirectoryInfo::Field.create( 'EMAIL', email, params)
@@ -269,11 +269,11 @@ TODO - need text=() implemented in Field
 
           yield x
 
-          x[:preferred] = 'pref' if x[:preferred]
+          x[:preferred] = 'PREF' if x[:preferred]
 
-          types = x.to_a.flatten.uniq.compact.map { |s| s.to_str }
+          types = x.to_a.flatten.uniq.compact.map { |s| s.upcase }
 
-          params['type'] = types if types.first
+          params['TYPE'] = types if types.first
         end
 
         @card << Vpim::DirectoryInfo::Field.create( 'IMPP', url, params)
@@ -299,11 +299,11 @@ TODO - need text=() implemented in Field
 
           yield x
 
-          x[:preferred] = 'pref' if x[:preferred]
+          x[:preferred] = 'PREF' if x[:preferred]
 
-          types = x.to_a.flatten.uniq.compact.map { |s| s.to_str }
+          types = x.to_a.flatten.uniq.compact.map { |s| s.upcase }
 
-          params['type'] = types if types.first
+          params['TYPE'] = types if types.first
         end
 
         @card << Vpim::DirectoryInfo::Field.create( 'X-AIM', xaim, params)
@@ -346,12 +346,12 @@ TODO - need text=() implemented in Field
         params = {}
 
         # Don't set type to the empty string.
-        params['type'] = x[:type] if( x[:type] && x[:type].length > 0 )
+        params['TYPE'] = x[:type] if( x[:type] && x[:type].length > 0 )
 
         if x[:link]
-          params['value'] = 'uri'
+          params['VALUE'] = 'URI'
         else # it's inline, base-64 encode it
-          params['encoding'] = :b64
+          params['ENCODING'] = :b64
           if !x[:type]
             raise Vpim::InvalidEncodingError, 'Inline image data must have it\'s type set.'
           end

@@ -39,7 +39,6 @@ test_old:
 	for r in /usr/bin/ruby; do $$r -w $(TEST); done
 
 
-
 changes:
 	cvs-changelog -r -f changes.cvs
 
@@ -101,6 +100,8 @@ install:
 
 stamp:
 	ruby -pi~ -e '$$_.gsub!(/0\.\d+(bis|[a-z])?/, "$V")' lib/vpim/vpim.rb vpim.gemspec
+	rm -f lib/vpim/vpim.rb~
+	rm -f vpim.gemspec~
 
 gem:
 	ruby18 vpim.gemspec

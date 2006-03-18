@@ -1,3 +1,15 @@
+0.18 -
+
+- Don't package backup files (.../*.rb~).
+
+- Icalendar decoding optimizations, should be about twice as fast now, and
+  more optimizations are possible.
+
+- Continue the move to using uppercase for all syntactic elements that
+  can be mixed case. The API might eventually allow only uppercase, it
+	appears case-insensitive comparisons still have a noticeable effect
+	on performance.
+
 0.17 - 2006-03-08
 
 - DirectoryInfo#delete - new

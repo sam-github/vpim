@@ -106,7 +106,7 @@ end:VCARD
     assert_equal(nil,          card.enum_by_name("Email").entries[0].param("foo"))
 
     assert_equal(["B"],        card.enum_by_name("kEy").to_a.first.param("encoding"))
-    assert_equal("b",          card.enum_by_name("kEy").entries[0].encoding)
+    assert_equal("B",          card.enum_by_name("kEy").entries[0].encoding)
 
     assert_equal(["work", "voice", "msg"], card.enum_by_name("tel").entries[0].param("Type"))
 
@@ -116,7 +116,7 @@ end:VCARD
 
     assert_equal(nil, card.enum_by_name("tel").entries.first.encoding)
 
-    assert_equal("b", card.enum_by_name("key").entries.first.encoding)
+    assert_equal("B", card.enum_by_name("key").entries.first.encoding)
 
     assert_equal("dGhpcyBjb3VsZCBiZSAKbXkgY2VydGlmaWNhdGUK", card.enum_by_name("key").entries.first.value_raw)
 
