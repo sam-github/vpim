@@ -111,9 +111,9 @@ module Vpim::Methods
   def casecmp?(str0, str1)
     if str0 == nil
       if str1 == nil
-      return true
+        return true
       else
-        return fasle
+        return false
       end
     end
 
