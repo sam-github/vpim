@@ -12,7 +12,7 @@
 # Author::     Sam Roberts <sroberts@uniserve.com>
 # Copyright::  Copyright (C) 2006 Sam Roberts
 # License::    May be distributed under the same terms as Ruby
-# Version::    0.17
+# Version::    0.18
 # Homepage::   http://vpim.rubyforge.org
 #
 # vCard (RFC 2426) is a format for personal information, see Vpim::Vcard and
@@ -77,7 +77,7 @@
 # - link:rrule.txt: utility for printing recurrence rules
 # - link:ics-dump.txt: utility for dumping contents of .ics files
 module Vpim
-  VERSION = "0.17"
+  VERSION = "0.18"
 
   # Return the API version as a string.
   def Vpim.version

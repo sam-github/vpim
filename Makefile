@@ -89,7 +89,7 @@ doc:
 	cp -r doc/* $(HOME)/Sites/vpim/
 	open doc/index.html
 
-V=0.17
+V=0.18
 P=vpim-$V
 R=releases/$P
 
@@ -104,6 +104,7 @@ stamp:
 	rm -f vpim.gemspec~
 
 gem:
+	mkdir -p releases
 	ruby18 vpim.gemspec
 	mv vpim-$V.gem releases/
 

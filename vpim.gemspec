@@ -4,13 +4,13 @@ Gem.manage_gems
 
 spec = Gem::Specification.new do |s|
   s.name              = "vpim"
-  s.version           = "0.17"
+  s.version           = "0.18"
   s.author            = "Sam Roberts"
   s.email             = "sroberts@uniserve.com"
   s.homepage          = "http://vpim.rubyforge.org"
   s.platform          = Gem::Platform::RUBY
   s.summary           = "a library to manipulate vCards and iCalendars"
-  s.files             = Dir.glob("{lib}/**/*").delete_if {|item| item.include?(".svn")}
+  s.files             = Dir.glob("lib/**/*.rb").delete_if { |i| i.include? 'agent' }
   s.require_path      = "lib"
 	s.has_rdoc          = true
 	s.autorequire       = "vpim"
