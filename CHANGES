@@ -1,9 +1,9 @@
-0.18 -
+0.xxx - yyyy-mm-dd
 
 - Don't package backup files (.../*.rb~).
 
-- Icalendar decoding optimizations, should be about twice as fast now, and
-  more optimizations are possible.
+- Icalendar decoding optimizations. Icalendar.decode is about twice as fast
+  now, and more optimizations are scheduled.
 
 - Continue the move to using uppercase for all syntactic elements that
   can be mixed case. The API might eventually allow only uppercase, it
@@ -355,4 +355,7 @@ Address Book from Mutt
 0.1 -
 
 - First release.
+---
+
+puts changes
 

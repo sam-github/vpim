@@ -89,7 +89,7 @@ doc:
 	cp -r doc/* $(HOME)/Sites/vpim/
 	open doc/index.html
 
-V=0.18
+V=0.$(shell ruby -rsvn -e"puts Svn.info['Revision']")
 P=vpim-$V
 R=releases/$P
 
@@ -99,9 +99,8 @@ install:
 	for r in /usr/bin/ruby /opt/local/bin/ruby ruby18; do (cd $R; $$r install.rb config; sudo $$r install.rb install); done
 
 stamp:
-	ruby -pi~ -e '$$_.gsub!(/0\.\d+(bis|[a-z])?/, "$V")' lib/vpim/vpim.rb vpim.gemspec
-	rm -f lib/vpim/vpim.rb~
-	rm -f vpim.gemspec~
+	echo "Stamp version:" $V
+	ruby stamp.rb > lib/vpim/version.rb
 
 gem:
 	mkdir -p releases

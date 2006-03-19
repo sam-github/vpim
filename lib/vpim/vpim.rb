@@ -12,7 +12,6 @@
 # Author::     Sam Roberts <sroberts@uniserve.com>
 # Copyright::  Copyright (C) 2006 Sam Roberts
 # License::    May be distributed under the same terms as Ruby
-# Version::    0.18
 # Homepage::   http://vpim.rubyforge.org
 #
 # vCard (RFC 2426) is a format for personal information, see Vpim::Vcard and
@@ -21,17 +20,17 @@
 # iCalendar (RFC 2445) is a format for calendar related information, see
 # Vpim::Icalendar.
 #
-# iCalendar was called vCalendar pre-IETF standaradization, and since both of
-# these "v-formats" are commonly used personal information management, the
+# iCalendar was called vCalendar pre-IETF standardization, and since both of
+# these "v-formats" are commonly used for personal information management, the
 # library is called "vpim".
 #
 # vCard and iCalendar support is built on top of an implementation of the MIME
 # Content-Type for Directory Information (RFC 2425). The basic RFC 2425 format
 # is implemented by  Vpim::DirectoryInfo and Vpim::DirectoryInfo::Field.
 #
-# The libary is mature to the point of useability, but there is always more
-# that could be done. I have a very long todo list, so if you think something
-# is missing, or have API suggestions, please contact me. I can't promise
+# The libary is quite useable, but there is always more that could be done.
+# Since I have a more on my todo list than I have time, if you think something
+# is missing or have API suggestions, please contact me. I can't promise
 # instantaneous turnaround, but I might be able to suggest another approach,
 # and features requested by users of vPim are high priority for me.
 #
@@ -76,14 +75,8 @@
 #   Apple's iCal calendars
 # - link:rrule.txt: utility for printing recurrence rules
 # - link:ics-dump.txt: utility for dumping contents of .ics files
-module Vpim
-  VERSION = "0.18"
 
-  # Return the API version as a string.
-  def Vpim.version
-    VERSION
-  end
-end
+require 'vpim/version'
 
 module Vpim
   # Exception used to indicate that data being decoded is invalid, the message
@@ -91,7 +84,7 @@ module Vpim
   class InvalidEncodingError < StandardError; end
 end
 
-module Vpim::Methods
+module Vpim::Methods #:nodoc:
   module_function
 
   # Case-insensitive comparison of +str0+ to +str1+, returns true or false.
