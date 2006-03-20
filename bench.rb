@@ -2,29 +2,55 @@ require 'benchmark'
 require 'pp'
 require 'vpim/icalendar'
 
-unless ARGV.first
-	ARGV << "~/Library/Calendars"
-end
+str0 = "a" * 20
+str1 = str0.upcase
+sym0 = str0.to_sym
+sym1 = str1.to_sym
 
-@cal = []
+$N = 1000000
 
-ARGV.each do |dir|
-	@cal.concat(Dir.glob(File.expand_path(dir) + '/*.ics'))
-end
+Benchmark.bm(20) do |x|
 
-pp @cal
+	x.report("noop")  do
+    $N.times do
+    end
+  end
 
-Benchmark.bmbm do |x|
-	@cal.each do |file|
-		unfold =  Vpim.unfold(open(file))
-		collect = unfold.collect { |line| Vpim::DirectoryInfo::Field.decode(line) }
-		expand = Vpim.expand(collect)
+	x.report("String#==")  do
+    $N.times do
+      str0 == str1
+    end
+  end
 
-		x.report(file + ' - decode')  { Vpim::Icalendar.decode(open(file)) }
-		x.report(file + ' - unfold')  { Vpim.unfold(open(file)) }
-		x.report(file + ' - field')  { unfold.collect { |line| Vpim::DirectoryInfo::Field.decode(line) } }
-		x.report(file + ' - expand')  { Vpim.expand(collect) }
-		x.report(file + ' - decodex')  { Vpim::Icalendar.decode(nil, expand) }
-	end
+	x.report("String#casecmp")  do
+    $N.times do
+      str0.casecmp(str1)
+    end
+  end
+
+	x.report("Symbol#==")  do
+    $N.times do
+      sym0 == sym1
+    end
+  end
+
+	x.report("String#to_sym")  do
+    $N.times do
+      str1.to_sym
+    end
+  end
+
+	x.report("String#up")  do
+    $N.times do
+      str1.upcase
+    end
+  end
+
+	x.report("String#up#to_sym")  do
+    $N.times do
+      str1.upcase.to_sym
+    end
+  end
+
 end
 
