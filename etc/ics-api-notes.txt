@@ -367,7 +367,11 @@ x    location      x             x
      percent       x
 x    priority      x             x
 x    transp                      x
-     
+
+     due           x
+		 duration      x             x
+		 dtend                       x
+
      the following are optional, and MAY occur more than once
      
 x    categories    x             x             x
@@ -376,11 +380,14 @@ x    contact       x             x             x
 x    resources     x             x
      
      attach        x             x             x
+
      attendee      x             x             x
+
+     related       x             x             x
+
      exdate        x             x             x
      exrule        x             x             x
      rdate         x             x             x
-     related       x             x             x
      rrule         x             x             x
      rstatus       x             x             x
 
