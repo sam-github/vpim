@@ -4,8 +4,8 @@ SHELL:=/bin/sh
 
 .PHONY: default doc test other
 
-do:
-	ruby -w -I lib ex_cpvcard.rb
+do: default
+	# ruby -w -I lib test_vcard.rb
 
 default: test
 
@@ -80,7 +80,7 @@ SAMPLES := \
 
 doc:
 	rm -rf doc/
-	rdoc18 $(RDFLAGS) lib CHANGES COPYING README README.mutt
+	rdoc18 $(RDFLAGS) -x lib/vpim/agent lib/vpim CHANGES COPYING README README.mutt
 	for s in $(SAMPLES); do cp $$s doc/`basename $$s .rb`.txt; done
 	cp etc/rfc24*.txt doc/
 	chmod u=rw doc/*.txt
@@ -116,6 +116,7 @@ pkg:
 	mkdir -p $R/samples
 	mkdir -p $R/etc
 	cp COPYING README CHANGES install.rb $R/
+	cp lib/*.rb                $R/lib/
 	cp lib/vpim/*.rb           $R/lib/vpim/
 	cp lib/vpim/maker/*.rb     $R/lib/vpim/maker/
 	cp etc/rfc2425.txt     $R/etc

@@ -190,9 +190,25 @@ module Vpim
   # \n -> NL
   # \N -> NL
   # \, -> ,
+  # \; -> ;
   def Vpim.decode_text(v) # :nodoc:
-    # FIXME - this will fail for "\\,"!
-    v.gsub(/\\[nN]/, "\n").gsub(/\\,/, ",").gsub(/\\\\/) { |m| "\\" }
+    v.gsub(/\\(.)/) do
+      case $1
+      when '\\', ',', ';'
+        $1
+      when 'n', 'N' 
+        "\n"
+      else
+        raise Vpim::InvalidEncodingError, "TEXT #{v.inspect} uses invalid escape sequence '\\#{$1}'"
+      end
+    end
+  end
+
+  # Convert a +sep+-seperated list of TEXT values into an array of values.
+  def Vpim.decode_text_list(value, sep = ',') # :nodoc:
+    value.scan(/((?:(?:\\.)|[^#{sep}])+)#{sep}?/).map do |v|
+      Vpim.decode_text(v.first)
+    end
   end
 
 

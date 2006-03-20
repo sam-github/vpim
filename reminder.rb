@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-$:.unshift File.dirname($0)
-
 require 'getoptlong'
 require 'pp'
 

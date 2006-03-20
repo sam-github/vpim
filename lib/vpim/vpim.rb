@@ -75,6 +75,8 @@
 #   Apple's iCal calendars
 # - link:rrule.txt: utility for printing recurrence rules
 # - link:ics-dump.txt: utility for dumping contents of .ics files
+module Vpim
+end
 
 require 'vpim/version'
 

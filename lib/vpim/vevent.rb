@@ -10,86 +10,55 @@ require 'vpim/dirinfo'
 require 'vpim/field'
 require 'vpim/rfc2425'
 require 'vpim/vpim'
-
-=begin
-A vTodo that is done:
-
-BEGIN:VTODO
-COMPLETED:20040303T050000Z
-DTSTAMP:20040304T011707Z
-DTSTART;TZID=Canada/Eastern:20030524T115238
-SEQUENCE:2
-STATUS:COMPLETED
-SUMMARY:Wash Car
-UID:E7609713-8E13-11D7-8ACC-000393AD088C
-END:VTODO
-
-BEGIN:VTODO
-DTSTAMP:20030909T015533Z
-DTSTART;TZID=Canada/Eastern:20030808T000000
-SEQUENCE:1
-SUMMARY:Renew Passport
-UID:EC76B256-BBE9-11D7-8401-000393AD088C
-END:VTODO
-
-
-=end
+require 'vpim/property/base'
+require 'vpim/property/common'
+require 'vpim/property/priority'
+require 'vpim/property/location'
+require 'vpim/property/resources'
 
 module Vpim
   class Icalendar
-    class Vtodo
-      def initialize(fields) #:nodoc:
-        @fields = fields
+    class Vjournal
+      include Vpim::Icalendar::Property::Base
+      include Vpim::Icalendar::Property::Common
 
+      def initialize(fields) #:nodoc:
         outer, inner = Vpim.outer_inner(fields)
 
         @properties = Vpim::DirectoryInfo.create(outer)
 
         @elements = inner
-
-        # TODO - see Vevent
-
-        @summary = nil
-        @description = nil
-        @comment = nil
-        @location = nil
-        @status = nil
-        @uid = nil
-        @priority = nil
-        @dtstamp = nil
-        @dtstart = nil
-        @dtend = nil
-        @duration = nil
-        @due = nil
-        @rrule = nil
-
-        @properties.each do |f|
-          case f.name
-          when 'SUMMARY'       then @summary = f.to_text
-          when 'DESCRIPTION'   then @description = f.to_text
-          when 'COMMENT'       then @comment = f.to_text
-          when 'LOCATION'      then @location = f.to_text
-          when 'STATUS'        then @status = f.to_text
-          when 'UID'           then @uid = f.to_text
-          when 'PRIORITY'      then @priority = f.to_text
-
-          when 'DTSTAMP'       then @dtstamp = f
-          when 'DTSTART'       then @dtstart = f
-          when 'DTEND'         then @dtend = f
-          when 'DURATION'      then @duration = f
-          when 'DUE'           then @due = f
-
-          when 'RRULE'         then @rrule = f.value
-          end
-        end
-
-        # Need to seperate status-handling out into a module...
-        @status_values = [ 'COMPLETED' ];
-
       end
 
-      attr_reader :description, :summary, :comment, :location
-      attr_reader :properties, :fields # :nodoc:
+      # Create a Vjournal component.
+      def self.create(fields=[])
+        di = DirectoryInfo.create([], 'VJOURNAL')
+
+        Vpim::DirectoryInfo::Field.create_array(fields).each { |f| di.push_unique f }
+
+        new(di.to_a)
+      end
+
+    end
+  end
+end
+
+module Vpim
+  class Icalendar
+    class Vtodo
+      include Vpim::Icalendar::Property::Base
+      include Vpim::Icalendar::Property::Common
+      include Vpim::Icalendar::Property::Priority
+      include Vpim::Icalendar::Property::Location
+      include Vpim::Icalendar::Property::Resources
+
+      def initialize(fields) #:nodoc:
+        outer, inner = Vpim.outer_inner(fields)
+
+        @properties = Vpim::DirectoryInfo.create(outer)
+
+        @elements = inner
+      end
 
       # Create a new Vtodo object.
       #
@@ -111,37 +80,6 @@ module Vpim
         new(di.to_a)
       end
 
-=begin
-I think that the initialization shouldn't be done in the #initialize, so, for example,
-  @status = @properties.text('STATUS').first
-should be in the method below.
-
-That way, I can construct a Vtodo by just including a module for each field that is allowed
-in a Vtodo, simply.
-=end
-      def status
-        if(!@status); return nil; end
-
-        s = @status.upcase
-
-        unless @status_values.include?(s)
-          raise Vpim::InvalidEncodingError, "Invalid status '#{@status}'"
-        end
-
-        s
-      end
-
-      # +priority+ is a number from 1 to 9, with 1 being the highest and 0
-      # meaning "no priority", equivalent to not specifying the PRIORITY field.
-      # Other values are reserved by RFC2446.
-      def priority
-        p = @priority ? @priority.to_i : 0
-
-        if( p < 0 || p > 9 )
-          raise Vpim::InvalidEncodingError, 'Invalid priority #{@priority} - it must be 0-9!'
-        end
-        p
-      end
     end
   end
 end
@@ -149,63 +87,20 @@ end
 module Vpim
   class Icalendar
     class Vevent
-      def proptext(name) #:nodoc:
-        text = @properties.detect { |f| f.name? name }
-        if text
-          text = text.to_text
-        end
-        text
-      end
+      include Vpim::Icalendar::Property::Base
+      include Vpim::Icalendar::Property::Common
+      include Vpim::Icalendar::Property::Priority
+      include Vpim::Icalendar::Property::Location
+      include Vpim::Icalendar::Property::Resources
 
       def initialize(fields) #:nodoc:
-        @fields = fields
-
         outer, inner = Vpim.outer_inner(fields)
 
         @properties = Vpim::DirectoryInfo.create(outer)
 
         @elements = inner
 
-        # TODO - don't get properties here, put the accessor in a module, which
-        # can cache the results. Caching is important, it allows much faster
-        # processing of large calendars, because you don't have to decode
-        # fields you aren't interested in. And besides, this code is hideous.
-
-        @summary = nil
-        @description = nil
-        @comment = nil
-        @location = nil
-        @status = nil
-        @uid = nil
-        @dtstamp = nil
-        @dtstart = nil
-        @dtend = nil
-        @duration = nil
-        @rrule = nil
-
-        @properties.each do |f|
-          case f.name
-          when 'SUMMARY'       then @summary = f.to_text
-          when 'DESCRIPTION'   then @description = f.to_text
-          when 'COMMENT'       then @comment = f.to_text
-          when 'LOCATION'      then @location = f.to_text
-          when 'STATUS'        then @status = f.to_text
-          when 'UID'           then @uid = f.to_text
-
-          when 'DTSTAMP'       then @dtstamp = f
-          when 'DTSTART'       then @dtstart = f
-          when 'DTEND'         then @dtend = f
-          when 'DURATION'      then @duration = f
-
-          when 'RRULE'         then @rrule = f.value
-          end
-        end
-
         # See "TODO - fields" in dirinfo.rb
-
-        # Need to seperate status-handling out into a module...
-        @status_values = [ 'TENTATIVE', 'CONFIRMED', 'CANCELLED' ];
-
       end
 
       # Create a new Vevent object. All events must have a DTSTART field,
@@ -240,13 +135,6 @@ module Vpim
           )
       end
 
-      attr_reader :description, :summary, :comment, :location
-      attr_reader :properties, :fields # :nodoc:
-
-      #--
-      # The methods below should be shared, somehow, by all calendar components, not just Events.
-      #++
-
       # Accept an event invitation. The +invitee+ is the Address that wishes
       # to accept the event invitation as confirmed.
       def accept(invitee)
@@ -270,68 +158,24 @@ module Vpim
         Vevent.new(fields)
       end
 
-      # Status values are not rejected during decoding. However, if the
-      # status is requested, and it's value is not one of the defined
-      # allowable values, an exception is raised.
-      def status
-        if(!@status); return nil; end
-
-        s = @status.upcase
-
-        unless @status_values.include?(s)
-          raise Vpim::InvalidEncodingError, "Invalid status '#{@status}'"
-        end
-
-        s
-      end
-
-      # TODO - def status? ...
-
-      # TODO - def status= ...
-
-      # The unique identifier of this calendar component, a string. It cannot be
-      # nil, if it is not found in the component, the calendar is malformed, and
-      # this method will raise an exception.
-      def uid
-        if(!@uid)
-          raise Vpim::InvalidEncodingError, 'Invalid component - no UID field was found!'
-        end
-
-        @uid
-      end
-
-      # The time stamp for this calendar component. Describe what this is....
-      # This field is required!
-      def dtstamp
-        if(!@dtstamp)
-          raise Vpim::InvalidEncodingError, 'Invalid component - no DTSTAMP field was found!'
-        end
-
-        @dtstamp.to_time.first
-      end
-
-      # The start time for this calendar component. Describe what this is....
-      # This field is required!
-      def dtstart
-        if(!@dtstart)
-          raise Vpim::InvalidEncodingError, 'Invalid component - no DTSTART field was found!'
-        end
-
-        @dtstart.to_time.first
-      end
-
 =begin
       # Set the start time for the event to +start+, a Time object.
       # TODO - def dtstart=(start) ... start should be allowed to be Time/Date/DateTime
 =end
+
+      def transparency
+        proptoken 'TRANSP', ["OPAQUE", "TRANSPARENT"], "OPAQUE"
+      end
 
       # The duration in seconds of a Event, Todo, or Vfreebusy component, or
       # for Alarms, the delay period prior to repeating the alarm. The
       # duration is calculated from the DTEND and DTBEGIN fields if the
       # DURATION field is not present. Durations of zero seconds are possible.
       def duration
-        if(!@duration)
-          return nil unless @dtend
+        dur = @properties.field 'DURATION'
+        dte = @properties.field 'DTEND'
+        if !dur
+          return nil unless dte
 
           b = dtstart
           e = dtend
@@ -339,7 +183,7 @@ module Vpim
           return (e - b).to_i
         end
 
-        Icalendar.decode_duration(@duration.value_raw)
+        Icalendar.decode_duration(dur.value_raw)
       end
 
       # The end time for this calendar component. For an Event, if there is no
@@ -347,8 +191,9 @@ module Vpim
       # However, the end time will be calculated from the event duration, if
       # present.
       def dtend
-        if(@dtend)
-          @dtend.to_time.first
+        dte = @properties.field 'DTEND'
+        if dte
+          dte.to_time.first
         elsif duration
             dtstart + duration
         else
@@ -359,7 +204,7 @@ module Vpim
       # The recurrence rule, if any, for this event. Recurrence starts at the
       # DTSTART time.
       def rrule
-        @rrule
+        propvalue 'RRULE'
       end
 
       # The times this event occurs, as a Vpim::Rrule.
@@ -369,7 +214,7 @@ module Vpim
       # Note: occurences are currently calculated only from DTSTART and RRULE,
       # no allowance for EXDATE or other fields is made.
       def occurences
-        Vpim::Rrule.new(dtstart, @rrule)
+        Vpim::Rrule.new(dtstart, rrule)
       end
 
       # Check if this event overlaps with the time period later than or equal to +t0+, but
@@ -378,46 +223,6 @@ module Vpim
         occurences.each_until(t1).detect { |t| tend = t + (duration || 0); tend > t0 }
       end
 
-      # Return the event organizer, an object of Icalendar::Address (or nil if
-      # there is no ORGANIZER field).
-      #
-      # TODO - verify that it is illegal for there to be more than one
-      # ORGANIZER, if more than one is allowed, this needs to return an array.
-      def organizer
-        unless instance_variables.include? "@organizer"
-          @organizer = @properties.field('ORGANIZER')
-
-          if @organizer
-            @organizer = Icalendar::Address.new(@organizer)
-          end
-        end
-        @organizer.freeze
-      end
-
-      # Return an array of attendees, an empty array if there are none. The
-      # attendees are objects of Icalendar::Address. If +uri+ is specified
-      # only the return the attendees with this +uri+.
-      def attendees(uri = nil)
-        unless instance_variables.include? "@attendees"
-          @attendees = @properties.enum_by_name('ATTENDEE').map { |a| Icalendar::Address.new(a).freeze }
-          @attendees.freeze
-        end
-        if uri
-          @attendees.select { |a| a == uri } .freeze
-        else
-          @attendees
-        end
-      end
-
-      # Return true if the +uri+, usually a mailto: URI, is an attendee.
-      def attendee?(uri)
-        attendees.include? uri
-      end
-
-      # CONTACT - value is text, parameters are ALTREP and LANGUAGE.
-      #
-      # textual contact information, or an altrep referring to a URI pointing
-      # at a vCard or LDAP entry...
     end
   end
 end

@@ -493,8 +493,12 @@ EOF
 
     # text
     assert_equal(
-       "aa,\n\n,\\\\,\\a\\b",
-       Vpim.decode_text("aa,\\n\\n\,\\\\\\\\,\\a\\b")
+                        "aa,\n\n,\\,\\a;;b",
+       Vpim.decode_text('aa,\\n\\n,\\\\\,\\\\a\;\;b')
+       )
+    assert_equal(
+                             ["1\n2,3", "bbb", "zz"],
+       Vpim.decode_text_list(',1\\n2\\,3,bbb,,zz,')
        )
   end
 

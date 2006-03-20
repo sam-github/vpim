@@ -108,7 +108,7 @@ UID:uid5@host1.com
 ORGANIZER:MAILTO:jsmith@host.com
 STATUS:DRAFT
 CLASS:PUBLIC
-CATEGORY:Project Report, XYZ, Weekly Meeting
+CATEGORIES:Project Report, XYZ, Weekly Meeting
 DESCRIPTION:Project xyz Review Meeting Minutes\n
  Agenda\n1. Review of project version 1.0 requirements.\n2.
  Definition
@@ -136,4 +136,14 @@ FREEBUSY:19980318T030000Z/19980318T040000Z
 URL:http://www.host.com/calendar/busytime/jsmith.ifb
 END:VFREEBUSY
 END:VCALENDAR
+
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:example
+BEGIN:VTODO
+caTEGORIES:Blue\, Inc,Rocket Red
+CATEGorieS:more,more,more,,,,
+GEO:37.386013;-122.082932
+END:VTODO
+end:vcaleNDAR
 

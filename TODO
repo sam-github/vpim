@@ -1,3 +1,7 @@
+RFC error - CATEGORY is used in an example, it should be CATEGORIES
+
+Need to cache properties, it's too slow. Do when I do encoding, because
+cacheing implies cache clearing...
 
 == PACKAGING
 

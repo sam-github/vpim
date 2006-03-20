@@ -1,0 +1,97 @@
+
+  ...            ; y/n    (whether I've seen it in Apple's calendars)
+                   name
+                   section
+                   type/comments
+
+
+  icalbody = icalprops component
+
+  icalprops =
+     prodid /    ; y  PRODID    4.7.3  required, TEXT
+     version /   ; y            4.7.4  required, TEXT, "2.0"
+     calscal /   ; y            4.7.1  only defined value is GREGORIAN
+     method /    ; n  METHOD    4.7.2  used with transport protocols
+
+  component =
+     eventc /    ; y  VEVENT    4.6.1
+     todoc /     ; y  VTODO     4.6.2
+     journalc /  ; n
+     freebusyc / ; n
+     timezonec / ; n
+     
+   alarmc        ; y  VALARM  4.6.6  occurs inside a VEVENT or a VTODO
+
+   class         ; y  CLASS     4.8.1.3   private/public/confidentical/... (default=public)
+
+   comment       ; n            4.8.1.4   TEXT
+   description   ; y            4.8.1.5   TEXT
+   summary       ; y            4.8.1.12  TEXT
+   location      ; y            4.8.1.7   TEXT  intended venue
+ 
+   priority      ; n why?       4.8.1.9   INTEGER, why isn't this seen for my TODO items?
+
+   status        ; y            4.8.1.11  TEXT, different values defined for event, todo, journal
+
+      Event: TENTATIVE, CONFIRMED, CANCELLED
+
+      Todo: NEEDS-ACTION, COMPLETED, IN-PROCESS, CANCELLED
+
+      Journal: DRAFT, FINAL, CANCELLED
+
+   dtstart       ; y  DTSTART   4.8.2.4   DATE-TIME is default, value=date can be set
+   dtend         ; y  DTEND     4.8.2.2   Unless it has Z (UTC), or a tzid, then it is local-time.
+
+   dtstamp       ; y  DTSTAMP   4.8.7.2   DATE-TIME, creation time, inclusion is mandatory, but what does
+     it mean? It seems to be when the icalendar was actually created (as opposed to when the user entered
+     the information into the calendar database, for example), but in that case my Apple icalendars should
+     have all components having the same DTSTAMP, but they don't!
+
+   duration      ; y  DURATION  4.8.2.5   dur-value
+
+     dur-value  = (["+"] / "-") "P" (dur-date / dur-time / dur-week)
+
+     dur-date   = dur-day [dur-time]
+                = 1*DIGIT "D" [ dur-time ]
+                
+     dur-time   = "T" (dur-hour / dur-minute / dur-second)
+                = "T" (
+                    1*DIGIT "H" [ 1*DIGIT "M" [ 1*DIGIT "S" ] ] /
+                                  1*DIGIT "M" [ 1*DIGIT "S" ]   /
+                                                1*DIGIT "S"
+                    )
+
+     dur-week   = 1*DIGIT "W"
+     dur-day    = 1*DIGIT "D"
+     dur-hour   = 1*DIGIT "H" [dur-minute]
+     dur-minute = 1*DIGIT "M" [dur-second]
+     dur-second = 1*DIGIT "S"
+
+     The EBNF is complicated, because they want to say that /some/ component
+     must be present, and that if you have a "T", you need a time after it,
+     and that you can't have an hour followed by seconds with no intervening
+     minutes... but we don't care about that during decoding, so we rewrite
+     the EBNF as:
+
+     dur-value = ["+" / "-"] "P" [ 1*DIGIT "W" ] [ 1*DIGIT "D" ] [ "T" [ 1*DIGIT "H" ]  [ 1*DIGIT "M" ] [ 1*DIGIT "S" ] ]
+
+   dtdue         ; n  DTDUE     4.8.2.3
+
+   uid           ; y  UID       4.8.4.7   TEXT, recommended to generate them in RFC822 form
+
+   rrule         ; y  RRULE     4.8.5.4   RECUR, can occur multiple times!
+
+   
+
+VEVENT Ifx:
+
+  TEXT: summary, description, comment, location, uid
+
+  think about:  uid
+
+  Vevent#status -> The status, upper-case.
+  Vevent#status= -> set a new status, only allow the defined statuses!
+  Vevent#status?(s) -> check if the status is s
+
+  can contain alarms... should it include an alarms module?
+

@@ -290,6 +290,11 @@ module Vpim
       # Note: Both the RFC 2425 encoding param ("b", meaning base-64) and the
       # vCard 2.1 encoding params ("base64", "quoted-printable", "8bit", and
       # "7bit") are supported.
+      #
+      # FIXME:
+      # - should use the VALUE parameter
+      # - should also take a default value type, so it can be converted
+      #   if VALUE parameter is not present.
       def value
         case encoding
           when nil, '8BIT', '7BIT' then @value
@@ -465,7 +470,7 @@ module Vpim
       # characters, this method will strip them, if present.
       #
       # In theory, #value could also do this, but it would need to know that
-      # the value is of type 'TEXT', and often for text values the 'TYPE'
+      # the value is of type 'TEXT', and often for text values the 'VALUE'
       # parameter is not present, so knowledge of the expected type of the
       # field is required from the decoder.
       def to_text

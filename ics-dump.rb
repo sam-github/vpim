@@ -2,7 +2,7 @@
 #
 # Calendars are in ~/Library/Calendars/
 
-$:.unshift File.dirname($0)
+$:.unshift File.dirname($0) + "/lib"
 
 require 'getoptlong'
 require 'pp'
@@ -61,35 +61,73 @@ if opt_node
   exit 0
 end
 
+def puts_common(e)
+  [
+    :access_class,
+    :created,
+    :description,
+    :dtstamp,
+    :dtstart,
+    :status,
+    :summary,
+    :uid,
+    :url,
+    :organizer,
+  ].each do |m|
+    v = e.send(m)
+    if v
+      puts "  #{m}=<#{v.to_s}>"
+    end
+  end
+
+  [
+    :categories,
+    :comments,
+    :contacts
+  ].each do |m|
+    e.send(m).each_with_index do |v,i|
+      puts "  #{m}[#{i}]=<#{v.to_s}>"
+    end
+  end
+
+  e.attendees.each_with_index do |a,i|
+    puts "  attendee[#{i}]=#{a.to_s}"
+      puts "   role=#{a.role.upcase} participation-status=#{a.partstat.upcase} rsvp?=#{a.rsvp ? 'yes' : 'no'}"
+  end
+end
+
 ARGV.each do |file|
   cals = Vpim::Icalendar.decode(File.open(file))
 
-  cals.each do |cal|
-    puts "vCalendar: version=#{cal.version/10.0} producer='#{cal.producer}'"
+  cals.each_with_index do |cal, i|
+    if i > 0
+      puts
+    end
 
-    if cal.protocol; puts "  protocol-method=#{cal.protocol}"; end
+    puts "vCalendar[#{i}]:"
+    puts " version=#{cal.version/10.0}"
+    puts " producer=#{cal.producer}"
+
+    if cal.protocol; puts " protocol=#{cal.protocol}"; end
 
     events = cal.events
-    events.each do |e|
-      puts " vEvent:"
-      if e.summary;      puts "   summary=#{e.summary}"; end
-      if e.description;  puts "   description=<#{e.description}>"; end
-      if e.comment;      puts "   comment=#{e.comment}"; end
 
-      if e.organizer;    puts "   organizer=#{e.organizer.to_s}"; end
+    events.each_with_index do |e, i|
+      puts " vEvent[#{i}]:"
 
-      e.attendees.each_with_index do |a,i|
-        puts "   attendee[#{i}]=#{a.to_s}"
-        puts "     role=#{a.role.upcase} participation-status=#{a.partstat.upcase} rsvp?=#{a.rsvp ? 'yes' : 'no'}"
-      end
+      puts_common(e)
+
+#     if e.comment;      puts "  comment=#{e.comment}"; end
+
 
       if e.location;     puts "   location=#{e.location}"; end
-      if e.status;       puts "   status=#{e.status}"; end
-                         puts "   uid=#{e.uid}"
-                         puts "   dtstamp=#{e.dtstamp.to_s}"
-                         puts "   dtstart=#{e.dtstart.to_s}"
+      if e.geo;          puts "   geo=#{e.geo.inspect}"; end
       if e.dtend;        puts "     dtend=#{e.dtend.to_s}"; end
       if e.duration;     puts "   duration=#{Duration.secs(e.duration).to_s}"; end
+
+      puts "  priority=#{e.priority}"
+      puts "  transparency=#{e.transparency}"
+
       # TODO - spec as hours/mins/secs
       if e.rrule;        puts "   rrule=#{e.rrule}"; end
 
@@ -104,9 +142,15 @@ ARGV.each do |file|
     end
 
     todos = cal.todos
-    todos.each do |e|
-      s = e.status ? " (#{e.status})" : ''
-      puts "Todo#{s}: #{e.summary}"
+
+    todos.each_with_index do |e,i|
+      puts " vTodo[#{i}]:"
+
+      puts_common(e)
+
+      puts "  priority=#{e.priority}"
+
+      if e.geo;          puts "   geo=#{e.geo.inspect}"; end
     end
 
     if opt_debug

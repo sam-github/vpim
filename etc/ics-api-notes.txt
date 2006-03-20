@@ -73,30 +73,6 @@ those properties are changed.
 Should be able to parse the examples in s5.
 
 
-Data structures:
-
-component =>
-list of allowed properties
-
-
-property=>
-list of allowed parameters
-restrictions on allowed parameter values?
-
-default value type
-other allowed value types?
-multiplicity of value
-restrictions on allowed value type?
-
-parameter=>
-decoding function
-encoding function
-
-value type=>
-decoding function
-encoding function
-
-
 APIs:
 
 Vpim
@@ -114,9 +90,6 @@ Rrule
 		  Common (summary/description/...)
 			Times (dtstart/dtend/duration)
 			...
-
-			Divide into groups, if possible, if the entire group is implemented together.
-		  
 
 
 Rrule
@@ -252,7 +225,7 @@ if I ever do iTIP.
 #attachments
 	  n:0-*
 		... array of class Attachment
-		  Attachement
+		  Attachment
 			  #uri          TEXT  (default)
 				#binary       String, ENCODING=BASE64, VALUE=BINARY
 				#format       param FMTTYPE, application/x-word, etc., default to "" or nil?
@@ -290,26 +263,26 @@ if I ever do iTIP.
 
 		(Concatenate all the comments found, all the property values in one array)
 
-#contacts
+  #contacts
 	  n:0-*
 	  #value   TEXT
 		... array of String
 		param LANGUAGE ... don't support
 		param ALTREP ... don't support
 
-#exrules
+  #exrules
 	  n:0-*
 		#value   RRULE
 		... array of Rrule
 
-#exdates
+  #exdates
 	  n:0-*
 		#value   DATE-TIME, or optionally DATE
 		... array of Time, or Date?
-param VALUE
-param TZID supported?
+    param VALUE
+    param TZID supported?
 
-#rstatus
+  #rstatus
 	  n:0-*
 		#value   TEXT, kindof
 		... array of class Status:
@@ -317,7 +290,7 @@ param TZID supported?
 								 #description
 								 #extra
 
-#relationships "RELATED-TO"
+  #relationships "RELATED-TO"
 	  n:0-*
 		#value   TEXT
 		... array of class Related:
@@ -333,7 +306,7 @@ param TZID supported?
 
 		  --> type should be components, that I look up by UID
 
-#rrule
+  #rrule
 	#rdate
 	  ... both may occur multiple times, how to handle? I think
 		I need a #recurrences that returns an object that has all the
@@ -370,45 +343,46 @@ can have *alarmc:
 	vtodo
 
 
-              Vtodo:        Vevent:       Vjournal:
-
-the following are optional, but MUST NOT occur more than once
-
-class         x             x             x
-created       x             x             x
-description   x             x             x
-dtstamp       x             x             x
-dtstart       x             x             x
-last-mod      x             x             x
-organizer     x             x             x
-recurid       x             x             x
-seq           x             x             x
-status        x             x             x
-summary       x             x             x
-uid           x             x             x
-url           x             x             x
-
-completed     x
-geo           x             x
-location      x             x
-percent       x
-priority      x             x
-transp                      x
-
-the following are optional, and MAY occur more than once
-
-attach        x             x             x
-attendee      x             x             x
-categories    x             x             x
-comment       x             x             x
-contact       x             x             x
-exdate        x             x             x
-exrule        x             x             x
-rdate         x             x             x
-related       x             x             x
-resources     x             x
-rrule         x             x             x
-rstatus       x             x             x
+Done:              Vtodo:        Vevent:       Vjournal:
+     
+     the following are optional, but MUST NOT occur more than once
+     
+x    class         x             x             x
+x    created       x             x             x
+x    description   x             x             x
+x    dtstamp       x             x             x
+x    dtstart       x             x             x
+x    last-mod      x             x             x
+x    organizer     x             x             x
+     recurid       x             x             x
+     seq           x             x             x
+x    status        x             x             x
+x    summary       x             x             x
+x    uid           x             x             x
+x    url           x             x             x
+     
+     completed     x
+x    geo           x             x
+x    location      x             x
+     percent       x
+x    priority      x             x
+x    transp                      x
+     
+     the following are optional, and MAY occur more than once
+     
+x    categories    x             x             x
+x    comment       x             x             x
+x    contact       x             x             x
+x    resources     x             x
+     
+     attach        x             x             x
+     attendee      x             x             x
+     exdate        x             x             x
+     exrule        x             x             x
+     rdate         x             x             x
+     related       x             x             x
+     rrule         x             x             x
+     rstatus       x             x             x
 
 
 Notes:
@@ -420,113 +394,9 @@ MUST NOT occur in the same 'todoprop'
 	due
 	duration
 
-
-
 Vevent - either 'dtend' or 'duration' may appear in a 'eventprop', but 'dtend'
 and 'duration' MUST NOT occur in the same 'eventprop'
 
 	dtend
 	duration
-
-
-
-=begin
-
-  ...            ; y/n    (whether I've seen it in Apple's calendars)
-                   name
-                   section
-                   type/comments
-
-
-  icalbody = icalprops component
-
-  icalprops =
-     prodid /    ; y  PRODID    4.7.3  required, TEXT
-     version /   ; y            4.7.4  required, TEXT, "2.0"
-     calscal /   ; y            4.7.1  only defined value is GREGORIAN
-     method /    ; n  METHOD    4.7.2  used with transport protocols
-
-  component =
-     eventc /    ; y  VEVENT    4.6.1
-     todoc /     ; y  VTODO     4.6.2
-     journalc /  ; n
-     freebusyc / ; n
-     timezonec / ; n
-     
-   alarmc        ; y  VALARM  4.6.6  occurs inside a VEVENT or a VTODO
-
-   class         ; y  CLASS     4.8.1.3   private/public/confidentical/... (default=public)
-
-   comment       ; n            4.8.1.4   TEXT
-   description   ; y            4.8.1.5   TEXT
-   summary       ; y            4.8.1.12  TEXT
-   location      ; y            4.8.1.7   TEXT  intended venue
- 
-   priority      ; n why?       4.8.1.9   INTEGER, why isn't this seen for my TODO items?
-
-   status        ; y            4.8.1.11  TEXT, different values defined for event, todo, journal
-
-      Event: TENTATIVE, CONFIRMED, CANCELLED
-
-      Todo: NEEDS-ACTION, COMPLETED, IN-PROCESS, CANCELLED
-
-      Journal: DRAFT, FINAL, CANCELLED
-
-   dtstart       ; y  DTSTART   4.8.2.4   DATE-TIME is default, value=date can be set
-   dtend         ; y  DTEND     4.8.2.2   Unless it has Z (UTC), or a tzid, then it is local-time.
-
-   dtstamp       ; y  DTSTAMP   4.8.7.2   DATE-TIME, creation time, inclusion is mandatory, but what does
-     it mean? It seems to be when the icalendar was actually created (as opposed to when the user entered
-     the information into the calendar database, for example), but in that case my Apple icalendars should
-     have all components having the same DTSTAMP, but they don't!
-
-   duration      ; y  DURATION  4.8.2.5   dur-value
-
-     dur-value  = (["+"] / "-") "P" (dur-date / dur-time / dur-week)
-
-     dur-date   = dur-day [dur-time]
-                = 1*DIGIT "D" [ dur-time ]
-                
-     dur-time   = "T" (dur-hour / dur-minute / dur-second)
-                = "T" (
-                    1*DIGIT "H" [ 1*DIGIT "M" [ 1*DIGIT "S" ] ] /
-                                  1*DIGIT "M" [ 1*DIGIT "S" ]   /
-                                                1*DIGIT "S"
-                    )
-
-     dur-week   = 1*DIGIT "W"
-     dur-day    = 1*DIGIT "D"
-     dur-hour   = 1*DIGIT "H" [dur-minute]
-     dur-minute = 1*DIGIT "M" [dur-second]
-     dur-second = 1*DIGIT "S"
-
-     The EBNF is complicated, because they want to say that /some/ component
-     must be present, and that if you have a "T", you need a time after it,
-     and that you can't have an hour followed by seconds with no intervening
-     minutes... but we don't care about that during decoding, so we rewrite
-     the EBNF as:
-
-     dur-value = ["+" / "-"] "P" [ 1*DIGIT "W" ] [ 1*DIGIT "D" ] [ "T" [ 1*DIGIT "H" ]  [ 1*DIGIT "M" ] [ 1*DIGIT "S" ] ]
-
-   dtdue         ; n  DTDUE     4.8.2.3
-
-   uid           ; y  UID       4.8.4.7   TEXT, recommended to generate them in RFC822 form
-
-   rrule         ; y  RRULE     4.8.5.4   RECUR, can occur multiple times!
-
-   
-
-VEVENT Ifx:
-
-  TEXT: summary, description, comment, location, uid
-
-  think about:  uid
-
-  Vevent#status -> The status, upper-case.
-  Vevent#status= -> set a new status, only allow the defined statuses!
-  Vevent#status?(s) -> check if the status is s
-
-  can contain alarms... should it include an alarms module?
-
-=end
 
