@@ -1,14 +1,24 @@
 0.xxx - yyyy-mm-dd
 
+- Modularized the component property accessor methods, and added lots of
+	Icalendar property support for Vevent, Vtodo, and Vjournal.
+
+- Fixed support for TEXT decoding.
+
+- Use Subversion revision as release sub-version.
+
+- It appears that a top-level vpim.rb that requires everything else is needed
+	for ruby-gems, gemspec seems to work now.
+
 - Don't package backup files (.../*.rb~).
 
 - Icalendar decoding optimizations. Icalendar.decode is about twice as fast
-  now, and more optimizations are scheduled.
+	now, and more optimizations are scheduled.
 
-- Continue the move to using uppercase for all syntactic elements that
-  can be mixed case. The API might eventually allow only uppercase, it
-	appears case-insensitive comparisons still have a noticeable effect
-	on performance.
+- Continue the move to using uppercase for all syntactic elements that can be
+	mixed case. The API might eventually allow only uppercase, it appears
+	case-insensitive comparisons still have a noticeable effect on performance.
+
 
 0.17 - 2006-03-08
 
