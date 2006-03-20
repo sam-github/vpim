@@ -67,6 +67,7 @@ module Vpim
       # Categorize the components
       @vevents = []
       @vtodos  = []
+      @vjournals  = []
       @others = []
 
       inner.each do |component|
@@ -81,6 +82,7 @@ module Vpim
         case name
           when 'VEVENT'    then @vevents << Vevent.new(component)
           when 'VTODO'     then @vtodos  << Vtodo.new(component)
+          when 'VJOURNAL'  then @vjournals  << Vjournal.new(component)
           else @others << component
         end
       end
@@ -155,6 +157,8 @@ module Vpim
           @vevents << component
         when Vtodo
           @vtodos << component
+        when Vjournal
+          @vjournals << component
         else
           raise ArgumentError, "can't add component type #{component.type} to a calendar"
       end
@@ -266,16 +270,21 @@ module Vpim
       m ? m.upcase : m
     end
 
-    # The array of all calendar events (each is a Vevent).
+    # The array of all calendar event components (each is a Vevent).
     #
     # TODO - should this take an interval: t0,t1?
     def events
       @vevents
     end
 
-    # The array of all calendar todos (each is a Vtodo).
+    # The array of all calendar todo components (each is a Vtodo).
     def todos
       @vtodos
+    end
+
+    # The array of all calendar journal components (each is a Vjournal).
+    def journals
+      @vjournals
     end
   end
 

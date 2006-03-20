@@ -153,6 +153,14 @@ ARGV.each do |file|
       if e.geo;          puts "   geo=#{e.geo.inspect}"; end
     end
 
+    journals = cal.journals
+
+    journals.each_with_index do |e,i|
+      puts " vJournal[#{i}]:"
+
+      puts_common(e)
+    end
+
     if opt_debug
       pp cals
     end
