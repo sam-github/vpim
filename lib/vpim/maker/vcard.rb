@@ -16,6 +16,7 @@ module Vpim
     # - link:ex_mkvcard.txt: example of creating a vCard
     # - link:ex_cpvcard.txt: example of copying and them modifying a vCard
     # - link:ex_mkv21vcard.txt: example of creating version 2.1 vCard
+    # - link:ex_mkyourown.txt: example of adding support for new fields to Maker::Vcard
     class Vcard
       # Make a vCard.
       #
@@ -80,16 +81,13 @@ module Vpim
       #
       # All attributes are optional.
       #
-      # Warning: This is the only mandatory field besides the full name, FN,
-      # but FN: can be set in #make, and if not set will be constucted as the
-      # string "#{prefix} #{given} #{additional} #{family}, #{suffix}".
-      #
-      # FIXME: is it possible to deduce given/family from the full_name?
-      # 
-      # FIXME: Each attribute can currently only have a single String value.
-      #
-      # FIXME: Need to escape specials in the String.
+      # Warning: This is the only mandatory field besides the full name, FN.
+      # FN: can be set in #make, or by #fullname=, and if not set will be
+      # constucted as the string "#{prefix} #{given} #{additional} #{family},
+      # #{suffix}".
       def add_name # :yield: n
+        # FIXME: Each attribute can currently only have a single String value.
+        # FIXME: Need to escape specials in the String.
         x = Struct.new(:family, :given, :additional, :prefix, :suffix).new
         yield x
         @card << Vpim::DirectoryInfo::Field.create(
@@ -101,8 +99,8 @@ module Vpim
 
       # Add a full name field, FN.
       #
-      # Normally the FN field value is derived from the N: field value, but
-      # it can be explicitly set.
+      # Normally the FN field value is derived from the N: field value, see
+      # #add_name, but it can be explicitly set.
       def fullname=(fullname)
         if @card.field('FN')
           raise Vpim::InvalidEncodingError, "Not allowed to add more than one FN field to a vCard."
@@ -130,9 +128,8 @@ module Vpim
       # strings.
       #
       # TODO - Add #label to support LABEL.
-      #
-      # FIXME - Need to escape specials in the String.
       def add_addr # :yield: adr
+        # FIXME - Need to escape specials in the String.
         x = Struct.new(
           :location, :preferred, :delivery,
           :pobox, :extended, :street, :locality, :region, :postalcode, :country
@@ -226,6 +223,7 @@ module Vpim
         end
         @card << Vpim::DirectoryInfo::Field.create( 'BDAY', birthday );
       end
+
 =begin
 TODO - need text=() implemented in Field
 
@@ -359,6 +357,11 @@ TODO - need text=() implemented in Field
 
         @card << Vpim::DirectoryInfo::Field.create( 'PHOTO', value, params )
         self
+      end
+
+      # Add a URL field, URL:.
+      def add_url(url)
+        @card << Vpim::DirectoryInfo::Field.create( 'URL', url.to_str );
       end
 
       # Add a Field, +field+.

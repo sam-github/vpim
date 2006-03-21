@@ -20,7 +20,7 @@ module Vpim
   #
   # A vCard, for example, is a specialization of a directory info object.
   #
-  #  [RFC2425] the directory information framework (ftp://ftp.ietf.org/rfc/rfc2425.txt)
+  # - [RFC2425] the directory information framework (ftp://ftp.ietf.org/rfc/rfc2425.txt)
   class DirectoryInfo
     include Enumerable
 
@@ -42,7 +42,7 @@ module Vpim
     # Decode +card+ into a DirectoryInfo object.
     #
     # +card+ may either be a something that is convertible to a string using
-    # #to_str or an array of objects that can be joined into a string using
+    # #to_str or an Array of objects that can be joined into a string using
     # #join("\n"), or an IO object (which will be read to end-of-file).
     #
     # The lines in the string may be delimited using IETF (CRLF) or Unix (LF) conventions.

@@ -1,5 +1,9 @@
 0.xxx - yyyy-mm-dd
 
+- Maker::Vcard#add_url - new
+
+- ex_mkyourown.rb - new example
+
 - Modularized the component property accessor methods, and added lots of
 	Icalendar property support for Vevent, Vtodo, and Vjournal.
 

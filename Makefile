@@ -67,6 +67,7 @@ SAMPLES := \
  ex_cpvcard.rb \
  ex_mkvcard.rb \
  ex_mkv21vcard.rb \
+ ex_mkyourown.rb \
  ics-dump.rb \
  ics-to-rss.rb\
  mutt-aliases-to-vcf.rb \
@@ -99,7 +100,7 @@ install:
 	for r in /usr/bin/ruby /opt/local/bin/ruby ruby18; do (cd $R; $$r install.rb config; sudo $$r install.rb install); done
 
 stamp:
-	echo "Stamp version:" $V
+	@echo "Stamp version:" $V
 	ruby stamp.rb > lib/vpim/version.rb
 
 gem:
@@ -113,12 +114,14 @@ pkg:
 	mkdir -p $R
 	mkdir -p $R/lib
 	mkdir -p $R/lib/vpim/maker
+	mkdir -p $R/lib/vpim/property
 	mkdir -p $R/samples
 	mkdir -p $R/etc
 	cp COPYING README CHANGES install.rb $R/
 	cp lib/*.rb                $R/lib/
 	cp lib/vpim/*.rb           $R/lib/vpim/
 	cp lib/vpim/maker/*.rb     $R/lib/vpim/maker/
+	cp lib/vpim/property/*.rb     $R/lib/vpim/property/
 	cp etc/rfc2425.txt     $R/etc
 	cp etc/rfc2426.txt     $R/etc
 	cp etc/rfc2445.txt     $R/etc
