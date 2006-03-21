@@ -100,6 +100,7 @@ install:
 	for r in /usr/bin/ruby /opt/local/bin/ruby ruby18; do (cd $R; $$r install.rb config; sudo $$r install.rb install); done
 
 stamp:
+	svn up
 	@echo "Stamp version:" $V
 	ruby stamp.rb > lib/vpim/version.rb
 
