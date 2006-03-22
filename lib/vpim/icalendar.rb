@@ -10,6 +10,8 @@ require 'vpim/rfc2425'
 require 'vpim/dirinfo'
 require 'vpim/rrule'
 require 'vpim/vevent'
+require 'vpim/vtodo'
+require 'vpim/vjournal'
 require 'vpim/vpim'
 
 module Vpim

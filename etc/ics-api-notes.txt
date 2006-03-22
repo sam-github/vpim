@@ -1,4 +1,4 @@
-
+vim:expandtab
 
 props and params with lists of values use ,
 
@@ -78,18 +78,18 @@ APIs:
 Vpim
 Icalendar
 Rrule
-		Attendee
-		Attachment
-		...?
+    Attendee
+    Attachment
+    ...?
 
-		Vevent
-		Vtodo
-		V...
+    Vevent
+    Vtodo
+    V...
 
-		Property
-		  Common (summary/description/...)
-			Times (dtstart/dtend/duration)
-			...
+    Property
+      Common (summary/description/...)
+      Times (dtstart/dtend/duration)
+      ...
 
 
 Rrule
@@ -130,198 +130,198 @@ components...
 
 Vevent#
 
-#properties  --> a Dirinfo?
-
-#class
-n:0-1
-#value    "PUBLIC" / "PRIVATE" / "CONFIDENTIAL" / ...
-(default is "PUBLIC")
-
-#created
-n:0-1
-#value    DATE-TIME, must be UTC
-(default is "PUBLIC")
-
-#dtstamp
-n:0-1
-#value   DATE-TIME, must be UTC
-
-#last-modified
-n:0-1
-#value    DATE-TIME, must be UTC
-
-#dtstart, #dtend, 
-n:0-1
-#value    DATE-TIME, or optionally DATE
-param VALUE
-param TZID supported?
-		  (dtstart is required for VEVENT, different criteria by component)
-
-#duration
-n:0-1
-#value    special format... currently return seconds, but that is only
-with respect to the specific occurence. Perhaps it should take an
-arg, where it's arg is start time. Default is DTSTART, but if you
-want to know the duration of each occurence, you can ask with the
-new start time. Or does Rrule already handle this?
-
-note: either DTEND or DURATION, but not both
-
-#description/#location/#summary
-n:0-1
-#value    TEXT
-param ALTREP
-param LANGUAGE
-
-Deal with altrep by having #description_altrep, etc, returning a URI
-
-#geo
-n:0-1
-#value   [ FLOAT, FLOAT ], the latitude and longitude
-
-#organizer
-n:0-1
-#value    CAL-ADDRESS
-param CN
-param DIR
-param SENTBY
-param LANGUAGE
-
-#priority
-n:0-1
-#value   INTEGER, range is 0-9, 0 being unspecified (the default), 1 being highest priority
-
-#sequence
-n:0-1
-#value   INTEGER
-
-#status
-n:0-1
-#value   "TENTATIVE"/ "CONFIRMED"/ "CANCELLED" (different for each component)
-
-#transp
-n:0-1
-#value   "OPAQUE" / "TRANSPARENT"
-
-#uid
-n:0-1
-#value    TEXT
-
-#url
-n:0-1
-#value    URI, return as text? probably easiest... maybe accept URI though, particularly
-if it has a to_str or to_s method
-
-#recurid
-n:0-1
-#value    DATE-TIME, or optionally DATE
-param VALUE
-param TZID supported?
-param RANGE
+  #properties  --> a Dirinfo?
+  
+  #class
+  n:0-1
+  #value    "PUBLIC" / "PRIVATE" / "CONFIDENTIAL" / ...
+  (default is "PUBLIC")
+  
+  #created
+  n:0-1
+  #value    DATE-TIME, must be UTC
+  (default is "PUBLIC")
+  
+  #dtstamp
+  n:0-1
+  #value   DATE-TIME, must be UTC
+  
+  #last-modified
+  n:0-1
+  #value    DATE-TIME, must be UTC
+  
+  #dtstart, #dtend, 
+  n:0-1
+  #value    DATE-TIME, or optionally DATE
+  param VALUE
+  param TZID supported?
+        (dtstart is required for VEVENT, different criteria by component)
+  
+  #duration
+  n:0-1
+  #value    special format... currently return seconds, but that is only
+  with respect to the specific occurence. Perhaps it should take an
+  arg, where it's arg is start time. Default is DTSTART, but if you
+  want to know the duration of each occurence, you can ask with the
+  new start time. Or does Rrule already handle this?
+  
+  note: either DTEND or DURATION, but not both
+  
+  #description/#location/#summary
+  n:0-1
+  #value    TEXT
+  param ALTREP
+  param LANGUAGE
+  
+  Deal with altrep by having #description_altrep, etc, returning a URI
+  
+  #geo
+  n:0-1
+  #value   [ FLOAT, FLOAT ], the latitude and longitude
+  
+  #organizer
+  n:0-1
+  #value    CAL-ADDRESS
+  param CN
+  param DIR
+  param SENTBY
+  param LANGUAGE
+  
+  #priority
+  n:0-1
+  #value   INTEGER, range is 0-9, 0 being unspecified (the default), 1 being highest priority
+  
+  #sequence
+  n:0-1
+  #value   INTEGER
+  
+  #status
+  n:0-1
+  #value   "TENTATIVE"/ "CONFIRMED"/ "CANCELLED" (different for each component)
+  
+  #transp
+  n:0-1
+  #value   "OPAQUE" / "TRANSPARENT"
+  
+  #uid
+  n:0-1
+  #value    TEXT
+  
+  #url
+  n:0-1
+  #value    URI, return as text? probably easiest... maybe accept URI though, particularly
+  if it has a to_str or to_s method
+  
+  #recurid
+  n:0-1
+  #value    DATE-TIME, or optionally DATE
+  param VALUE
+  param TZID supported?
+  param RANGE
 
 Should be a class, and it has tons of special handling... deal with later
 if I ever do iTIP.
 
-#attachments
-	  n:0-*
-		... array of class Attachment
-		  Attachment
-			  #uri          TEXT  (default)
-				#binary       String, ENCODING=BASE64, VALUE=BINARY
-				#format       param FMTTYPE, application/x-word, etc., default to "" or nil?
-				#value        either binary, or download the URI, can it be a StringIO?
+  #attachments
+    n:0-*
+    ... array of class Attachment
+      Attachment
+        #uri          TEXT  (default)
+        #binary       String, ENCODING=BASE64, VALUE=BINARY
+        #format       param FMTTYPE, application/x-word, etc., default to "" or nil?
+        #value        either binary, or download the URI, can it be a StringIO?
 
-#attendees
-	  n:0-*
-		... array of class Address
+  #attendees
+    n:0-*
+    ... array of class Address
 
-	#categories
-	  n:0-*
-		#value   TEXT
-		... array of String
-		param LANGUAGE ... don't support
+  #categories
+    n:0-*
+    #value   TEXT
+    ... array of String
+    param LANGUAGE ... don't support
 
-		(Concatenate all the categories found, comma seperated in each value, all
-		the property values in one array)
+    (Concatenate all the categories found, comma seperated in each value, all
+    the property values in one array)
 
-	#resources
-	  n:0-*
-		#value   TEXT
-		... array of String
-		param LANGUAGE ... don't support
-		param ALTREP ... don't support
+  #resources
+    n:0-*
+    #value   TEXT
+    ... array of String
+    param LANGUAGE ... don't support
+    param ALTREP ... don't support
 
-		(Concatenate all the resources found, comma seperated in each value, all
-		the property values in one array)
+    (Concatenate all the resources found, comma seperated in each value, all
+    the property values in one array)
 
-	#comments
-	  n:0-*
-		#value   TEXT
-		... array of String
-		param LANGUAGE ... don't support
-		param ALTREP ... don't support
+  #comments
+    n:0-*
+    #value   TEXT
+    ... array of String
+    param LANGUAGE ... don't support
+    param ALTREP ... don't support
 
-		(Concatenate all the comments found, all the property values in one array)
+    (Concatenate all the comments found, all the property values in one array)
 
   #contacts
-	  n:0-*
-	  #value   TEXT
-		... array of String
-		param LANGUAGE ... don't support
-		param ALTREP ... don't support
+    n:0-*
+    #value   TEXT
+    ... array of String
+    param LANGUAGE ... don't support
+    param ALTREP ... don't support
 
   #exrules
-	  n:0-*
-		#value   RRULE
-		... array of Rrule
+    n:0-*
+    #value   RRULE
+    ... array of Rrule
 
   #exdates
-	  n:0-*
-		#value   DATE-TIME, or optionally DATE
-		... array of Time, or Date?
+    n:0-*
+    #value   DATE-TIME, or optionally DATE
+    ... array of Time, or Date?
     param VALUE
     param TZID supported?
 
   #rstatus
-	  n:0-*
-		#value   TEXT, kindof
-		... array of class Status:
-		             #code
-								 #description
-								 #extra
+    n:0-*
+    #value   TEXT, kindof
+    ... array of class Status:
+                 #code
+                 #description
+                 #extra
 
   #relationships "RELATED-TO"
-	  n:0-*
-		#value   TEXT
-		... array of class Related:
-		  #uid     String
-			#type    "PARENT"/ "CHILD" / "SIBLING" (parent is default)
-			#target  ... a component?
+    n:0-*
+    #value   TEXT
+    ... array of class Related:
+      #uid     String
+      #type    "PARENT"/ "CHILD" / "SIBLING" (parent is default)
+      #target  ... a component?
 
-		could use special handing:
+    could use special handing:
 
-		#parents  (default)
-		#children
-		#siblings
+    #parents  (default)
+    #children
+    #siblings
 
-		  --> type should be components, that I look up by UID
+      --> type should be components, that I look up by UID
 
   #rrule
-	#rdate
-	  ... both may occur multiple times, how to handle? I think
-		I need a #recurrences that returns an object that has all the
-		rrules, rdates, and exceptional conditions in it, and returns
-		them in sorted order....
+  #rdate
+    ... both may occur multiple times, how to handle? I think
+    I need a #recurrences that returns an object that has all the
+    rrules, rdates, and exceptional conditions in it, and returns
+    them in sorted order....
 
-		Not trivial! Definitely could use some test code.
+    Not trivial! Definitely could use some test code.
 
 
 ; the following are optional, ; and MAY occur more than once
-	x-prop
-	 
-	 Give access to the underlying fields if they want to do something special.
+  x-prop
+   
+   Give access to the underlying fields if they want to do something special.
 
-	
+  
 For multi-valued properties where it might be useful to have access to the
 params, sometime, I could do #comments(detailed=false) where detailed returns
 objects if its needed. In the meantime, there's always the dirinfo APIs.
@@ -329,18 +329,32 @@ objects if its needed. In the meantime, there's always the dirinfo APIs.
 
 alarms...
 n:0-*
-		... array of Alarm:
+    ... array of Alarm:
 
-		  TBD...
+      TBD...
 
+Notes:
+
+  Vtodo - either 'due' or 'duration' may appear in a 'todoprop', but 'due' and
+  'duration'
+  MUST NOT occur in the same 'todoprop'
+
+    due
+    duration
+
+  Vevent - either 'dtend' or 'duration' may appear in a 'eventprop', but 'dtend'
+  and 'duration' MUST NOT occur in the same 'eventprop'
+
+    dtend
+    duration
 
 
 Summary of properties by component type:
 
 can have *alarmc:
 
-	vevent
-	vtodo
+  vevent
+  vtodo
 
 
 Done:              Vtodo:        Vevent:       Vjournal:
@@ -354,56 +368,154 @@ x    dtstamp       x             x             x
 x    dtstart       x             x             x
 x    last-mod      x             x             x
 x    organizer     x             x             x
-     recurid       x             x             x
-     seq           x             x             x
+     recurid       x             x             x     (postponed, iTip)
+x    seq           x             x             x
 x    status        x             x             x
 x    summary       x             x             x
 x    uid           x             x             x
 x    url           x             x             x
-     
-     completed     x
-x    geo           x             x
-x    location      x             x
-     percent       x
-x    priority      x             x
-x    transp                      x
-
-     due           x
-		 duration      x             x
-		 dtend                       x
-
-     the following are optional, and MAY occur more than once
-     
 x    categories    x             x             x
 x    comment       x             x             x
 x    contact       x             x             x
-x    resources     x             x
-     
      attach        x             x             x
+x    attendee      x             x             x
+     related       x             x             x    (postponed, iTip)
+     rstatus       x             x             x    (postponed, iTip)
+     
+x    geo           x             x
+x    location      x             x
+x    priority      x             x
+x    resources     x             x
+     duration      x             x                   (done for Vevent, but needs more work)
 
-     attendee      x             x             x
+x    completed     x
+x    percent       x
+x    due           x
 
-     related       x             x             x
+x    transp                      x
+x    dtend                       x
 
+
+These all need handling together, its quite complex:
+     rrule         x             x             x    (single RRULE: is handled)
      exdate        x             x             x
      exrule        x             x             x
      rdate         x             x             x
-     rrule         x             x             x
-     rstatus       x             x             x
 
 
-Notes:
+Valarm:
 
-Vtodo - either 'due' or 'duration' may appear in a 'todoprop', but 'due' and
-'duration'
-MUST NOT occur in the same 'todoprop'
 
-	due
-	duration
+  Required.
+action
+trigger
 
-Vevent - either 'dtend' or 'duration' may appear in a 'eventprop', but 'dtend'
-and 'duration' MUST NOT occur in the same 'eventprop'
+  Optional, but if 1, must have other.
+duration
+repeat
 
-	dtend
-	duration
+attach
+attendee
+description
+summary
+x-prop
+
+
+
+
+audioprop  = 2*(
+
+          ; 'action' and 'trigger' are both REQUIRED,
+          ; but MUST NOT occur more than once
+
+          action / trigger /
+
+          ; 'duration' and 'repeat' are both optional,
+          ; and MUST NOT occur more than once each,
+          ; but if one occurs, so MUST the other
+
+          duration / repeat /
+
+          ; the following is optional,
+          ; but MUST NOT occur more than once
+
+          attach /
+
+          ; the following is optional,
+          ; and MAY occur more than once
+
+          x-prop
+
+          )
+
+dispprop   = 3*(
+
+          ; the following are all REQUIRED,
+          ; but MUST NOT occur more than once
+
+          action / description / trigger /
+
+          ; 'duration' and 'repeat' are both optional,
+          ; and MUST NOT occur more than once each,
+          ; but if one occurs, so MUST the other
+
+          duration / repeat /
+
+          ; the following is optional,
+
+          ; and MAY occur more than once
+
+          *x-prop
+
+          )
+
+emailprop  = 5*(
+
+          ; the following are all REQUIRED,
+          ; but MUST NOT occur more than once
+
+          action / description / trigger / summary
+
+          ; the following is REQUIRED,
+          ; and MAY occur more than once
+
+          attendee /
+
+          ; 'duration' and 'repeat' are both optional,
+          ; and MUST NOT occur more than once each,
+          ; but if one occurs, so MUST the other
+
+          duration / repeat /
+
+          ; the following are optional,
+          ; and MAY occur more than once
+
+          attach / x-prop
+
+          )
+
+procprop   = 3*(
+
+          ; the following are all REQUIRED,
+          ; but MUST NOT occur more than once
+
+          action / attach / trigger /
+
+          ; 'duration' and 'repeat' are both optional,
+          ; and MUST NOT occur more than once each,
+          ; but if one occurs, so MUST the other
+
+          duration / repeat /
+
+          ; 'description' is optional,
+          ; and MUST NOT occur more than once
+
+          description /
+
+          ; the following is optional,
+          ; and MAY occur more than once
+
+          x-prop
+
+          )
 

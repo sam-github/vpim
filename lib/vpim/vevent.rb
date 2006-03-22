@@ -15,74 +15,7 @@ require 'vpim/property/common'
 require 'vpim/property/priority'
 require 'vpim/property/location'
 require 'vpim/property/resources'
-
-module Vpim
-  class Icalendar
-    class Vjournal
-      include Vpim::Icalendar::Property::Base
-      include Vpim::Icalendar::Property::Common
-
-      def initialize(fields) #:nodoc:
-        outer, inner = Vpim.outer_inner(fields)
-
-        @properties = Vpim::DirectoryInfo.create(outer)
-
-        @elements = inner
-      end
-
-      # Create a Vjournal component.
-      def self.create(fields=[])
-        di = DirectoryInfo.create([], 'VJOURNAL')
-
-        Vpim::DirectoryInfo::Field.create_array(fields).each { |f| di.push_unique f }
-
-        new(di.to_a)
-      end
-
-    end
-  end
-end
-
-module Vpim
-  class Icalendar
-    class Vtodo
-      include Vpim::Icalendar::Property::Base
-      include Vpim::Icalendar::Property::Common
-      include Vpim::Icalendar::Property::Priority
-      include Vpim::Icalendar::Property::Location
-      include Vpim::Icalendar::Property::Resources
-
-      def initialize(fields) #:nodoc:
-        outer, inner = Vpim.outer_inner(fields)
-
-        @properties = Vpim::DirectoryInfo.create(outer)
-
-        @elements = inner
-      end
-
-      # Create a new Vtodo object.
-      #
-      # If specified, +fields+ must be either an array of Field objects to
-      # add, or a Hash of String names to values that will be used to build
-      # Field objects. The latter is a convenient short-cut allowing the Field
-      # objects to be created for you when called like:
-      #
-      #   Vtodo.create('SUMMARY' => "buy mangos")
-      #
-      # TODO - maybe todos are usually created in a particular way? I can
-      # make it easier. Ideally, I would like to make it hard to encode an invalid
-      # Event.
-      def Vtodo.create(fields=[])
-        di = DirectoryInfo.create([], 'VTODO')
-
-        Vpim::DirectoryInfo::Field.create_array(fields).each { |f| di.push_unique f }
-
-        new(di.to_a)
-      end
-
-    end
-  end
-end
+require 'vpim/property/recurrence'
 
 module Vpim
   class Icalendar
@@ -92,6 +25,7 @@ module Vpim
       include Vpim::Icalendar::Property::Priority
       include Vpim::Icalendar::Property::Location
       include Vpim::Icalendar::Property::Resources
+      include Vpim::Icalendar::Property::Recurrence
 
       def initialize(fields) #:nodoc:
         outer, inner = Vpim.outer_inner(fields)
@@ -199,28 +133,6 @@ module Vpim
         else
           nil
         end
-      end
-
-      # The recurrence rule, if any, for this event. Recurrence starts at the
-      # DTSTART time.
-      def rrule
-        propvalue 'RRULE'
-      end
-
-      # The times this event occurs, as a Vpim::Rrule.
-      #
-      # Note: the event may occur only once.
-      #
-      # Note: occurences are currently calculated only from DTSTART and RRULE,
-      # no allowance for EXDATE or other fields is made.
-      def occurences
-        Vpim::Rrule.new(dtstart, rrule)
-      end
-
-      # Check if this event overlaps with the time period later than or equal to +t0+, but
-      # earlier than +t1+.
-      def occurs_in?(t0, t1)
-        occurences.each_until(t1).detect { |t| tend = t + (duration || 0); tend > t0 }
       end
 
     end

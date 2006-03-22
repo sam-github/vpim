@@ -15,19 +15,18 @@ module Vpim
   class DirectoryInfo
 
     # A field in a directory info object.
-    #
-    # TODO
-    # - Field should know which param values and field vales are
-    # case-insensitive, configurably, so it can down case them
-    # - perhaps should have pvalue_set/del/add, perhaps case-insensitive, or
-    # pvalue_iset/idel/iadd, where set sets them all, add adds if not present,
-    # and del deletes any that are present
-    # - I really, really, need a case-insensitive string...
-    # - should allow nil as a field value, its not the same as '', if there is
-    # more than one pvalue, the empty string will show up. This isn't strictly
-    # disallowed, but its odd. Should also strip empty strings on decoding, if
-    # I don't already.
     class Field
+      # TODO
+      # - Field should know which param values and field values are
+      #   case-insensitive, configurably, so it can down case them
+      # - perhaps should have pvalue_set/del/add, perhaps case-insensitive, or
+      #   pvalue_iset/idel/iadd, where set sets them all, add adds if not present,
+      #   and del deletes any that are present
+      # - I really, really, need a case-insensitive string...
+      # - should allow nil as a field value, its not the same as '', if there is
+      #   more than one pvalue, the empty string will show up. This isn't strictly
+      #   disallowed, but its odd. Should also strip empty strings on decoding, if
+      #   I don't already.
       private_class_method :new
 
       def Field.create_array(fields)

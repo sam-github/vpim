@@ -1,3 +1,5 @@
+require 'vpim/attachment'
+
 module Vpim
   class Icalendar
     module Property
@@ -35,9 +37,16 @@ module Vpim
           proptime 'CREATED'
         end
 
-        # Description of the calendar component, or nil if there is no description.
+        # Description of the calendar component, or nil if there is no
+        # description.
         def description
           proptext 'DESCRIPTION'
+        end
+
+        # Revision sequence number of the calendar component, or nil if there
+        # is no SEQUENCE; property.
+        def sequence
+          propinteger 'SEQUENCE'
         end
 
         # The time stamp for this calendar component.
@@ -149,6 +158,24 @@ seq
 
         def contacts
           proptextarray 'CONTACT'
+        end
+
+        # Attachments, an Array of Icalendar::Attachment objects.
+        def attachments
+          @properties.enum_by_name('ATTACH').map do |f|
+            value = f.value
+            format = f['FMTTYPE'].first
+            type = f['VALUE']
+            if type
+              type = type.first
+            end
+            
+            if Vpim::Methods.casecmp?(type, 'BINARY')
+              Attachment.new(nil, value, format)
+            else
+              Attachment.new(value, nil, format)
+            end
+          end
         end
 
       end

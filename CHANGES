@@ -1,3 +1,17 @@
+@2006-03-dd:
+
+- split Vtodo and Vjournal into own files
+
+- Added Recurrence module to Vtodo and Vjournal
+
+- Property::Common#sequence - new
+
+- Property::Common#attachments - new
+
+- Icalendar::Attachment - new
+
+
+
 @2006-03-20:
 
 - Maker::Vcard#add_url - new

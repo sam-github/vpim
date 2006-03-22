@@ -61,23 +61,48 @@ if opt_node
   exit 0
 end
 
-def puts_common(e)
+def puts_properties(c)
   [
     :access_class,
+    :attachments,
+    :completed,
     :created,
     :description,
+    :dtend,
     :dtstamp,
     :dtstart,
+    :due,
+    :geo,
+    :location,
+    :organizer,
+    :percent_complete,
+    :priority,
+    :priority,
+    :sequence,
     :status,
     :summary,
+    :transparency,
     :uid,
     :url,
-    :organizer,
   ].each do |m|
-    v = e.send(m)
-    if v
-      puts "  #{m}=<#{v.to_s}>"
+    if c.respond_to? m
+      v = c.send(m)
+      case v
+      when Array
+        v.each_with_index do |v,i|
+          puts "  #{m}[#{i}]=<#{v.inspect}>"
+        end
+      else
+        if v
+          puts "  #{m}=<#{v.inspect}>"
+        end
+      end
     end
+  end
+
+  begin
+    if c.duration;     puts "   duration=#{Duration.secs(c.duration).to_s}"; end
+  rescue NoMethodError
   end
 
   [
@@ -85,15 +110,49 @@ def puts_common(e)
     :comments,
     :contacts
   ].each do |m|
-    e.send(m).each_with_index do |v,i|
+    c.send(m).each_with_index do |v,i|
       puts "  #{m}[#{i}]=<#{v.to_s}>"
     end
   end
 
-  e.attendees.each_with_index do |a,i|
+  c.attendees.each_with_index do |a,i|
     puts "  attendee[#{i}]=#{a.to_s}"
-      puts "   role=#{a.role.upcase} participation-status=#{a.partstat.upcase} rsvp?=#{a.rsvp ? 'yes' : 'no'}"
+    puts "   role=#{a.role.upcase} participation-status=#{a.partstat.upcase} rsvp?=#{a.rsvp ? 'yes' : 'no'}"
   end
+
+  [
+    'RRULE',
+    'RDATE',
+    'EXRULE',
+    'EXDATE',
+  ].each do |m|
+    c.propvaluearray(m).each_with_index do |v,i|
+      puts "  #{m}[#{i}]=<#{v.to_s}>"
+
+      case
+      when i == 1 && m != 'RRULE'
+        # Anything that isn't an RRULE isn't supported at all.
+        puts "  ==> #{m} is unsupported!"
+      when i == 2 && m == 'RRULE'
+        # If there was more than 1 RRULE, its not supported.
+        puts "  ==> More than one RRULE is unsupported!"
+      end
+    end
+  end
+
+  begin
+    c.occurences.each_with_index do |t, i|
+      if(i < 10)
+        puts "   #{i+1} -> #{t}"
+      else
+        puts "   ..."
+        break;
+      end
+    end
+  rescue ArgumentError
+    # No occurences.
+  end
+
 end
 
 ARGV.each do |file|
@@ -104,7 +163,7 @@ ARGV.each do |file|
       puts
     end
 
-    puts "vCalendar[#{i}]:"
+    puts "Icalendar[#{i}]:"
     puts " version=#{cal.version/10.0}"
     puts " producer=#{cal.producer}"
 
@@ -112,53 +171,16 @@ ARGV.each do |file|
 
     events = cal.events
 
-    events.each_with_index do |e, i|
-      puts " vEvent[#{i}]:"
+    [
+      cal.events,
+      cal.todos,
+      cal.journals
+    ].each do |components|
+      components.each_with_index do |c, i|
+        puts " #{c.class.to_s.sub(/.*::/,'')}[#{i}]:"
 
-      puts_common(e)
-
-#     if e.comment;      puts "  comment=#{e.comment}"; end
-
-
-      if e.location;     puts "   location=#{e.location}"; end
-      if e.geo;          puts "   geo=#{e.geo.inspect}"; end
-      if e.dtend;        puts "     dtend=#{e.dtend.to_s}"; end
-      if e.duration;     puts "   duration=#{Duration.secs(e.duration).to_s}"; end
-
-      puts "  priority=#{e.priority}"
-      puts "  transparency=#{e.transparency}"
-
-      # TODO - spec as hours/mins/secs
-      if e.rrule;        puts "   rrule=#{e.rrule}"; end
-
-      e.occurences.each_with_index do |t, i|
-        if(i < 10)
-          puts "   #{i+1} -> #{t}"
-        else
-          puts "   ..."
-          break;
-        end
+        puts_properties(c)
       end
-    end
-
-    todos = cal.todos
-
-    todos.each_with_index do |e,i|
-      puts " vTodo[#{i}]:"
-
-      puts_common(e)
-
-      puts "  priority=#{e.priority}"
-
-      if e.geo;          puts "   geo=#{e.geo.inspect}"; end
-    end
-
-    journals = cal.journals
-
-    journals.each_with_index do |e,i|
-      puts " vJournal[#{i}]:"
-
-      puts_common(e)
     end
 
     if opt_debug

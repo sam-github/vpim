@@ -13,6 +13,20 @@ module Vpim
           prop
         end
 
+        # Array of values of all properties with name +name+
+        def propvaluearray(name) #:nodoc:
+          @properties.select{ |f| f.name? name }.map{ |p| p.value }
+        end
+
+
+        def propinteger(name) #:nodoc:
+          prop = @properties.detect { |f| f.name? name }
+          if prop
+            prop = Vpim.decode_integer(prop.value)
+          end
+          prop
+        end
+
         def proptoken(name, allowed, default_token = nil) #:nodoc:
           prop = propvalue name
 

@@ -53,6 +53,9 @@ module Vpim
     # time-zone = "Z" / time-numzone
     # time-numzome = sign time-hour [":"] time-minute
     TIME = '(\d\d):?(\d\d):?(\d\d)(\.\d+)?(Z|[-+]\d\d:?\d\d)?'
+
+    # integer = (["+"] / "-") 1*DIGIT
+    INTEGER = '[-+]?\d+'
   end
 end
 
@@ -148,14 +151,23 @@ module Vpim
   # float
   #
   # float_list
-  #
-  # integer
+=begin
+=end
+
+  # Convert an RFC2425 INTEGER value into an Integer
+  def Vpim.decode_integer(v) # :nodoc:
+    unless match = %r{\s*#{Bnf::INTEGER}\s*}.match(v)
+      raise Vpim::InvalidEncodingError, "integer not valid (#{v})"
+    end
+    v.to_i
+  end
+
   #
   # integer_list
   #
   # text_list
 
-  # Convert a RFC 2425 date-list into an array of dates.
+  # Convert a RFC2425 date-list into an array of dates.
   def Vpim.decode_date_list(v) # :nodoc:
     Vpim.decode_list(v) do |date|
       date.strip!
