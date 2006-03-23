@@ -15,8 +15,16 @@ module Vpim
         @format = format
       end
 
-      def inspect
-        "#<Icalendar::Attachment uri=#{uri.inspect} binary=#{binary.inspect} format=#{format.inspect}>"
+      # The value as a StringIO if the value is inline binary, or the IO
+      # returned by open after requiring the open-uri library.
+      def value
+        if binary
+          require 'stringio'
+          StringIO.new(binary)
+        else
+          require 'open-uri'
+          open(uri)
+        end
       end
 
     end
