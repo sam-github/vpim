@@ -133,10 +133,6 @@ seq
           attendees.include? uri
         end
 
-        # categories = "CATEGORIES" catparam ":" text *("," text)
-        # comment    = "COMMENT" commparam ":" text
-        # contact    = "CONTACT" contparam ":" text
-
         # This property defines the categories for a calendar component.
         #
         # Property Name: CATEGORIES
@@ -164,7 +160,8 @@ seq
         def attachments
           @properties.enum_by_name('ATTACH').map do |f|
             value = f.value
-            format = f['FMTTYPE'].first
+            format = f['FMTTYPE']
+            format = format.first if format
             type = f['VALUE']
             if type
               type = type.first
