@@ -1,0 +1,2119 @@
+BEGIN:vcard
+VERSION:3.0
+N:Last Name;First Name;;;Prefix;Suffix
+FN:Prefix First Name Last Name, Suffix
+TITLE:Title
+ORG:Company,Division
+CATEGORIES:Category 1, Category 2
+ADR;type=Address-1-Label:;;Street 1 (Line 1), Street 1 (Line 2);City 1;State 1;Zip 1;Country 1
+ADR;type=Address-2-Label:;;Street 2 (Line 1), Street 2 (Line 2);City 2;State 2;Zip 2;Country 2
+TEL;type=Phone-1-Label:Phone 1, xExtension 1
+TEL;type=Phone-2-Label:Phone 2, xExtension 2
+TEL;type=Phone-3-Label:Phone 3, xExtension 3
+TEL;type=Phone-4-Label:Phone 4, xExtension 4
+BDAY:Birthday
+EMAIL:Email
+URL:Web Site
+NOTE:Custom 1, Custom 2, Custom 3, Custom 4, Custom 5, Custom 6, Custom 7, Custom 8, Custom 9
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:Assurance-Emploi
+CATEGORIES:Utilitaires
+TEL;type=other:1-800-808-6342
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:Télédec
+CATEGORIES:Utilitaires
+TEL;type=other:1-800-431-5595
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Bois;Antonia;;;Mrs.;
+FN:Mrs. Antonia Bois
+CATEGORIES:École de danse
+TEL;type=home:968-8923
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lapierre;Monika;;;;
+FN:Monika Lapierre
+CATEGORIES:École de danse
+TEL;type=work:766-8080
+TEL;type=Fax:766-8081
+BDAY:17 juillet
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:Allo-Stop Montréal
+CATEGORIES:voyage
+ADR;type=Work:;;St-Denis;Montréal;PQ;;Canada
+TEL;type=other:514-985-3032
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:Allo-Stop Québec
+CATEGORIES:voyage
+ADR;type=office:;;;Québec;PQ;;Canada
+TEL;type=work:418-522-0056
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:Autobus Voyager
+CATEGORIES:voyage
+TEL;type=station:514-842-2281
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lalancette;Annie;;;;
+FN:Annie Lalancette
+CATEGORIES:interprètes
+TEL;type=home:514-989-8408
+EMAIL:bouc@crosswinds.net
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Belzile;Guylaine;;;Mrs.;
+FN:Mrs. Guylaine Belzile
+TITLE:Directrice Du Regroupement Des Écoles De La C_N
+ORG:École De Danse De Baie-Commeau
+CATEGORIES:École de danse
+TEL;type=home:418-589-5033
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Drouin;Christian;;;;
+FN:Christian Drouin
+ORG:Auberge De Jeunesse Le Tangon
+CATEGORIES:Tangon
+TEL;type=home:927-2944
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Gallant;Delvi;;;;
+FN:Delvi Gallant
+ORG:Centre Local D'Emploi
+CATEGORIES:Utilitaires
+ADR;type=Work:;;456 Arnaud rez-de-chaussée 11;Sept-Iles;PQ;G4R 3B1;Canada
+TEL;type=work:962-6545, x271
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lebel;Alice;;;Mrs.;
+FN:Mrs. Alice Lebel
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;408 Chemin Du Lac;Pohénégamook;PQ;G0L 2T0;Canada
+TEL;type=home:418-859-2579
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Léger;Monique;;;Mrs.;
+FN:Mrs. Monique Léger
+ORG:Conseil Des Arts Du Canada
+CATEGORIES:Utilitaires
+ADR;type=Work:;;350 Rue Albert, CP 1045;Ottawa;ON;K1P 5V8;Canada
+TEL;type=work:1-800-263-5588, x5506
+TEL;type=Fax:613-566-4409
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:Club De Ski Rapido
+CATEGORIES:Loisirs
+ADR;type=Work:;;CP 1060;Sept-Iles;PQ;G4R 4S3;Canada
+TEL;type=work:968-4011
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Porte;Dominique;;;Miss;
+FN:Miss Dominique Porte
+CATEGORIES:interprètes
+ADR;type=Home:;;5243 St-Denis;Montréal;PQ;H2J 2M1;Canada
+TEL;type=home:514-278-8078
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:Carrefour Jeunesse Emploi
+CATEGORIES:Utilitaires
+ADR;type=Home:;;263 Rue Papineau;Sept-Iles;Québec;G4R 4S3;Canada
+TEL;type=work:418-961-2533
+TEL;type=Fax:418-968-1229
+EMAIL:cjedup@globetrotter.net
+URL:www.cjed.qc.ca
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Roberts;Christia;;;;
+FN:Christia Roberts
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;#7-4153 Sophia Street;Vancouver;BC;V5V 3V4;Canada
+TEL;type=home:604-222-1632
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Plante;Emmanuelle;;;;
+FN:Emmanuelle Plante
+CATEGORIES:Amis/Famille, Journaliste
+ADR;type=Home:;;5590 Waverly;Montréal;Québec;;Canada
+TEL;type=Mobile:514-274-9413
+TEL;type=Mobile:514-993-2024
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Chabot;François;;;;
+FN:François Chabot
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;Iberville;Montréal;PQ;;Canada
+TEL;type=home:514-527-6297
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Roy;Emmanuelle;;;;
+FN:Emmanuelle Roy
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;31 Des Épinettes;Sept-Iles;PQ;G4S 1K8;Canada
+TEL;type=home:968-6853
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lemieux;Émilie;;;;
+FN:Émilie Lemieux
+CATEGORIES:Amis/Famille
+TEL;type=Parents:962-1475
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Cooke-Poirier;Émilie ;;;;
+FN:Émilie  Cooke-Poirier
+CATEGORIES:Amis/Famille
+TEL;type=home:514-481-5595
+TEL;type=Parents:927-3000
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Després;Marcial;;;;
+FN:Marcial Després
+ORG:Espace Virtuel
+CATEGORIES:Diffuseurs
+TEL;type=free:1-877-998-3873
+TEL;type=work:418-698-3873
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lebel;Céline;;;;
+FN:Céline Lebel
+CATEGORIES:Amis/Famille
+TEL;type=home:450-264-9630
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:Faites De La Musique!
+CATEGORIES:Diffuseurs
+TEL;type=work:514-380-8111
+TEL;type=Fax:514-380-8118
+EMAIL:fdm@faitesdelamusique.qc.ca
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Chevrier;François;;;;
+FN:François Chevrier
+ORG:Auberge De Jeunesse Le Tangon
+CATEGORIES:Tangon
+ADR;type=Home:;;1401 De La Rive;Sept-Iles;PQ;;Canada
+TEL;type=home:927-2383
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Malenfant;Eddy;;;;
+FN:Eddy Malenfant
+ORG:Productions Manitou
+CATEGORIES:Amis/Famille, Journaliste
+TEL;type=home:927-3431
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Perreault;Émilie;;;;
+FN:Émilie Perreault
+CATEGORIES:Amis/Famille
+TEL;type=Pager:961-6929
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:Ensemble Indépendant
+CATEGORIES:Business
+ADR;type=Work:;;CP 691;Sept-Iles;PQ;G4R 4K9;Canada
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Boudreault;Guillaume;;;;
+FN:Guillaume Boudreault
+CATEGORIES:Amis/Famille
+TEL;type=Parents:962-7655
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Bouffart;Geneviève;;;;
+FN:Geneviève Bouffart
+TITLE:Info-Services CJBR
+ORG:Radio-Canada
+CATEGORIES:Journaliste
+ADR;type=Work:;;273 Rue St-Jean Baptiste Ouest;Rimouski;PQ;G5L 4J8;Canada
+TEL;type=work:418-721-3786
+TEL;type=Fax:418-722-7266
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Bériau;Germain;;;;
+FN:Germain Bériau
+TITLE:Directeur Technique
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;564 Évangéline;Sept-Iles;PQ;G4R 2N7;Canada
+TEL;type=work:962-9787
+TEL;type=home:962-0787
+BDAY:23 février 1951
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Francoeur;Josée;;;;
+FN:Josée Francoeur
+CATEGORIES:Amis/Famille, gr. recherche Sept-Iles
+ADR;type=Work:;;7 Des Plaquebières;Sept-Iles;PQ;G4S 1H5;Canada
+TEL;type=grand-mother:968-4965
+TEL;type=home:968-6013
+TEL;type=work:766-3972
+EMAIL:jofr@bbsi.net
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Richard;Josée ;;;;
+FN:Josée  Richard
+ORG:Corpus Rhésus Danse
+CATEGORIES:Amis/Famille, École de danse
+ADR;type=Work:;;946 Rue St-Paul, Local 205;Trois-Rivières;PQ;G9A 1J3;Canada
+TEL;type=work:819-693-9666
+TEL;type=home:819-693-0060
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Chevrier;Isabelle;;;;
+FN:Isabelle Chevrier
+CATEGORIES:interprètes, Amis/Famille
+ADR;type=Home:;;4039 De Lorimier;Montréal;Québec;H2K 3X8;Canada
+TEL;type=home:514-527-6983
+EMAIL:ichevrier@hotmail.com
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Soutter;Jennifer;;;;
+FN:Jennifer Soutter
+CATEGORIES:interprètes, Amis/Famille
+TEL;type=home:514-276-7783
+EMAIL:jr_soutter@hotmail.com
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Paradis;Isabelle;;;;
+FN:Isabelle Paradis
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;6 Deschênes;Lévis;Québec;G6W 1M3;
+TEL;type=Parents:968-8315
+TEL;type=home:418-838-2775
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:M. Smith;Kathleen;;;;
+FN:Kathleen M. Smith
+TITLE:Executive Director
+ORG:Moving Pictures Festival of Dance On Film and Video
+ADR;type=Work:;;253 College Street, Suite 102;Toronto;ON;M5T 1R5;
+TEL;type=work:416-961-5424
+TEL;type=Fax:416-961-5624
+EMAIL:movingpix@sympatico.ca
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Thériault;Lucille;;;Mrs.;
+FN:Mrs. Lucille Thériault
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;976 Rue Gallienne;Sept-Iles;PQ;G4R 4B3;Canada
+TEL;type=Mobile:964-6802
+TEL;type=home:968-8010
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Laberge;Louis;;;;
+FN:Louis Laberge
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;142 St-Joseph Est;Montréal;PQ;H2T 1H3;Canada
+TEL;type=home:514-849-3842
+BDAY:16 juillet 1979
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Cliche;Stéphanie;;;;
+FN:Stéphanie Cliche
+ADR;type=Home:;;465 Rue Du Pont # 303;Québec;Québec;G1K6N3;Canada
+TEL;type=home:418-529-1048
+TEL;type=Mobile:418-264-0014
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Martins;Karina;;;;
+FN:Karina Martins
+CATEGORIES:Amis/Famille
+TEL;type=home:418-549-2075
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Wagerer;Lydia;;;;
+FN:Lydia Wagerer
+CATEGORIES:Diffuseurs, interprètes
+ADR;type=Home:;;618 De La Reine;Québec;PQ;G1K 2S1;Canada
+TEL;type=home:418-522-0068
+TEL;type=Fax:418-649-4702
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Gagné;Karine;;;;
+FN:Karine Gagné
+CATEGORIES:Amis/Famille, interprètes
+ADR;type=Home:;;5245 1ère Avenue;Montréal;PQ;H1Y 2Z8;Canada
+TEL;type=Parents:968-6953
+TEL;type=Pager:413-2944
+TEL;type=home:529-4263
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lefort;Michèle ;;;;
+FN:Michèle  Lefort
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;1567 Rue Bell;Gallix;PQ;;Canada
+TEL;type=home:766-2482
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+TITLE:Maquillage De Scène
+ORG:Secret D'une Star
+CATEGORIES:Fournisseurs
+ADR;type=Work:;;1149-A Mont-Royal;Montréal;PQ;;Canada
+TEL;type=work:514-521-1080
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Legendre;Mélissa;;;;
+FN:Mélissa Legendre
+CATEGORIES:Amis/Famille
+TEL;type=home:514-381-0954
+TEL;type=work:341-6880 -1-1-, x5318
+TEL;type=other:735-5651, x203
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Gareau;Mélanie ;;;;
+FN:Mélanie  Gareau
+CATEGORIES:interprètes
+TEL;type=home:514-385-4965
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Gougeaon;Jean-Guy;;;;
+FN:Jean-Guy Gougeaon
+TITLE:Directeur De L'information
+ORG:Journal Le Nord-Est
+CATEGORIES:Journaliste
+TEL;type=work:962-9441
+TEL;type=Fax:962-0439
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Normand;Mélanie ;;;;
+FN:Mélanie  Normand
+CATEGORIES:Amis/Famille
+TEL;type=Parents:962-5202
+TEL;type=home:514-272-8484
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lavoie;Marc ;;;;
+FN:Marc  Lavoie
+ORG:Auberge De Jeunesse Le Tangon
+CATEGORIES:Tangon
+TEL;type=work:927-3113
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Longchamps;Marc;;;;
+FN:Marc Longchamps
+CATEGORIES:Amis/Famille
+TEL;type=home:450-663-4969
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Dubé;Marianne;;;;
+FN:Marianne Dubé
+CATEGORIES:Amis/Famille
+TEL;type=Parents:968-6042
+TEL;type=home:450-774-1274
+EMAIL:carottecannibale@hotmail.com
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Tremblay;Martin-Pierre;;;;
+FN:Martin-Pierre Tremblay
+CATEGORIES:Amis/Famille
+TEL;type=Pager:962-8093
+TEL;type=home:968-8010
+EMAIL:bald@globetrotter.net
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Morissette;Solange;;;;
+FN:Solange Morissette
+ORG:ROSEQ
+CATEGORIES:Diffuseurs
+TEL;type=work:1-418-723-4323
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Malenafant;Pascale;;;;
+FN:Pascale Malenafant
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;54 Des Becs-Scie;Sept-Iles;PQ;G4S 1J8;Canada
+TEL;type=Mobile:961-8107
+TEL;type=home:968-1870
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Levasseur;Pierre;;;;
+FN:Pierre Levasseur
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;2095 De La Ronde #5;Québec;PQ;G1V 4E5;Canada
+TEL;type=Mobile:418-563-7632
+TEL;type=home:418-524-9059
+TEL;type=Pager:418-647-8329
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+TITLE:Sept-Iles
+ORG:Radio-Canada
+CATEGORIES:Journaliste
+TEL;type=work:968-0720
+TEL;type=Fax:968-9219
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:Regroupement Québécois De La Danse
+CATEGORIES:Utilitaires
+ADR;type=Work:;;3575 Boul. St-Laurent, Bur. 418;Montréal;PQ;H2X 2T2;Canada
+TEL;type=work:514-849-4003
+TEL;type=Fax:514-849-3288
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Duguay;Roland ;;;;
+FN:Roland  Duguay
+ORG:Auberge De Jeunesse Le Tangon
+CATEGORIES:Tangon
+TEL;type=work:962-4405
+TEL;type=home:962-8373
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:Régie De L'assurance Médicament
+CATEGORIES:Personnel
+TEL;type=work:800-561-9749
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Gauthier;Georgette;;;;
+FN:Georgette Gauthier
+TITLE:Directrice - Communications Et Relations Publics
+ORG:Compagnie Minière Québec Cartier
+CATEGORIES:Commandite
+ADR;type=Work:;;30 Route 138;Port-Cartier;PQ;G5B 2H3;Canada
+TEL;type=work:766-2321
+EMAIL:gauthier.georgette@qcmines.com
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Viens;Tania;;;;
+FN:Tania Viens
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;396 18e Rue;Québec;PQ;G1L 2E2;Canada
+TEL;type=work:418-659-1021
+TEL;type=home:418-529-8114
+BDAY:2 janvier 1976
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:SOCAN
+CATEGORIES:Utilitaires
+TEL;type=work:514-844-8377
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Caskey;Paul;;;;
+FN:Paul Caskey
+ORG:Studio 303
+CATEGORIES:Diffuseurs
+ADR;type=Work:;;372 Ste-Catherine Ouest;Montréal;PQ;H3B 1A2;Canada
+TEL;type=work:514-393-3771
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Guerguerian;Sophie;;;;
+FN:Sophie Guerguerian
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;80 62e Avenue;St-Eustache;Québec;J7P 3N3;Canada
+ADR;type=-maman:;;45 Avenue Pacific ;Senneville;Québec;H9X 1B1;Canada
+TEL;type=Parents:514-457-3025
+TEL;type=home:450-974-4074
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Gagnon;Denis;;;;
+FN:Denis Gagnon
+TITLE:Côte-Nord
+ORG:Télé-Québec
+CATEGORIES:Journaliste
+ADR;type=Work:;;410 Évangéline;Sept-Iles;Québec;;Canada
+TEL;type=work:964-8240
+TEL;type=Fax:964-8923
+EMAIL:denis.gagnon@telequebec.qc.ca
+URL:www.telequebec.tv
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:Studio-Santé
+CATEGORIES:Utilitaires
+TEL;type=Fax:968-5799
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lemay;Brigitte;;;;
+FN:Brigitte Lemay
+TITLE:Directrice
+ORG:Auberge De Jeunesse Le Tangon
+CATEGORIES:Tangon
+ADR;type=Home:;;555 Ave. Cartier;Sept-Iles;PQ;G4R 2T8;Canada
+TEL;type=work:962-8180
+TEL;type=Fax:961-2965
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Cliche;Sébastien;;;;
+FN:Sébastien Cliche
+CATEGORIES:Amis/Famille
+TEL;type=home:527-6297
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Gagnon;Blaise;;;;
+FN:Blaise Gagnon
+TITLE:Directeur
+ORG:Salle De Sepctacles De Sept-Iles
+CATEGORIES:Diffuseurs
+ADR;type=Work:;;546 Boul Laure;Sept-Iles;PQ;G4R 1X7;
+TEL;type=work:962-0850
+TEL;type=Fax:962-1870
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Roberts;Sam;;;;
+FN:Sam Roberts
+ORG:Certicom
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;276 Westmoreland Ave.;Toronto;ON;M6H 3A5;Canada
+TEL;type=work:905-501-3781
+TEL;type=home:416-535-5340
+TEL;type=Fax:905-907-4230
+BDAY:14 juillet 1970
+EMAIL:sroberts@uniserve.com
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Alfonso;Céleste;;;;
+FN:Céleste Alfonso
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;3220 Milleret;Ste-Foy;PQ;G1X 1N8;Canada
+TEL;type=other:968-3557
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Thibeault;Véronique;;;;
+FN:Véronique Thibeault
+ORG:Trio Trapèze
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;4618 Messier;Montréal;PQ;H2H 2J1;Canada
+TEL;type=home:514-527-0515
+TEL;type=Fax:514-527-2117
+BDAY:25 septembre 1974
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Chéry;Valérie;;;;
+FN:Valérie Chéry
+CATEGORIES:Amis/Famille
+TEL;type=Pager:896-2196
+TEL;type=home:514-352-5339
+TEL;type=Mobile:514-578-5780
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Leblanc;Vivianne;;;;
+FN:Vivianne Leblanc
+CATEGORIES:Amis/Famille
+TEL;type=Parents:962-0556
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lajoie;Valérie;;;;
+FN:Valérie Lajoie
+CATEGORIES:interprètes
+TEL;type=Pager:418-621-8545
+BDAY:29 novembre 1969
+EMAIL:valerielajoie@bigfoot.com
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Laberge;Marie-Claude;;;;
+FN:Marie-Claude Laberge
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;59 Ferguson #3;Sept-Iles;PQ;G4R 4G7;Canada
+TEL;type=home:962-6479
+BDAY:16 janvier 1948
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Sheean;Nancy;;;;
+FN:Nancy Sheean
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;260 Wellesley St. East, App. 1703;Toronto;ON;M4X 1G6;Canada
+TEL;type=home:416-922-1578
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Dépatie;Isabelle;;;;
+FN:Isabelle Dépatie
+CATEGORIES:pub list
+ADR;type=Home:;;4188 43 Rue  ;Montréal;PQ;H1Z 1R2;Canada
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Bériau;Régean;;;;
+FN:Régean Bériau
+TEL;type=home:968-0002
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Gagnon;Vital;;;;
+FN:Vital Gagnon
+ORG:Théâtre La Patente
+CATEGORIES:Amis/Famille, Production
+ADR;type=Home:;;388 Évangéline;Sept-Iles;PQ;G4R 2M9;Canada
+TEL;type=home:968-1910
+EMAIL:valfin@globetrotter.net
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Maltais;Étienne;;;;
+FN:Étienne Maltais
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;65 St-Laurent;Sept-Iles;PQ;G4R 4V1;Canada
+TEL;type=home:962-1073
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Gagnon;Jean-Eudes;;;;
+FN:Jean-Eudes Gagnon
+TITLE:Location Des Locaux
+ORG:Cégep
+CATEGORIES:Production
+TEL;type=work:962-5848
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Richer;Tomy;;;;
+FN:Tomy Richer
+CATEGORIES:pub list
+ADR;type=Home:;;1672 Cartier;Montréal;PQ;H2K 4E2;Canada
+TEL;type=work:514-529-0319
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Hould;Suzanne;;;;
+FN:Suzanne Hould
+TITLE:Services Financiers
+ORG:Banque Nationale
+CATEGORIES:Finances
+ADR;type=Work:;;350 Rue Smith;Sept-Iles;PQ;G4R 3X2;Canada
+TEL;type=work:962-7091
+TEL;type=Fax:968-0725
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Bédard;Héloïse;;;;
+FN:Héloïse Bédard
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;335 St-Jean #5;Québec;PQ;G1R 1N8;Canada
+TEL;type=home:514-327-1586
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Laflamme;Manon;;;;
+FN:Manon Laflamme
+TITLE:Agente Administrative
+ORG:Diagramme
+CATEGORIES:Finances
+ADR;type=Work:;;812 Rue Cherrier ;Montréal;PQ;H2L 1H4;Canada
+TEL;type=work:514-524-7665
+TEL;type=Fax:514-524-7584
+EMAIL:gestion@diagramme.org
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Caron;Francine;;;;
+FN:Francine Caron
+TEL;type=home:514-487-4077
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Fargearel;Jacques;;;;
+FN:Jacques Fargearel
+CATEGORIES:Recherche
+TEL;type=home:011-33-1-46-71-28-20
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Bouchard;Carmen;;;;
+FN:Carmen Bouchard
+CATEGORIES:École de danse, Amis/Famille
+TEL;type=home:418-623-8030
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:L'oblique
+CATEGORIES:Fournisseurs
+TEL;type=work:514-499-1323
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Gravelle;Sébastien;;;;
+FN:Sébastien Gravelle
+ORG:Rapido
+CATEGORIES:Utilitaires
+TEL;type=work:968-4890
+TEL;type=home:961-2740
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Tremblay;Daniel;;;;
+FN:Daniel Tremblay
+TITLE:Coordonnateur
+ORG:MOCSI
+CATEGORIES:répétitions
+TEL;type=work:968-2288
+TEL;type=Fax:968-2286
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Faucher;Ginette;;;;
+FN:Ginette Faucher
+TITLE:Directrice
+ORG:Académie Des Joies De La Danse
+CATEGORIES:École de danse
+ADR;type=Home:;;65 A Rue De La Rivière;Port-Cartier;Québec;G5B 1P6;Canada
+TEL;type=home:766-3917
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lefèbvre;Ginette;;;;
+FN:Ginette Lefèbvre
+CATEGORIES:Amis/Famille
+TEL;type=home:819-322-6482
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Bois;Henri;;;;
+FN:Henri Bois
+CATEGORIES:Amis/Famille, École de danse
+TEL;type=Mobile:819-574-1687
+TEL;type=home:968-8923
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Muheim;Aline;;;;
+FN:Aline Muheim
+ORG:Anomalie
+CATEGORIES:interprètes
+ADR;type=Home:;;42 Rue Fbg Saint-Martin;Paris;;75010;France
+TEL;type=home:014-201-5477
+EMAIL:alinemuheim@hotmail.com
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Aubry;Françoise;;;;
+FN:Françoise Aubry
+ORG:Cégep
+CATEGORIES:Utilitaires
+TEL;type=work:962-9848, x259
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Gagné;Louise;;;;
+FN:Louise Gagné
+TITLE:CALQ, Danse
+ORG:Conseil Des Arts Et Lettres Du Québec
+CATEGORIES:Utilitaires
+TEL;type=work:1-800-608-3350
+TEL;type=Fax:1-514-864-4160
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Pourcel;Gérard;;;;
+FN:Gérard Pourcel
+ORG:Direction Régionale Du Ministère De La Culture Et Des Communications
+CATEGORIES:Production
+ADR;type=Work:;;625 Boul. Laflèche, Bureau 1.806;Baie-Comeau;Québec;G5C 1C5;Canada
+TEL;type=work:418-295-4988
+TEL;type=poste:418-295-4979
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Poirier;Yolaine;;;;
+FN:Yolaine Poirier
+TITLE:Couturière
+CATEGORIES:Production
+TEL;type=home:9680248
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Dugas;Bernard;;;;
+FN:Bernard Dugas
+TITLE:Technicien
+ORG:Cogeco
+CATEGORIES:Production
+TEL;type=Pager:961-0039
+TEL;type=home:962-4348
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Babin;Lise;;;;
+FN:Lise Babin
+TITLE:Conseillère Municipale
+ORG:Ville De Sept-Iles
+CATEGORIES:Production
+ADR;type=Work:;;546 Ave. Dequen;Sept-Iles;Québec;G4R 2R4;Canada
+TEL;type=home:968-4509
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:Telus Mobilité
+CATEGORIES:Utilitaires
+TEL;type=work:1-800-463-8988
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Bertrand;Nadia;;;;
+FN:Nadia Bertrand
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;B-554 Des Franciscaines;Chicoutimi;Québec;G7H 3W6;
+TEL;type=-Chicoutimi:418-696-3484
+TEL;type=Parents:450-560-9413
+BDAY:3 mars 1974
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:;Emmanuel ;;;Martin;
+FN:Martin Emmanuel 
+TITLE:Directeur Technique
+ORG:FDM Faîtes De La Musique,Espaces Émergents
+CATEGORIES:Diffuseurs
+TEL;type=work:514-380-8441
+TEL;type=Mobile:707-6735
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lelièvre;Catherine;;;;
+FN:Catherine Lelièvre
+TITLE:Coordonatrice Projet Culturels
+ORG:CDEST
+CATEGORIES:Diffuseurs, Production
+TEL;type=work:514-256-6825, x253
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Ouelet;Laurier;;;;
+FN:Laurier Ouelet
+TITLE:Directeur
+ORG:École Bois-Joli
+CATEGORIES:Production
+ADR;type=Work:;;95 Des Chanterelles;Sept-Iles;PQ;G4S 2B9;Canada
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Desfonds;Michèle;;;;
+FN:Michèle Desfonds
+CATEGORIES:Amis/Famille
+TEL;type=home:819-321-0650
+TEL;type=Mobile:514-781-5439
+TEL;type=other:525-1402
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Rioux;Catherine;;;;
+FN:Catherine Rioux
+CATEGORIES:Amis/Famille
+TEL;type=home:514-729-2004
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Leclerc;Cynthia;;;;
+FN:Cynthia Leclerc
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;350 Boul. Cité Des Jeunes #57;Hull;PQ;J8Y 6R4;Canada
+TEL;type=home:902-463-1143
+TEL;type=Parents:968-3108
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Fancello;Claudia;;;;
+FN:Claudia Fancello
+CATEGORIES:interprètes, Amis/Famille
+ADR;type=Home:;;5934 Waverly;Montréal;PQ;H2T 2Y3;Canada
+TEL;type=home:514-277-2320
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:CISM
+CATEGORIES:Journaliste
+TEL;type=work:514-343-7511
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Tremblay;Luc;;;;
+FN:Luc Tremblay
+CATEGORIES:interprètes
+ADR;type=Home:;;2328 Rue Sheppard;Montréal;;H2K 3K9;
+TEL;type=home:514-525-0104
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Johnson;Pam;;;;
+FN:Pam Johnson
+CATEGORIES:interprètes
+TEL;type=home:416-537-4866
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Laberge;Paul;;;;
+FN:Paul Laberge
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;Manoir Outremont 1000 Rockland;Montréal;PQ;H2V 4P5;Canada
+TEL;type=home:514-270-9526
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Laberge;Pauline;;;;
+FN:Pauline Laberge
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;80 Patrick Morgan;La Malbaie;PQ;G5A 1T1;Canada
+TEL;type=home:418-665-2973
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Roger;Danielle;;;;
+FN:Danielle Roger
+TITLE:Percussionniste
+CATEGORIES:Production
+TEL;type=home:514-522-5218
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Jomphe;François;;;;
+FN:François Jomphe
+TITLE:Québec
+ORG:Solotech
+CATEGORIES:Fournisseurs
+ADR;type=Home:;;356 Boul. Wilfrid-Hamel Vanier;Québec;PQ;G1M 2S3;Canada
+TEL;type=work:418-682-4155
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Merahi;Nedjma;;;;
+FN:Nedjma Merahi
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;2 Rue Denis Papin ;Toulouse;;31 500 ;France
+TEL;type=home:056-180-5719
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Larouche;Anna;;;;
+FN:Anna Larouche
+TITLE:Propriétaire
+CATEGORIES:Personnel
+ADR;type=Home:;;580 Iberville;Sept-Iles;Québec;G4R 2E4 ;Canada
+TEL;type=home:968-8132
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Macedo;Angèle;;;;
+FN:Angèle Macedo
+TITLE:Directrice Générale
+ORG:Ensemble Indépendant
+CATEGORIES:Amis/Famille, Conseil d'administration
+ADR;type=Home:;;614 A Gamache;Sept-Iles;Québec;G4R 2J4;Canada
+TEL;type=work:962-1238
+TEL;type=home:961-2936
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Langevin;Amélie;;;;
+FN:Amélie Langevin
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;7388 De Gaspé;Montréal;Québec;H2R 1Z8;Canada
+TEL;type=home:274-2899
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Angers;Alexandra;;;;
+FN:Alexandra Angers
+TITLE:Journaliste-réalisatrice
+CATEGORIES:Journaliste, Amis/Famille
+TEL;type=work:964-8240
+TEL;type=home:962-9693
+TEL;type=Parents:418-642-5654
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:D'Anjou;Denise;;;;
+FN:Denise D'Anjou
+CATEGORIES:Amis/Famille
+TEL;type=home:962-5904
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:CIPC
+CATEGORIES:voyage
+TEL;type=work:766-6868
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:;Hélaine;;;;
+FN:Hélaine
+TITLE:Couturière
+CATEGORIES:Production
+ADR;type=Home:;;214 Gallant #5;Sept-Iles;Québec;;Canada
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Spendiff;Stephen;;;;
+FN:Stephen Spendiff
+ORG:ROSco Canada
+CATEGORIES:Fournisseurs
+ADR;type=Work:;;1241 Denison St. #44;Markham;ON;L3R 4B4;Canada
+TEL;type=work:1-888-767-2686
+TEL;type=work:905-475-1400
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Frachon;Marc;;;;
+FN:Marc Frachon
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;7056 Drolet;Montréal;Québec;H2S 2T6;Canada
+TEL;type=home:270-4457
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lebel;Bernard;;;;
+FN:Bernard Lebel
+CATEGORIES:Amis/Famille
+ADR;type=Home:;;5476 12e Avenue;Montréal;Québec;;
+TEL;type=home:514-388-0984
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Bouffard;Andrée;;;;
+FN:Andrée Bouffard
+TITLE:Comptabilité
+ORG:Académie Des Joies De La Danse
+CATEGORIES:École de danse
+TEL;type=home:766-2813
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Côté;Frédéric;;;;
+FN:Frédéric Côté
+TITLE:Comptabilité
+ORG:Tangon
+CATEGORIES:Tangon
+TEL;type=Pager:961-7980
+TEL;type=home:961-2831
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Cormier;Barry;;;;
+FN:Barry Cormier
+TITLE:Directeur Technique
+ORG:Salle De Sepctacles De Sept-Iles
+TEL;type=work:962-3728
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:St-Pierre;Louise;;;;
+FN:Louise St-Pierre
+TEL;type=home:766-3560
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:Profil 2000
+CATEGORIES:Utilitaires
+TEL;type=work:968-2004
+TEL;type=Fax:968-5799
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Porlier;Caroline;;;;
+FN:Caroline Porlier
+TEL;type=Parents:968-5896
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Couture;Pierre;;;;
+FN:Pierre Couture
+TEL;type=home:968-6956
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Baril;;;;Dr.;
+FN:Dr. Baril
+ORG:Polyclinique De La Marina
+TEL;type=work:968-1234
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Pardini;Fabio;;;;
+FN:Fabio Pardini
+ORG:Caisse D'Économie Desjardins De Sept-Iles
+TEL;type=work:962-7241
+TEL;type=Fax:962-0369
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Bergeron;Jasmin;;;;
+FN:Jasmin Bergeron
+ADR;type=Home:;;;Québec;;;
+TEL;type=home:418-827-1821
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Gagné;Bernard;;;;
+FN:Bernard Gagné
+ORG:Malette Maheu
+TEL;type=work:962-3154
+TEL;type=other:766-6464
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lebel;Georges;;;;
+FN:Georges Lebel
+ADR;type=Home:;;408 Laurier;;;;
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Dinet;Peter;;;;
+FN:Peter Dinet
+TEL;type=home:968-1353
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Bérubé;Jean-Marc;;;;
+FN:Jean-Marc Bérubé
+TITLE:Le Circuit
+ORG:Espaces Émergents
+ADR;type=Work:;;4297 Ontario Est;Montréal;Québec;H1V1K4;Canada
+TEL;type=work:514-380-8496
+TEL;type=Fax:514-380-8118
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Desrosiers;Marie-Josée;;;;
+FN:Marie-Josée Desrosiers
+TEL;type=work:961-0444
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Ko;James;;;;
+FN:James Ko
+ADR;type=Home:;;693 West 21 St Ave;Vancouer;BC;V5Z 1Y9;Canada
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Vollant;Réginal;;;;
+FN:Réginal Vollant
+ORG:Shaputuan
+TEL;type=work:962-4000
+TEL;type=Fax:962-3131
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Candeau;Yves;;;;
+FN:Yves Candeau
+ADR;type=Home:;;10-12 Rue Créspin Du Gast;Paris;;75011;France
+TEL;type=-intan:416-653-2045
+TEL;type=home:011-33-1-433-82659
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:;Hélène;;;;
+FN:Hélène
+TITLE:Physiothérapeute
+TEL;type=work:962-9360
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Degilio;Lauraine;;;;
+FN:Lauraine Degilio
+TEL;type=home:514-5245725
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Craven;Éric ;;;;
+FN:Éric  Craven
+ADR;type=Home:;;258 Van Horn;Montréal;Québec;H2V 1J1;Canada
+TEL;type=home:514-278-3524
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Leblond;Dominic;;;;
+FN:Dominic Leblond
+ADR;type=Home:;;4663 St Hubert;;;H2J 2X6;
+TEL;type=home:521-4379
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Fournier;Ghyslain;;;;
+FN:Ghyslain Fournier
+TITLE:Député
+ORG:Bloc Québécois,Manicouagan
+ADR;type=Work:;;690 Boul. Laure Bur. 260;Sept-Iles;Québec;G4R 4N8;Canada
+TEL;type=work:962-2562
+TEL;type=Fax:962-6809
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Duguay;Normand;;;;
+FN:Normand Duguay
+TITLE:Député
+ORG:Parti Québécois,Duplessis
+ADR;type=Work:;;456 Rue Arnaud Bur 240;Sept-Iles;Québec;G4R 3B1;Canada
+TEL;type=work:968-5044
+TEL;type=Fax:968-2541
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Bourque;Raymonde;;;;
+FN:Raymonde Bourque
+ORG:Académie Des Joies De La Danse
+TEL;type=home:766-2527
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Huard;Micheline;;;;
+FN:Micheline Huard
+ORG:Musée Régionnal De La Côte-Nord
+ADR;type=Work:;;500 Boul. Laure;Sept-Iles;Québec;G4R 1X7;Canada
+TEL;type=work:968-2070
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Desfossés;Corinne;;;;
+FN:Corinne Desfossés
+TITLE:Professeur De Danse
+CATEGORIES:candidature stages Côte-Nord
+ADR;type=Home:;;5238, Queen Mary Apt. 4;Montréal;Québec;H3W 1X5;Canada
+ADR;type=Work:;;Labrosse;St-Hubert;;;
+TEL;type=home:514-482-9670
+TEL;type=other:450-676-6151
+BDAY:19 septembre 1977
+EMAIL:desfossescorinne@hotmail.com
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:École De Danse De Québec
+ADR;type=Work:;;310 Boul Langelier Bur 214;Québec;Québec;G1K 5N3;Canada
+TEL;type=work:418-649-4715
+TEL;type=Fax:649-4702
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+TITLE:Hostelling International
+ORG:Centre De Séjour De Québec
+ADR;type=Work:;;19 Ste-Ursule;;;;
+TEL;type=work:418-694-0755
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Normandin;Louise;;;;
+FN:Louise Normandin
+TITLE:Adjointe Direction
+ORG:Espaces Émergents,Salle De Spectacle Le Zest
+TEL;type=work:514-380-8128
+TEL;type=Fax:380-8118
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Bourdages;Luc;;;;
+FN:Luc Bourdages
+TITLE:Directeur
+ORG:L'autre Caserne
+TEL;type=work:418-691-7709
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Imbeau;Gaston;;;;
+FN:Gaston Imbeau
+TITLE:Québec
+ORG:Télé-Québec
+TEL;type=work:418-643-5303, x239
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Gosselin;Gaëtan;;;;
+FN:Gaëtan Gosselin
+TITLE:Directeur Des Arts Visuels Arts Médiatiques Et De La Littérature
+ORG:Conseil Des Arts Et Des Lettres Du Québec
+TEL;type=work:1-800-897-1707
+TEL;type=work:418-528-2886
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Despins;Sophie;;;;
+FN:Sophie Despins
+TITLE:Photographe
+ORG:L'autre Caserne-Ludovica
+TEL;type=home:418-660-2369
+EMAIL:sopdes@webnet.qc.ca
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Gauthier;Mathieu;;;;
+FN:Mathieu Gauthier
+TITLE:Ludovica- L'autre Caserne
+EMAIL:mathiopoulos@hotmail.com
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Wever;Shara;;;;
+FN:Shara Wever
+TITLE:Chorégraphe
+ORG:Danse Avec Handicaps
+EMAIL:swever@magma.ca
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lapierre;Louise;;;;
+FN:Louise Lapierre
+CATEGORIES:gr. recherche Sept-Iles
+ADR;type=Home:;;991 Bl. Auger;Alma;Québec;G8B 4G7;Canada
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Puopolo;Tony;;;;
+FN:Tony Puopolo
+ORG:Dovercourt Boys and Girls Club
+ADR;type=Work:;;180 Westmoreland Avenue;Toronto;ON;M6H 3A2;Canada
+TEL;type=work:416-536-4102
+TEL;type=Fax:416-536-2015
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Vaudrin;Sophie;;;;
+FN:Sophie Vaudrin
+TITLE:Présidente
+ORG:Ensemble Indépendant
+CATEGORIES:Ensemble Indépendant, gr. recherche Sept-Iles
+ADR;type=Home:;;489 Iberville;Sept-Iles;Québec;G4R 2E1;Canada
+TEL;type=work:962-3232
+TEL;type=Parents:968-8851 (418-968-8743)
+TEL;type=Pager:964-4558
+TEL;type=Fax:418-962-7513
+EMAIL:sophie.vaudrin@motioncanada.com
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Boucher;Sophie;;;;
+FN:Sophie Boucher
+CATEGORIES:gr. recherche Sept-Iles
+ADR;type=Home:;;14135 Therrien;St-Janvier De Mirabel;Québec;J7J 1J8;Canada
+TEL;type=Parents:450-419-9060
+EMAIL:berslack_power@hotmail.com
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Grégoire;Joan;;;;
+FN:Joan Grégoire
+CATEGORIES:gr. recherche Sept-Iles
+ADR;type=Home:;;Cp 1266          (57 Lac Daigle);Sept-Iles;Québec;G4R 4X7;Canada
+TEL;type=home:968-9280
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lafrenière;Josanne;;;;
+FN:Josanne Lafrenière
+CATEGORIES:gr. recherche Sept-Iles, Tangon
+ADR;type=Home:;;666 Kégaska #1;Sept-Iles;Québec;G4R 2A3;Canada
+TEL;type=home:968-1680
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lebrun;Jasmine;;;;
+FN:Jasmine Lebrun
+CATEGORIES:gr. recherche Sept-Iles
+ADR;type=Home:;;47 Blouin;Sept-Iles;Québec;G4R 2K5;Canada
+TEL;type=Mobile:965-7355
+TEL;type=Parents:968-2821
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lemay;Maxime;;;;
+FN:Maxime Lemay
+CATEGORIES:gr. recherche Sept-Iles
+ADR;type=Home:;;91 Des Battures;Sept-Iles;Québec;G4R 4K2;Canada
+TEL;type=home:968-2975
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:St-Pierre;Kathie;;;;
+FN:Kathie St-Pierre
+CATEGORIES:gr. recherche Sept-Iles
+ADR;type=Home:;;112 McMannus, (mère);Sept-Iles;Québec;G4R 4R5;Canada
+TEL;type=mother:968-8013
+TEL;type=father:968-3901
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Aubry;Émilie;;;;
+FN:Émilie Aubry
+TEL;type=Parents:927-2825
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Côté;Gaetane;;;;
+FN:Gaetane Côté
+ORG:École Jean-du-Nord
+TEL;type=work:964-2811
+TEL;type=home:968-3937
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Bérubé;Marco;;;;
+FN:Marco Bérubé
+ADR;type=Home:;;155 De Maisonneuve #2;Québec;;;
+TEL;type=Parents:962-1260
+TEL;type=home:418-649-5417
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Côté Deschênes;Rachel;;;;
+FN:Rachel Côté Deschênes
+TITLE:Conseillère Municipale
+ORG:Ville De Sept-Iles,Culture 
+ADR;type=Work:;;546 Ave. Dequen;Sept-Iles;Québec;G4R 2R4;Canada
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Doiron Catto;Louisette;;;;
+FN:Louisette Doiron Catto
+TITLE:Conseillère Municipale
+ORG:Ville De Sept-Iles,Culture 
+ADR;type=Work:;;546, Avenue De Quen;Sept-Iles;Québec;G4R 2R4;Canada
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lapierre;Alain;;;;
+FN:Alain Lapierre
+TITLE:Conseiler Municipal
+ORG:Ville De Sept-Iles,Jeunesse
+ADR;type=Work:;;546 Ave. Dequen;Sept-Iles;Québec;G4R 2R4;Canada
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Ouellet;Régean;;;;
+FN:Régean Ouellet
+ORG:Auberge De Jeunesse Le Tangon
+CATEGORIES:Tangon
+TEL;type=home:968-0077
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lapierre;Daniel;;;;
+FN:Daniel Lapierre
+ORG:Auberge De Jeunesse Le Tangon
+CATEGORIES:Tangon
+TEL;type=home:961-1306
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Vignola;Chantal;;;;
+FN:Chantal Vignola
+ORG:Auberge De Jeunesse Le Tangon
+CATEGORIES:Tangon
+TEL;type=home:968-1374
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Vaillancourt;Annie;;;;
+FN:Annie Vaillancourt
+ORG:Auberge De Jeunesse Le Tangon
+CATEGORIES:Tangon
+TEL;type=home:968-5278
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Danais;Alain;;;;
+FN:Alain Danais
+ORG:Auberge De Jeunesse Le Tangon
+CATEGORIES:Tangon
+TEL;type=home:968-5794
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Kennedy;Terry;;;;
+FN:Terry Kennedy
+ORG:Auberge De Jeunesse Le Tangon
+CATEGORIES:Tangon
+TEL;type=home:968-6800
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Bouchard;Marc-Gilles;;;;
+FN:Marc-Gilles Bouchard
+TITLE:Directeur
+ORG:Espaces Émergents,Production
+CATEGORIES:Diffuseurs
+TEL;type=work:514-380-8111
+TEL;type=Fax:514-380-8118
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Leclerc;Francine;;;;
+FN:Francine Leclerc
+TITLE:Docteur
+TEL;type=work:514-528-7555
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:Bell Mobilité
+TEL;type=work:1-800-667-0123
+TEL;type=home:1-888-466-2453
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:Globetrotter
+TEL;type=work:1-800-520-4562
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Gallant;Caroline;;;;
+FN:Caroline Gallant
+CATEGORIES:Amis/Famille
+TEL;type=home:418-927-3837
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:Automobiles Yves Boily
+TEL;type=work:418-962-4475
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Latour;Chantal;;;;
+FN:Chantal Latour
+TEL;type=work:418-295-4987
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lévesque;Marie-France;;;;
+FN:Marie-France Lévesque
+ORG:Conseil Régional De La Culture 
+ADR;type=Work:;;625 Boul Laflèche Bur. 204-A;Baie-Comeau;Québec;G5C 1C5;Canada
+TEL;type=work:418-589-6744
+TEL;type=Fax:418-295-1991
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Miville;Monique;;;;
+FN:Monique Miville
+TITLE:Attachée Politique
+ORG:CIrconscription Électorale De Duplessis
+ADR;type=Work:;;456 Ave. Arnaud Bur 240;Sept-Iles;Québec;G4R 3B1;Canada
+TEL;type=work:418-968-5044
+TEL;type=Fax:418-968-2541
+TEL;type=free:1-800-463-1644
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lalonde;Françis;;;;
+FN:Françis Lalonde
+TEL;type=work:514-529-3047
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:Trinity Square
+ADR;type=Work:;;35 Mccaul;Toronto;ON;;Canada
+TEL;type=work:416-593-1332
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+TITLE:Locat Caméra Media 100
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+TITLE:Location Caméra Media 100
+ORG:Charles
+TEL;type=work:416-593-1332
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:;Nelini Mohabir;;;;
+FN:Nelini Mohabir
+TEL;type=work:416-777-2001, x374
+TEL;type=home:416-259-3341
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Westmoreland;Fax;;;;
+FN:Fax Westmoreland
+ORG:Bloor Court Post Office
+ADR;type=Work:;;998 Bloor;Toronto;ON;;Canada
+TEL;type=Fax:416-533-9569
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Proulx;Pascale;;;;
+FN:Pascale Proulx
+TEL;type=work:416-888-4162
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Stephan;Dagmara;;;;
+FN:Dagmara Stephan
+ADR;type=Home:;;3751 St-Hubert;Montréal;Québec;;Canada
+TEL;type=home:514-528-1329
+EMAIL:daggygee@hotmail.com
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:Impot Fédéral
+ADR;type=Work:;;;Shawinigan Sud;;;
+TEL;type=work:18009597405
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:Maison Du Conseil Des Arts De Montréal
+ADR;type=Work:;;3450 Saint-Urbain;Montréal;Québec;H2X 2N5;Canada
+TEL;type=work:514-280-3780
+TEL;type=Fax:514-280-3789
+EMAIL:christine.leduc@cum.qc.ca
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Tardif;Luc;;;;
+FN:Luc Tardif
+TEL;type=work:902-769-2114
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Szperling;Silvina;;;;
+FN:Silvina Szperling
+TITLE:Directora
+ORG:Festival International De Video-danza De Buenos Aires
+ADR;type=Work:;;Triunviarto 4050 Dto. 8;(1431) Buenos Aires;;;Argentina
+TEL;type=work:54-11-4522-0597
+EMAIL:silvinaszperling@yahoo.com
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Santerre;Sophie;;;;
+FN:Sophie Santerre
+ORG:École De Danse De Forestville
+TEL;type=work:418-587-4012
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:;Luce;;;;
+FN:Luce
+TITLE:Présidente
+ORG:École De Danse Du Havre St-Pierre
+TEL;type=work:418-538-2015
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Vachon;Line;;;;
+FN:Line Vachon
+ORG:École De Ballet De Sept-Iles
+TEL;type=home:418-962-4627
+EMAIL:rock.mimeau@si.cgocable.ca
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Boulé;Tania;;;;
+FN:Tania Boulé
+TITLE:Professeure
+ORG:École De Danse Du Havre St-Pierre
+TEL;type=home:418-528-3357
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Arsenault;Denise;;;;
+FN:Denise Arsenault
+ORG:Théâtre De Baie-Comeau
+ADR;type=Work:;;1660, Rue De Bretagne;Baie-Comeau;Québec;G5C 3S3;Canada
+TEL;type=work:418-295-2500
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lapointe;Pierre;;;;
+FN:Pierre Lapointe
+TITLE:Consultant Culturel
+TEL;type=work:819-226-3343
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lagacé;Linda;;;;
+FN:Linda Lagacé
+TITLE:Coordonnatrice
+ORG:École De Danse De Baie-Commeau
+TEL;type=work:418-589-9016
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Fougère;Greta ;;;;
+FN:Greta  Fougère
+TITLE:Présidente
+ORG:École De Danse De Baie-Commeau
+TEL;type=home:418-296-5954
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Asselin;Marie-Julie;;;;
+FN:Marie-Julie Asselin
+ADR;type=Home:;;303 Rue Murray;Greenfield Park;Québec;J4V 1N6;Canada
+TEL;type=home:450-671-6802
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Hurtubise;Lison;;;;
+FN:Lison Hurtubise
+TITLE:Présidente
+ORG:Accadémie De Danse De Forestiville Inc.
+ADR;type=Home:;;10 10e Rue No 4;Forestville;;G0T 1E0;
+TEL;type=home:418-587-6291
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+ORG:GRT Arts
+ADR;type=Work:;;310 Boul Langelier Bur 120;Québec;Québec;G1K 5N3;Canada
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Pelletier;Martin;;;;
+FN:Martin Pelletier
+TEL;type=Parents:962-7133
+TEL;type=Pager:961-6537
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Thomson;Scott;;;;
+FN:Scott Thomson
+ADR;type=Work:;;7 A Quebec Street;Guelph;Ontario;N1H 2T1;Canada
+TEL;type=Mobile:519-820-7160
+TEL;type=home:519-824-6540
+TEL;type=other:279-5436, xMtl
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Marcottte;Alain;;;;
+FN:Alain Marcottte
+TITLE:Hébergement Québec
+ORG:Attrappe Touriste
+ADR;type=Work:;;555 4e Avenue;;;;
+TEL;type=work:418-648-9876
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Gagnon;Dominic;;;;
+FN:Dominic Gagnon
+ADR;type=Home:;;22 Petit Pas;Sept-Iles;Québec;G4R 4V6;Canada
+TEL;type=Parents:962-7044
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Boulton;Jeff ;;;;
+FN:Jeff  Boulton
+ORG:Dante
+TEL;type=work:416-534-6728
+EMAIL:info@dante-ent.com
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Gazanfari ???;Nastaran ;;;;
+FN:Nastaran  Gazanfari ???
+CATEGORIES:intéressé(e) pour cours de danse
+TEL;type=home:416-530-8001
+TEL;type=other:416-413-5549
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Michaud;Michel;;;;
+FN:Michel Michaud
+TITLE:Régisseur À La Jeunesse Et À La Culture
+ORG:Salle De Sepctacles De Fermont,Service Des Loisirs De La Ville De Fermont
+ADR;type=Work:;;Case Postale 520;Fermont;Québec;G0G 1J0;Canada
+TEL;type=work:418-287-5471, x3
+TEL;type=home:418-287-5292
+TEL;type=Fax:418-287-3586
+EMAIL:marina5246@hotmail.com
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Shryer;Claude;;;;
+FN:Claude Shryer
+TITLE:Inter-arts
+ORG:Conseil Des Arts Du Canada
+ADR;type=Work:;;350 Rue Albert CP 1047;Ottawa;ON;K1P 5V8;Canada
+TEL;type=work:1-800-263-5588, x4204
+EMAIL:claude.schryer@conseildesarts.ca
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Rafuse;Johane;;;;
+FN:Johane Rafuse
+TITLE:Service De La Danse
+ORG:Conseil Des Arts Du Canada,La Brigade Volante
+ADR;type=Work:;;350 Rue Albert , CP 1045;Ottawa;ON;K1P 5V8;Canada
+TEL;type=work:1-800-263-5588, x4503
+TEL;type=Fax:1-613-566-4409
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Sauvageau;Line;;;;
+FN:Line Sauvageau
+TITLE:Optométriste
+ORG:Iris Sept-Iles
+ADR;type=Work:;;Place De Ville 770 Boul. Laure Suite 430;Sept-Iles;Québec;G4R 1Y5;
+TEL;type=work:418-9684788
+TEL;type=Fax:418-968-0227
+EMAIL:iris337@iris.ca
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Davida;Dena;;;;
+FN:Dena Davida
+TITLE:Directrice Artistique
+ORG:Tangente
+ADR;type=Work:;;840 Rue Cherrier;Montréal;Québec;H2L 1H4;Canada
+TEL;type=work:514-525-5584
+TEL;type=Fax:514-525-1860
+EMAIL:danse@tangente.qc.ca
+URL:www.tangente.qc.ca
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Hétu;Joane;;;;
+FN:Joane Hétu
+ORG:DAME
+ADR;type=Work:;;4540 Ave De Lorimier;Montréal;Québec;H2H 2B5;
+EMAIL:info@actuellecd.com
+URL:http://www.actuellecd.com/
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Ouellet;Luc;;;;
+FN:Luc Ouellet
+ORG:CIrcuit-est
+CATEGORIES:Studio répétition mtl
+TEL;type=work:514-525-1569
+EMAIL:luc@circuit-est.qc.ca
+URL:www.circuit-est.qc.ca
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lee Chan;Yan;;;;
+FN:Yan Lee Chan
+TITLE:Technique-lumières
+ORG:Studio 303
+TEL;type=Pager:540-5854
+TEL;type=home:514-374-0199
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Tarif;Steve;;;;
+FN:Steve Tarif
+TITLE:Auberges B&B
+ORG:Couette Et Café Cherrier
+ADR;type=Work:;;522 Rue Cherrier;Montréal;Québec;H2L 1H3;Canada
+TEL;type=work:514-982-6848
+TEL;type=Fax:514-982-3313
+EMAIL:couette@sympatico.ca
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Rieley;Kevin;;;;
+FN:Kevin Rieley
+ADR;type=Work:;;205 Spidana Road;Toronto;;;
+TEL;type=Mobile:416-528-6541
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:MacGregor;Andrew;;;;
+FN:Andrew MacGregor
+CATEGORIES:climbers in Toronto
+ADR;type=Home:;;1043 Davenport;Toronto;;;
+TEL;type=home:416-658-0706
+TEL;type=Pager:416-403-4507
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Cummer;Chris;;;;
+FN:Chris Cummer
+CATEGORIES:climbers in Toronto
+ADR;type=Home:;;201  B- 109 Niagara Street ;;;;
+TEL;type=Mobile:416-737-2633
+EMAIL:ccummer@postal-code.com
+URL:www.postal-code.com
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Hossack;Paul;;;;
+FN:Paul Hossack
+CATEGORIES:climbers in Toronto
+TEL;type=home:416-738-9623
+EMAIL:phossack@hotmail.com
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:;Andrew;;;;
+FN:Andrew
+ORG:Co-voiturage TO-MTL
+TEL;type=Pager:416-772-0910
+TEL;type=Mobile:905-
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+TITLE:Studio De Contact Impro
+ORG:Dance Network Studio,Ottawa
+ADR;type=Work:;;111a Rideau Street 3rd Floor;Ottawa;ON;;Canada
+TEL;type=work:613564177
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Brown;Monty;;;;
+FN:Monty Brown
+TITLE:Owner/Operator
+ORG:Lion's Head Inn
+CATEGORIES:Auberge
+ADR;type=Work:;;Box 1100;Lion's Head;ON;NOH 1W0;Canada
+TEL;type=work:519-793-4601
+TEL;type=Fax:519-793-4878
+EMAIL:mbrown@amtelecom.net
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Poirrier;Jean-Sébastien;;;;
+FN:Jean-Sébastien Poirrier
+TEL;type=Pager:514-921-3425
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Gaumond;Martin;;;;
+FN:Martin Gaumond
+CATEGORIES:interprètes
+EMAIL:martingaumond@hotmail.com
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Lévesque;Johnny;;;;
+FN:Johnny Lévesque
+TITLE:Technicien
+ORG:Musée Régionnal De La Côte-Nord
+TEL;type=work:9682079
+TEL;type=home:962-5908
+EMAIL:mrcn@mrcn.qc.ca
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Simard;Lise-Anne;;;;
+FN:Lise-Anne Simard
+TEL;type=work:987-3000, x3950
+TEL;type=work:3978649
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Boudreault;Lucie;;;;
+FN:Lucie Boudreault
+TITLE:Infirmière
+ORG:CLSC Centre De Santé Des Sept Rivières,Vacinnation Voyage
+ADR;type=Work:;;405 Avenue Brochu;Sept-Iles;Québec;G4R 2W9;Canada
+TEL;type=work:9622572
+TEL;type=Fax:9621858
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Sladeck;Brigitte;;;;
+FN:Brigitte Sladeck
+TITLE:Artiste Peintre
+ADR;type=Home:;;65 Vienneau CP 246;Moisie;Qc;G0G 2B0;Canada
+TEL;type=work:418-927-3113
+EMAIL:slav@bbsi.net
+URL:spid.dom/sladek
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Paradis;Marie-Jo;;;;
+FN:Marie-Jo Paradis
+TITLE:Enseignante En Danse
+ADR;type=Home:;;;Chicoutimi;;;
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Tremblay;George Nicolas;;;;
+FN:George Nicolas Tremblay
+TITLE:Danseur
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Gauthier;Simon;;;;
+FN:Simon Gauthier
+TITLE:Conteur
+ADR;type=Work:;;552-A Marie-Victorin;Verchères;Québec;JOL 2R8;Canada
+TEL;type=home:450-583-5631
+TEL;type=Fax:450-583-5631
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Cyr;Richard;;;;
+FN:Richard Cyr
+TITLE:Docteur En Chiropratique
+ORG:CLinique GEM
+ADR;type=Work:;;7454 St-Denis;Montréal;Qc;H2R 2E4;Canada
+TEL;type=work:514-271-3963
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:Ferrigan;Kelli Ann;;;;
+FN:Kelli Ann Ferrigan
+TITLE:Traductrice
+TEL;type=work:514-598-7197
+EMAIL:ferrigank@videotron.ca
+END:vcard
+BEGIN:vcard
+VERSION:3.0
+N:St-Gelais;Thérèse ;;;;
+FN:Thérèse  St-Gelais
+TITLE:Professeu D'histoire De L'art
+ORG:UQAM
+END:vcard

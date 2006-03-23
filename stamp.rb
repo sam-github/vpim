@@ -10,7 +10,9 @@ version=<<"---"
 =end
 
 module Vpim
-  VERSION = "0.#{Svn.info['Revision']}"
+  PRODID = '-//Ensemble Independent//vPim 0.#{Svn.info['Revision']}//EN'
+
+  VERSION = '0.#{Svn.info['Revision']}'
 
   # Return the API version as a string.
   def Vpim.version
