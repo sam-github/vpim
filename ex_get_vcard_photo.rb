@@ -2,7 +2,7 @@
 
 require 'vpim/vcard'
 
-vcf = open(ARGV[0] || 'samples/Sam Roberts.vcf')
+vcf = open(ARGV[0] || 'data/vcf/Sam Roberts.vcf')
 
 card = Vpim::Vcard.decode(vcf).first
 
