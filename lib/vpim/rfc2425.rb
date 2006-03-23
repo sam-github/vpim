@@ -203,15 +203,17 @@ module Vpim
   # \N -> NL
   # \, -> ,
   # \; -> ;
+  #
+  # I've seen double-quote escaped by iCal.app. Hmm. Ok, if you aren't supposed
+  # to escape anything but the above, everything else is ambiguous, so I'll
+  # just support it.
   def Vpim.decode_text(v) # :nodoc:
     v.gsub(/\\(.)/) do
       case $1
-      when '\\', ',', ';'
-        $1
       when 'n', 'N' 
         "\n"
       else
-        raise Vpim::InvalidEncodingError, "TEXT #{v.inspect} uses invalid escape sequence '\\#{$1}'"
+        $1
       end
     end
   end
