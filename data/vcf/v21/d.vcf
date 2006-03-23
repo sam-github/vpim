@@ -1,0 +1,14 @@
+BEGIN:VCARD
+VERSION:2.1
+REV:20051010T100825Z
+UID:007e06e40a69512c-00e0e076a19cd40f-172
+N:Bloggs;Joe;;;
+ADR;WORK;ENCODING=QUOTED-PRINTABLE:=
+;;Unit=2018=0D=0AThe=20Company=0D=0AKilcarbery=20Business=20Park,=20N=
+angor=20Road,;Dublin=2022;;;Ireland
+TEL;WORK:+353 11122888
+EMAIL;INTERNET:joe.bloggs@abc.ie
+URL:http://www.abc.ie
+ORG:ABC Computers;
+FN:Joe Bloggs
+END:VCARD

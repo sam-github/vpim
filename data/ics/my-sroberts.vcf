@@ -1,0 +1,13 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Roberts;Sam;;;
+FN:Sam Roberts
+foo.EMAIL;type=HOME;type=pref:sroberts@uniserve.com
+EMAIL;type=WORK:sroberts@certicom.com
+TEL;type=WORK;type=pref:905-501-3781
+TEL;HOME:416 535 5340
+ADR;type=HOME;type=pref:;;276 Westmoreland Ave.;Toronto;ON;M6H 3A5;Canada
+NOTE;name=:lead-climber
+URL;name=val1,,val2:http://www.ensembleindependant.org/sam
+BDAY;value=date:1970-07-14
+END:VCARD
