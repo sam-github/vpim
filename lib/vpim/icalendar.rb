@@ -66,26 +66,24 @@ module Vpim
       @properties = DirectoryInfo.create(outer)
       @properties.check_begin_end('VCALENDAR')
 
-      # Categorize the components
-      @vevents = []
-      @vtodos  = []
-      @vjournals  = []
-      @others = []
+      @components = []
+
+      factory = {
+        'VEVENT' => Vevent,
+        'VTODO' => Vtodo,
+        'VJOURNAL' => Vjournal,
+      }
 
       inner.each do |component|
-        # First field in every component should be a "BEGIN:".
         name = component.first
-        if ! name.name? 'BEGIN'
+        unless name.name? 'BEGIN'
           raise InvalidEncodingError, "calendar component begins with #{name.name}, instead of BEGIN!"
         end
 
-        name = name.value.upcase
+        name = name.value
 
-        case name
-          when 'VEVENT'    then @vevents << Vevent.new(component)
-          when 'VTODO'     then @vtodos  << Vtodo.new(component)
-          when 'VJOURNAL'  then @vjournals  << Vjournal.new(component)
-          else @others << component
+        if klass = factory[name]
+          @components << klass.new(component)
         end
       end
     end
@@ -143,9 +141,7 @@ module Vpim
 
       last = fields.pop
 
-      @vevents.each { |c| fields << c.fields }
-      @vtodos.each  { |c| fields << c.fields }
-      @others.each  { |c| fields << c.fields }
+      @components.each { |c| fields << c.fields }
 
       fields << last
     end
@@ -155,14 +151,10 @@ module Vpim
     # Push a calendar component onto the calendar.
     def push(component)
       case component
-        when Vevent
-          @vevents << component
-        when Vtodo
-          @vtodos << component
-        when Vjournal
-          @vjournals << component
+        when Vevent, Vtodo, Vjournal
+          @components << component
         else
-          raise ArgumentError, "can't add component type #{component.type} to a calendar"
+          raise ArgumentError, "can't add a #{component.type} to a calendar"
       end
     end
 
@@ -272,22 +264,50 @@ module Vpim
       m ? m.upcase : m
     end
 
-    # The array of all calendar event components (each is a Vevent).
+    # The value of the CALSCALE: property, or "GREGORIAN" if CALSCALE: is not
+    # present.
     #
-    # TODO - should this take an interval: t0,t1?
-    def events
-      @vevents
+    # This is of academic interest, really because there aren't any other
+    # calendar scales defined, and given that its hard enough just dealing with
+    # Gregorian calendars, there probably won't be.
+    def calscale
+      proptext('CALSCALE') || 'GREGORIAN'
     end
 
-    # The array of all calendar todo components (each is a Vtodo).
-    def todos
-      @vtodos
+    # The array of all supported calendar components. If a class is provided,
+    # return only the components of that class.
+    #
+    # If a block is provided, yield the components instead of returning them.
+    #
+    # Examples:
+    #   calendar.components(Vpim::Icalendar::Vevent)
+    #   => array of all calendar components
+    #
+    #   calendar.components(Vpim::Icalendar::Vtodo) {|c| c... }
+    #   => yield all todo components
+    #
+    #   calendar.components {|c| c... }
+    #   => yield all components
+    def components(klass=Object) #:yields:component
+      # TODO - should this take an interval: t0,t1?
+
+      unless block_given?
+        return @components.select{|c| klass === c}.freeze
+      end
+
+      @components.each do |c|
+        if klass === c
+          yield c
+        end
+      end
+      self
     end
 
-    # The array of all calendar journal components (each is a Vjournal).
-    def journals
-      @vjournals
+    # For backwards compatibility.
+    def events #:nodoc:
+      components Icalendar::Vevent
     end
+
   end
 
 end
