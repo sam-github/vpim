@@ -91,6 +91,13 @@ class TestIcal < Test::Unit::TestCase
   def test_1
     req = Icalendar.decode(Req_1).first
 
+    req.components { }
+    req.components(Icalendar::Vevent) { }
+    req.components(Icalendar::Vjournal) { }
+    req.components
+    req.components(Icalendar::Vevent)
+    req.components(Icalendar::Vjournal)
+
     assert_equal(req.protocol, 'REQUEST')
 
     event = req.events.first

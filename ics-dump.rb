@@ -61,11 +61,33 @@ if opt_node
   exit 0
 end
 
+def v2s(v)
+  case v
+  when Vpim::Icalendar::Attachment
+    if v.binary
+      "#{v.format.inspect} binary #{v.binary.inspect}"
+    else
+      s = "#{v.format.inspect} uri #{v.uri.inspect}"
+      begin
+        s << " #{v.value.gets.inspect}..."
+      rescue
+        s << " (#{$!.class})"
+      end
+    end
+  else
+    v.inspect
+  end
+end
+
+
 def puts_properties(c)
   [
     :access_class,
     :attachments,
+    :categories,
+    :comments,
     :completed,
+    :contacts,
     :created,
     :description,
     :dtend,
@@ -76,7 +98,6 @@ def puts_properties(c)
     :location,
     :organizer,
     :percent_complete,
-    :priority,
     :priority,
     :sequence,
     :status,
@@ -90,11 +111,11 @@ def puts_properties(c)
       case v
       when Array
         v.each_with_index do |v,i|
-          puts "  #{m}[#{i}]=<#{v.inspect}>"
+          puts "  #{m}[#{i}]=<#{v2s v}>"
         end
       else
         if v
-          puts "  #{m}=<#{v.inspect}>"
+          puts "  #{m}=<#{v2s v}>"
         end
       end
     end
@@ -103,16 +124,6 @@ def puts_properties(c)
   begin
     if c.duration;     puts "   duration=#{Duration.secs(c.duration).to_s}"; end
   rescue NoMethodError
-  end
-
-  [
-    :categories,
-    :comments,
-    :contacts
-  ].each do |m|
-    c.send(m).each_with_index do |v,i|
-      puts "  #{m}[#{i}]=<#{v.to_s}>"
-    end
   end
 
   c.attendees.each_with_index do |a,i|
@@ -156,6 +167,7 @@ def puts_properties(c)
 end
 
 ARGV.each do |file|
+  puts "===> ", file
   cals = Vpim::Icalendar.decode(File.open(file))
 
   cals.each_with_index do |cal, i|
@@ -171,16 +183,18 @@ ARGV.each do |file|
 
     events = cal.events
 
-    [
-      cal.events,
-      cal.todos,
-      cal.journals
-    ].each do |components|
-      components.each_with_index do |c, i|
+    cal.components.each_with_index do |c, i|
         puts " #{c.class.to_s.sub(/.*::/,'')}[#{i}]:"
 
-        puts_properties(c)
-      end
+        begin
+          puts_properties(c)
+        rescue => e
+          cb = e.backtrace
+          pp e
+          print cb.shift, ":", e.message, " (", e.class, ")\n"
+          cb.each{|c| print "\tfrom ", c, "\n"}
+          exit 1
+        end
     end
 
     if opt_debug

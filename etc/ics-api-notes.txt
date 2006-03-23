@@ -377,7 +377,7 @@ x    url           x             x             x
 x    categories    x             x             x
 x    comment       x             x             x
 x    contact       x             x             x
-     attach        x             x             x
+x    attach        x             x             x
 x    attendee      x             x             x
      related       x             x             x    (postponed, iTip)
      rstatus       x             x             x    (postponed, iTip)
@@ -402,6 +402,7 @@ These all need handling together, its quite complex:
      exrule        x             x             x
      rdate         x             x             x
 
+--> Download and use the UUID class from rubyforge.
 
 Valarm:
 

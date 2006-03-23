@@ -1,5 +1,9 @@
 @2006-03-dd:
 
+- Icalendar#components - new
+
+- Icalendar#vevents - deprecated, see Icalendar#components
+
 - split Vtodo and Vjournal into own files
 
 - Added Recurrence module to Vtodo and Vjournal

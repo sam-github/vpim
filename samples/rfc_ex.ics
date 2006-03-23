@@ -71,7 +71,7 @@ SUMMARY:Calendaring Interoperability Planning Meeting
 DESCRIPTION:Discuss how we can test c&s interoperability\n
  using iCalendar and other IETF standards.
 LOCATION:LDB Lobby
-ATTACH;FMTTYPE=application/postscript:ftp://xyzCorp.com/pub/
+ATTACH;FMTTYPE=application/postscript:ftp://example.local./pub/
  conf/bkgrnd.ps
 END:VEVENT
 END:VCALENDAR

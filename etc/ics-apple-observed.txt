@@ -82,16 +82,3 @@
    rrule         ; y  RRULE     4.8.5.4   RECUR, can occur multiple times!
 
    
-
-VEVENT Ifx:
-
-  TEXT: summary, description, comment, location, uid
-
-  think about:  uid
-
-  Vevent#status -> The status, upper-case.
-  Vevent#status= -> set a new status, only allow the defined statuses!
-  Vevent#status?(s) -> check if the status is s
-
-  can contain alarms... should it include an alarms module?
-
