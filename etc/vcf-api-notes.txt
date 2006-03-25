@@ -1,58 +1,45 @@
-
-
 VCARD
-
 
 Should I find the version field, then create a Vcard3 class?
 
+  #lines => Line
+     Line.group => group or ""
+     Line.name  => field name, uppercase
+     Line.value => ... whatever below
 
+Internal data structure .. hash of field to a Line, that will allow cacheing.
+
+  #delete_if(name) yield Line, true/false means delete
+
+  #address
+  #addresses
+  #photo
+  #photos
+  #tel
+  #tels
+  #nickname (first of first)
+  #nicknames (array of all)
+  ...
 
 Parameters:
 
-(rfc2425)
+(from rfc2425)
 
 ENCODING
 
 VALUE
 
-	The predefined data type values specified in [MIME-DIR] MUST NOT be repeated
-	in COMMA separated value lists except within the N, NICKNAME, ADR and
-	CATEGORIES value types.
+  values must not be "," repeated except in N, NICKNAME, ADR, CATEGORIES
 
-	The text value type defined in [MIME-DIR] is further restricted such that any
-	SEMI-COLON character (ASCII decimal 59) in the value MUST be escaped with the
-	BACKSLASH character (ASCII decimal 92).
+  value=TEXT, ";" must be escaped, + the ones in 2425
 
-	New:
+  value=VCARD, value is another vcard, for AGENT
 
-	BINARY
+  PHONE-NUMBER, value is a ..., for TEL
 
-	  The "binary" value type specifies that the type value is inline, encoded
-	  binary data. This value type can be specified in the PHOTO, LOGO, SOUND, and
-	  KEY types.
+  UTC-OFFSET, for TZ
 
-	  If BINARY, must use ENCODING=B. Should fold to 75 characters.
-
-	  Allowed for: PHOTO, LOGO, SOUND, and KEY
-
-  VCARD
-
-	  value is another vcard. Allowed for AGENT.
-
-	PHONE-NUMBER
-
-	  for TEL
-
-  UTC-OFFSET
-
-	  for TZ
-
-
-
-  , must be escaped with a backslash in all values...
-
-
-
+  , must be escaped with a backslash in all values
 
 LANGUAGE
 
@@ -60,160 +47,150 @@ CHARSET
 
 CONTEXT
 
+  ??
+
 (rfc2426)
 
 TYPE
 
 
-Types:
+Properties:
 
 (rfc2425)
 
+--
 SOURCE
-
-	If the SOURCE type is present, then its value provides information how to
-	find the source for the vCard.
-
+  If the SOURCE type is present, then its value provides information how to
+  find the source for the vCard.
+--
 NAME
-
-	If the NAME type is present, then its value is the displayable, presentation
-	text associated with the source for the vCard, as specified in the SOURCE
-	type.
-
-
+  If the NAME type is present, then its value is the displayable, presentation
+  text associated with the source for the vCard, as specified in the SOURCE
+  type.
+--
 PROFILE
-
+--
 BEGIN
-
+--
 END
+--
 
 (rfc2426)
 
+  If encoding not specified, it is 8bit.
+
+--
+VERSION
+value: "3.0"
+--
 FN
+value: text
+--
 N
-NICKNAME
-
-  list of TEXT
-
-
-PHOTO
-
-  don't need encoding=b if its a uri.
-
-	default value=binary
-
-	can do value=uri
-
-	type=<iana registered image format, what does that mean/>
-
-
+value: (structured text)
+--
 BDAY
+value: date (default), date-time  -- it appears from the examples that
+  value can be a date-time even it the parameter doesn't say so!
 
-  default is single DATE, can be date-time
-
-
-ADR
-
-  Allow Array for all the parts. Escape ; and ,. Concat with ,.
-
-	Only allow specified types.
-
-	Provide tests for the types (#home?, ...).
-
-	Implement default of "TYPE=intl,postal,parcel,work" for test.
-
-	Allow assignment of an Address class?
-
-	Make an Address class?
-
-
-LABEL
-
-  As for ADR
-
-TEL
-
-  As for ADR
-
-EMAIL
-
-  As for ADR
-
-MAILER
-
-  single TEXT value, the name of the mail client....
-
-TZ
-
-  an offset, or TEXT (no ,  or ; is significant)
-
+Date?
+DateTime?
+Time doesn't go back to people's bdays...
+--
+UID
+encoding: 8bit
+value: text
+type:iana identifier -- need this?
+--
+REV
+value:date-time (default), date   -- it appears from the examples that
+  value can be a date-time even it the parameter doesn't say so!
+--
 GEO
+value; (structured, two floats seperated by ";")
+--
+LABEL
+value: text
+type: ... as for ADR
 
-  ...
-
+could be associated with an ADR using grouping...
+--
+NICKNAME
+CATEGORIES
+value: *text with a ","
+--
+TZ
+value:utc-offset (default), text
+--
+SORT-STRING
+--
+CLASS
+--
 TITLE
 ROLE
-  single TEXT value, so escape the ,
-
-
-LOGO
-
-  like PHOTO
-
-
-AGENT
-
-  Default is a vCard, can be set to binary or a URI.
-
-
-ORG
-
-  structured TEXT, ; seperated.
-
-CATEGORIES
-
-  list of TEXT
-
+MAILER
 NOTE
-
-  single TEXT
-
-
 PRODID
-
-  set, as I do for iCalendar
-
-REV
-
-  single DATE-TIME, can be a single DATE
-
-SORT-STRING
-
-  whatever....
-
-SOUND
-
-  Like an attachment, default is binary, can say value=uri, can set type=
-
-
+value:text
+--
+ORG
+value: (structured text, ";" seperated, organization, followed by unit names)
+--
+AGENT
+value:vcard (default), text, uri
+--
 URL
-
-  single TEXT
-
-UID
-
-  single TEXT
-
-VERSION
-
-
-
-CLASS
-
-
+encoding: 8bit
+value: uri
+--
+LOGO
+SOUND
+PHOTO
+value: binary (default), uri
+encoding: 8bit (default), b
+type: iana type
 
 KEY
 
-  default is TEXT, can have encoding=b
+value: binary (default), uri, text
+encoding: 8bit (default), b
+type: iana type
 
+Note:
 
+value=BINARY  only allowed for the above.
+
+If BINARY, must use ENCODING=B. Should fold to 75 characters.
+
+Is this really the case? Maybe do this on output, but liberal on input.
+
+Maybe instead of attachment should return either a String with a #to_io
+or a "class URI<String" with a #to_io?
+
+Both can be extended with #format.
+
+--
+TEL
+type: home,msg,work,pref,voice,fax,cell,video,pager,bbs,modem,car,isdn,pcs
+  (default is type=voice)
+--
+EMAIL
+value:text
+type:internet,x400,pref,<iana>,<non-standard>
+--
+ADR
+value: (structured text)
+type: dom,intl,postal,parcel,home,work,pref
+  default is "TYPE=intl,postal,parcel,work"
+
+  Allow Array for all the parts. Escape ; and ,. Concat with ,.
+
+  Only allow specified types.
+
+  Provide tests for the types (#home?, ...).
+
+  Implement default of "TYPE=intl,postal,parcel,work" for test.
+
+  Allow assignment of an Address class?
+
+  Make an Address class?
