@@ -21,6 +21,16 @@ module Vpim
   # A vCard, for example, is a specialization of a directory info object.
   #
   # - [RFC2425] the directory information framework (ftp://ftp.ietf.org/rfc/rfc2425.txt)
+  #
+  # Here's an example of encoding a simple vCard using the low-level APIs:
+  #
+  #   card = Vpim::Vcard.create
+  #   card << Vpim::DirectoryInfo::Field.create('EMAIL', 'user.name@example.com', 'TYPE' => 'INTERNET' )
+  #   card << Vpim::DirectoryInfo::Field.create('URL', 'http://www.example.com/user' )
+  #   card << Vpim::DirectoryInfo::Field.create('FN', 'User Name' )
+  #   puts card.to_s
+  #
+  # Don't do it like that, use Vpim::Maker::Vcard.
   class DirectoryInfo
     include Enumerable
 
