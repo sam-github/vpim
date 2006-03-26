@@ -2,11 +2,6 @@ VCARD
 
 Should I find the version field, then create a Vcard3 class?
 
-  #lines => Line
-     Line.group => group or ""
-     Line.name  => field name, uppercase
-     Line.value => ... whatever below
-
 Internal data structure .. hash of field to a Line, that will allow cacheing.
 
   #delete_if(name) yield Line, true/false means delete
@@ -33,8 +28,6 @@ VALUE
 
   value=TEXT, ";" must be escaped, + the ones in 2425
 
-  value=VCARD, value is another vcard, for AGENT
-
   PHONE-NUMBER, value is a ..., for TEL
 
   UTC-OFFSET, for TZ
@@ -56,141 +49,5 @@ TYPE
 
 Properties:
 
-(rfc2425)
-
---
-SOURCE
-  If the SOURCE type is present, then its value provides information how to
-  find the source for the vCard.
---
-NAME
-  If the NAME type is present, then its value is the displayable, presentation
-  text associated with the source for the vCard, as specified in the SOURCE
-  type.
---
-PROFILE
---
-BEGIN
---
-END
---
-
 (rfc2426)
 
-  If encoding not specified, it is 8bit.
-
---
-VERSION
-value: "3.0"
---
-FN
-value: text
---
-N
-value: (structured text)
---
-BDAY
-value: date (default), date-time  -- it appears from the examples that
-  value can be a date-time even it the parameter doesn't say so!
-
-Date?
-DateTime?
-Time doesn't go back to people's bdays...
---
-UID
-encoding: 8bit
-value: text
-type:iana identifier -- need this?
---
-REV
-value:date-time (default), date   -- it appears from the examples that
-  value can be a date-time even it the parameter doesn't say so!
---
-GEO
-value; (structured, two floats seperated by ";")
---
-LABEL
-value: text
-type: ... as for ADR
-
-could be associated with an ADR using grouping...
---
-NICKNAME
-CATEGORIES
-value: *text with a ","
---
-TZ
-value:utc-offset (default), text
---
-SORT-STRING
---
-CLASS
---
-TITLE
-ROLE
-MAILER
-NOTE
-PRODID
-value:text
---
-ORG
-value: (structured text, ";" seperated, organization, followed by unit names)
---
-AGENT
-value:vcard (default), text, uri
---
-URL
-encoding: 8bit
-value: uri
---
-LOGO
-SOUND
-PHOTO
-value: binary (default), uri
-encoding: 8bit (default), b
-type: iana type
-
-KEY
-
-value: binary (default), uri, text
-encoding: 8bit (default), b
-type: iana type
-
-Note:
-
-value=BINARY  only allowed for the above.
-
-If BINARY, must use ENCODING=B. Should fold to 75 characters.
-
-Is this really the case? Maybe do this on output, but liberal on input.
-
-Maybe instead of attachment should return either a String with a #to_io
-or a "class URI<String" with a #to_io?
-
-Both can be extended with #format.
-
---
-TEL
-type: home,msg,work,pref,voice,fax,cell,video,pager,bbs,modem,car,isdn,pcs
-  (default is type=voice)
---
-EMAIL
-value:text
-type:internet,x400,pref,<iana>,<non-standard>
---
-ADR
-value: (structured text)
-type: dom,intl,postal,parcel,home,work,pref
-  default is "TYPE=intl,postal,parcel,work"
-
-  Allow Array for all the parts. Escape ; and ,. Concat with ,.
-
-  Only allow specified types.
-
-  Provide tests for the types (#home?, ...).
-
-  Implement default of "TYPE=intl,postal,parcel,work" for test.
-
-  Allow assignment of an Address class?
-
-  Make an Address class?
