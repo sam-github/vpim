@@ -36,9 +36,9 @@ card = Vpim::Maker::Vcard.make2 do |maker|
     photo.type = 'jpeg'
   end
 
-  maker.add_tel('+416 123 1111')
+  maker.add_tel('416 123 1111')
 
-  maker.add_tel('+416 123 2222') { |t| t.location = 'home'; t.preferred = true }
+  maker.add_tel('416 123 2222') { |t| t.location = 'home'; t.preferred = true }
 
   maker.add_impp('joe') do |impp|
     impp.preferred = 'yes'
@@ -49,7 +49,7 @@ card = Vpim::Maker::Vcard.make2 do |maker|
     xaim.location = 'row12'
   end
 
-  maker.add_tel('+416+123+3333') do |tel|
+  maker.add_tel('416-123-3333') do |tel|
     tel.location = 'work'
     tel.capability = 'fax'
   end
