@@ -262,6 +262,19 @@ module Vpim
       # FIXME - remove my own uses of #params
       alias params pnames # :nodoc:
 
+      # The first value of the param +name+,  nil if there is no such param,
+      # the param has no value, or the first param value is zero-length.
+      def pvalue(name)
+        v = pvalues( name )
+        if v
+          v = v.first
+        end
+        if v
+          v = nil unless v.length > 0
+        end
+        v
+      end
+
       # The Array of all values of the param +name+,  nil if there is no such
       # param, [] if the param has no values. If the Field isn't frozen, the
       # Array is mutable.
@@ -401,9 +414,9 @@ module Vpim
           if v.size > 1
             raise InvalidEncodingError, "multi-valued param 'VALUE' (#{values})"
           end
-          v = v.first
+          v = v.first.downcase
         end
-        v.downcase
+        v
       end
 
       # The value as an array of Time objects (all times and dates in
