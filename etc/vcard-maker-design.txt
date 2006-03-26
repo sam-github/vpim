@@ -1,5 +1,3 @@
-# $Id: vcard-maker-design.txt,v 1.1 2004/11/15 02:35:53 sam Exp $
-
 Vcard maker API. Partially motivated by:
 
   http://rpa-base.rubyforge.org/wiki/wiki.cgi?GoodAPIDesign

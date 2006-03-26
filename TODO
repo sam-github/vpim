@@ -1,7 +1,11 @@
 RFC error - CATEGORY is used in an example, it should be CATEGORIES
 
+Output a graph of the connections in address book, spouses, etc.
+
 Need to cache properties, it's too slow. Do when I do encoding, because
 cacheing implies cache clearing...
+
+Use standard Enumerator instead of mine.
 
 == PACKAGING
 

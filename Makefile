@@ -5,7 +5,7 @@ SHELL:=/bin/sh
 .PHONY: default doc test other
 
 do: default
-	# ruby -w -I lib test_vcard.rb
+	#ruby -w -I lib test_vcard.rb -t test_birthday
 
 default: test
 
@@ -75,6 +75,7 @@ SAMPLES := \
  rrule.rb \
  tabbed-file-to-vcf.rb \
  vcf-dump.rb \
+ vcf-lines.rb \
  vcf-to-mutt.rb \
  vcf-to-ics.rb \
 
@@ -134,3 +135,4 @@ pkg:
 	# no docs: cp -r  doc             $R/
 	cd releases && tar -zcf $P.tgz $P
 
+#vim:noexpandtab:tabstop=2:softtabstop=2:shiftwidth=2

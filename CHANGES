@@ -1,5 +1,10 @@
 @2006-03-dd:
 
+- Added high-level vCard decoding API.
+
+- Beginning to depend on ruby1.8. I'm willing to try for backwards compat if I
+  get feedback that this causes difficulties.
+
 - Icalendar#components - new
 
 - Icalendar#vevents - deprecated, see Icalendar#components
@@ -15,7 +20,6 @@
 - Icalendar::Attachment - new
 
 
-
 @2006-03-20:
 
 - Maker::Vcard#add_url - new
@@ -23,23 +27,23 @@
 - ex_mkyourown.rb - new example
 
 - Modularized the component property accessor methods, and added lots of
-	Icalendar property support for Vevent, Vtodo, and Vjournal.
+  Icalendar property support for Vevent, Vtodo, and Vjournal.
 
 - Fixed support for TEXT decoding.
 
 - Use Subversion revision as release sub-version.
 
 - It appears that a top-level vpim.rb that requires everything else is needed
-	for ruby-gems, gemspec seems to work now.
+  for ruby-gems, gemspec seems to work now.
 
 - Don't package backup files (.../*.rb~).
 
 - Icalendar decoding optimizations. Icalendar.decode is about twice as fast
-	now, and more optimizations are scheduled.
+  now, and more optimizations are scheduled.
 
 - Continue the move to using uppercase for all syntactic elements that can be
-	mixed case. The API might eventually allow only uppercase, it appears
-	case-insensitive comparisons still have a noticeable effect on performance.
+  mixed case. The API might eventually allow only uppercase, it appears
+  case-insensitive comparisons still have a noticeable effect on performance.
 
 
 0.17 - 2006-03-08
@@ -55,11 +59,11 @@
 - Maker::Vcard.make - deprecated
 
 - Profiled decoding of a huge iCalendar file. Performance appears to be
-	dominated by overhead of String#downcase (20% of time spent in Field#name?).
-	Keeping the field group, field name, and field's parameter's names internally
-	in uppercase and using ruby 1.8's String#casecmp? is a first attempt at
-	optimization. This is a change in the default case returned, but it aligns
-	with the RFC and common usage.
+  dominated by overhead of String#downcase (20% of time spent in Field#name?).
+  Keeping the field group, field name, and field's parameter's names internally
+  in uppercase and using ruby 1.8's String#casecmp? is a first attempt at
+  optimization. This is a change in the default case returned, but it aligns
+  with the RFC and common usage.
 
 - Maker::Vcard.make -  full_name is now optional, it will be derived from name/N:
 
@@ -389,5 +393,4 @@ Address Book from Mutt
 - First release.
 ---
 
-puts changes
-
+vim:expandtab:tabstop=8:softtabstop=2:shiftwidth=2
