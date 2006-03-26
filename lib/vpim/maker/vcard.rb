@@ -27,11 +27,11 @@ module Vpim
       # fields are added to it.
       #
       # Defaults:
-      # - vCards must have both an N: and an FN: field, #make2 will fail if there
-      #   is no FN: field in the +card+ when your block is finished adding fields.
-      # - If there is an FN: field, but no N: field, N: will be set from the information
-      #   in FN:, see Vcard::Name#preformatted for more information.
-      # - vCards must have a VERSION: field. If one does not exist when your block is
+      # - vCards must have both an N and an FN field, #make2 will fail if there
+      #   is no FN field in the +card+ when your block is finished adding fields.
+      # - If there is an FN field, but no N field, N will be set from the information
+      #   in FN, see Vcard::Name#preformatted for more information.
+      # - vCards must have a VERSION field. If one does not exist when your block is
       #   is finished adding fields then it will be set to 3.0.
       def Vcard.make2(card = Vpim::Vcard.create, &block) # :yields: maker
         new(nil, card).make(&block)
@@ -39,7 +39,7 @@ module Vpim
 
       # Deprecated, use #make2.
       #
-      # If set, the FN: field will be set to +full_name+. Otherwise, FN: will
+      # If set, the FN field will be set to +full_name+. Otherwise, FN will
       # be set from the values in #add_name.
       def Vcard.make(full_name = nil, &block) # :yields: maker
         new(full_name, Vpim::Vcard.create).make(&block)
@@ -70,7 +70,7 @@ module Vpim
 
       public
 
-      # Add a name field, N:.
+      # Add a name field, N.
       #
       # Attributes of N are:
       # - family: family name
@@ -82,7 +82,7 @@ module Vpim
       # All attributes are optional.
       #
       # Warning: This is the only mandatory field besides the full name, FN.
-      # FN: can be set in #make, or by #fullname=, and if not set will be
+      # FN can be set in #make, or by #fullname=, and if not set will be
       # constucted as the string "#{prefix} #{given} #{additional} #{family},
       # #{suffix}".
       def add_name # :yield: n
@@ -99,7 +99,7 @@ module Vpim
 
       # Add a full name field, FN.
       #
-      # Normally the FN field value is derived from the N: field value, see
+      # Normally the FN field value is derived from the N field value, see
       # #add_name, but it can be explicitly set.
       def fullname=(fullname)
         if @card.field('FN')
@@ -108,110 +108,46 @@ module Vpim
         @card << Vpim::DirectoryInfo::Field.create( 'FN', fullname );
       end
 
-      # Add a address field, ADR:.
-      #
-      # Attributes of ADR: that describe the address are:
-      # - pobox: post office box
-      # - extended: seldom used, its not clear what it is for
-      # - street: street address, multiple components should be separated by a comma, ','
-      # - locality: usually the city
-      # - region: usually the province or state
-      # - postalcode: postal code
-      # - country: country name, no standard for country naming is specified
-      #
-      # Attributes that describe how the address is used, and customary values, are:
-      # - location: home, work - often used, can be set to other values
-      # - preferred: true - often used, set if this is the preferred address
-      # - delivery: postal, parcel, dom (domestic), intl (international) - rarely used
-      #
-      # All attributes are optional. #location and #home can be set to arrays of
-      # strings.
-      #
-      # TODO - Add #label to support LABEL.
-      def add_addr # :yield: adr
-        # FIXME - Need to escape specials in the String.
-        x = Struct.new(
-          :location, :preferred, :delivery,
-          :pobox, :extended, :street, :locality, :region, :postalcode, :country
-          ).new
+      # Add an address field, ADR. +address+ is a Vpim::Vcard::Address.
+      def add_addr # :yield: address
+        x = Vpim::Vcard::Address.new
         yield x
-
-        values = x.to_a[3, 7].map { |s| s ? s.to_str : '' }
-
-        # All these attributes go into the TYPE parameter.
-        params = [ x[:location], x[:delivery] ]
-        params << 'PREF' if x[:preferred]
-        params = params.flatten.uniq.compact.map { |s| s.to_str }
-
-        paramshash = {}
-
-        paramshash['TYPE'] = params if params.first
-
-        @card << Vpim::DirectoryInfo::Field.create( 'ADR', values, paramshash)
+        @card << x.encode
         self
       end
 
-      # Add a telephone number field, TEL:.
+      # Add a telephone field, TEL. +tel+ is a Vpim::Vcard::Telephone.
       #
-      # +number+ is supposed to be a "X.500 Telephone Number" according to RFC 2426, if you happen
-      # to be familiar with that. Otherwise, anything that looks like a phone number should be OK.
-      # 
-      # Attributes of TEL: are:
-      # - location: home, work, msg, cell, car, pager - often used, can be set to other values
-      # - preferred: true - often used, set if this is the preferred telephone number
-      # - capability: voice,fax,video,bbs,modem,isdn,pcs - fax is useful, the others are rarely used
-      #
-      # All attributes are optional, and so is the block.
+      # The block is optional, its only necessary if you want to specify
+      # the optional attributes.
       def add_tel(number) # :yield: tel
-        params = {}
+        x = Vpim::Vcard::Telephone.new(number)
         if block_given?
-          x = Struct.new( :location, :preferred, :capability ).new
-
           yield x
-
-          x[:preferred] = 'PREF' if x[:preferred]
-
-          types = x.to_a.flatten.uniq.compact.map { |s| s.to_str }
-
-          params['TYPE'] = types if types.first
         end
-
-        @card << Vpim::DirectoryInfo::Field.create( 'TEL', number, params)
+        @card << x.encode
         self
       end
 
-      # Add a email address field, EMAIL:.
+      # Add an email field, EMAIL. +email+ is a Vpim::Vcard::Email.
       #
-      # Attributes of EMAIL: are:
-      # - location: home, work - often used, can be set to other values
-      # - preferred: true - often used, set if this is the preferred email address
-      # - protocol: internet,x400 - internet is the default, set this for other kinds
-      #
-      # All attributes are optional, and so is the block.
+      # The block is optional, its only necessary if you want to specify
+      # the optional attributes.
       def add_email(email) # :yield: email
-        params = {}
+        x = Vpim::Vcard::Email.new(email)
         if block_given?
-          x = Struct.new( :location, :preferred, :protocol ).new
-
           yield x
-
-          x[:preferred] = 'PREF' if x[:preferred]
-
-          types = x.to_a.flatten.uniq.compact.map { |s| s.to_str }
-
-          params['TYPE'] = types if types.first
         end
-
-        @card << Vpim::DirectoryInfo::Field.create( 'EMAIL', email, params)
+        @card << x.encode
         self
       end
 
-      # Add a nickname field, NICKNAME:.
+      # Add a nickname field, NICKNAME.
       def nickname=(nickname)
         @card << Vpim::DirectoryInfo::Field.create( 'NICKNAME', nickname );
       end
 
-      # Add a birthday field, BDAY:.
+      # Add a birthday field, BDAY.
       #
       # +birthday+ must be a time or date object.
       #
@@ -233,10 +169,10 @@ TODO - need text=() implemented in Field
       end
 =end
 
-      # Add an instant-messaging/point of presence address field, IMPP:. The address
+      # Add an instant-messaging/point of presence address field, IMPP. The address
       # is a URL, with the syntax depending on the protocol.
       #
-      # Attributes of IMPP: are:
+      # Attributes of IMPP are:
       # - preferred: true - set if this is the preferred address
       # - location: home, work, mobile - location of address
       # - purpose: personal,business - purpose of communications
@@ -248,7 +184,7 @@ TODO - need text=() implemented in Field
       # the user to know the URL for their own address, hopefully not too much
       # of a burden.
       #
-      # IMPP: is defined in draft-jennings-impp-vcard-04.txt. It refers to the
+      # IMPP is defined in draft-jennings-impp-vcard-04.txt. It refers to the
       # URI scheme of a number of messaging protocols, but doesn't give
       # references to all of them:
       # - "xmpp" indicates to use XMPP, draft-saintandre-xmpp-uri-06.txt
@@ -269,7 +205,7 @@ TODO - need text=() implemented in Field
 
           x[:preferred] = 'PREF' if x[:preferred]
 
-          types = x.to_a.flatten.uniq.compact.map { |s| s.upcase }
+          types = x.to_a.flatten.compact.map { |s| s.downcase }.uniq
 
           params['TYPE'] = types if types.first
         end
@@ -278,13 +214,13 @@ TODO - need text=() implemented in Field
         self
       end
 
-      # Add an X-AIM: account name where +xaim+ is an AIM screen name.
+      # Add an X-AIM account name where +xaim+ is an AIM screen name.
       #
       # I don't know if this is conventional, or supported by anything other
       # than AddressBook.app, but an example is:
       #   X-AIM;type=HOME;type=pref:exampleaccount
       #
-      # Attributes of X-AIM: are:
+      # Attributes of X-AIM are:
       # - preferred: true - set if this is the preferred address
       # - location: home, work, mobile - location of address
       #
@@ -299,7 +235,7 @@ TODO - need text=() implemented in Field
 
           x[:preferred] = 'PREF' if x[:preferred]
 
-          types = x.to_a.flatten.uniq.compact.map { |s| s.upcase }
+          types = x.to_a.flatten.compact.map { |s| s.downcase }.uniq
 
           params['TYPE'] = types if types.first
         end
@@ -309,9 +245,9 @@ TODO - need text=() implemented in Field
       end
 
 
-      # Add a photo field, PHOTO:.
+      # Add a photo field, PHOTO.
       #
-      # Attributes of PHOTO: are:
+      # Attributes of PHOTO are:
       # - image: set to image data to include inline
       # - link: set to the URL of the image data
       # - type: string identifying the image type, supposed to be an "IANA registered image format",
@@ -359,7 +295,7 @@ TODO - need text=() implemented in Field
         self
       end
 
-      # Add a URL field, URL:.
+      # Add a URL field, URL.
       def add_url(url)
         @card << Vpim::DirectoryInfo::Field.create( 'URL', url.to_str );
       end
@@ -388,7 +324,7 @@ TODO - need text=() implemented in Field
       # allowing the field to be copied and modified (see Field#copy) before adding, or 
       # not added at all if the block yields nil.
       #
-      # The vCard fields BEGIN: and END: aren't copied, and VERSION:, N:, and FN: are copied
+      # The vCard fields BEGIN and END aren't copied, and VERSION, N, and FN are copied
       # only if the card doesn't have them already.
       def copy(card) # :yields: Field
         card.each do |field|

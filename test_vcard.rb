@@ -7,6 +7,7 @@ require 'vpim/maker/vcard'
 require 'test/unit'
 require 'date'
 
+
 require 'pp'
 
 include Vpim
@@ -121,6 +122,8 @@ end:VCARD
     assert_equal("dGhpcyBjb3VsZCBiZSAKbXkgY2VydGlmaWNhdGUK", card.enum_by_name("key").entries.first.value_raw)
 
     assert_equal("this could be \nmy certificate\n", card.enum_by_name("key").entries.first.value)
+
+    card.lines
   end
 
 =begin
@@ -497,7 +500,7 @@ EOF
        Vpim.decode_text('aa,\\n\\n,\\\\\,\\\\a\;\;b')
        )
     assert_equal(
-                             ["1\n2,3", "bbb", "zz"],
+                         ['', "1\n2,3", "bbb", '', "zz", ''],
        Vpim.decode_text_list(',1\\n2\\,3,bbb,,zz,')
        )
   end
@@ -533,15 +536,12 @@ EOF
 
 EX_BDAYS = <<'EOF'
 BEGIN:VCARD
-FN:ex0
 BDAY;value=date:206-12-15
 END:VCARD
 BEGIN:VCARD
-FN:ex1
 BDAY;value=date:2003-12-09
 END:VCARD
 BEGIN:VCARD
-FN:ex2
 END:VCARD
 EOF
 
@@ -563,6 +563,29 @@ EOF
       assert_equal(d, cards[i].birthday)
     end
 
+  end
+
+EX_ATTACH=<<'---'
+BEGIN:VCARD
+VERSION:3.0
+N:Middle Family;Ny_full
+PHOTO:val\nue
+PHOTO;encoding=8bit:val\nue
+PHOTO;encoding=8bit:val\nue
+PHOTO;encoding=8bit;type=atype:val\nue
+PHOTO;value=binary;encoding=8bit:val\nue
+PHOTO;value=binary;encoding=8bit:val\nue
+PHOTO;value=binary;encoding=8bit;type=atype:val\nue
+PHOTO;value=text;encoding=8bit:val\nue
+PHOTO;value=text;encoding=8bit:val\nue
+PHOTO;value=text;encoding=8bit;type=atype:val\nue
+PHOTO;value=uri:my://
+PHOTO;value=uri;type=atype:my://
+END:VCARD
+---
+  def test_attach
+    card = Vpim::Vcard.decode(EX_ATTACH).first
+    card.lines # FIXME - assert values are as expected
   end
 
 EX_21=<<'---'
