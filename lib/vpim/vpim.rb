@@ -82,8 +82,15 @@ require 'vpim/version'
 
 module Vpim
   # Exception used to indicate that data being decoded is invalid, the message
-  # usually gives some clue as to exactly what is invalid.
+  # should give some clue as to exactly what is invalid.
   class InvalidEncodingError < StandardError; end
+
+  # Exception used to indicate that data being decoded is unsupported, the message
+  # should give some clue as to exactly what is unsupported.
+  #
+  # If its unsupported, its likely because I didn't anticipate it being useful
+  # to support this, and it will likely be supported if requested.
+  class UnsupportedError < StandardError; end
 end
 
 module Vpim::Methods #:nodoc:
