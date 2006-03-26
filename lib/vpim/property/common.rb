@@ -6,8 +6,8 @@
   details.
 =end
 
-require 'vpim/attachment'
 require 'vpim/address'
+require 'vpim/attachment'
 
 module Vpim
   class Icalendar
@@ -165,26 +165,14 @@ seq
           proptextarray 'CONTACT'
         end
 
-        # Attachments, an Array of Icalendar::Attachment objects.
+        # An Array of attachments, see Attachment for more information.
         def attachments
           @properties.enum_by_name('ATTACH').map do |f|
-            value = f.value
-            format = f['FMTTYPE']
-            format = format.first if format
-            type = f['VALUE']
-            if type
-              type = type.first
-            end
-            
-            if Vpim::Methods.casecmp?(type, 'BINARY')
-              Attachment.new(nil, value, format)
-            else
-              Attachment.new(value, nil, format)
-            end
+            attachment = Attachment.decode(f, 'uri', 'FMTTYPE')
           end
         end
-
       end
+
     end
   end
 end

@@ -94,9 +94,9 @@ class TestIcal < Test::Unit::TestCase
     req.components { }
     req.components(Icalendar::Vevent) { }
     req.components(Icalendar::Vjournal) { }
-    req.components
-    req.components(Icalendar::Vevent)
-    req.components(Icalendar::Vjournal)
+    assert_equal(1, req.components.size)
+    assert_equal(1, req.components(Icalendar::Vevent).size)
+    assert_equal(0, req.components(Icalendar::Vjournal).size)
 
     assert_equal(req.protocol, 'REQUEST')
 

@@ -31,7 +31,7 @@ module Vpim
   # types, where appropriate.
   #
   # The wrapper functions (#birthday, #nicknames, #emails, etc.) exist
-  # partially as an API convenience, and partially so as a place to document
+  # partially as an API convenience, and partially as a place to document
   # the values returned for the more complex types, like PHOTO and EMAIL.
   #
   # For types that do not sensibly occur multiple times (like BDAY or GEO),
@@ -66,48 +66,6 @@ module Vpim
   # - link:vcf-to-ics.txt: example of how to create calendars of birthdays from vCards
   # - link:vcf-dump.txt: utility for dumping contents of .vcf files
   class Vcard < DirectoryInfo
-
-    # Extend a String to support some of the same methods as Uri.
-    module StringWithIO #:nodoc:
-      def to_io
-        StringIO.new(self)
-      end
-      def format
-        @format
-      end
-    end
-
-    # A URI String. It is not returned as String to distinguish it from binary
-    # content.
-    class Uri
-      # The URI.
-      attr_reader :uri
-
-      def initialize(uri) #:nodoc:
-        @uri = uri
-      end
-
-      # The format of the data referred to by the URI.
-      def format
-        @format
-      end
-
-      # Return the IO object from opening the URI.
-      def to_io
-        open(@uri)
-      end
-
-      # Return the String from opening the URI and reading the entire data.
-      def to_s
-        to_io.read(nil)
-      end
-
-      def inspect #:nodoc:
-        s = "<#{self.class.to_s}: #{uri.inspect}>"
-        s << ", #{@format.inspect}" if @format
-        s
-      end
-    end
 
     # Represents the value of an ADR field.
     #
@@ -541,24 +499,7 @@ module Vpim
     end
 
     def decode_attachment(field) #:nodoc:
-      line = case field.kind
-             when 'text'
-               l = decode_text(field)
-               l.value.extend(StringWithIO)
-               l
-             when 'uri'
-               decode_uri(field)
-             when 'binary', nil
-               l = Line.new( field.group, field.name, field.value )
-               l.value.extend(StringWithIO)
-               l
-             else
-               raise InvalidEncodingError, "URI type #{field.kind} is not allowed"
-             end
-
-      # TODO - auto-detect format based on magic at beginning of value?
-      line.value.instance_variable_set(:@format, field.pvalue('TYPE') || '')
-      line
+      Line.new( field.group, field.name, Attachment.decode(field, 'binary', 'TYPE') )
     end
 
     @@decode = {
@@ -885,7 +826,7 @@ module Vpim
     # object that the vCard represents. It is not commonly used, but could
     # contain a X.509 or PGP certificate.
     #
-    # Value object is same as for #photos.
+    # See Attachment for a description of the value.
     def keys(&proc) #:yield: Line.value
       values('KEY', &proc)
     end
@@ -897,7 +838,7 @@ module Vpim
     # represents. Its not common, but would probably be equivalent to the logo
     # on printed card.
     #
-    # Value object is same as for #photos.
+    # See Attachment for a description of the value.
     def logos(&proc) #:yield: Line.value
       values('LOGO', &proc)
     end
@@ -943,19 +884,7 @@ module Vpim
     # the object the vCard represents. Commonly there is one PHOTO, and it is a
     # photo of the person identified by the vCard.
     #
-    # The value will be either a String or Uri. Besides the methods specific to
-    # their class, both types of value are extended to support:
-    # - #to_io: return an IO from with the value can be read, see +open-uri+
-    #   and +stringio+ for more information.
-    # - #to_s: return the value as a String, retrieveing it with +open-uri+
-    #   if necessary.
-    # - #format: the format of the value, supposed to be an "iana defined"
-    #   identifier, but could be almost anything (or nothing) in practice.
-    #   Since the parameter is optional, it may be "".
-    #
-    # TODO - It might be possible to autodetect the format from the first few
-    # bytes of the value, and return the appropriate MIME type when format
-    # isn't defined.
+    # See Attachment for a description of the value.
     def photos(&proc) #:yield: Line.value
       values('PHOTO', &proc)
     end
@@ -977,7 +906,7 @@ module Vpim
     # used. Also, note that there is no mechanism available to specify that the
     # SOUND is being used for anything other than the default.
     #
-    # Value object is same as for #photos.
+    # See Attachment for a description of the value.
     def sounds(&proc) #:yield: Line.value
       values('SOUND', &proc)
     end
