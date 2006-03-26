@@ -310,7 +310,7 @@ module Vpim
 
     # For backwards compatibility. Use #components.
     def todos #:nodoc:
-      components Icalendar::Vevent
+      components Icalendar::Vtodo
     end
 
   end
