@@ -208,6 +208,7 @@ module Vpim
   # to escape anything but the above, everything else is ambiguous, so I'll
   # just support it.
   def Vpim.decode_text(v) # :nodoc:
+    # FIXME - I think this should trim leading and trailing space
     v.gsub(/\\(.)/) do
       case $1
       when 'n', 'N' 
@@ -217,12 +218,34 @@ module Vpim
       end
     end
   end
+  
+  def Vpim.encode_text(v) #:nodoc:
+    v.to_str.gsub(/(.)/) do
+      case $1
+      when "\n"
+        "\\n"
+      when "\\", ",", ";"
+        "\\#{$1}"
+      else
+        $1
+      end
+    end
+  end
+
+  def Vpim.encode_text_list(v, sep = ",") #:nodoc:
+    v.to_ary.map{ |t| Vpim.encode_text(t) }.join(sep)
+  end
 
   # Convert a +sep+-seperated list of TEXT values into an array of values.
   def Vpim.decode_text_list(value, sep = ',') # :nodoc:
-    value.scan(/((?:(?:\\.)|[^#{sep}])+)#{sep}?/).map do |v|
+    # Need to do in two stages, as best I can find.
+    list = value.scan(/([^#{sep}\\]*(?:\\.[^#{sep}\\]*)*)#{sep}/).map do |v|
       Vpim.decode_text(v.first)
     end
+    if value.match(/([^#{sep}\\]*(?:\\.[^#{sep}\\]*)*)$/)
+      list << $1
+    end
+    list
   end
 
 
