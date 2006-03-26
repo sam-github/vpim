@@ -18,7 +18,8 @@ module Vpim
 
         # Array of Float, +[ latitude, longitude]+.
         #
-        # North or equator is postive latitude, East of meridian is positive logitude.
+        # North of the equator is positive latitude, east of the meridian is
+        # positive longitude.
         #
         # See RFC2445 for more info... there are lots of special cases.
         def geo
