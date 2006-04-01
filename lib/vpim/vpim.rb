@@ -94,9 +94,8 @@ module Vpim
   
   # Exception used to indicate that encoding failed, probably because the
   # object would not result in validly encoded data. The message should
-  # describe what is unsupported. This is a type of ArgumentError, because you
-  # should not attempt to encode invalid data.
-  class Unencodeable < ArgumentError; end
+  # describe what is unsupported.
+  class Unencodeable < StandardError; end
 end
 
 module Vpim::Methods #:nodoc:
