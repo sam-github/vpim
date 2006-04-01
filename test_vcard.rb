@@ -598,9 +598,9 @@ ADR;WORK;PREF:
 LABEL;WORK;PREF:
 TEL;WORK;FAX:925 833-7660
 TEL;HOME;FAX:925 833-7660
-TEL;VOICE:
-TEL;FAX:
-EMAIL;INTERNET:
+TEL;VOICE:1
+TEL;FAX:2
+EMAIL;INTERNET:e@c
 TITLE:
 NOTE:
 UID:pas-id-3F93E22900000001
@@ -675,5 +675,63 @@ END:VCARD
     # pp card.field('LABEL').value_raw
     # pp card.field('LABEL').value
   end
+
+  def test_modify_name
+    card = Vcard.decode("begin:vcard\nend:vcard\n").first
+
+    assert_raises(InvalidEncodingError) do
+      card.name
+    end
+
+    assert_raises(Unencodeable) do
+      Maker::Vcard.make2(card) {}
+    end
+
+    card.make do |m|
+      m.name {}
+    end
+
+    assert_equal('', card.name.given)
+    assert_equal('', card.name.fullname)
+
+    assert_raises(TypeError) do
+      card.name.given = 'given'
+    end
+
+    card.make do |m|
+      m.name do |n|
+        n.given = 'given'
+      end
+    end
+
+    assert_equal('given', card.name.given)
+    assert_equal('given', card.name.fullname)
+    assert_equal(''     , card.name.family)
+
+    card.make do |m|
+      m.name do |n|
+        n.family = n.given
+        n.prefix = ' Ser '
+        n.fullname = 'well given'
+      end
+    end
+
+    assert_equal('given', card.name.given)
+    assert_equal('given', card.name.family)
+    assert_equal('Ser given given', card.name.formatted)
+    assert_equal('well given', card.name.fullname)
+  end
+
+  def test_add_note
+    note = "hi\' \  \"\",,;; \n \n field"
+
+    card = Vpim::Maker::Vcard.make2 do |m|
+      m.add_note(note)
+      m.name {}
+    end
+
+    assert_equal(note, card.note)
+  end
+
 end
 

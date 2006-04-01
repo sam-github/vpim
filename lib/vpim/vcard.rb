@@ -331,7 +331,7 @@ module Vpim
         value = field.to_text.strip
 
         if value.length < 1
-          raise InvalidEncodingError, "EMAIL must have a value"
+          raise InvalidEncodingError, "TEL must have a value"
         end
 
         tel = Telephone.new(value)
@@ -366,23 +366,33 @@ module Vpim
     # fields.
     class Name
       # family name, from N
-      attr_reader :family
+      attr_accessor :family
       # given name, from N
-      attr_reader :given
+      attr_accessor :given
       # additional names, from N
-      attr_reader :additional
+      attr_accessor :additional
       # such as "Ms." or "Dr.", from N
-      attr_reader :prefix
+      attr_accessor :prefix
       # such as "BFA", from N
-      attr_reader :suffix
-      # all the components of N formtted as "#{prefix} #{given} #{additional} #{family}, #{suffix}"
-      attr_reader :formatted
+      attr_accessor :suffix
       # full name, the FN field. FN is a formatted version of the N field,
-      # probably in a form more aligned with the cultural conventions of the
-      # vCard owner than +formatted+ is.
-      attr_reader :fullname
+      # intended to be in a form more aligned with the cultural conventions of
+      # the vCard owner than +formatted+ is.
+      attr_accessor :fullname
+      # all the components of N formtted as "#{prefix} #{given} #{additional} #{family}, #{suffix}"
+      attr_reader   :formatted
 
-      def initialize(n, fn) #:nodoc:
+      # Override the attr reader to make it dynamic
+      remove_method :formatted
+      def formatted #:nodoc:
+        f = [ @prefix, @given, @additional, @family ].map{|i| i == '' ? nil : i.strip}.compact.join(' ')
+        if @suffix != ''
+          f << ', ' << @suffix
+        end
+        f
+      end
+
+      def initialize(n='', fn='') #:nodoc:
         n = Vpim.decode_text_list(n, ';') do |item|
           item.strip
         end
@@ -392,13 +402,22 @@ module Vpim
         @additional = n[2] || ""
         @prefix     = n[3] || ""
         @suffix     = n[4] || ""
-        @formatted = [ @prefix, @given, @additional, @family ].map{|i| i == '' ? nil : i}.compact.join(' ')
-        if @suffix != ''
-          @formatted << ', ' << @suffix
-        end
 
         # FIXME - make calls to #fullname fail if fn is nil
-        @fullname = fn
+        @fullname = (fn || "").strip
+      end
+
+      def encode #:nodoc:
+         Vpim::DirectoryInfo::Field.create('N',
+           Vpim.encode_text_list([ @family, @given, @additional, @prefix, @suffix ].map{|n| n.strip}, ';')
+           )
+      end
+      def encode_fn #:nodoc:
+        fn = @fullname.strip
+        if @fullname.length == 0
+          fn = formatted
+        end
+        Vpim::DirectoryInfo::Field.create('FN', fn)
       end
 
     end
@@ -420,7 +439,7 @@ module Vpim
     end
 
     def decode_n(field) #:nodoc:
-      Line.new( field.group, field.name, Name.new(field.value, self['FN']) )
+      Line.new( field.group, field.name, Name.new(field.value, self['FN']).freeze )
     end
 
     def decode_date_or_datetime(field) #:nodoc:
@@ -562,7 +581,12 @@ module Vpim
       end
     end
 
-    @lines = {}
+    #@lines = {} FIXME - dead code
+
+    # Return line for a field
+    def f2l(field) #:nodoc:
+      Line.decode(@@decode, self, field)
+    end
 
     # With no block, returns an Array of Line. If +name+ is specified, the
     # Array will only contain the +Line+s with that +name+. The Array may be
@@ -576,7 +600,7 @@ module Vpim
       unless block_given?
         map do |f|
           if( !name || f.name?(name) )
-            Line.decode(@@decode, self, f)
+           f2l(f)
           else
             nil
           end
@@ -584,7 +608,7 @@ module Vpim
       else
         each do |f|
           if( !name || f.name?(name) )
-            line = Line.decode(@@decode, self, f)
+            line = f2l(f)
             if line
               yield line
             end
@@ -850,7 +874,7 @@ module Vpim
     # N is required for a vCards, this raises InvalidEncodingError if
     # there is no N so it cannot return nil.
     def name
-      value('N')
+      value('N') || raise(Vpim::InvalidEncodingError, "Missing mandatory N field")
     end
 
     # The first NICKNAME value, nil if there are none.
@@ -947,6 +971,39 @@ module Vpim
         raise Vpim::InvalidEncodingError, 'Invalid vCard - it has no version field!'
       end
       v
+    end
+
+    # Make changes to a vCard.
+    #
+    # Same as Vpim::Maker::Vcard.make2(self), yields a Vpim::Maker::Vcard.
+    def make #:yield: maker
+      Vpim::Maker::Vcard.make2(self) do |maker|
+        yield maker
+      end
+    end
+
+    # Delete +line+ if block yields true.
+    def delete_if #:nodoc: :yield: line
+      # Do in two steps to not mess up progress through the enumerator.
+      rm = []
+
+      each do |f|
+        line = f2l(f)
+        if line && yield(line)
+          rm << f
+
+          # Hack - because we treat N and FN as one field
+          if f.name? 'N'
+            rm << field('FN')
+          end
+        end
+      end
+
+      rm.each do |f|
+        @fields.delete( f )
+        @cache.delete( f )
+      end
+
     end
 
   end

@@ -13,10 +13,10 @@ card21 = Vpim::DirectoryInfo.create(
   ], 'VCARD')
 
 Vpim::Maker::Vcard.make2(card21) do |maker|
-  maker.add_name do |name|
-    name.prefix = 'Dr.'
-    name.given = 'Jimmy'
-    name.family = 'Death'
+  maker.name do |n|
+    n.prefix = 'Dr.'
+    n.given = 'Jimmy'
+    n.family = 'Death'
   end
 
 end

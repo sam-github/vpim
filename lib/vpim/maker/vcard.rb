@@ -10,7 +10,13 @@ require 'vpim/vcard'
 
 module Vpim
   module Maker #:nodoc:
-    # A helper class to assist in building a vCard.
+    # A class to make and make changes to vCards.
+    #
+    # It can be used to create completely new vCards using Vcard#make2.
+    #
+    # Its is also yielded from Vpim::Vcard#make, in which case it allows a kind
+    # of transactional approach to changing vCards, so their values can be
+    # validated after any changes have been made.
     #
     # Examples:
     # - link:ex_mkvcard.txt: example of creating a vCard
@@ -28,11 +34,11 @@ module Vpim
       #
       # Defaults:
       # - vCards must have both an N and an FN field, #make2 will fail if there
-      #   is no FN field in the +card+ when your block is finished adding fields.
-      # - If there is an FN field, but no N field, N will be set from the information
-      #   in FN, see Vcard::Name#preformatted for more information.
+      #   is no N field in the +card+ when your block is finished adding fields.
+      # - If there is an N field, but no FN field, FN will be set from the
+      #   information in N, see Vcard::Name#preformatted for more information.
       # - vCards must have a VERSION field. If one does not exist when your block is
-      #   is finished adding fields then it will be set to 3.0.
+      #   is finished it will be set to 3.0.
       def Vcard.make2(card = Vpim::Vcard.create, &block) # :yields: maker
         new(nil, card).make(&block)
       end
@@ -40,7 +46,7 @@ module Vpim
       # Deprecated, use #make2.
       #
       # If set, the FN field will be set to +full_name+. Otherwise, FN will
-      # be set from the values in #add_name.
+      # be set from the values in #name.
       def Vcard.make(full_name = nil, &block) # :yields: maker
         new(full_name, Vpim::Vcard.create).make(&block)
       end
@@ -48,9 +54,14 @@ module Vpim
       def make # :nodoc:
         yield self
         unless @card['N']
-          raise Vpim::InvalidEncodingError, 'It is mandatory to have a name field, see #add_name.'
+          raise Unencodeable, 'N field is mandatory'
         end
-        unless @card['FN']
+        fn = @card.field('FN')
+        if fn && fn.value.strip.length == 0
+          @card.delete(fn)
+          fn = nil
+        end
+        unless fn
           @card << Vpim::DirectoryInfo::Field.create('FN', Vpim::Vcard::Name.new(@card['N'], '').formatted)
         end
         unless @card['VERSION']
@@ -64,49 +75,73 @@ module Vpim
       def initialize(full_name, card) # :nodoc:
         @card = card || Vpim::Vcard::create
         if full_name
-          @card << Vpim::DirectoryInfo::Field.create('FN', full_name )
+          @card << Vpim::DirectoryInfo::Field.create('FN', full_name.strip )
         end
       end
 
       public
 
-      # Add a name field, N.
+      #     def add_name # :yield: n
+      #       # FIXME: Each attribute can currently only have a single String value.
+      #       # FIXME: Need to escape specials in the String.
+      #       x = Struct.new(:family, :given, :additional, :prefix, :suffix).new
+      #       yield x
+      #       @card << Vpim::DirectoryInfo::Field.create(
+      #         'N',
+      #         x.map { |s| s ? s.to_str : '' }
+      #         )
+      #       self
+      #     end
+      # Set with #name now.
+      # Use m.name do |n| n.fullname = foo end
+      def fullname=(fullname) #:nodoc: bacwards compat
+        if @card.field('FN')
+          raise Vpim::InvalidEncodingError, "Not allowed to add more than one FN field to a vCard."
+        end
+        @card << Vpim::DirectoryInfo::Field.create( 'FN', fullname );
+      end
+
+      # Set the name fields, N and FN.
       #
-      # Attributes of N are:
+      # Attributes of +name+ are:
       # - family: family name
       # - given: given name
       # - additional: additional names
       # - prefix: such as "Ms." or "Dr."
       # - suffix: such as "BFA", or "Sensei"
       #
-      # All attributes are optional.
+      # +name+ is a Vcard::Name.
       #
-      # Warning: This is the only mandatory field besides the full name, FN.
-      # FN can be set in #make, or by #fullname=, and if not set will be
-      # constucted as the string "#{prefix} #{given} #{additional} #{family},
-      # #{suffix}".
-      def add_name # :yield: n
-        # FIXME: Each attribute can currently only have a single String value.
-        # FIXME: Need to escape specials in the String.
-        x = Struct.new(:family, :given, :additional, :prefix, :suffix).new
+      # All attributes are optional, though have all names be zero-length
+      # strings isn't really in the spirit of  things. FN's value will be set
+      # to Vcard::Name#formatted if Vcard::Name#fullname isn't given a specific
+      # value.
+      #
+      # Warning: This is the only mandatory field.
+      def name #:yield:name
+        x = begin
+              @card.name.dup
+            rescue
+              Vpim::Vcard::Name.new
+            end
+
+        fn = x.fullname
+
         yield x
-        @card << Vpim::DirectoryInfo::Field.create(
-          'N',
-          x.map { |s| s ? s.to_str : '' }
-          )
+
+        x.fullname.strip!
+
+        delete_if do |line|
+          line.name == 'N'
+        end
+
+        @card << x.encode
+        @card << x.encode_fn
+
         self
       end
 
-      # Add a full name field, FN.
-      #
-      # Normally the FN field value is derived from the N field value, see
-      # #add_name, but it can be explicitly set.
-      def fullname=(fullname)
-        if @card.field('FN')
-          raise Vpim::InvalidEncodingError, "Not allowed to add more than one FN field to a vCard."
-        end
-        @card << Vpim::DirectoryInfo::Field.create( 'FN', fullname );
-      end
+      alias :add_name :name #:nodoc: backwards compatibility
 
       # Add an address field, ADR. +address+ is a Vpim::Vcard::Address.
       def add_addr # :yield: address
@@ -142,8 +177,12 @@ module Vpim
         self
       end
 
-      # Add a nickname field, NICKNAME.
+      # Set the nickname field, NICKNAME.
+      #
+      # It can be set to a single String or an Array of String.
       def nickname=(nickname)
+        delete_if { |l| l.name == 'NICKNAME' }
+
         @card << Vpim::DirectoryInfo::Field.create( 'NICKNAME', nickname );
       end
 
@@ -155,19 +194,17 @@ module Vpim
       # birthdays.
       def birthday=(birthday)
         if !birthday.respond_to? :month
-          raise Vpim::InvalidEncodingError, 'birthday doesn\'t have #month, so it is not a date or time object.'
+          raise ArgumentError, 'birthday must be a date or time object.'
         end
+        delete_if { |l| l.name == 'BDAY' }
         @card << Vpim::DirectoryInfo::Field.create( 'BDAY', birthday );
       end
 
-=begin
-TODO - need text=() implemented in Field
-
-      # Add a note field, NOTE. It can contain newlines, they will be escaped.
-      def note=(note)
-        @card << Vpim::DirectoryInfo::Field.create( 'NOTE', note );
+      # Add a note field, NOTE. The +note+ String can contain newlines, they
+      # will be escaped.
+      def add_note(note)
+        @card << Vpim::DirectoryInfo::Field.create( 'NOTE', Vpim.encode_text(note) );
       end
-=end
 
       # Add an instant-messaging/point of presence address field, IMPP. The address
       # is a URL, with the syntax depending on the protocol.
@@ -345,6 +382,18 @@ TODO - need text=() implemented in Field
               add_field(field)
             end
           end
+        end
+      end
+
+      # Delete +line+ if block yields true.
+      def delete_if #:yield: line
+        begin
+        @card.delete_if do |line|
+          yield line
+        end
+        rescue NoMethodError
+          # FIXME - this is a hideous hack, allowing a DirectoryInfo to
+          # be passed instead of a Vcard, and for it to almost work. Yuck.
         end
       end
 

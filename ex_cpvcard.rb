@@ -20,7 +20,9 @@ puts original
 
 modified = Vpim::Maker::Vcard.make2 do |maker|
   # Set the fullname field to use family-given name order.
-  maker.fullname = "#{original.name.family} #{original.name.given}"
+  maker.name do |n|
+    n.fullname = "#{original.name.family} #{original.name.given}"
+  end
 
   # Copy original fields, with some changes:
   # - set only work email addresses and telephone numbers to be preferred.

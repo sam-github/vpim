@@ -1,11 +1,12 @@
 # Makefile
 
+
 SHELL:=/bin/sh
 
 .PHONY: default doc test other
 
-do: default
-	#ruby -w -I lib test_vcard.rb -t test_birthday
+do:
+	ruby -w -I lib test_vcard.rb
 
 default: test
 
@@ -79,7 +80,7 @@ SAMPLES := \
  vcf-to-mutt.rb \
  vcf-to-ics.rb \
 
-
+.PHONY: doc
 doc:
 	rm -rf doc/
 	rdoc18 $(RDFLAGS) -x lib/vpim/agent lib/vpim CHANGES COPYING README README.mutt
@@ -89,6 +90,11 @@ doc:
 	chmod go=r doc/*.txt
 	mkdir -p $(HOME)/Sites/vpim
 	cp -r doc/* $(HOME)/Sites/vpim/
+	open doc/index.html
+
+.PHONY: doc-vcf
+doc-vcf:
+	rdoc lib/vpim/vcard.rb lib/vpim/maker/vcard.rb
 	open doc/index.html
 
 V=0.$(shell ruby -rsvn -e"puts Svn.info['Revision']")
@@ -123,16 +129,17 @@ pkg:
 	cp lib/*.rb                $R/lib/
 	cp lib/vpim/*.rb           $R/lib/vpim/
 	cp lib/vpim/maker/*.rb     $R/lib/vpim/maker/
-	cp lib/vpim/property/*.rb     $R/lib/vpim/property/
-	cp etc/rfc2425.txt     $R/etc
-	cp etc/rfc2426.txt     $R/etc
-	cp etc/rfc2445.txt     $R/etc
-	cp etc/rrule.txt       $R/etc
-	cp README.mutt         $R/samples
-	cp $(SAMPLES)          $R/samples
-	cp osx-wrappers.rb     $R/samples
-	cp test_*.rb           $R/samples
-	# no docs: cp -r  doc             $R/
+	cp lib/vpim/property/*.rb  $R/lib/vpim/property/
+	cp etc/rfc2425.txt         $R/etc
+	cp etc/rfc2426.txt         $R/etc
+	cp etc/rfc2445.txt         $R/etc
+	cp etc/rrule.txt           $R/etc
+	cp README.mutt             $R/samples
+	cp $(SAMPLES)              $R/samples
+	cp osx-wrappers.rb         $R/samples
+	cp test_*.rb               $R/samples
+	# no docs: cp -r  doc      $R/
 	cd releases && tar -zcf $P.tgz $P
 
-#vim:noexpandtab:tabstop=2:softtabstop=2:shiftwidth=2
+# vim:noexpandtab:tabstop=2:
+
