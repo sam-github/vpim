@@ -5,8 +5,7 @@ SHELL:=/bin/sh
 
 .PHONY: default doc test other
 
-do:
-	ruby -w -I lib test_vcard.rb
+do: default
 
 default: test
 

@@ -1,5 +1,11 @@
 @2006-03-dd:
 
+- Vcard::make, Maker::Vcard#delete_if - new
+
+- Vcard::Maker#add_name - deprecate, see Vcard::Maker#name
+
+- Vcard::Maker#fullname= - deprecate, see Vcard::Maker#name
+
 - Added high-level vCard decoding API.
 
 - Beginning to depend on ruby1.8. I'm willing to try for backwards compat if I
