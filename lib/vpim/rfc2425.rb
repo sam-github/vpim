@@ -220,7 +220,7 @@ module Vpim
   end
   
   def Vpim.encode_text(v) #:nodoc:
-    v.to_str.gsub(/(.)/) do
+    v.to_str.gsub(/([.\n])/) do
       case $1
       when "\n"
         "\\n"
