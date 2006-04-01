@@ -1,4 +1,4 @@
-require 'vpim/maker/vcard'
+require 'vpim/vcard'
 
 ORIGINAL =<<'---'
 BEGIN:VCARD
@@ -18,7 +18,7 @@ original = Vpim::Vcard.decode(ORIGINAL).first
 
 puts original
 
-modified = Vpim::Maker::Vcard.make2 do |maker|
+modified = Vpim::Vcard::Maker.make2 do |maker|
   # Set the fullname field to use family-given name order.
   maker.name do |n|
     n.fullname = "#{original.name.family} #{original.name.given}"
@@ -46,7 +46,7 @@ end
 puts '---'
 puts modified
 
-Vpim::Maker::Vcard.make2(modified) do |maker|
+Vpim::Vcard::Maker.make2(modified) do |maker|
   maker.nickname = "Your Last Friend"
 end
 

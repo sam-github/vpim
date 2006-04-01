@@ -3,7 +3,6 @@
 $:.unshift File.dirname($0)
 
 require 'vpim/vcard'
-require 'vpim/maker/vcard'
 require 'test/unit'
 require 'date'
 
@@ -608,7 +607,7 @@ END:VCARD
 ---
   def test_v21_modification
     card0 = Vpim::Vcard.decode(EX_21).first
-    card1 = Vpim::Maker::Vcard.make2(card0) do |maker|
+    card1 = Vpim::Vcard::Maker.make2(card0) do |maker|
       maker.nickname = 'nickname'
     end
     card2 = Vpim::Vcard.decode(card1.encode).first
@@ -619,7 +618,7 @@ END:VCARD
 
   def test_v21_versioned_copy
     card0 = Vpim::Vcard.decode(EX_21).first
-    card1 = Vpim::Maker::Vcard.make2(Vpim::DirectoryInfo.create([], 'VCARD')) do |maker|
+    card1 = Vpim::Vcard::Maker.make2(Vpim::DirectoryInfo.create([], 'VCARD')) do |maker|
       maker.copy card0
     end
     card2 = Vpim::Vcard.decode(card1.encode).first
@@ -643,7 +642,7 @@ END:VCARD
       card0.delete card0.field('BEGIN')
     end
 
-    card1 = Vpim::Maker::Vcard.make2(Vpim::DirectoryInfo.create([], 'VCARD')) do |maker|
+    card1 = Vpim::Vcard::Maker.make2(Vpim::DirectoryInfo.create([], 'VCARD')) do |maker|
       maker.copy card0
     end
     card2 = Vpim::Vcard.decode(card1.encode).first
@@ -684,7 +683,7 @@ END:VCARD
     end
 
     assert_raises(Unencodeable) do
-      Maker::Vcard.make2(card) {}
+      Vcard::Maker.make2(card) {}
     end
 
     card.make do |m|
@@ -725,7 +724,7 @@ END:VCARD
   def test_add_note
     note = "hi\' \  \"\",,;; \n \n field"
 
-    card = Vpim::Maker::Vcard.make2 do |m|
+    card = Vpim::Vcard::Maker.make2 do |m|
       m.add_note(note)
       m.name {}
     end

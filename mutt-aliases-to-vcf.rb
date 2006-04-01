@@ -2,7 +2,7 @@
 
 $:.unshift File.dirname($0)
 
-require 'vpim/maker/vcard'
+require 'vpim/vcard'
 
 ARGV.each do |file|
 
@@ -24,9 +24,9 @@ ARGV.each do |file|
           nick = nil
       end
 
-      card = Vpim::Maker::Vcard.make(name) do |maker|
+      card = Vpim::Vcard::Maker.make2 do |maker|
         # don't have the broken-down name, we'll have to leave it blank
-        maker.add_name { }
+        maker.name { |n| n.fullname = name }
 
         # Set preferred, its the only one...
         maker.add_email( email ) { |e| e.preferred = true }

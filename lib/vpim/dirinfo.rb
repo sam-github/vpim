@@ -30,7 +30,7 @@ module Vpim
   #   card << Vpim::DirectoryInfo::Field.create('FN', 'User Name' )
   #   puts card.to_s
   #
-  # Don't do it like that, use Vpim::Maker::Vcard.
+  # Don't do it like that, use Vpim::Vcard::Maker.
   class DirectoryInfo
     include Enumerable
 
@@ -225,8 +225,8 @@ module Vpim
     # profile-specific fields can be deleted, including mandatory ones. For
     # vCards in particular, in order to avoid destroying them, I suggest
     # creating a new Vcard, and copying over all the fields that you still
-    # want, rather than using #delete. This is easy with Maker::Vcard#copy, see
-    # the Maker::Vcard examples.
+    # want, rather than using #delete. This is easy with Vcard::Maker#copy, see
+    # the Vcard::Maker examples.
     def delete(field)
       case
       when field.name?('BEGIN'), field.name?('END')

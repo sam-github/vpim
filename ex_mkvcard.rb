@@ -1,6 +1,6 @@
-require 'vpim/maker/vcard'
+require 'vpim/vcard'
 
-card = Vpim::Maker::Vcard.make2 do |maker|
+card = Vpim::Vcard::Maker.make2 do |maker|
   maker.add_name do |name|
     name.prefix = 'Dr.'
     name.given = 'Jimmy'

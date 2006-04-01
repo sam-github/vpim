@@ -6,9 +6,8 @@
   details.
 =end
 
-# I think a file like this may be required by ruby-gems.
+# the existence of this file is a hack to support users or rubygems
 
 require 'vpim/icalendar'
 require 'vpim/vcard'
-require 'vpim/maker/vcard'
 
