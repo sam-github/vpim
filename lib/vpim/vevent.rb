@@ -100,7 +100,7 @@ module Vpim
           |f,i|
 
           # put invitee in as field[1]
-          fields << invitee.field if i == 1
+          fields << invitee.encode('ATTENDEE') if i == 1
           
           fields << f unless f.name? 'ATTENDEE'
         end
