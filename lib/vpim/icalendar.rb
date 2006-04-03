@@ -33,10 +33,12 @@ module Vpim
   #   (iTIP) Scheduling Events, BusyTime, To-dos and Journal Entries
   # - link:rfc2447.txt: iCalendar Message-Based Interoperability Protocol
   #
-  # iCalendar (RFC 2445) is based on vCalendar, but does not appear to be
-  # altogether compatible. iCalendar files have VERSION:2.0 and vCalendar have
-  # VERSION:1.0.  While much appears to be similar, the recurrence rule syntax,
-  # at least, is completely different.
+  # = iCalendar and vCalendar
+  #
+  # iCalendar files have VERSION:2.0 and vCalendar have VERSION:1.0.  iCalendar
+  # (RFC 2445) is based on vCalendar, but but is not very compatible.  While
+  # much appears to be similar, the recurrence rule syntax is completely
+  # different.
   #
   # iCalendars are usually transmitted in files with <code>.ics</code>
   # extensions.
@@ -88,18 +90,37 @@ module Vpim
       end
     end
 
+    # Add and event to this calendar.
+    #
+    # Yields an event maker, Icalendar::Vevent::Maker.
+    def add_event(&block) #:yield:event
+      push Vevent::Maker.make( &block )
+    end
+
+    # FIXME - could take mandatory fields as an arguments
+    # FIXME - args: support PRODID
+    # FIXME - yield an Icalendar::Maker if block provided
+    # FIXME - maker#prodid=
+    def Icalendar.create2(args = nil)
+      # FIXME - make the primary API
+      di = DirectoryInfo.create( [ DirectoryInfo::Field.create('VERSION', '2.0') ], 'VCALENDAR' )
+
+      di.push_unique DirectoryInfo::Field.create('PRODID',   Vpim::PRODID)
+      di.push_unique DirectoryInfo::Field.create('CALSCALE', "Gregorian")
+
+      new(di.to_a)
+    end
+
     # Create a new Icalendar object with the minimal set of fields for a valid
     # Calendar. If specified, +fields+ must be an array of
     # DirectoryInfo::Field objects to add. They can override the the default
     # Calendar fields, so, for example, this can be used to set a custom PRODID field.
-    #
-    # TODO - allow hash args like Vevent.create
     def Icalendar.create(fields=[])
       di = DirectoryInfo.create( [ DirectoryInfo::Field.create('VERSION', '2.0') ], 'VCALENDAR' )
 
       DirectoryInfo::Field.create_array(fields).each { |f| di.push_unique f }
 
-      di.push_unique DirectoryInfo::Field.create('PRODID',   "-//Ensemble Independant//vPim #{Vpim.version}//EN")
+      di.push_unique DirectoryInfo::Field.create('PRODID',   Vpim::PRODID)
       di.push_unique DirectoryInfo::Field.create('CALSCALE', "Gregorian")
 
       new(di.to_a)
@@ -124,26 +145,21 @@ module Vpim
       Icalendar.create(fields)
     end
 
+    # Used during encoding.
+    def fields # :nodoc:
+      f = @properties.to_a
+      last = f.pop
+      @components.each { |c| f << c.fields }
+      f.push last
+    end
+
     # Encode the Calendar as a string. The width is the maximum width of the
     # encoded lines, it can be specified, but is better left to the default.
-    #
-    # TODO - only does top-level now, needs to add the events/todos/etc.
     def encode(width=nil)
       # We concatenate the fields of all objects, create a DirInfo, then
       # encode it.
       di = DirectoryInfo.create(self.fields.flatten)
       di.encode(width)
-    end
-
-    # Used during encoding.
-    def fields # :nodoc:
-      fields = @properties.to_a
-
-      last = fields.pop
-
-      @components.each { |c| fields << c.fields }
-
-      fields << last
     end
 
     alias to_s encode
@@ -156,6 +172,7 @@ module Vpim
         else
           raise ArgumentError, "can't add a #{component.type} to a calendar"
       end
+      self
     end
 
     # Check if the protocol method is +method+

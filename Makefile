@@ -5,7 +5,8 @@ SHELL:=/bin/sh
 
 .PHONY: default doc test other
 
-do: default
+do:
+	ruby -I lib -w -rpp ex_ics_api.rb
 
 default: test
 
@@ -46,6 +47,9 @@ other:
 	ruby -w -I . ab-query.rb --me
 	ruby -w -I . mutt_ab_query.rb --file=_vcards -d Sam
 	ruby -w -I . mbox2vcard.rb _mbox
+
+outline:
+	sh ./outline.sh > outline.txt
 
 .PHONY: tags
 tags:
@@ -90,6 +94,7 @@ doc:
 	mkdir -p $(HOME)/Sites/vpim
 	cp -r doc/* $(HOME)/Sites/vpim/
 	open doc/index.html
+	ruby -I lib -w -rpp ex_ics_api.rb > ex_ics_api.out
 
 .PHONY: doc-vcf
 doc-vcf:

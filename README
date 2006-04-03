@@ -17,11 +17,11 @@ vCard and iCalendar support is built on top of an implementation of the MIME
 Content-Type for Directory Information (RFC 2425). The basic RFC 2425 format is
 implemented by  Vpim::DirectoryInfo and Vpim::DirectoryInfo::Field.
 
-The libary is quite useable, but there is always more that could be done.
-Since I have a more on my todo list than I have time, if you think something
-is missing or have API suggestions, please contact me. I can't promise
-instantaneous turnaround, but I might be able to suggest another approach,
-and features requested by users of vPim go to the top of the todo list.
+The libary is quite useable, but work is ongoing.  have a more on my todo list
+than I have time, so if you find something missing or have suggestions, please
+contact me. I can't promise instantaneous turnaround, but I might be able to
+suggest another approach, and features requested by users of vPim go to the top
+of the todo list.
 
 = Project Information
 
@@ -36,7 +36,93 @@ subscribe to "vpim-talk":
 
 = Examples
 
-Examples of using vPim are provided in samples/.
+Here's an example to give a sense for how iCalendars are encoded and decoded:
+
+  require 'vpim/icalendar'
+
+  cal = Vpim::Icalendar.create2
+
+  cal.add_event do |e|
+    e.dtstart       Date.new(2005, 04, 28)
+    e.dtend         Date.new(2005, 04, 29)
+    e.summary       "Monthly meet-the-CEO day"
+    e.description <<'---'
+  Unlike last one, this meeting will change your life because
+  we are going to discuss your likely demotion if your work isn't
+  done soon.
+  ---
+    e.categories    [ 'APPOINTMENT' ]
+    e.categories do |c| c.push 'EDUCATION' end
+    e.url           'http://www.example.com'
+    e.sequence      0
+    e.access_class  "PRIVATE"
+    e.transparency  'OPAQUE'
+
+    now = Time.now
+    e.created       now
+    e.lastmod       now
+
+
+    e.organizer do |o|
+      o.cn = "Example Organizer, Mr."
+      o.uri = "mailto:organizer@example.com"
+    end
+
+    attendee = Vpim::Icalendar::Address.create("mailto:attendee@example.com")
+    attendee.rsvp = true
+    e.add_attendee attendee
+  end
+
+  icsfile = cal.encode
+
+  puts '--- Encode:'
+
+  puts icsfile
+
+  puts '--- Decode:'
+
+  cal = Vpim::Icalendar.decode(icsfile).first
+
+  cal.components do |e|
+    puts e.summary
+    puts e.description
+    puts e.dtstart.to_s
+    puts e.dtend.to_s
+  end
+
+This produces:
+
+  --- Encode:
+  BEGIN:VCALENDAR
+  VERSION:2.0
+  PRODID:-//Ensemble Independent//vPim 0.357//EN
+  CALSCALE:Gregorian
+  BEGIN:VEVENT
+  DTSTART;VALUE=DATE:20050428
+  DTEND;VALUE=DATE:20050429
+  SUMMARY:Monthly meet-the-CEO day
+  DESCRIPTION:Unlike last one, this meeting will change your life because\nwe
+    are going to discuss your likely demotion if your work isn't\ndone soon.\n
+  CATEGORIES:APPOINTMENT,EDUCATION
+  URL:http://www.example.com
+  SEQUENCE:0
+  CLASS:PRIVATE
+  CREATED:20060402T231755
+  LAST-MODIFIED:20060402T231755
+  ORGANIZER;CN="Example Organizer, Mr.":mailto:organizer@example.com
+  ATTENDEE;RSVP=true:mailto:attendee@example.com
+  END:VEVENT
+  END:VCALENDAR
+  --- Decode:
+  Monthly meet-the-CEO day
+  Unlike last one, this meeting will change your life because
+  we are going to discuss your likely demotion if your work isn't
+  done soon.
+  Thu Apr 28 00:00:00 UTC 2005
+  Fri Apr 29 00:00:00 UTC 2005
+
+
+More examples of using vPim are provided in samples/.
 
 vCard examples are:
 - link:ex_mkvcard.txt: example of creating a vCard

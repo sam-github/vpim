@@ -20,6 +20,7 @@ require 'vpim/property/recurrence'
 module Vpim
   class Icalendar
     class Vevent
+
       include Vpim::Icalendar::Property::Base
       include Vpim::Icalendar::Property::Common
       include Vpim::Icalendar::Property::Priority
@@ -36,6 +37,19 @@ module Vpim
 
         # See "TODO - fields" in dirinfo.rb
       end
+
+      # TODO - derive everything from Icalendar::Component to get this kind of stuff?
+      def fields #:nodoc:
+        f = @properties.to_a
+        last = f.pop
+        f.push @elements
+        f.push last
+      end
+
+      def properties #:nodoc:
+        @properties
+      end
+
 
       # Create a new Vevent object. All events must have a DTSTART field,
       # specify it as either a Time or a Date in +start+, it defaults to "now"
@@ -71,10 +85,12 @@ module Vpim
 
       # Accept an event invitation. The +invitee+ is the Address that wishes
       # to accept the event invitation as confirmed.
+      #
+      # The event created is identical to this one, but
+      # - without the attendees
+      # - with the invitee added with a PARTSTAT of ACCEPTED
       def accept(invitee)
-        # The event created is identical to this one, but
-        # - without the attendees
-        # - with the invitee added with a PARTSTAT of ACCEPTED
+        # FIXME - move to Vpim::Itip.
         invitee = invitee.copy
         invitee.partstat = 'ACCEPTED'
 
@@ -92,11 +108,8 @@ module Vpim
         Vevent.new(fields)
       end
 
-=begin
-      # Set the start time for the event to +start+, a Time object.
-      # TODO - def dtstart=(start) ... start should be allowed to be Time/Date/DateTime
-=end
-
+      # In iTIP, whether this event is OPAQUE or TRANSPARENT to scheduling. If
+      # transparency is not explicitly set, it defaults to OPAQUE.
       def transparency
         proptoken 'TRANSP', ["OPAQUE", "TRANSPARENT"], "OPAQUE"
       end
@@ -132,6 +145,57 @@ module Vpim
             dtstart + duration
         else
           nil
+        end
+      end
+
+      # Make a new Vevent, or make changes to an existing Vevent.
+      class Maker
+        # TODO - should I automatically set
+        #   #created
+        #   #dtstamp
+        #   #sequence
+        #   ...?
+        #
+        # Many have pretty specific meanings in iTIP, perhaps I should leave
+        # them alone.
+        include Vpim::Icalendar::Set::Util #:nodoc:
+        include Vpim::Icalendar::Set::Common
+
+        # The event that changes are being made to.
+        attr_reader :event
+
+        def initialize(event) #:nodoc:
+          @event = event
+          @comp = event
+        end
+
+        # Make changes to +event+. If +event+ is not specified, creates a new
+        # event. Yields a Vevent::Maker, and returns +event+.
+        def self.make(event = Vpim::Icalendar::Vevent.create) #:yield:maker
+          m = self.new(event)
+          yield m
+          m.event
+        end
+
+        # Set transparency to "OPAQUE" or "TRANSPARENT", see Vpim::Vevent#transparency.
+        def transparency(token)
+          set_token 'TRANSP', ["OPAQUE", "TRANSPARENT"], "OPAQUE", token
+        end
+
+        # Set end for events with fixed durations. +end+ can be a Date or Time
+        def dtend(dtend)
+          set_date_or_datetime 'DTEND', 'DATE-TIME', dtend
+        end
+
+        # Yields a selector that allows the duration to be set.
+        #
+        # TODO - syntax is:
+        #   dur-value =  (["+"] / "-") "P" (dur-date / dur-time / dur-week)
+        #   dur-date  = dur-day [ "T" (dur-hour / dur-minute / dur-second) ]
+        #   dur-time  = "T" (dur-hour / dur-minute / dur-second)
+        #   dur-week  = 1*DIGIT "W"
+        def duration(dur) #:yield:selector
+          raise Vpim::Unsupported
         end
       end
 

@@ -1078,19 +1078,12 @@ module Vpim
 
       public
 
-      #     def add_name # :yield: n
-      #       # FIXME: Each attribute can currently only have a single String value.
-      #       # FIXME: Need to escape specials in the String.
-      #       x = Struct.new(:family, :given, :additional, :prefix, :suffix).new
-      #       yield x
-      #       @card << Vpim::DirectoryInfo::Field.create(
-      #         'N',
-      #         x.map { |s| s ? s.to_str : '' }
-      #         )
-      #       self
-      #     end
-      # Set with #name now.
-      # Use m.name do |n| n.fullname = foo end
+      # Deprecated, see #name.
+      #
+      # Use
+      #   maker.name do |n| n.fullname = "foo" end
+      # to set just fullname, or set the other fields to set fullname and the
+      # name.
       def fullname=(fullname) #:nodoc: bacwards compat
         if @card.field('FN')
           raise Vpim::InvalidEncodingError, "Not allowed to add more than one FN field to a vCard."

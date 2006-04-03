@@ -56,6 +56,14 @@ module Vpim
 
     # integer = (["+"] / "-") 1*DIGIT
     INTEGER = '[-+]?\d+'
+
+    # QSAFE-CHAR = WSP / %x21 / %x23-7E / NON-US-ASCII
+    #  ; Any character except CTLs and DQUOTE
+    QSAFECHAR = '[ \t\x21\x23-\x7e\x80-\xff]'
+
+    # SAFE-CHAR  = WSP / %x21 / %x23-2B / %x2D-39 / %x3C-7E / NON-US-ASCII
+    #   ; Any character except CTLs, DQUOTE, ";", ":", ","
+    SAFECHAR = '[ \t\x21\x23-\x2b\x2d-\x39\x3c-\x7e\x80-\xff]'
   end
 end
 
@@ -232,8 +240,13 @@ module Vpim
     end
   end
 
+  # v is an Array of String, or just a single String
   def Vpim.encode_text_list(v, sep = ",") #:nodoc:
-    v.to_ary.map{ |t| Vpim.encode_text(t) }.join(sep)
+    begin
+      v.to_ary.map{ |t| Vpim.encode_text(t) }.join(sep)
+    rescue
+      Vpim.encode_text(v)
+    end
   end
 
   # Convert a +sep+-seperated list of TEXT values into an array of values.
@@ -246,6 +259,29 @@ module Vpim
       list << $1
     end
     list
+  end
+
+  # param-value = paramtext / quoted-string
+  # paramtext  = *SAFE-CHAR
+  # quoted-string      = DQUOTE *QSAFE-CHAR DQUOTE
+  def Vpim.encode_paramtext(value)
+    case value
+    when %r{\A#{Bnf::SAFECHAR}*\z}
+      value
+    else
+      raise Vpim::Unencodable, "paramtext #{value.inspect}"
+    end
+  end
+
+  def Vpim.encode_paramvalue(value)
+    case value
+    when %r{\A#{Bnf::SAFECHAR}*\z}
+      value
+    when %r{\A#{Bnf::QSAFECHAR}*\z}
+      '"' + value + '"'
+    else
+      raise Vpim::Unencodable, "param-value #{value.inspect}"
+    end
   end
 
 

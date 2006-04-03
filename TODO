@@ -1,11 +1,39 @@
-RFC error - CATEGORY is used in an example, it should be CATEGORIES
-
 Output a graph of the connections in address book, spouses, etc.
 
-Need to cache properties, it's too slow. Do when I do encoding, because
-cacheing implies cache clearing...
+cal.protocol = 
+
+def note=() - removes all the current notes and replaces with this one?
+
+Change to major.minor.buildno?
 
 Use standard Enumerator instead of mine.
+
+Move stuff out of Vpim, so you can do "include Vpim" and not overly pollute
+your namespace.
+
+Reorganize Property => Get, add Set
+
+  lib/vpim/ics/set/
+  lib/vpim/ics/get/
+
+Adjust CSS stylesheet so that modules show up on single lines?
+
+rename examples:
+
+  ex_ics_...
+  ex_vcf_...
+
+vcf example on web page:
+
+  create
+  change
+  access
+
+ditto for ics
+
+sync vCard encoding types with decoding, and create EVERY field combo,
+is value set/not set correctly?
+
 
 == PACKAGING
 
@@ -20,8 +48,6 @@ Check packaging guidelines:
 
 == FEATURES
 
-- DirectoryInfo#delete_if
-
 - don't encode TYPE= if there are no values
 
 - complete RRULE support
@@ -30,28 +56,19 @@ Check packaging guidelines:
 
 - rrule maker
 
-- streaming decoder?
-
-- streaming encoder?
-
-  maker, take OUT as a param, append fields using << ? then if it's an IO it will
-  be a push encoder, can default to Vcard#create.
-
-	---> nice idea, but it breaks the check for duplicates I'm doing...
-
 - valarms
 
   - like ones that open apps: http://docs.info.apple.com/article.html?artnum=300368
 
-- vjournal
-
-- value=uri
-  -> the value isn't a URI, the URI points to the value, of unknown type! Should
-  I allow this to be handled? Maybe use open-uri()?
-
 - add way to delete a param from a Field, maybe assign nil to it? done?
 
-- encoding TEXT, and the NOTE field
+
+== Future Development
+
+- streaming decoder?
+
+- streaming encoder?
+
 
 == QUESTIONS
 
@@ -67,6 +84,9 @@ Check packaging guidelines:
 + Ask on ietf-icalendar:
 
   Errors in examples?
+
+  RFC error - CATEGORY is used in an example, it should be CATEGORIES
+
 
 
 == CLEANUPS/BUGS
@@ -94,17 +114,13 @@ Then, I can eliminate non-existent times before yielding them.
 
 - the rrule tests depended on being in EST/EDT, so no longer pass...
 
-- when encoding a Date or Time, set value=date/value=date-time parameter.
+- when encoding a Date or Time, set value=date/value=date-time parameter?
 
 - allow preferred to be set to false/nil in vcard/maker
 
 - Need to deal with Date and Time comparisons, see note in time_from_rfc2425. I
   might need to extend the date time comparisons so Date and Time can be
   compared.
-
-- Need to document @properties
-
-- pull common implementation of ical components out into a module/mixin
 
 - Vevent has @fields, and @properties, but @properties has @fields, too.
   Duplication necessary?
@@ -122,11 +138,6 @@ Then, I can eliminate non-existent times before yielding them.
   occurence in Feb
 
 - do coverage testing: http://rubyforge.org/project/showfiles.php?group_id=18&release_id=360
-
-- guess whether it's a date or a date-time by matching regexes, instead of
-  having to provide the default, which I hacked in, its ugly, and we can guess
-
-  Done?
 
 - deal with timezones correctly, iCalendar wants:
 
@@ -146,23 +157,25 @@ Then, I can eliminate non-existent times before yielding them.
 
 - preserve whitespace in a Field?
 
-- support ';' list values (done on encoding, anything to do on decoding?)
-
 - value=text
   in this value, newlines are \n or \N, deal with this when decoding
   (as are ; and ,)
 
 - freeze everything? -> Need to test this.
 
+== JR
+
+Examples don't run!
+
 
 == VCARD VERSION INTEROP
 
 - Confirm Address Book bugs: PHOTO uses version 2 encoding field, and has too many spaces.
 
-Examine vCard 2.1 interop, and possible trans-encoding.
+- Examine vCard 2.1 interop, and possible trans-encoding.
 
-; can show up in a parameter value, if escaped
+  - ; can show up in a parameter value, if escaped
 
-quoted-printable can be used to encode values with line breaks
+  - quoted-printable can be used to encode values with line breaks
 
 

@@ -8,10 +8,88 @@
 
 module Vpim
   class Icalendar
+    module Set #:nodoc:
+      module Util #:nodoc:
+
+        def rm_all(name)
+          rm = @comp.properties.select { |f| f.name? name }
+          rm.each { |f| @comp.properties.delete(f) }
+        end
+
+        def set_token(name, allowed, default, value) #:nodoc:
+          value = value.to_str
+          unless allowed.include?(value)
+            raise Vpim::Unencodeable, "Invalid #{name} value '#{value}'"
+          end
+          rm_all(name)
+          unless value == default
+            @comp.properties.push Vpim::DirectoryInfo::Field.create(name, value)
+          end
+        end
+
+        def field_create(name, value, default_value_type = nil, value_type = nil, params = {})
+          if value_type && value_type != default_value_type
+            params['VALUE'] = value_type
+          end
+          Vpim::DirectoryInfo::Field.create(name, value, params)
+        end
+
+        def set_date_or_datetime(name, default, value)
+          f = nil
+          case value
+          when Date
+            f = field_create(name, Vpim.encode_date(value), default, 'DATE')
+          when Time
+            f = field_create(name, Vpim.encode_date_time(value), default, 'DATE-TIME')
+          else
+            raise Vpim::Unencodeable, "Invalid #{name} value #{value.inspect}"
+          end
+          rm_all(name)
+          @comp.properties.push(f)
+        end
+
+        def set_datetime(name, value)
+          f = field_create(name, Vpim.encode_date_time(value))
+          rm_all(name)
+          @comp.properties.push(f)
+        end
+
+        def set_text(name, value)
+          f = field_create(name, Vpim.encode_text(value))
+          rm_all(name)
+          @comp.properties.push(f)
+        end
+
+        def set_text_list(name, value)
+          f = field_create(name, Vpim.encode_text_list(value))
+          rm_all(name)
+          @comp.properties.push(f)
+        end
+
+        def set_integer(name, value)
+          value = value.to_int.to_s
+          f = field_create(name, value)
+          rm_all(name)
+          @comp.properties.push(f)
+        end
+
+        def add_address(name, value)
+          f = value.encode(name)
+          @comp.properties.push(f)
+        end
+
+        def set_address(name, value)
+          rm_all(name)
+          add_address(name, value)
+        end
+
+      end
+    end
+
     module Property #:nodoc:
 
-      # FIXME - these should be part of Dirinfo
-      module Base
+      # FIXME - rename Base to Util
+      module Base #:nodoc:
         # Value of first property with name +name+
         def propvalue(name) #:nodoc:
           prop = @properties.detect { |f| f.name? name }
