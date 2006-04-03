@@ -9,12 +9,17 @@ spec = Gem::Specification.new do |s|
   s.author            = "Sam Roberts"
   s.email             = "sroberts@uniserve.com"
   s.homepage          = "http://vpim.rubyforge.org"
+  s.rubyforge_project = "vpim"
+  s.summary           = "iCalendar and vCard support for ruby"
+  s.description       = <<'---'
+This is a pure-ruby library for decoding and encoding vCard and iCalendar data
+("personal information") called vPim.
+---
   s.platform          = Gem::Platform::RUBY
-  s.summary           = "a library to manipulate vCards and iCalendars"
+  s.has_rdoc          = true
   s.files             = Dir.glob("lib/**/*.rb").delete_if { |i| i.include? 'agent' }
   s.require_path      = "lib"
-	s.has_rdoc          = true
-	s.autorequire       = "vpim"
+  s.autorequire       = "vpim"
 end
 
 if $0==__FILE__
