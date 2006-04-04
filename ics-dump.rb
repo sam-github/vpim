@@ -6,6 +6,7 @@ $:.unshift File.dirname($0) + "/lib"
 
 require 'getoptlong'
 require 'pp'
+require 'open-uri'
 
 require 'vpim/icalendar'
 require 'vpim/duration'
@@ -19,6 +20,7 @@ Options
   -h,--help         Print this helpful message.
   -n,--node         Dump as nodes.
   -d,--debug        Print debug information.
+  -m,--metro        Convert metro.
 
 Examples:
 EOF
@@ -75,7 +77,7 @@ def v2s(v)
       end
     end
   else
-    v.inspect
+    v #.inspect
   end
 end
 
@@ -168,7 +170,9 @@ end
 
 ARGV.each do |file|
   puts "===> ", file
-  cals = Vpim::Icalendar.decode(File.open(file))
+  cals = Vpim::Icalendar.decode(
+    (file == "-") ? $stdin : open(file)
+    )
 
   cals.each_with_index do |cal, i|
     if i > 0

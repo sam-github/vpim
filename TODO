@@ -34,6 +34,13 @@ ditto for ics
 sync vCard encoding types with decoding, and create EVERY field combo,
 is value set/not set correctly?
 
+Put Apple comments to:
+
+   http://microformats.org/wiki/icalendar-implementations
+
+http://www3.ietf.org/proceedings/06mar/minutes/calsify.txt
+
+svn co http://opensource.reevoo.com/repos/uformats/trunk
 
 == PACKAGING
 
@@ -47,6 +54,8 @@ Check packaging guidelines:
 
 
 == FEATURES
+
+- conversion to/from hcard/hevent
 
 - don't encode TYPE= if there are no values
 

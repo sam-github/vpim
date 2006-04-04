@@ -63,6 +63,9 @@ todo: soap/weather-to-ics
   Query weather reports using SOAP, represent as iCalendars.
 
 
+todo: log4j with with zeroconf support
+
+
 todo: ics-alarm
   A really, really fast way of adding an alarm to iCalendar, i.e., 3 min, check the kettle.
 
