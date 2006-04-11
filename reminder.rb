@@ -78,18 +78,13 @@ if opt_verbose
 end
 
 # Collect all events, then all todos.
-allEvents = []
-allTodos  = []
-
-def Fu(a, b)
-  pp a
-  pp b
-end
+all_events = []
+all_todos  = []
 
 calendars.each do |file|
   if opt_debug; puts file; end
 
-  next if File.basename(file) =~ /^x-/
+  next if File.basename(file) =~ /^x/
 
   cals = Vpim::Icalendar.decode(File.open(file))
 
@@ -98,16 +93,16 @@ calendars.each do |file|
       if opt_debug; pp e; end
       if e.occurs_in?(t0, t1)
         if e.summary
-          allEvents.push(e)
+          all_events.push(e)
         end
       end
     end
 
-    allTodos.concat(cal.todos)
+    all_todos.concat(cal.todos)
   end
 end
 
-def StartOfFirstOccurence(t0, t1, e)
+def start_of_first_occurence(t0, t1, e)
   e.occurences.each_until(t1).each do |t|
     # An event might start before t0, but end after it..., in which case
     # we are still interested.
@@ -118,11 +113,11 @@ def StartOfFirstOccurence(t0, t1, e)
   nil
 end
 
-allEvents.sort! do |lhs, rhs|
-  StartOfFirstOccurence(t0, t1, lhs) <=> StartOfFirstOccurence(t0, t1, rhs)
+all_events.sort! do |lhs, rhs|
+  start_of_first_occurence(t0, t1, lhs) <=> start_of_first_occurence(t0, t1, rhs)
 end
 
-allEvents.each do |e|
+all_events.each do |e|
   puts "#{e.summary}:"
 
   if opt_verbose
@@ -161,7 +156,7 @@ def fix_priority(vtodo)
 end
 =end
 
-allTodos.sort! do |x,y|
+all_todos.sort! do |x,y|
   x = x.priority
   y = y.priority
 
@@ -185,7 +180,7 @@ priorities = [
   'not important'
 ]
 
-allTodos.each do |e|
+all_todos.each do |e|
   status = e.status || 'Todo'
   if status != 'COMPLETED'
     puts "#{status.capitalize}: #{e.summary}" #  (#{priorities[e.priority]})"
