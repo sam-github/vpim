@@ -10,6 +10,9 @@ todo: RSS
 
 == UNSORTED
 
+Figure out how iCal stores whether a calendar is in-view or not, and use to drive
+reminder.
+
 iTip protocol binding for IM protocols
 
 http://linux.slashdot.org/article.pl?sid=05/02/15/2228204
@@ -25,6 +28,8 @@ http://www.imc.org/ietf-calendar/index.html
 == Data Sources
 
 * SOAP Weather
+
+* METAR - a standard weather format
 
 * Evolution
   http://revolution.rubyforge.org/
