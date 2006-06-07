@@ -6,7 +6,7 @@ SHELL:=/bin/sh
 .PHONY: default doc test other
 
 do:
-	ruby -I lib -w -rpp ex_ics_api.rb
+	ruby -I lib -w -rpp test_ical.rb --name=test_duration
 
 default: test
 
@@ -49,12 +49,12 @@ other:
 	ruby -w -I . mbox2vcard.rb _mbox
 
 outline:
-	sh ./outline.sh > outline.txt
+	zsh ./outline.sh > outline.txt
 
 .PHONY: tags
 tags:
-	exctags -R lib #rss
-	RUBYLIB=/Users/sam/p/ruby/ruby/lib rdoc18 -f tags lib
+	/opt/local/bin/ctags -R --extra=+f lib #rss
+	RUBYLIB=/Users/sam/p/ruby/ruby/lib /usr/local/bin/rdoc18 -f tags lib
 	mv tags tags.ctags
 	sort tags.ctags tags.rdoc > tags
 
