@@ -84,7 +84,7 @@ all_todos  = []
 calendars.each do |file|
   if opt_debug; puts file; end
 
-  next if File.basename(file) =~ /^x/
+  next if File.basename(file) =~ /^[xj]/
 
   cals = Vpim::Icalendar.decode(File.open(file))
 
