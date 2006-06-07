@@ -39,6 +39,10 @@ module Vpim
           occurences.each_until(t1).detect { |t| tend = t + (duration || 0); tend > t0 }
         end
 
+        def rdates
+          Vpim.decode_date_time_list(propvalue('RDATE'))
+        end
+
       end
     end
   end
