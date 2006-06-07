@@ -1,4 +1,12 @@
+Is there a way to see if a vCard field is preferred, using the high-level APIs?
+
 Output a graph of the connections in address book, spouses, etc.
+
+ical2 support
+
+vpim rrule encoding APIs
+
+tzinfo.rubyforge.org
 
 cal.protocol = 
 
