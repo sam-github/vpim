@@ -85,7 +85,7 @@ SAMPLES := \
 .PHONY: doc
 doc:
 	rm -rf doc/
-	rdoc18 $(RDFLAGS) -x lib/vpim/agent lib/vpim CHANGES COPYING README README.mutt
+	rdoc18 $(RDFLAGS) -x lib/vpim/agent lib/vpim CHANGES COPYING README samples/README.mutt
 	for s in $(SAMPLES); do cp $$s doc/`basename $$s .rb`.txt; done
 	cp etc/rfc24*.txt doc/
 	chmod u=rw doc/*.txt
@@ -138,9 +138,9 @@ pkg:
 	cp etc/rfc2426.txt         $R/etc
 	cp etc/rfc2445.txt         $R/etc
 	cp etc/rrule.txt           $R/etc
-	cp README.mutt             $R/samples
+	cp samples/README.mutt     $R/samples
 	cp $(SAMPLES)              $R/samples
-	cp osx-wrappers.rb         $R/samples
+	cp samples/osx-wrappers.rb $R/samples
 	cp test/test_*.rb          $R/test
 	# no docs: cp -r  doc      $R/
 	cd releases && tar -zcf $P.tgz $P
