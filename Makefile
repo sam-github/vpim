@@ -1,12 +1,11 @@
 # Makefile
 
-
 SHELL:=/bin/sh
 
 .PHONY: default doc test other
 
 do:
-	ruby -I lib -w -rpp test_ical.rb --name=test_duration
+	ruby -I lib -w -rpp test/test_ical.rb --name=test_duration
 
 default: test
 
@@ -21,7 +20,7 @@ RDFLAGS = -w2
 #--diagram
 # --main doc/foo.html
 
-TEST=test_all.rb
+TEST=test/test_all.rb
 
 dcal:
 	sh -c "./ics-dump.rb ~/Library/Calendars/Play.ics"
@@ -65,28 +64,28 @@ open:
 	open doc/index.html
 
 SAMPLES := \
- ab-query.rb \
- cmd-itip.rb \
- ex_get_vcard_photo.rb \
- ex_cpvcard.rb \
- ex_mkvcard.rb \
- ex_mkv21vcard.rb \
- ex_mkyourown.rb \
- ics-dump.rb \
- ics-to-rss.rb\
- mutt-aliases-to-vcf.rb \
- reminder.rb \
- rrule.rb \
- tabbed-file-to-vcf.rb \
- vcf-dump.rb \
- vcf-lines.rb \
- vcf-to-mutt.rb \
- vcf-to-ics.rb \
+ samples/ab-query.rb \
+ samples/cmd-itip.rb \
+ samples/ex_get_vcard_photo.rb \
+ samples/ex_cpvcard.rb \
+ samples/ex_mkvcard.rb \
+ samples/ex_mkv21vcard.rb \
+ samples/ex_mkyourown.rb \
+ samples/ics-dump.rb \
+ samples/ics-to-rss.rb \
+ samples/mutt-aliases-to-vcf.rb \
+ samples/reminder.rb \
+ samples/rrule.rb \
+ samples/tabbed-file-to-vcf.rb \
+ samples/vcf-dump.rb \
+ samples/vcf-lines.rb \
+ samples/vcf-to-mutt.rb \
+ samples/vcf-to-ics.rb \
 
 .PHONY: doc
 doc:
 	rm -rf doc/
-	rdoc18 $(RDFLAGS) -x lib/vpim/agent lib/vpim CHANGES COPYING README README.mutt
+	rdoc18 $(RDFLAGS) -x lib/vpim/agent lib/vpim CHANGES COPYING README samples/README.mutt
 	for s in $(SAMPLES); do cp $$s doc/`basename $$s .rb`.txt; done
 	cp etc/rfc24*.txt doc/
 	chmod u=rw doc/*.txt
@@ -128,6 +127,7 @@ pkg:
 	mkdir -p $R/lib/vpim/maker
 	mkdir -p $R/lib/vpim/property
 	mkdir -p $R/samples
+	mkdir -p $R/test
 	mkdir -p $R/etc
 	cp COPYING README CHANGES install.rb $R/
 	cp lib/*.rb                $R/lib/
@@ -138,12 +138,11 @@ pkg:
 	cp etc/rfc2426.txt         $R/etc
 	cp etc/rfc2445.txt         $R/etc
 	cp etc/rrule.txt           $R/etc
-	cp README.mutt             $R/samples
+	cp samples/README.mutt     $R/samples
 	cp $(SAMPLES)              $R/samples
-	cp osx-wrappers.rb         $R/samples
-	cp test_*.rb               $R/samples
+	cp samples/osx-wrappers.rb $R/samples
+	cp test/test_*.rb          $R/test
 	# no docs: cp -r  doc      $R/
 	cd releases && tar -zcf $P.tgz $P
 
 # vim:noexpandtab:tabstop=2:
-
