@@ -1,7 +1,6 @@
 /README.mutt/1.1/Sat Mar 10 02:14:12 2007//
 /ab-query.rb/1.1/Sat Mar 10 02:14:12 2007//
 /cmd-itip.rb/1.1/Sat Mar 10 02:14:13 2007//
-/ex_cpvcard.rb/1.1/Sat Mar 10 02:14:12 2007//
 /ex_get_vcard_photo.rb/1.1/Sat Mar 10 02:14:13 2007//
 /ex_mkv21vcard.rb/1.1/Sat Mar 10 02:14:13 2007//
 /ex_mkvcard.rb/1.1/Sat Mar 10 02:14:12 2007//
@@ -17,4 +16,5 @@
 /vcf-lines.rb/1.1/Sat Mar 10 02:14:12 2007//
 /vcf-to-ics.rb/1.1/Sat Mar 10 02:14:13 2007//
 /vcf-to-mutt.rb/1.1/Sat Mar 10 02:14:12 2007//
+/ex_cpvcard.rb/1.1/Wed Jun 13 05:16:36 2007//
 D
