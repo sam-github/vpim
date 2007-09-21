@@ -2,6 +2,8 @@
 
 $:.unshift File.dirname($0)
 
+ENV['TZ'] = 'EST5EDT'
+
 require 'vpim/rrule'
 require 'test/unit'
 
@@ -773,6 +775,43 @@ VEC
 #   RRULE:FREQ=WEEKLY;INTERVAL=2;COUNT=4;BYDAY=TU,SU;WKST=SU
 #   ==> (1997 EDT)August 5,17,19,31
 #
+end
+
+def test_us_laborday
+=begin
+Patch with test from Sam Stephenson at 37signals:
+
+We're using your vPim library at 37signals for the Backpack Calendar
+(http://backpackit.com/calendar ) and ran into an issue with the "US
+Holidays" calendar available at http://ical.mac.com/ical/US32Holidays.ics .
+Specifically, calling Vpim::Rrule#each for events such as Labor Day:
+
+  DTSTART;VALUE=DATE:20020902
+  DTEND;VALUE=DATE:20020903
+  RRULE:FREQ=YEARLY;INTERVAL=1;BYMONTH=9;BYDAY=1MO
+
+would never yield any recurrences.
+=end
+
+# The first Monday in September, forever (Labor Day):
+#
+#   DTSTART;TZID=US-Eastern:20020902T090000
+#   RRULE:FREQ=YEARLY;INTERVAL=1;BYMONTH=9;BYDAY=1MO
+#
+#   ==> (2002 9:00 AM EST)September 2
+#       (2003 9:00 AM EST)September 1
+#       (2004 9:00 AM EST)September 6
+#   ...
+
+Test(
+  'FREQ=YEARLY;INTERVAL=1;BYMONTH=9;BYDAY=1MO;count=3',
+  '20020902T090000',
+  <<VEC
+#   ==> (2002 9:00 AM EDT)September 2
+#       (2003 9:00 AM EDT)September 1
+#       (2004 9:00 AM EDT)September 6
+VEC
+)
 end
 
 end

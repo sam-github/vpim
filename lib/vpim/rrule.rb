@@ -180,7 +180,9 @@ module Vpim
         # Process the BY* modifiers in RFC defined order:
         #  BYMONTH, BYWEEKNO, BYYEARDAY, BYMONTHDAY, BYDAY,
         #  BYHOUR, BYMINUTE, BYSECOND and BYSETPOS
-        
+       
+	bymon = [nil]
+
         if @by['BYMONTH']
           bymon = @by['BYMONTH'].split(',')
           bymon = bymon.collect { |m| m.to_i }
@@ -225,7 +227,7 @@ module Vpim
 
           case @freq
             when 'YEARLY'
-              dates = byday_in_yearly(t.year, byday)
+              dates = bymon.collect { |m| byday_in_monthly(t.year, m, byday) }.flatten
             when 'MONTHLY'
               dates = byday_in_monthly(t.year, t.month, byday)
             when 'WEEKLY'
@@ -453,10 +455,6 @@ module Vpim
       end
       dates.sort!
       dates
-    end
-
-    def byday_in_yearly(year, byday) #:nodoc:
-      byday_in_monthly(year, nil, byday)
     end
 
     def byday_in_monthly(year, mon, byday) #:nodoc:
