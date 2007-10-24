@@ -88,6 +88,20 @@ ___
 
 class TestIcal < Test::Unit::TestCase
 
+  # Reported by Kyle Maxwell
+  def test_serialize_todo
+icstodo =<<___
+BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VTODO
+END:VTODO
+END:VCALENDAR
+___
+
+    cal = Icalendar.decode(icstodo)
+    assert_equal(icstodo, cal.to_s)
+  end
+
   def test_1
     req = Icalendar.decode(Req_1).first
 

@@ -36,6 +36,18 @@ module Vpim
         @elements = inner
       end
 
+      # TODO - derive everything from Icalendar::Component to get this kind of stuff?
+      def fields #:nodoc:
+        f = @properties.to_a
+        last = f.pop
+        f.push @elements
+        f.push last
+      end
+
+      def properties #:nodoc:
+        @properties
+      end
+
       # Create a new Vtodo object.
       #
       # If specified, +fields+ must be either an array of Field objects to

@@ -2,6 +2,8 @@
 
 SHELL:=/bin/sh
 
+RUBY=/opt/local/bin/ruby
+
 .PHONY: default doc test other
 
 do:
@@ -27,8 +29,8 @@ dcal:
 	sh -c "./ics-dump.rb ~/Library/Calendars/Events.ics"
 
 test:
-	/usr/local/bin/ruby18 -w -I lib $(TEST)
-	for e in ex_*.rb; do /usr/local/bin/ruby18 -w -I lib $$e; done >/dev/null
+	$(RUBY) -w -I lib $(TEST)
+	for e in ex_*.rb; do $(RUBY) -w -I lib $$e; done >/dev/null
 	#/usr/bin/ruby -w -I lib $(TEST)
 	#/opt/local/bin/ruby -w -I lib $(TEST)
 
