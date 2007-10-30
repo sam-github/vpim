@@ -10,6 +10,20 @@ Field=Vpim::DirectoryInfo::Field
 
 class TestField < Test::Unit::TestCase
 
+  def test_encode_decode_text()
+    enc_in = "+\\\\+\\n+\\N+\\,+\\;+\\a+\\b+\\c+"
+    dec = Vpim.decode_text(enc_in)
+    #puts("<#{enc_in}> => <#{dec}>")
+    assert_equal("+\\+\n+\n+,+;+a+b+c+", dec)
+    enc_out = Vpim.encode_text(dec)
+    should_be = "+\\\\+\\n+\\n+\\,+\\;+a+b+c+"
+    # Note a, b, and c are allowed to be escaped, but shouldn't be and 
+    # aren't in output
+    #puts("<#{dec}> => <#{enc_out}>")
+    assert_equal(should_be, enc_out)
+
+  end
+
   def test_field4
     line = 't;e=a,b: 4 '
     part = Field.decode0(line)
