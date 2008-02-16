@@ -4,9 +4,11 @@ D/samples////
 D/test////
 /CHANGES/1.1/Sat Mar 10 01:16:24 2007//
 /COPYING/1.1/Sat Mar 10 01:16:24 2007//
+/Makefile/1.2/Wed Oct 24 03:28:18 2007//
 /README/1.1/Sat Mar 10 01:16:32 2007//
 /bench.rb/1.1/Sat Mar 10 01:16:24 2007//
 /ex_fmt_convert.rb/1.1/Sat Mar 10 01:16:31 2007//
+/ex_ics_api.rb/1.1/Wed Oct 24 03:30:04 2007//
 /ex_mkv21card.rb/1.1/Sat Mar 10 01:16:31 2007//
 /install.rb/1.1/Sat Mar 10 01:16:31 2007//
 /mbox2vcard.rb/1.1/Sat Mar 10 01:16:32 2007//
@@ -16,5 +18,3 @@ D/test////
 /stamp.rb/1.1/Sat Mar 10 01:16:32 2007//
 /svn.rb/1.1/Sat Mar 10 01:16:32 2007//
 /vpim.gemspec/1.1/Sat Mar 10 01:16:32 2007//
-/ex_ics_api.rb/1.1/Wed Oct 24 03:30:04 2007//
-/Makefile/1.2/Wed Oct 24 03:28:18 2007//
