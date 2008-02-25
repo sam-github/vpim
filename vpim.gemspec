@@ -19,7 +19,7 @@ This is a pure-ruby library for decoding and encoding vCard and iCalendar data
   s.has_rdoc          = true
   s.files             = Dir.glob("lib/**/*.rb").delete_if { |i| i.include? 'agent' }
   s.require_path      = "lib"
-  s.autorequire       = "vpim"
+# s.autorequire       = "vpim"
 end
 
 if $0==__FILE__

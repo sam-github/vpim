@@ -1,11 +1,8 @@
 #!/usr/bin/env ruby
 
-$:.unshift File.dirname($0)
-
 require 'vpim/vcard'
 require 'test/unit'
 require 'date'
-
 
 require 'pp'
 

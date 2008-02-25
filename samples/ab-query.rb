@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
-$:.unshift File.dirname($0) + '/lib'
+$-w = true
+$:.unshift File.dirname($0) + '/../lib'
 
 require 'osx-wrappers'
 

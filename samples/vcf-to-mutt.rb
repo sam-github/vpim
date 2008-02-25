@@ -12,7 +12,9 @@
 # NICKNAME shouldn't have spaces, and EMAIL can be either "user@example.com",
 # "<user@example.com>", or "User <user@example.com>".
 
-$:.unshift File.dirname($0)
+$-w = true
+$:.unshift File.dirname($0) + '/../lib'
+
 
 require 'getoptlong'
 require 'vpim/vcard'

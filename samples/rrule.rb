@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
-$:.unshift File.dirname($0)
+$-w = true
+$:.unshift File.dirname($0) + "/../lib"
 
 require 'vpim/rrule'
 require 'getoptlong'
@@ -56,12 +57,12 @@ if ARGV.length < 1
   exit 1
 end
 
-puts "Start: #{dtstart}"
+puts "Start: #{Vpim.encode_date_time(dtstart)}"
 
 ARGV.each do |rule|
   rrule = Vpim::Rrule.new(dtstart, rule)
 
-  puts "Rrule: #{rule}"
+  puts "Rule: #{rule}"
 
   rrule.each_with_index do |t, count|
     puts format("count=%3d %s", count, t.to_s)

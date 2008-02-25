@@ -16,6 +16,12 @@ require 'pp'
 
 $debug = ENV['DEBUG']
 
+class Date
+  def inspect
+    self.to_s
+  end
+end
+
 def debug(*objs)
   if $debug
     pp(*objs)
@@ -30,14 +36,14 @@ module Vpim
   # syntax description and examples from RFC 2445. The description is pretty
   # hard to understand, but the examples are more helpful.
   #
-  # The implementation is pretty complete, but still lacks support for:
+  # The implementation is reasonably complete, but still lacks support for:
   #
-  # TODO - BYWEEKLY, BYWEEKNO, WKST: rules that recur by the week, or are
-  # limited to particular weeks, not hard, but not trivial, I'll do it for the
-  # next release
+  # Recurrence by date (RDATE) and exclusions (EXDATE, EXRULE).
+  #
+  # TODO - BYWEEKNO: rules that are limited to particular weeks in a year.
   #
   # TODO - BYHOUR, BYMINUTE, BYSECOND: trivial to do, but I don't have an
-  # immediate need for them, I'll do it for the next release
+  # immediate need for them.
   #
   # TODO - BYSETPOS: limiting to only certain recurrences in a set (what does
   # -1, last occurence, mean for an infinitely occuring rule?)
@@ -139,16 +145,18 @@ module Vpim
     # most systems.
     def each(dountil = nil) #:yield: ytime
       t = @dtstart.clone
-      count = 1
 
       # Time.to_a => [ sec, min, hour, day, month, year, wday, yday, isdst, zone ]
 
-      # Every event occurs at least once, at its start time, but only if the start
-      # time is earlier than DOUNTIL...
+      # Every event occurs at its start time, but only if the start time is
+      # earlier than DOUNTIL...
+      if !dountil || t < dountil
+        yield t
+      end
+      count = 1
+
+      # With no recurrence, DTSTART is the only occurence.
       if !@rrule
-        if !dountil || t < dountil
-          yield t
-        end
         return self
       end
 
@@ -168,20 +176,21 @@ module Vpim
           #when 'YEARLY' then
           # Don't need to keep track of year, all occurences are within t's
           # year.
-          when 'MONTHLY'  then  days.month = t.month #month = { t.month => nil }
-  #       when 'WEEKLY'   then  days.mday = t.month, t.mday
+        when 'MONTHLY'  then  days.month = t.month
+        when 'WEEKLY'   then  #days.month = t.month
           # TODO - WEEKLY
-          when 'DAILY'    then  days.mday = t.month, t.mday #month = { t.month => [ t.mday ] }
-          when 'HOURLY'   then  hour  = [t.hour]
-          when 'MINUTELY' then  min   = [t.min]
-          when 'SECONDLY' then  sec   = [t.sec]
+        when 'DAILY'    then  days.mday = t.month, t.mday
+        when 'HOURLY'   then  hour  = [t.hour]
+        when 'MINUTELY' then  min   = [t.min]
+        when 'SECONDLY' then  sec   = [t.sec]
         end
 
+  #      debug [t, days]
         # Process the BY* modifiers in RFC defined order:
         #  BYMONTH, BYWEEKNO, BYYEARDAY, BYMONTHDAY, BYDAY,
         #  BYHOUR, BYMINUTE, BYSECOND and BYSETPOS
-       
-	bymon = [nil]
+
+        bymon = [nil]
 
         if @by['BYMONTH']
           bymon = @by['BYMONTH'].split(',')
@@ -220,7 +229,6 @@ module Vpim
 
         if @by['BYDAY']
           byday = @by['BYDAY'].scan(/,?([+-]?[1-9]?\d*)?(SU|MO|TU|WE|TH|FR|SA)/i)
-  #        debug byday
 
           # BYDAY means different things in different frequencies. The +n+
           # is only meaningful when freq is yearly or monthly.
@@ -231,7 +239,7 @@ module Vpim
             when 'MONTHLY'
               dates = byday_in_monthly(t.year, t.month, byday)
             when 'WEEKLY'
-              # dates = byday_in_weekly(t.year, wkstart, t.month, t.day, byday)
+              dates = byday_in_weekly(t.year, t.month, t.mday, @wkst, byday)
             when 'DAILY', 'HOURLY', 'MINUTELY', 'SECONDLY'
               # Reuse the byday_in_monthly. Current day is already specified,
               # so this will just eliminate the current day if its not allowed
@@ -248,29 +256,34 @@ module Vpim
         
         # TODO - BYSETPOS
 
-        # Yield the time, if we haven't gone over COUNT, or past UNTIL, or past
-        # the end of representable time.
-
         hour   = [@dtstart.hour]   if !hour 
         min    = [@dtstart.min]    if !min  
         sec    = [@dtstart.sec]    if !sec 
 
   #      debug days
 
+        # Yield the time, if we haven't gone over COUNT, or past UNTIL, or past
+        # the end of representable time.
+
         days.each do |m,d|
             hour.each do |h|
               min.each do |n|
                 sec.each do |s|
-                  if(@count && (count > @count))
-                    return self
-                  end
                   y = Time.local(t.year, m, d, h, n, s, 0)
 
                   next if y.hour != h
 
                   # The generated set can sometimes generate results earlier
-                  # than the DTSTART, skip them.
-                  next if y < @dtstart
+                  # than the DTSTART, skip them. Also, we already yielded
+                  # DTSTART, skip it.
+                  next if y <= @dtstart
+
+                  count += 1
+
+                  # We are done if current count is past @count.
+                  if(@count && (count > @count))
+                    return self
+                  end
 
                   # We are done if current time is past @until.
                   if @until && (y > @until)
@@ -282,7 +295,6 @@ module Vpim
                     return self
                   end
                   yield y
-                  count += 1
                 end
               end
             end
@@ -363,30 +375,30 @@ module Vpim
       end
 
       def intersect_dates(dates) #:nodoc:
-        if dates
-          # If no months are in the dayset, add all the ones in dates
-          if !@month
-            @month = {}
+        return unless dates
 
-            dates.each do |d|
-              @month[d.mon] = nil
-            end
+        # If no months are in the dayset, add all the ones in dates
+        if !@month
+          @month = {}
+
+          dates.each do |d|
+            @month[d.mon] = nil
           end
+        end
 
-          # In each month,
-          #   if there are days,
-          #     eliminate those not in dates
-          #   otherwise
-          #     add all those in dates
-          @month.each do |mon, days|
-            days_in_mon = dates.find_all { |d| d.mon == mon }
-            days_in_mon = days_in_mon.collect { |d| d.day }
+        # In each month,
+        #   if there are days,
+        #     eliminate those not in dates
+        #   otherwise
+        #     add all those in dates
+        @month.each do |mon, days|
+          days_in_mon = dates.find_all { |d| d.mon == mon }
+          days_in_mon = days_in_mon.collect { |d| d.day }
 
-            if days
-              days_in_mon = days_in_mon & days
-            end
-            @month[mon] = days_in_mon
+          if days
+            days_in_mon = days_in_mon & days
           end
+          @month[mon] = days_in_mon
         end
       end
 
@@ -451,7 +463,7 @@ module Vpim
       dates = []
 
       byyday.each do |yday|
-        dates << Date.new2(year, yday[0].to_i)
+        dates << Date.ordinal(year, yday[0].to_i)
       end
       dates.sort!
       dates
@@ -470,6 +482,17 @@ module Vpim
       end
       dates.sort!
       dates
+    end
+
+    def byday_in_weekly(year, mon, day, wkst, byday)
+      #    debug ["day", year,mon,day,wkst,byday]
+      days = byday.map{ |_, byday| Date.str2wday(byday) }
+      week = DateGen.weekofdate(year, mon, day, wkst)
+      #    debug [ "week", dates ]
+      week.delete_if do |d|
+        !days.include?(d.wday)
+      end
+      week
     end
 
   end

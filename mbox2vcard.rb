@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+$-w = true
+
 $:.unshift File.dirname($0)
 
 require 'rmail'

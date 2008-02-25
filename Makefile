@@ -2,7 +2,7 @@
 
 SHELL:=/bin/sh
 
-RUBY=/opt/local/bin/ruby
+RUBY=/usr/bin/ruby
 
 .PHONY: default doc test other
 
@@ -118,7 +118,7 @@ stamp:
 
 gem:
 	mkdir -p releases
-	ruby18 vpim.gemspec
+	ruby vpim.gemspec
 	mv vpim-$V.gem releases/
 
 pkg:
@@ -131,7 +131,7 @@ pkg:
 	mkdir -p $R/samples
 	mkdir -p $R/test
 	mkdir -p $R/etc
-	cp COPYING README CHANGES install.rb $R/
+	cp COPYING README CHANGES setup.rb $R/
 	cp lib/*.rb                $R/lib/
 	cp lib/vpim/*.rb           $R/lib/vpim/
 	cp lib/vpim/maker/*.rb     $R/lib/vpim/maker/

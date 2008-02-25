@@ -1,8 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'test/unit'
-
+$-w = true
 $:.unshift File.dirname($0)
+
+require 'test/unit'
 
 require 'test_date.rb'
 require 'test_dur.rb'

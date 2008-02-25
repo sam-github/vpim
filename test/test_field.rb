@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-$:.unshift File.dirname($0)
-
 require 'test/unit'
 require 'pp'
 require 'vpim/field'

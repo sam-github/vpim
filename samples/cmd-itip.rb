@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
-$:.unshift File.dirname($0)
+$-w = true
+$:.unshift File.dirname($0) + '/../lib'
 
 require 'getoptlong'
 
@@ -109,9 +110,9 @@ ARGV.each do |file|
         puts e.description
       end
 
-      if e.comment
+      if e.comments
         puts finish="-- Comment --"
-        puts "   comment=#{e.comment}"
+        puts "   comment=#{e.comments}"
       end
 
       if e.attendees.first

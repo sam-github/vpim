@@ -2,7 +2,8 @@
 #
 # Calendars are in ~/Library/Calendars/
 
-$:.unshift File.dirname($0) + "/lib"
+$-w = true
+$:.unshift File.dirname($0) + '/../lib'
 
 require 'getoptlong'
 require 'pp'

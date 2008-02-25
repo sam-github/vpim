@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
 
-$:.unshift File.dirname($0)
-
 require 'vpim/date'
+require 'vpim/time'
 require 'test/unit'
 
 class TestVpimDate < Test::Unit::TestCase
@@ -11,6 +10,16 @@ class TestVpimDate < Test::Unit::TestCase
     # Need to test with DateTime, but I don't have that with ruby 1.6.
     assert_equal(Time.at(0), Date.new(1970, 1, 1).to_time)
     assert_equal(Time.at(24 * 60 * 60), Date.new(1970, 1, 2).to_time)
+  end
+
+  def test_date_weekstart
+    assert_equal(Date.weekstart(2004, 01, 12, 'tu').to_s, Date.new(2004, 01,  6).to_s)
+    assert_equal(Date.weekstart(2004, 01, 12, 'we').to_s, Date.new(2004, 01,  7).to_s)
+    assert_equal(Date.weekstart(2004, 01, 12, 'th').to_s, Date.new(2004, 01,  8).to_s)
+    assert_equal(Date.weekstart(2004, 01, 12, 'fr').to_s, Date.new(2004, 01,  9).to_s)
+    assert_equal(Date.weekstart(2004, 01, 12, 'sa').to_s, Date.new(2004, 01, 10).to_s)
+    assert_equal(Date.weekstart(2004, 01, 12, 'su').to_s, Date.new(2004, 01, 11).to_s)
+    assert_equal(Date.weekstart(2004, 01, 12, 'mo').to_s, Date.new(2004, 01, 12).to_s)
   end
 
   def do_bywday(args, expect)

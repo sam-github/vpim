@@ -77,8 +77,8 @@ class Date
   # - Date.bywday(2004, -2, 3, -2) => second last Wednesday in the second last month of 2004
   #
   # Compare this to Date.new, which allows a Date to be created by
-  # day-of-the-month, mday, to Date.new2, which allows a Date to be created by
-  # day-of-the-year, yday, and to Date.neww, which allows a Date to be created
+  # day-of-the-month, mday, to Date.ordinal, which allows a Date to be created by
+  # day-of-the-year, yday, and to Date.commercial, which allows a Date to be created
   # by day-of-the-week, but within a specific week.
   def Date.bywday(year, mon, wday, n = 1, sg=Date::ITALY)
     # Normalize mon to 1-12.
@@ -120,10 +120,36 @@ class Date
     end
     d
   end
+
+  # Return the first day of the week for the specified date. Commercial weeks
+  # start on Monday, but the weekstart can be specified (as 0-6, where 0 is
+  # sunday, or in formate of Date.str2day).
+  def Date.weekstart(year, mon, day, weekstart="MO")
+    wkst = Date.str2wday(weekstart)
+    d = Date.new(year, mon, day)
+    until d.wday == wkst
+      d = d - 1
+    end
+    d
+  end
 end
 
 # DateGen generates arrays of dates matching simple criteria.
 class DateGen
+
+  # Generate an array of a week's dates, where week is specified by year, mon,
+  # day, and the weekstart (the day-of-week that is considered the "first" day
+  # of that week, 0-6, where 0 is sunday).
+  def DateGen.weekofdate(year, mon, day, weekstart)
+    d = Date.weekstart(year, mon, day, weekstart)
+    week = []
+    7.times do
+      week << d
+      d = d + 1
+    end
+    week
+  end
+
   # Generate an array of dates on +wday+ (the day-of-week,
   # 0-6, where 0 is Sunday).
   #
