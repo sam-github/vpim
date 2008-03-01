@@ -2,12 +2,9 @@ D/etc////
 D/lib////
 D/samples////
 D/test////
-/CHANGES/1.1/Sat Mar 10 01:16:24 2007//
 /COPYING/1.1/Sat Mar 10 01:16:24 2007//
-/README/1.1/Sat Mar 10 01:16:32 2007//
 /outline.sh/1.1/Sat Mar 10 01:16:32 2007//
 /profile.txt/1.1/Sat Mar 10 01:16:32 2007//
-/stamp.rb/1.1/Sat Mar 10 01:16:32 2007//
 /vpim.gemspec/1.2/Tue Feb 19 06:07:51 2008//
 /Makefile/1.4/Sat Mar  1 23:19:03 2008//
 /bench.rb/1.1/Sat Mar  1 23:25:40 2008//
@@ -18,3 +15,6 @@ D/test////
 /profile.rb/1.1/Sat Mar  1 23:25:40 2008//
 /setup.rb/1.1/Sat Mar  1 23:25:40 2008//
 /svn.rb/1.1/Sat Mar  1 23:25:40 2008//
+/CHANGES/1.2/Sat Mar  1 23:35:50 2008//
+/README/1.2/Sat Mar  1 23:25:40 2008//
+/stamp.rb/1.2/Sat Mar  1 23:25:40 2008//
