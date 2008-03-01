@@ -511,7 +511,7 @@ VEC
     )
   end
 
-  def test_rfc2445_examples_others
+  def test_rfc2445_examples_misc1
     # Yearly in June and July for 10 occurrences:
     #
     #   DTSTART;TZID=US-Eastern:19970610T090000
@@ -737,8 +737,18 @@ VEC
     #   ==> (1997 9:00 AM EDT)September 4;October 7
     #       (1997 9:00 AM EST)November 6
 
-    # TODO
+    Test(
+'FREQ=MONTHLY;COUNT=3;BYDAY=TU,WE,TH;BYSETPOS=3',
+'19970904T090000',
+<<VEC
+#   ==> (1997 9:00 AM EDT)September 4;October 7
+#       (1997 9:00 AM EST)November 6
+VEC
+    )
 
+  end
+
+  def test_rfc2445_example_2nd_last_weekday_of_month
     # The 2nd to last weekday of the month:
     #
     #   DTSTART;TZID=US-Eastern:19970929T090000
@@ -750,8 +760,18 @@ VEC
     #   ...
     #
 
-    # TODO
+    Test(
+'FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-2;count=7',
+'19970929T090000',
+<<VEC
+#   ==> (1997 9:00 AM EDT)September 29
+#       (1997 9:00 AM EST)October 30;November 27;December 30
+#       (1998 9:00 AM EST)January 29;February 26;March 30
+VEC
+)
+  end
 
+  def test_rfc2445_examples_misc2
     # Every 3 hours from 9:00 AM to 5:00 PM on a specific day:
     #
     #   DTSTART;TZID=US-Eastern:19970902T090000
@@ -895,6 +915,65 @@ VEC
 VEC
     );
   end
+
+  def test_bysetpos_before_dtstart
+    # Note - this doesn't work with Apple iCal 3.0.2, I think its their bug.
+    Test(
+  'FREQ=MONTHLY;COUNT=5;BYDAY=MO;BYSETPOS=1,2',
+  '20080305T180000',
+  <<VEC
+#   ==> (2008 6:00 PM EST)March 5
+#       (2008 6:00 PM EDT)March 10
+#       (2008 6:00 PM EDT)April 7,14
+#       (2008 6:00 PM EDT)May 5
+VEC
+    );
+  end
+
+  def test_bysetpos_after_until
+    Test(
+  'FREQ=MONTHLY;UNTIL=20080421;BYDAY=MO;BYSETPOS=-1',
+  '20080305T180000',
+  <<VEC
+#   ==> (2008 6:00 PM EST)March 5
+#       (2008 6:00 PM EDT)March 31
+VEC
+    );
+  end
+
+  def test_bysetpos_zipdx_last_saturday
+    # In Microsoft Exchange, if I want a meeting to occur on a certain Saturday
+    # of each month, Exchange generates:
+    #
+    #   RRULE:FREQ=MONTHLY;COUNT=4;WKST=SU;INTERVAL=1;BYDAY=-1SA
+    #
+    # However, if I use Microsoft Outlook, Outlook generates:
+    #   RRULE:FREQ=MONTHLY;COUNT=4;INTERVAL=1;BYDAY=SA;BYSETPOS=-1;WKST=SU
+    # And we get confused and generate the meeting every week (instead of every
+    # month). I think this is because the library does not support BYSETPOS;
+    # this is stated in the documentation.
+    Test(
+  'FREQ=MONTHLY;COUNT=4;INTERVAL=1;WKST=SU;BYDAY=SA;BYSETPOS=-1',
+  '20080305T180000',
+  <<VEC
+#   ==> (2008 6:00 PM EST)March 5
+#       (2008 6:00 PM EDT)March 29
+#       (2008 6:00 PM EDT)April 26
+#       (2008 6:00 PM EDT)May 31
+VEC
+    );
+  end
+=begin
+BEGIN:VEVENT
+SUMMARY:Boxing Day
+DESCRIPTION:First Weekday on or after December 26th.
+DTSTAMP:20030701T000000Z
+UID:holiday0042@icaldates.com
+CATEGORIES:Holiday - Canada
+DTSTART;VALUE=DATE:17531226
+RRULE:FREQ=MONTHLY;BYMONTH=12;INTERVAL=1;BYDAY=MO,TU,WE,TH,FR;BYMONTHDAY=26,27,28;BYSETPOS=1
+END:VEVENT
+=end
 
 end
 

@@ -45,9 +45,6 @@ module Vpim
   # TODO - BYHOUR, BYMINUTE, BYSECOND: trivial to do, but I don't have an
   # immediate need for them.
   #
-  # TODO - BYSETPOS: limiting to only certain recurrences in a set (what does
-  # -1, last occurence, mean for an infinitely occuring rule?)
-  #
   # TODO - new API? -> Rrule#infinite?
   #
   # == Examples
@@ -187,14 +184,21 @@ module Vpim
 
   #      debug [t, days]
         # Process the BY* modifiers in RFC defined order:
-        #  BYMONTH, BYWEEKNO, BYYEARDAY, BYMONTHDAY, BYDAY,
-        #  BYHOUR, BYMINUTE, BYSECOND and BYSETPOS
+        #  BYMONTH,
+        #  BYWEEKNO,
+        #  BYYEARDAY,
+        #  BYMONTHDAY,
+        #  BYDAY,
+        #  BYHOUR,
+        #  BYMINUTE,
+        #  BYSECOND,
+        #  BYSETPOS
 
         bymon = [nil]
 
         if @by['BYMONTH']
           bymon = @by['BYMONTH'].split(',')
-          bymon = bymon.collect { |m| m.to_i }
+          bymon = bymon.map { |m| m.to_i }
   #        debug bymon
 
           # In yearly, at  this point, month will always be nil. At other
@@ -235,7 +239,7 @@ module Vpim
 
           case @freq
             when 'YEARLY'
-              dates = bymon.collect { |m| byday_in_monthly(t.year, m, byday) }.flatten
+              dates = bymon.map { |m| byday_in_monthly(t.year, m, byday) }.flatten
             when 'MONTHLY'
               dates = byday_in_monthly(t.year, t.month, byday)
             when 'WEEKLY'
@@ -254,52 +258,73 @@ module Vpim
 
         # TODO - BYHOUR, BYMINUTE, BYSECOND
         
-        # TODO - BYSETPOS
-
         hour   = [@dtstart.hour]   if !hour 
         min    = [@dtstart.min]    if !min  
         sec    = [@dtstart.sec]    if !sec 
 
   #      debug days
 
-        # Yield the time, if we haven't gone over COUNT, or past UNTIL, or past
-        # the end of representable time.
+        # Generate the yield set so BYSETPOS can be evaluated.
+        yset = []
 
         days.each do |m,d|
-            hour.each do |h|
-              min.each do |n|
-                sec.each do |s|
-                  y = Time.local(t.year, m, d, h, n, s, 0)
+          hour.each do |h|
+            min.each do |n|
+              sec.each do |s|
+                y = Time.local(t.year, m, d, h, n, s, 0)
 
-                  next if y.hour != h
+                next if y.hour != h
 
-                  # The generated set can sometimes generate results earlier
-                  # than the DTSTART, skip them. Also, we already yielded
-                  # DTSTART, skip it.
-                  next if y <= @dtstart
-
-                  count += 1
-
-                  # We are done if current count is past @count.
-                  if(@count && (count > @count))
-                    return self
-                  end
-
-                  # We are done if current time is past @until.
-                  if @until && (y > @until)
-                    return self
-                  end
-                  # We are also done if current time is past the
-                  # caller-requested until.
-                  if dountil && (y >= dountil)
-                    return self
-                  end
-                  yield y
-                end
+                yset << y
               end
             end
+          end
         end
 
+        if @by['BYSETPOS']
+          bysetpos = @by['BYSETPOS'].split(',')
+          yset = bysetpos.map do |i|
+            i = i.to_i
+            case
+            when i < 0
+              # yset[-1] is last
+              yset[i]
+            when i > 0
+              # yset[1] is first
+              yset[i-1]
+            else
+              # ignore invalid syntax
+            end
+          end.compact # set positions out of scope will be nil, RFC says ignore them
+        end
+
+        # Yield the occurence, if we haven't gone over COUNT, or past UNTIL, or
+        # past the end of representable time.
+
+        yset.each do |y|
+          # The generated set can sometimes generate results earlier
+          # than the DTSTART, skip them. Also, we already yielded
+          # DTSTART, skip it.
+          next if y <= @dtstart
+
+          count += 1
+
+          # We are done if current count is past @count.
+          if(@count && (count > @count))
+            return self
+          end
+
+          # We are done if current time is past @until.
+          if @until && (y > @until)
+            return self
+          end
+          # We are also done if current time is past the
+          # caller-requested until.
+          if dountil && (y >= dountil)
+            return self
+          end
+          yield y
+        end
 
         # Add @interval to @freq component
 
@@ -341,6 +366,8 @@ module Vpim
         return self if dountil && (t > dountil)
       end
     end
+
+
 
     class DaySet #:nodoc:
 
@@ -393,7 +420,7 @@ module Vpim
         #     add all those in dates
         @month.each do |mon, days|
           days_in_mon = dates.find_all { |d| d.mon == mon }
-          days_in_mon = days_in_mon.collect { |d| d.day }
+          days_in_mon = days_in_mon.map { |d| d.day }
 
           if days
             days_in_mon = days_in_mon & days
