@@ -87,7 +87,7 @@ SAMPLES := \
 .PHONY: doc
 doc:
 	rm -rf doc/
-	rdoc18 $(RDFLAGS) -x lib/vpim/agent lib/vpim CHANGES COPYING README samples/README.mutt
+	rdoc $(RDFLAGS) -x lib/vpim/agent lib/vpim CHANGES COPYING README samples/README.mutt
 	for s in $(SAMPLES); do cp $$s doc/`basename $$s .rb`.txt; done
 	cp etc/rfc24*.txt doc/
 	chmod u=rw doc/*.txt
