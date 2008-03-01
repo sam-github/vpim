@@ -1,3 +1,20 @@
+@2008-03-01:
+
+- Support for BYSETPOS in recurrence rules (development supported by zipdx.com)
+
+@2008-02-24:
+
+- Support for FREQ=weekly in recurrence rules (development supported by zipdx.com)
+
+@2007-10-29:
+
+- Fixed an encode_text() bug (patch supplied by Jan Becvar)
+
+@2007-09-20:
+
+- Fixed problem with interaction between BYMONTH and BYDAY (patch supplied by
+  Sam Stephenson of 32signals.com)
+
 @2006-03-02:
 
 - Vevent::Maker - Started adding high-level iCalendar encoding APIs
@@ -32,7 +49,6 @@
 - Property::Common#attachments - new
 
 - Icalendar::Attachment - new
-
 
 @2006-03-20:
 
