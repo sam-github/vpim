@@ -17,6 +17,7 @@ done soon.
   e.sequence      0
   e.access_class  "PRIVATE"
   e.transparency  'OPAQUE'
+  e.set_text('LOCATION', 'my location')
 
   now = Time.now
   e.created       now
