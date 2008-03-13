@@ -17,11 +17,11 @@ vCard and iCalendar support is built on top of an implementation of the MIME
 Content-Type for Directory Information (RFC 2425). The basic RFC 2425 format is
 implemented by  Vpim::DirectoryInfo and Vpim::DirectoryInfo::Field.
 
-The libary is quite useable, but work is ongoing.  have a more on my todo list
-than I have time, so if you find something missing or have suggestions, please
-contact me. I can't promise instantaneous turnaround, but I might be able to
-suggest another approach, and features requested by users of vPim go to the top
-of the todo list.
+The libary is quite useful, but improvements are ongoing.  If you find
+something missing or have suggestions, please contact me. I can't promise
+instantaneous turnaround, but I might be able to suggest another approach, and
+features requested by users of vPim go to the top of the todo list. If you need
+a feature for a commercial project, consider sponsoring development.
 
 = Project Information
 
@@ -33,6 +33,12 @@ For notifications about new releases, or asking questions about vPim, please
 subscribe to "vpim-talk":
 
 - http://rubyforge.org/mailman/listinfo/vpim-talk
+
+= Thanks
+
+- Ruby Forge: for their generous hosting of this project.
+- ZipDX.com: for sponsoring support for FREQ=weekly and BYSETPOS in recurrence
+  rules.
 
 = Examples
 
@@ -159,17 +165,11 @@ There is a vPim package installable using ruby-gems.
 
 It is also installable in the standard way. Untar the package, and see:
 
-  ruby install.rb --help
+  ruby setup.rb --help
 
 or do:
 
-  $ ruby install.rb config
-  $ ruby install.rb setup
-  # ruby install.rb install (may require root privilege)
-
-= Thanks
-
-- Ruby Forge: for their generous hosting of this project.
-- ZipDX.com: for sponsoring support for FREQ=weekly and BYSETPOS in recurrence
-  rules
+  $ ruby setup.rb config
+  $ ruby setup.rb setup
+  # ruby setup.rb install (may require root privilege)
 

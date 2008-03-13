@@ -7,7 +7,7 @@ RUBY=/usr/bin/ruby
 .PHONY: default doc test other
 
 do:
-	ruby -I lib -w -rpp test/test_ical.rb --name=test_duration
+	ruby -I lib samples/reminder.rb
 
 default: test
 
@@ -118,8 +118,15 @@ stamp:
 
 gem:
 	mkdir -p releases
+	mkdir -p bin
+	cp -v samples/reminder.rb bin/reminder
+	cp -v samples/rrule.rb bin/rrule
+	chmod +x bin/*
 	ruby vpim.gemspec
-	mv vpim-$V.gem releases/
+	mv vpim*-$V.gem releases/
+
+geminstall:
+	gem install -V 
 
 pkg:
 	rm -rf $R/*
