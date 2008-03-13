@@ -1,18 +1,25 @@
 #!/usr/bin/env ruby
 
+$-w = true
+
+require 'ubygems' rescue "ignored"
+
 require 'getoptlong'
 require 'pp'
+require 'plist'
 
-require 'vpim/icalendar'
-require 'vpim/duration'
+require 'vpim/repo'
+
+$stdout.sync = true
+$stderr.sync = true
 
 HELP =<<EOF
-Usage: #{$0} <calendar>...
+Usage: #{$0} [where]
 
 Shows events and todos occuring soon.
 
-By default, the calendar files from ~/Library/Calendars are used (the
-location of Apple's iCal calendars).
+By default, the Apple iCal v3 calendars are used, but if a location where
+.ics files is specified, any calendars found there will be used.
 
 Options
   -h,--help        Print this helpful message.
@@ -50,10 +57,16 @@ opts.each do |opt, arg|
   end
 end
 
+calendars = []
+
 if ARGV.length > 0
-  calendars = ARGV
+  Vpim::Repo::Directory.each(ARGV.first) do |cal|
+    calendars << cal
+  end
 else
-  calendars = Dir[ File.expand_path("~/Library/Calendars/*.ics") ]
+  Vpim::Repo::Ical3.each() do |cal|
+    calendars << cal
+  end
 end
 
 if opt_debug
@@ -81,26 +94,28 @@ end
 all_events = []
 all_todos  = []
 
-calendars.each do |file|
-  if opt_debug; puts file; end
+calendars.each do |cal|
+  if opt_debug; puts cal.name; end
 
-  next if File.basename(file) =~ /^[xj]/
-
-  cals = Vpim::Icalendar.decode(File.open(file))
-
-  cals.each do |cal|
+  begin
     cal.events.each do |e|
-      if opt_debug; pp e; end
-      if e.occurs_in?(t0, t1)
-        if e.summary
-          all_events.push(e)
+      begin
+        if opt_debug; pp e; end
+        if e.occurs_in?(t0, t1)
+          if e.summary
+            all_events.push(e)
+          end
         end
+      rescue
+        $stderr.puts "error in #{cal.name} (\"#{e.summary}\"): #{$!.to_s}"
       end
     end
 
     all_todos.concat(cal.todos)
   end
 end
+
+puts
 
 def start_of_first_occurence(t0, t1, e)
   e.occurences.each_until(t1).each do |t|
@@ -122,10 +137,9 @@ all_events.each do |e|
 
   if opt_verbose
     if e.description;   puts "  description=#{e.description}"; end
-    if e.comment;       puts "  comment=#{e.comment}"; end
+    if e.comments;      puts "  comment=#{e.comments.first}"; end
     if e.location;      puts "  location=#{e.location}"; end
     if e.status;        puts "  status=#{e.status}"; end
-    if e.rrule;         puts "  rrule=#{e.rrule}"; end
     if e.dtstart;       puts "  dtstart=#{e.dtstart}"; end
     if e.duration;      puts "  duration=#{Vpim::Duration.new(e.duration).to_s}"; end
   end

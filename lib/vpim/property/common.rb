@@ -288,7 +288,7 @@ seq
           set_text_list('CATEGORIES', cats)
         end
 
-        # Set the comment, see Icalendar::Get::Common#comment.
+        # Set the comment, see Icalendar::Get::Common#comments.
         def comment(value)
           set_text 'COMMENT', value
         end

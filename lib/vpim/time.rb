@@ -21,7 +21,7 @@ class Time
 
     # Returns a new Time, +months+ later than this time. The day will be
     # rounded down if it is not valid for that month.
-    # 31 plus 1 month will be on Feb 28!
+    # Jan 31 plus 1 month will be on Feb 28!
     def plus_month(months)
       d = Date.new(year, month, day)
       d >>= months
