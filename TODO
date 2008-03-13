@@ -1,3 +1,90 @@
+== BUGS & User-Requests
+
+Review icalendar mailing list...
+
+Review l.vpim previous to this:
+
+- Subject: [Vpim-talk]  Incorrect unicode conversion
+From: Administration TURNS <administration@turns.net>
+
+
+- http://rubyforge.org/pipermail/icalendar-devel/2007-February/000061.html
+
+- a way to do icalendar as SQL...
+
+- event.rrule
+
+was used by reminder!
+
+-= http://209.85.173.104/search?q=cache:hQRadCEdph8J:www.lightning-tree.net/2005/08/vpim-vs-icalendar.html+ruby+vpim&hl=en&ct=clnk&cd=29&client=safari
+
+
+- gem problem
+
+http://objectmix.com/ruby/211902-ical-ics-parser-ruby.html
+
+- add to vpim
+
+http://ragnarson.blogspot.com/2005/10/importing-vcard-contacts-to.html
+
+- ccummer
+
+remindr utility working on OS 10.5
+
+- http://groups.google.com/group/phoenix-ruby/browse_thread/thread/ec3e7df198d6ca05
+
+Post here and point out that it works with vPim.
+
+- Magnus Mager <magnus-m@gmx.net>
+
+Vpim photos to Addressbook.app, example.
+
+Needs vcard.encode(0)?
+
+- Brandon Taylor <btaylordesign@gmail.com>
+
+How to create an ORG and TITLE field for vCard
+
+- Bram Whillock <bramski@gmail.com>
+
+Silently convert Fixnum and nil during field encoding??
+
+-  "Thomas R. Koll" <tomk32@gmx.de>
+
+Use capitals when encoding cards and calendars? Its how everybody else seems to
+do it.
+
+-  Florian Weber <florian@oaklandcutlery.com>
+
+charset and encoding for vCards
+
+do an example of latin1
+
+- bug: deal with "round down" that Date does when you add a month, and the dofmonth is not
+  in valid range -> if you have jan31 repeating monthly with iCal, you shouldn't get an
+  occurence in Feb
+
+ensemble:~/p/ruby/vpim % ./rrule.rb --start '20050131T000000Z' 'FREQ=MONTHLY' | head
+Start: Mon Jan 31 00:00:00 EST 2005
+Rrule: FREQ=MONTHLY
+count=  0 Mon Jan 31 00:00:00 EST 2005
+count=  1 Mon Feb 28 00:00:00 EST 2005
+count=  2 Mon Mar 28 00:00:00 EST 2005
+count=  3 Thu Apr 28 00:00:00 EDT 2005
+count=  4 Sat May 28 00:00:00 EDT 2005
+count=  5 Tue Jun 28 00:00:00 EDT 2005
+count=  6 Thu Jul 28 00:00:00 EDT 2005
+count=  7 Sun Aug 28 00:00:00 EDT 2005
+
+I need to keep my own date/time, and not use Time as the basic object in my iteration.
+
+Then, I can eliminate non-existent times before yielding them.
+
+
+
+
+== UNSORTED
+
 Is there a way to see if a vCard field is preferred, using the high-level APIs?
 
 Output a graph of the connections in address book, spouses, etc.
@@ -76,10 +163,6 @@ Check packaging guidelines:
 
 - complete RRULE support
 
-- icalendar maker
-
-- rrule maker
-
 - valarms
 
   - like ones that open apps: http://docs.info.apple.com/article.html?artnum=300368
@@ -112,31 +195,10 @@ Check packaging guidelines:
   RFC error - CATEGORY is used in an example, it should be CATEGORIES
 
 
-
-== CLEANUPS/BUGS
+== CLEANUPS
 
 - perfect round trip decode/encode - make Field take the entire line, with
 	embedded newlines?
-
--
-
-ensemble:~/p/ruby/vpim % ./rrule.rb --start '20050131T000000Z' 'FREQ=MONTHLY' | head
-Start: Mon Jan 31 00:00:00 EST 2005
-Rrule: FREQ=MONTHLY
-count=  0 Mon Jan 31 00:00:00 EST 2005
-count=  1 Mon Feb 28 00:00:00 EST 2005
-count=  2 Mon Mar 28 00:00:00 EST 2005
-count=  3 Thu Apr 28 00:00:00 EDT 2005
-count=  4 Sat May 28 00:00:00 EDT 2005
-count=  5 Tue Jun 28 00:00:00 EDT 2005
-count=  6 Thu Jul 28 00:00:00 EDT 2005
-count=  7 Sun Aug 28 00:00:00 EDT 2005
-
-I need to keep my own date/time, and not use Time as the basic object in my iteration.
-
-Then, I can eliminate non-existent times before yielding them.
-
-- the rrule tests depended on being in EST/EDT, so no longer pass...
 
 - when encoding a Date or Time, set value=date/value=date-time parameter?
 
@@ -156,10 +218,6 @@ Then, I can eliminate non-existent times before yielding them.
 
 - Time#plusmonth/day should ask itself if it is in utc, then call Time.utc or Time.local
   as appropriate.
-
-- bug: deal with "round down" that Date does when you add a month, and the dofmonth is not
-  in valid range -> if you have jan31 repeating monthly with iCal, you shouldn't get an
-  occurence in Feb
 
 - do coverage testing: http://rubyforge.org/project/showfiles.php?group_id=18&release_id=360
 
@@ -186,11 +244,6 @@ Then, I can eliminate non-existent times before yielding them.
   (as are ; and ,)
 
 - freeze everything? -> Need to test this.
-
-== JR
-
-Examples don't run!
-
 
 == VCARD VERSION INTEROP
 
