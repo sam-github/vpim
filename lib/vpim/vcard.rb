@@ -586,7 +586,7 @@ module Vpim
 
     # Return line for a field
     def f2l(field) #:nodoc:
-      Line.decode(@@decode, self, field)
+      Line.decode(@@decode, self, field) rescue nil
     end
 
     # With no block, returns an Array of Line. If +name+ is specified, the
@@ -662,7 +662,7 @@ module Vpim
     def Vcard.decode(card)
       if card.respond_to? :to_str
         string = card.to_str
-      elsif card.kind_of? IO
+      elsif card.respond_to? :read
         string = card.read(nil)
       else
         raise ArgumentError, "Vcard.decode cannot be called with a #{card.type}"
@@ -679,9 +679,9 @@ module Vpim
           arr = string.unpack('v*')
           arr.shift
           string = arr.pack('U*')
-        when /^\x00\x62/i
+        when /^\x00B/i
           string = string.unpack('n*').pack('U*')
-        when /^\x62\x00/i
+        when /^B\x00/i
           string = string.unpack('v*').pack('U*')
       end
 
@@ -769,11 +769,11 @@ module Vpim
       end
 
       if fields.first
-         line = Line.decode(@@decode, self, fields.first)
+        line = Line.decode(@@decode, self, fields.first) rescue nil
 
-         if line
-           return line.value
-         end
+        if line
+          return line.value
+        end
       end
 
       nil
