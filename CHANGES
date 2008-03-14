@@ -1,3 +1,17 @@
+0.604 - 2008-03-13
+
+- Fixed a bug with lower-case UTF-16 encoded cards not being detected properly.
+
+- Skip over invalidly encoded vCard fields when enumerating them.
+
+
+0.602 - 2008-03-12
+
+- Updated reminder utility to work with iCal 3.
+
+- Reworked gem to include tests, samples, and binaries.
+
+
 0.597 - 2008-03-01
 
 - Support for BYSETPOS in recurrence rules (development supported by ZipDX.com)

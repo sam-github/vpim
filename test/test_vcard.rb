@@ -729,5 +729,57 @@ END:VCARD
     assert_equal(note, card.note)
   end
 
+  def test_empty_tel
+    cin = <<___
+BEGIN:VCARD
+TEL;HOME;FAX:
+END:VCARD
+___
+
+    card = Vpim::Vcard.decode(cin).first
+    assert_equal(card.telephone, nil)
+    assert_equal(card.telephone('HOME'), nil)
+    assert_equal([], card.telephones)
+    
+  end
+
+
+  def utf_name_test(c)
+
+    begin
+    card = Vpim::Vcard.decode(c).first
+    assert_equal("name", card.name.family)
+    rescue
+      $!.message << " #{c.inspect}"
+      raise
+    end
+  end
+
+  def be(s)
+    s.unpack('U*').pack('n*')
+  end
+  def le(s)
+    s.unpack('U*').pack('v*')
+  end
+
+  def test_utf_heuristics
+    bom = "\xEF\xBB\xBF"
+    dat = "BEGIN:VCARD\nN:name\nEND:VCARD\n"
+    utf_name_test(bom+dat)
+    utf_name_test(bom+dat.downcase)
+    utf_name_test(dat)
+    utf_name_test(dat.downcase)
+
+    utf_name_test(be(bom+dat))
+    utf_name_test(be(bom+dat.downcase))
+    utf_name_test(be(dat))
+    utf_name_test(be(dat.downcase))
+
+    utf_name_test(le(bom+dat))
+    utf_name_test(le(bom+dat.downcase))
+    utf_name_test(le(dat))
+    utf_name_test(le(dat.downcase))
+  end
+
 end
 
