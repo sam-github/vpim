@@ -36,9 +36,9 @@ subscribe to "vpim-talk":
 
 = Thanks
 
-- Ruby Forge: for their generous hosting of this project.
-- ZipDX.com: for sponsoring support for FREQ=weekly and BYSETPOS in recurrence
-  rules.
+- http://RubyForge.org: for their generous hosting of this project.
+- http://ZipDX.com: for sponsoring development of FREQ=weekly and BYSETPOS in
+  recurrence rules.
 
 = Examples
 
