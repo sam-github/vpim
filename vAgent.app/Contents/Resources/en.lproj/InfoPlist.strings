@@ -1,0 +1,4 @@
+CFBundleName = "VpimAgent";
+CFBundleShortVersionString = "1.0";
+CFBundleGetInfoString = "VpimAgent version 1.0 Copyright 2008 Sam Roberts";
+NSHumanReadableCopyright = "Copyright 2008 Sam Roberts.";

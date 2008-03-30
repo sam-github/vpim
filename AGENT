@@ -1,3 +1,31 @@
+== Platypus feedback
+
+- executable bit should be set on script
+
+- selecting a folder to be added to the resource file seems to have the
+  side-effect of making the .app get generated into that folder
+
+- how does script know the location of the .app or it's Resources folder?
+
+    From $0
+
+- custom icon doesn't make it into the shell command to create the app?
+
+
+To use the tool it's preferred that you supply images at four different
+resolutions: 16x16, 32x32, 48x48, and 128x128. But, you can create a .icns file
+with as little as one image. Apple's help on this subject states: "If you give
+IconComposer only one image, it should be optimized to look best at 128x128
+pixels. This ensures it looks goods when displayed at the maximum resolution of
+128x128 pixels, and looks acceptable when scaled down to the smaller
+resolutions."
+
+Regarding image formats you can supply, the help system also states:
+"IconComposer can create icons from the following image formats: GIF, JPEG,
+PDF, PICT, PNG, TIFF, and any of the QuickTime-supported image formats."
+
+
+
 == 3RD PARTY
 
 todo: a OS X mail plugin that doesn't open a GUI, it just sends mail....
@@ -9,6 +37,8 @@ todo: RSS
   - add atom to rss/
 
 == UNSORTED
+
+Rerepresent craigslist as .xls...
 
 Figure out how iCal stores whether a calendar is in-view or not, and use to drive
 reminder.
