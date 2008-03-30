@@ -1,3 +1,7 @@
+
+- KAddressBook compatibility fix - allow / in field names, even though it is
+  illegal in vCard 3.0.
+
 0.604 - 2008-03-13
 
 - Fixed a bug with lower-case UTF-16 encoded cards not being detected properly.

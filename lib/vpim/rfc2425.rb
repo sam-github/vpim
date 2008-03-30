@@ -15,7 +15,8 @@ module Vpim
     # 1*(ALPHA / DIGIT / "-")
     # Note: I think I can add A-Z here, and get rid of the "i" matches elsewhere.
     # Note: added '_' to allowed because its produced by Notes - X-LOTUS-CHILD_UID
-    NAME    = '[-a-z0-9_]+'
+    # Note: added '/' to allowed because its produced by KAddressBook - X-messaging/xmpp-All:
+    NAME    = '[-a-z0-9_/]+'
 
     # <"> <Any character except CTLs, DQUOTE> <">
     QSTR    = '"([^"]*)"'

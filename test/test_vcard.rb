@@ -743,6 +743,18 @@ ___
     
   end
 
+  def test_slash_in_field_name
+    cin = <<___
+BEGIN:VCARD
+X-messaging/xmpp-All:some@jabber.id
+END:VCARD
+___
+
+    card = Vpim::Vcard.decode(cin).first
+    assert_equal(card.value("X-messaging/xmpp-All"), "some@jabber.id")
+    assert_equal(card["X-messaging/xmpp-All"], "some@jabber.id")
+  end
+
 
   def utf_name_test(c)
 
