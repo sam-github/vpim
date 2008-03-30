@@ -1,0 +1,23 @@
+#!/usr/bin/ruby
+
+$-w = true
+
+STDOUT.sync = STDERR.sync = true
+
+def path_strip(path, elements)
+  elements.times do
+    path = File.dirname(path)
+  end
+  path
+end
+
+appbase = path_strip($0, 3)
+libbase = path_strip($0, 1)
+
+$:.unshift(libbase + "/lib")
+
+puts "application base = #{appbase}"
+
+require "vpim/agent/main"
+
+

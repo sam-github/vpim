@@ -6,7 +6,9 @@ RUBY=/usr/bin/ruby
 
 .PHONY: default doc test other
 
-do:
+do: vagent
+
+reminder:
 	ruby -I lib samples/reminder.rb
 
 default: test
@@ -123,7 +125,7 @@ gem:
 	cp -v samples/rrule.rb bin/rrule
 	chmod +x bin/*
 	ruby vpim.gemspec
-	mv vpim*-$V.gem releases/
+	mv vpim*.gem releases/
 
 geminstall:
 	gem install -V 
@@ -153,5 +155,25 @@ pkg:
 	cp test/test_*.rb          $R/test
 	# no docs: cp -r  doc      $R/
 	cd releases && tar -zcf $P.tgz $P
+
+vagent:
+	mkdir -p vAgent.app/Contents/Resources/lib/vpim/agent
+	mkdir -p vAgent.app/Contents/Resources/lib/vpim/maker
+	mkdir -p vAgent.app/Contents/Resources/lib/vpim/property
+	cp lib/*.rb                vAgent.app/Contents/Resources/lib/
+	cp lib/vpim/*.rb           vAgent.app/Contents/Resources/lib/vpim/
+	cp lib/vpim/agent/*.rb     vAgent.app/Contents/Resources/lib/vpim/agent/
+	cp lib/vpim/maker/*.rb     vAgent.app/Contents/Resources/lib/vpim/maker/
+	cp lib/vpim/property/*.rb  vAgent.app/Contents/Resources/lib/vpim/property/
+	open vAgent.app
+
+
+# It's easier to just copy the resources I want into the target .app structure.
+#
+#VpimAgent.app: vpimd
+#	rm -rf "$@"
+#	/usr/local/bin/platypus -BR -a $< -t 'Ruby' -o 'TextWindow' -u 'Sam Roberts' -i '/usr/bin/ruby' -V $V -s '????' -I 'org.sam.vpimagent' -f '/Users/sam/p/ruby/vpim/root/branch/stable/lib' '/Users/sam/p/ruby/vpim/root/branch/stable/vpimd' $@
+
+
 
 # vim:noexpandtab:tabstop=2:
