@@ -25,18 +25,20 @@ module Vpim
       # need it, contact me and implementation will get on the schedule.
       module Recurrence
         # The times this event occurs, as a Vpim::Rrule.
-        def occurences
+        def occurrences
           start = dtstart
           unless start
-            raise ArgumentError, "Components with no DTSTART: don't have occurences!"
+            raise ArgumentError, "Components with no DTSTART: don't have occurrences!"
           end
           Vpim::Rrule.new(start, propvalue('RRULE'))
         end
 
+        alias occurences occurrences #:nodoc: backwards compatibility
+
         # Check if this event overlaps with the time period later than or equal to +t0+, but
         # earlier than +t1+.
         def occurs_in?(t0, t1)
-          occurences.each_until(t1).detect { |t| tend = t + (duration || 0); tend > t0 }
+          occurrences.each_until(t1).detect { |t| tend = t + (duration || 0); tend > t0 }
         end
 
         def rdates

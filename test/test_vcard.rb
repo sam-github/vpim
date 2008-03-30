@@ -16,7 +16,7 @@ def assert_equal_nospace(expected, got)
 end
 
 
-# Test cases: multiple occurences of type
+# Test cases: multiple occurrences of type
 =begin
 begin:VCARD
 version:2.1

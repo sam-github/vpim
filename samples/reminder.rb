@@ -117,8 +117,8 @@ end
 
 puts
 
-def start_of_first_occurence(t0, t1, e)
-  e.occurences.each_until(t1).each do |t|
+def start_of_first_occurrence(t0, t1, e)
+  e.occurrences.each_until(t1).each do |t|
     # An event might start before t0, but end after it..., in which case
     # we are still interested.
     if (t + (e.duration || 0)) >= t0
@@ -129,7 +129,7 @@ def start_of_first_occurence(t0, t1, e)
 end
 
 all_events.sort! do |lhs, rhs|
-  start_of_first_occurence(t0, t1, lhs) <=> start_of_first_occurence(t0, t1, rhs)
+  start_of_first_occurrence(t0, t1, lhs) <=> start_of_first_occurrence(t0, t1, rhs)
 end
 
 all_events.each do |e|
@@ -145,7 +145,7 @@ all_events.each do |e|
   end
 
   i = 1
-  e.occurences.each_until(t1).each do |t|
+  e.occurrences.each_until(t1).each do |t|
     # An event might start before t0, but end after it..., in which case
     # we are still interested.
     dstr = ''

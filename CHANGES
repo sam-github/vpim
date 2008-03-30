@@ -1,4 +1,6 @@
 
+- Global fix of misspellings of "occurrence"
+
 - KAddressBook compatibility fix - allow / in field names, even though it is
   illegal in vCard 3.0.
 

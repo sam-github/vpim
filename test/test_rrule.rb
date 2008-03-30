@@ -214,7 +214,7 @@ VEC
     )
   end
 
-  def test_rfc2445_examples_weekly_for_10_occurences
+  def test_rfc2445_examples_weekly_for_10_occurrences
     # Weekly for 10 occurrences
     #
     #   DTSTART;TZID=US-Eastern:19970902T090000

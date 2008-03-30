@@ -61,7 +61,7 @@ class Date
   # +mon+, and day-of-the-week +wday+.
   #
   # The nth, +n+, occurrence of +wday+ within the period will be generated
-  # (+n+ defaults to 1).  If +n+ is positive, the nth occurence from the
+  # (+n+ defaults to 1).  If +n+ is positive, the nth occurrence from the
   # beginning of the period will be returned, if negative, the nth occurrence
   # from the end of the period will be returned.
   #
@@ -154,7 +154,7 @@ class DateGen
   # 0-6, where 0 is Sunday).
   #
   # If +n+ is specified, only the nth occurrence of +wday+ within the period
-  # will be generated.  If +n+ is positive, the nth occurence from the
+  # will be generated.  If +n+ is positive, the nth occurrence from the
   # beginning of the period will be returned, if negative, the nth occurrence
   # from the end of the period will be returned.
   #

@@ -32,7 +32,7 @@ end
 
 module Vpim
 
-  # Implements the iCalendar recurence rule syntax. See etc/rrule.txt for the
+  # Implements the iCalendar recurrence rule syntax. See etc/rrule.txt for the
   # syntax description and examples from RFC 2445. The description is pretty
   # hard to understand, but the examples are more helpful.
   #
@@ -124,7 +124,7 @@ module Vpim
        end
     end
 
-    # Return an Enumerable, it's #each() will yield over all occurences up to
+    # Return an Enumerable, it's #each() will yield over all occurrences up to
     # (and not including) time +dountil+.
     def each_until(dountil)
       Vpim::Enumerator.new(self, dountil)
@@ -133,7 +133,7 @@ module Vpim
     # Yields for each +ytime+ in the recurring set of events.
     #
     # Warning: the set may be infinite! If you need an upper bound on the
-    # number of occurences, you need to implement a count, or pass a time,
+    # number of occurrences, you need to implement a count, or pass a time,
     # +dountil+, which will not be iterated past (i.e. all times yielded will be
     # less than +dountil+).
     #
@@ -152,7 +152,7 @@ module Vpim
       end
       count = 1
 
-      # With no recurrence, DTSTART is the only occurence.
+      # With no recurrence, DTSTART is the only occurrence.
       if !@rrule
         return self
       end
@@ -171,7 +171,7 @@ module Vpim
 
         case @freq
           #when 'YEARLY' then
-          # Don't need to keep track of year, all occurences are within t's
+          # Don't need to keep track of year, all occurrences are within t's
           # year.
         when 'MONTHLY'  then  days.month = t.month
         when 'WEEKLY'   then  #days.month = t.month
@@ -298,7 +298,7 @@ module Vpim
           end.compact # set positions out of scope will be nil, RFC says ignore them
         end
 
-        # Yield the occurence, if we haven't gone over COUNT, or past UNTIL, or
+        # Yield the occurrence, if we haven't gone over COUNT, or past UNTIL, or
         # past the end of representable time.
 
         yset.each do |y|

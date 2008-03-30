@@ -100,6 +100,25 @@ ___
     assert_equal(icstodo, cal.to_s)
   end
 
+  # Tracker #18920
+  def test_recurring_todos
+icstodo =<<___
+BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VTODO
+SUMMARY:todo
+DTSTART:20040415T120000
+RRULE:FREQ=WEEKLY;COUNT=2
+END:VTODO
+END:VCALENDAR
+___
+
+    cal = Icalendar.decode(icstodo).first
+    todo = cal.todos.first
+    assert(todo)
+    assert_equal(todo.occurrences.to_a.size, 2)
+  end
+
   def test_1
     req = Icalendar.decode(Req_1).first
 

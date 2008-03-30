@@ -94,7 +94,7 @@ ARGV.each do |file|
       puts "Organized by: #{e.organizer.to_s}"
 
       # TODO - spec as hours/mins/secs
-      e.occurences.each_with_index do |t, i|
+      e.occurrences.each_with_index do |t, i|
         if(i < 1)
           puts "At time: #{t}" +( e.duration ? " for #{Duration.secs(e.duration).to_s}" : '' )
         else

@@ -155,7 +155,7 @@ def puts_properties(c)
   end
 
   begin
-    c.occurences.each_with_index do |t, i|
+    c.occurrences.each_with_index do |t, i|
       if(i < 10)
         puts "   #{i+1} -> #{t}"
       else
@@ -164,7 +164,7 @@ def puts_properties(c)
       end
     end
   rescue ArgumentError
-    # No occurences.
+    # No occurrences.
   end
 
 end
