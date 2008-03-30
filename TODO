@@ -1,12 +1,60 @@
+== Sources
+
+- Review l.vpim previous to this:
+	Subject: [Vpim-talk] differentiating dates and times in dtstart/dtend?
+	From: Sanjay Vakil <svakil@gmail.com>
+	Date: Thu, 25 May 2006 00:12:35 -0400
+
+- Review icalendar mailing list...
+
+Read code:
+
+  http://calterm.rubyforge.org/svn/trunk/lib/
+
+
+
 == BUGS & User-Requests
 
-Review icalendar mailing list...
+- > Secondly, is there a way to distinguish between events which are
+> fundamentally "day" events and those which have a time component?
 
-Review l.vpim previous to this:
+I have the changes locally to make dtstart/... return Date or Time,
+depending on what the start is. The change breaks other things. :-(
 
-- Subject: [Vpim-talk]  Incorrect unicode conversion
-From: Administration TURNS <administration@turns.net>
 
+- can't export if there is a Vtodo?
+
+- EXDATE, etc.
+
+- Icalendar::Get::Common missing
+
+I am brand new to vpim, so I tried to use the example cmd-itip.sh. But it
+fails on the code:
+
+if e.comments
+with the error message:
+./cmd-itip.txt.sh:113: undefined method `comment' for
+  #<Vpim::Icalendar::Vevent:0x101899c> (NoMethodError)
+
+In the rdoc it says there should be Icalendar::Get::Common#comment
+
+But there is no module Get in Vpim:Icalendar. There is the module Set...
+
+Am I missing something?
+
+- photos and vPim and addressbook
+
+From: Magnus Mager <magnus-m@gmx.net>
+Date: Fri, 13 Jul 2007 23:36:57 +0200
+
+- something about line folding?
+
+Subject: Re: [Vpim-talk] VPIM - outlook contact failed to parse
+From: "Tijn Schuurmans - Soocial.com" <tijn@soocial.com>
+Date: Mon, 1 Oct 2007 13:46:37 +0200
+
+
+- RDATE support for Cosmin Andriescu <cosmin@speakeasy.net>
 
 - http://rubyforge.org/pipermail/icalendar-devel/2007-February/000061.html
 
