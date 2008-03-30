@@ -1,4 +1,12 @@
 
+- Fixed some problems with rescue statements not being specific enough.
+
+- Vcard#birthday may now return a DateTime.
+
+- Added Vcard#urls
+
+- Fixed a mispelled Uri in Vcard#url
+
 - Global fix of misspellings of "occurrence"
 
 - KAddressBook compatibility fix - allow / in field names, even though it is

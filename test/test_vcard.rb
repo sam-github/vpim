@@ -755,6 +755,53 @@ ___
     assert_equal(card["X-messaging/xmpp-All"], "some@jabber.id")
   end
 
+  def test_url_decode
+    cin=<<'---'
+BEGIN:VCARD
+URL:www.email.com
+URL:www.work.com
+END:VCARD
+---
+    card = Vpim::Vcard.decode(cin).first
+
+    assert_equal("www.email.com", card.url.uri)
+    assert_equal("www.email.com", card.url.uri.to_s)
+    assert_equal("www.email.com", card.urls.first.uri)
+    assert_equal("www.work.com", card.urls.last.uri)
+  end
+
+  def test_bday_decode
+    cin=<<'---'
+BEGIN:VCARD
+BDAY:1970-07-14
+END:VCARD
+---
+    card = Vpim::Vcard.decode(cin).first
+
+    card.birthday
+
+    assert_equal(Date.new(1970, 7, 14), card.birthday)
+    assert_equal(1, card.values("bday").size)
+
+    # Nobody should have multiple bdays, I hope, but its allowed syntactically,
+    # so test it, along with some variant forms of BDAY
+    cin=<<'---'
+BEGIN:VCARD
+BDAY:1970-07-14
+BDAY:70-7-14
+BDAY:1970-07-15T03:45:12
+BDAY:1970-07-15T03:45:12Z
+END:VCARD
+---
+    card = Vpim::Vcard.decode(cin).first
+
+    assert_equal(Date.new(1970, 7, 14), card.birthday)
+    assert_equal(4, card.values("bday").size)
+    assert_equal(Date.new(1970, 7, 14), card.values("bday").first)
+    assert_equal(Date.new(Time.now.year, 7, 14), card.values("bday")[1])
+    assert_equal(DateTime.new(1970, 7, 15, 3, 45, 12).to_s, card.values("bday")[2].to_s)
+    assert_equal(DateTime.new(1970, 7, 15, 3, 45, 12).to_s, card.values("bday").last.to_s)
+  end
 
   def utf_name_test(c)
 

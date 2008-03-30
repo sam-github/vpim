@@ -446,11 +446,9 @@ module Vpim
     def decode_date_or_datetime(field) #:nodoc:
       date = nil
       begin
-        date = Vpim.decode_date(field.value_raw)
-        date = Date.new(*date)
+        date = Vpim.decode_date_to_date(field.value_raw)
       rescue Vpim::InvalidEncodingError
-        # FIXME - try and decode as DATE-TIME
-        raise
+        date = Vpim.decode_date_time_to_datetime(field.value_raw)
       end
       Line.new( field.group, field.name, date )
     end
@@ -460,7 +458,9 @@ module Vpim
         return decode_date_or_datetime(field)
 
       rescue Vpim::InvalidEncodingError
-        if field.value =~ /(\d+)-(\d+)-(\d+)/
+        # Hack around BDAY dates hat are correct in the month and day, but have
+        # some kind of garbage in the year.
+        if field.value =~ /^\s*(\d+)-(\d+)-(\d+)\s*$/
           y = $1.to_i
           m = $2.to_i
           d = $3.to_i
@@ -502,7 +502,7 @@ module Vpim
     end
 
     def decode_uri(field) #:nodoc:
-      Line.new( field.group, field.name, Uri.new(field.value) )
+      Line.new( field.group, field.name, Attachment::Uri.new(field.value, nil) )
     end
 
     def decode_agent(field) #:nodoc:
@@ -586,7 +586,11 @@ module Vpim
 
     # Return line for a field
     def f2l(field) #:nodoc:
-      Line.decode(@@decode, self, field) rescue nil
+      begin
+        Line.decode(@@decode, self, field)
+      rescue InvalidEncodingError
+        # Skip invalidly encoded fields.
+      end
     end
 
     # With no block, returns an Array of Line. If +name+ is specified, the
@@ -769,7 +773,10 @@ module Vpim
       end
 
       if fields.first
-        line = Line.decode(@@decode, self, fields.first) rescue nil
+        line = begin
+                 Line.decode(@@decode, self, fields.first)
+               rescue Vpim::InvalidEncodingError
+               end
 
         if line
           return line.value
@@ -955,9 +962,14 @@ module Vpim
 
     ## UID
 
-    # The URL value, a Uri. A wrapper around #value('NOTE').
+    # The URL value, a Attachment::Uri. A wrapper around #value('URL').
     def url
       value('URL')
+    end
+
+    # The URL values, an Attachment::Uri. A wrapper around #values('URL').
+    def urls
+      values('URL')
     end
 
     # The VERSION multiplied by 10 as an Integer.  For example, a VERSION:2.1

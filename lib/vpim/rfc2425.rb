@@ -52,7 +52,7 @@ module Vpim
     # time-second = 2 DIGIT
     # time-secfrac = "," 1*DIGIT
     # time-zone = "Z" / time-numzone
-    # time-numzome = sign time-hour [":"] time-minute
+    # time-numzone = sign time-hour [":"] time-minute
     TIME = '(\d\d):?(\d\d):?(\d\d)(\.\d+)?(Z|[-+]\d\d:?\d\d)?'
 
     # integer = (["+"] / "-") 1*DIGIT
@@ -112,7 +112,7 @@ module Vpim
     [$1.to_i, $2.to_i, $3.to_i]
   end
 
-  # Convert a RFC 2425 date into an array of Date objects.
+  # Convert a RFC 2425 date into a Date object.
   def self.decode_date_to_date(v)
     Date.new(*decode_date(v))
   end
@@ -173,6 +173,12 @@ module Vpim
       # time
       hour.to_i, min.to_i, sec.to_i, secfrac ? secfrac.to_f : 0, tz
     ]
+  end
+
+  def Vpim.decode_date_time_to_datetime(v) #:nodoc:
+    year, month, day, hour, min, sec, secfrac, tz = Vpim.decode_date_time(v)
+    # TODO - DateTime understands timezones, so we could decode tz and use it.
+    DateTime.civil(year, month, day, hour, min, sec, 0)
   end
 
   # Vpim.decode_boolean
