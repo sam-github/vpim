@@ -1,3 +1,4 @@
+0.619 - 2008-03-30
 
 - Fixed some problems with rescue statements not being specific enough.
 
@@ -11,6 +12,7 @@
 
 - KAddressBook compatibility fix - allow / in field names, even though it is
   illegal in vCard 3.0.
+
 
 0.604 - 2008-03-13
 
