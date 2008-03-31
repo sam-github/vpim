@@ -2,6 +2,8 @@
 
 $-w = true
 
+$:.unshift File.dirname($0) + "/lib"
+
 unless STDOUT.isatty
   # Reopen io to somewhere we can see it.
   STDOUT.reopen(Dir.getwd + "/vpimd.log", "w")

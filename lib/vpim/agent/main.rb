@@ -5,18 +5,6 @@ require 'webrick'
 require 'vpim/icalendar'
 require 'vpim/vcard'
 
-# Notes on debugging with dnssd API: check system.log, it should give info.
-
-#require 'pp'
-#module Kernel
-#  def to_pp
-#    s = PP.pp(self, '')
-#    s.chomp!
-#    s
-#  end
-#end
-
-
 #--------------------------------------------------------------------------------
 # Load DNSSD support, if possible.
 # TODO - should be in net/dns/dnssd
@@ -276,7 +264,9 @@ server.mount( '/', VpimServlet )
 #--------------------------------------------------------------------------------
 # Run server
 
-$services << DNSSD.register($vpim_title, '_http._tcp', 'local', $port, 'path' => '/' )
+if DNSSD
+  $services << DNSSD.register($vpim_title, '_http._tcp', 'local', $port, 'path' => '/' )
+end
 
 ['INT', 'TERM'].each do |signal| 
   trap(signal) do
