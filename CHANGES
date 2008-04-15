@@ -1,3 +1,7 @@
+
+- Support Highrisehq.com's broken google talk field (see test_vcard.rb for
+  examples, thanks to Terry Tong for reporting).
+
 0.619 - 2008-03-30
 
 - Fixed some problems with rescue statements not being specific enough.

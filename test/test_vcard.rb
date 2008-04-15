@@ -840,5 +840,61 @@ END:VCARD
     utf_name_test(le(dat.downcase))
   end
 
+  # Broken output from Highrise. Report to support@highrisehq.com
+  def test_highrises_invalid_google_talk_field
+    c = <<'__'
+BEGIN:VCARD
+VERSION:3.0
+REV:20080409T095515Z
+X-YAHOO;TYPE=HOME:yahoo.john
+X-GOOGLE TALK;TYPE=WORK:gtalk.john
+X-SAMETIME;TYPE=WORK:sametime.john
+X-SKYPE;TYPE=WORK:skype.john
+X-MSN;TYPE=WORK:msn.john
+X-JABBER;TYPE=WORK:jabber.john
+N:Doe;John;;;
+ADR;TYPE=WORK:;;456 Grandview Building\, Wide Street;San Diego;CA;90204;
+ United States
+ADR;TYPE=HOME:;;123 Sweet Home\, Narrow Street;New York;NY;91102;United
+  States
+URL;TYPE=OTHER:http\://www.homepage.com
+URL;TYPE=HOME:http\://www.home.com
+URL;TYPE=WORK:http\://www.work.com
+URL;TYPE=OTHER:http\://www.other.com
+URL;TYPE=OTHER:http\://www.custom.com
+ORG:John Doe & Partners Limited;;
+TEL;TYPE=WORK:11111111
+TEL;TYPE=CELL:22222222
+TEL;TYPE=HOME:33333333
+TEL;TYPE=OTHER:44444444
+TEL;TYPE=FAX:55555555
+TEL;TYPE=FAX:66666666
+TEL;TYPE=PAGER:77777777
+TEL;TYPE=OTHER:88888888
+TEL;TYPE=OTHER:99999999
+UID:cc548e11-569e-3bf5-a9aa-722de4571f4a
+X-ICQ;TYPE=HOME:icq.john
+EMAIL;TYPE=WORK,INTERNET:john.doe@work.com
+EMAIL;TYPE=HOME,INTERNET:john.doe@home.com
+EMAIL;TYPE=OTHER,INTERNET:john.doe@other.com
+EMAIL;TYPE=OTHER,INTERNET:john.doe@custom.com
+TITLE:Sales Manager
+X-OTHER;TYPE=WORK:other.john
+X-AIM;TYPE=WORK:aim.john
+X-QQ;TYPE=WORK:qq.john
+FN:John Doe
+END:VCARD
+__
+
+    card = Vpim::Vcard.decode(c).first
+    assert_equal("Doe", card.name.family)
+    assert_equal("456 Grandview Building, Wide Street", card.address('work').street)
+    assert_equal("123 Sweet Home, Narrow Street", card.address('home').street)
+    assert_equal("John Doe & Partners Limited", card.org.first)
+    assert_equal("gtalk.john", card.value("x-google talk"))
+    assert_equal("www.homepage.com", card.url.uri)
+
+  end
+
 end
 
