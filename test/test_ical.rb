@@ -216,5 +216,14 @@ ___
   def test_decode_duration_with_composite_duration
     assert_equal((15*86400+5*3600+20), Icalendar.decode_duration('P15DT5H0M20S'))
   end
+
+  def test_create_with_prodid
+    prodid = "me//here/non-sgml"
+    cal = Icalendar.create2(prodid) do |cal|
+      assert_respond_to(cal, :push)
+    end
+    assert_equal(prodid, cal.producer)
+  end
+
 end
 

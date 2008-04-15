@@ -1,4 +1,7 @@
 
+- Modified Icalendar#create2 so only prodid can be supplied and cal is yielded
+  so events/etc. can be pushed.
+
 - Support Highrisehq.com's broken google talk field (see test_vcard.rb for
   examples, thanks to Terry Tong for reporting).
 

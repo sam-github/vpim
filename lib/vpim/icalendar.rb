@@ -97,18 +97,31 @@ module Vpim
       push Vevent::Maker.make( &block )
     end
 
-    # FIXME - could take mandatory fields as an arguments
-    # FIXME - args: support PRODID
-    # FIXME - yield an Icalendar::Maker if block provided
-    # FIXME - maker#prodid=
-    def Icalendar.create2(args = nil)
+    # Allows customization of calendar creation.
+    class Maker
+      def initialize #:nodoc:
+        @prodid = Vpim::PRODID
+      end
+
+      attr :prodid
+    end
+
+    # The producer ID defaults to Vpim::PRODID but you can set it to something
+    # specific to your application.
+    def Icalendar.create2(producer = Vpim::PRODID) #:yield: self
       # FIXME - make the primary API
       di = DirectoryInfo.create( [ DirectoryInfo::Field.create('VERSION', '2.0') ], 'VCALENDAR' )
 
-      di.push_unique DirectoryInfo::Field.create('PRODID',   Vpim::PRODID)
+      di.push_unique DirectoryInfo::Field.create('PRODID', producer.to_str)
       di.push_unique DirectoryInfo::Field.create('CALSCALE', "Gregorian")
 
-      new(di.to_a)
+      cal = new(di.to_a)
+
+      if block_given?
+        yield cal
+      end
+
+      cal
     end
 
     # Create a new Icalendar object with the minimal set of fields for a valid
@@ -174,6 +187,8 @@ module Vpim
       end
       self
     end
+
+    alias :<< :push
 
     # Check if the protocol method is +method+
     def protocol?(method)
