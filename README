@@ -1,11 +1,36 @@
-Author::     Sam Roberts <sroberts@uniserve.com>
+Author::     Sam Roberts <vieuxtech@gmail.com>
 Copyright::  Copyright (C) 2008 Sam Roberts
 License::    May be distributed under the same terms as Ruby
 Homepage::   http://vpim.rubyforge.org
 Download::   http://rubyforge.org/projects/vpim
+Install::    sudo gem install vpim
 
-This is a pure-ruby library for decoding and encoding vCard and iCalendar data
-("personal information") called vPim.
+vPim provides calendaring, scheduling, and contact support for Ruby through the
+standard iCalendar and vCard data formats for "personal information" exchange.
+
+= Thanks
+
+- http://ZipDX.com: for sponsoring development of FREQ=weekly and BYSETPOS in
+  recurrence rules.
+- http://RubyForge.org: for their generous hosting of this project.
+
+= Installation
+
+There is a vPim package installable using ruby-gems:
+
+  # sudo gem install vpim (may require root privilege)
+
+It is also installable in the standard way. Untar the package, and do:
+
+  $ ruby setup.rb --help
+
+or do:
+
+  $ ruby setup.rb config
+  $ ruby setup.rb setup
+  # ruby setup.rb install (may require root privilege)
+
+= Overview
 
 vCard (RFC 2426) is a format for personal information, see Vpim::Vcard and
 Vpim::Maker::Vcard.
@@ -22,23 +47,6 @@ something missing or have suggestions, please contact me. I can't promise
 instantaneous turnaround, but I might be able to suggest another approach, and
 features requested by users of vPim go to the top of the todo list. If you need
 a feature for a commercial project, consider sponsoring development.
-
-= Project Information
-
-The latest release can be downloaded from the Ruby Forge project page:
-
-- http://rubyforge.org/projects/vpim
-
-For notifications about new releases, or asking questions about vPim, please
-subscribe to "vpim-talk":
-
-- http://rubyforge.org/mailman/listinfo/vpim-talk
-
-= Thanks
-
-- http://RubyForge.org: for their generous hosting of this project.
-- http://ZipDX.com: for sponsoring development of FREQ=weekly and BYSETPOS in
-  recurrence rules.
 
 = Examples
 
@@ -156,20 +164,19 @@ iCalendar examples are:
   Apple's iCal calendars
 - link:rrule.txt: utility for printing recurrence rules
 - link:ics-dump.txt: utility for dumping contents of .ics files
-module Vpim
-end
 
-= Installation
+= Project Information
 
-There is a vPim package installable using ruby-gems.
+vPim can be downloaded from the Ruby Forge project page:
 
-It is also installable in the standard way. Untar the package, and see:
+- http://rubyforge.org/projects/vpim
 
-  ruby setup.rb --help
+or installed as a gem:
 
-or do:
+- sudo gem install vpim
 
-  $ ruby setup.rb config
-  $ ruby setup.rb setup
-  # ruby setup.rb install (may require root privilege)
+For notifications about new releases, or to ask questions about vPim, please
+subscribe to "vpim-talk":
+
+- http://rubyforge.org/mailman/listinfo/vpim-talk
 
