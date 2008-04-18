@@ -1,20 +1,20 @@
 /README.mutt/1.1/Sat Mar 10 02:14:12 2007//
 /ab-query.rb/1.2/Sat Mar  1 23:25:40 2008//
-/cmd-itip.rb/1.2/Sat Mar  1 23:25:40 2008//
 /ex_cpvcard.rb/1.1/Sat Mar  1 23:25:40 2008//
 /ex_get_vcard_photo.rb/1.1/Sat Mar  1 23:25:40 2008//
 /ex_mkv21vcard.rb/1.1/Sat Mar  1 23:25:40 2008//
 /ex_mkvcard.rb/1.1/Sat Mar  1 23:25:40 2008//
 /ex_mkyourown.rb/1.1/Sat Mar  1 23:25:40 2008//
-/ics-dump.rb/1.2/Sat Mar  1 23:25:40 2008//
 /ics-to-rss.rb/1.1/Sat Mar  1 23:25:40 2008//
 /mutt-aliases-to-vcf.rb/1.2/Sat Mar  1 23:25:40 2008//
 /osx-wrappers.rb/1.1/Sat Mar  1 23:25:40 2008//
-/reminder.rb/1.1/Sat Mar  1 23:25:40 2008//
 /rrule.rb/1.2/Sat Mar  1 23:25:40 2008//
 /tabbed-file-to-vcf.rb/1.1/Sat Mar  1 23:25:40 2008//
 /vcf-dump.rb/1.2/Sat Mar  1 23:25:40 2008//
 /vcf-lines.rb/1.2/Sat Mar  1 23:25:40 2008//
 /vcf-to-ics.rb/1.1/Sat Mar  1 23:25:40 2008//
 /vcf-to-mutt.rb/1.2/Sat Mar  1 23:25:40 2008//
+/cmd-itip.rb/1.3/Sun Mar 30 19:28:26 2008//
+/ics-dump.rb/1.3/Sun Mar 30 19:28:33 2008//
+/reminder.rb/1.2/Sun Mar 30 19:31:17 2008//
 D
