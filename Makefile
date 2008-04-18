@@ -7,6 +7,7 @@ RUBY=/usr/bin/ruby
 .PHONY: default doc test other
 
 do: vagent
+	open vAgent.app
 
 reminder:
 	ruby -I lib samples/reminder.rb
@@ -42,9 +43,9 @@ test_new:
 test_old:
 	for r in /usr/bin/ruby; do $$r -w $(TEST); done
 
-
-changes:
-	cvs-changelog -r -f changes.cvs
+coverage:
+	rcov -w -I lib:test test/test_all.rb
+	open coverage/index.html
 
 other:
 	ruby -w -I . ab-query.rb --me
@@ -160,12 +161,10 @@ vagent:
 	mkdir -p vAgent.app/Contents/Resources/lib/vpim/agent
 	mkdir -p vAgent.app/Contents/Resources/lib/vpim/maker
 	mkdir -p vAgent.app/Contents/Resources/lib/vpim/property
-	cp lib/*.rb                vAgent.app/Contents/Resources/lib/
-	cp lib/vpim/*.rb           vAgent.app/Contents/Resources/lib/vpim/
-	cp lib/vpim/agent/*.rb     vAgent.app/Contents/Resources/lib/vpim/agent/
-	cp lib/vpim/maker/*.rb     vAgent.app/Contents/Resources/lib/vpim/maker/
-	cp lib/vpim/property/*.rb  vAgent.app/Contents/Resources/lib/vpim/property/
-	open vAgent.app
+	tar -cf- `find lib -name "*.rb"` | (cd vAgent.app/Contents/Resources; tar -xvf-)
+	cp vagent.rb               vAgent.app/Contents/Resources/script
+	rm -f releases/vAgent.app.zip
+	find vAgent.app -type f | egrep -v ".svn|CVS" | zip releases/vAgent.app.zip -@
 
 
 # It's easier to just copy the resources I want into the target .app structure.

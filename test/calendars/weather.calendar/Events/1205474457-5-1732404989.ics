@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Apple Inc.//iCal 3.0//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+SEQUENCE:1
+DESCRIPTION:Thursday - Cloudy. A chance of snow in the morning...then a 
+ chance of rain or snow in the afternoon. Highs in the mid to upper 40s. 
+ Chance of precipitation 50 percent. \n<a href=\"http://www.wunderground.
+ com/US/WA/Leavenworth.html\">More Information</a>
+UID:1205474457-5-1732404989
+TRANSP:TRANSPARENT
+STATUS:CONFIRMED
+DTSTART;VALUE=DATE:20080313
+DTSTAMP:20080310T010500Z
+SUMMARY:Chance of Rain 48F / 29F | 9C / -2C
+CREATED:20080316T213048Z
+DTEND;VALUE=DATE:20080314
+LOCATION:Leavenworth\, WA
+END:VEVENT
+END:VCALENDAR

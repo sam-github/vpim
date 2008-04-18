@@ -45,7 +45,7 @@ This is a pure-ruby library for decoding and encoding vCard and iCalendar data
   s.executables       = FileList["bin/*"].map{|path| File.basename(path)}
 
   s.require_path      = "lib"
-  s.add_dependency("plist")
+# s.add_dependency("plist")
 # s.autorequire       = "vpim"
 end
 

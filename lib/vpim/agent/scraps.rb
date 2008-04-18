@@ -1,10 +1,21 @@
 require 'etc'
-require 'pp'
 require 'rss/maker'
 require 'socket'
 require 'webrick'
 require 'vpim/icalendar'
 require 'vpim/vcard'
+
+# Notes on debugging with dnssd API: check system.log, it should give info.
+
+#require 'pp'
+#module Kernel
+#  def to_pp
+#    s = PP.pp(self, '')
+#    s.chomp!
+#    s
+#  end
+#end
+
 
 #--------------------------------------------------------------------------------
 # Load DNSSD support, if possible.
@@ -86,7 +97,7 @@ server.config[:MimeTypes]['vcf'] = 'text/directory'
 # Mount services
 
 ##### Vcard Birthdays as iCalendar
-=begin
+
 $vcf_bday_file = 'vpim-bday.vcf'
 $vcf_bday_path = '/vcf/bday.ics'
 
@@ -123,11 +134,10 @@ end
 server.mount( $vcf_bday_path, VcfBdayIcsServlet )
 
 register( "Calendar for all the Birthdays in my vCards", $vcf_bday_path, 'webcal' )
-=end
 
 ##### iCalendar as calendars
 # Export local calendars two different ways
-=begin
+
 $ical_folder = File.expand_path( "~/Library/Calendars" )
 
 #
@@ -189,10 +199,8 @@ server.mount( '/calfile', WEBrick::HTTPServlet::FileHandler, $ical_folder, :Fanc
 # For debugging...
 register( 'My Calendar Folder', '/calfile' )
 
-=end
-
 ##### iCalendar/todo as RSS
-=begin
+
 $ics_todo_title = 'My Todo Items as an RSS Feed'
 $ics_todo_path  = "/ics/todo.rss"
 
@@ -235,56 +243,19 @@ end
 server.mount( $ics_todo_path, IcalTodoRssServlet )
 
 register( $ics_todo_title, $ics_todo_path )
-=end
 
-##### Local calendars
-
-require "vpim/agent/calendars"
-
-$ical_folder = File.expand_path( "~/Library/Calendars" )
-
-class CalendarsServlet < WEBrick::HTTPServlet::AbstractServlet
-  def do_GET(req, resp)
-    body = ''
-#   body << @options.inspect
-
-    folder = *@options
-
-    # TODO Should be longer lived
-    repo = Vpim::Repo::Apple3.new($ical_folder)
-    rest = Vpim::Agent::Calendars.new(repo)
-    path = Vpim::Agent::Path.new(req.request_uri, req.path)
-
-    begin
-      body, form = rest.get(path)
-      status = 200
-    rescue Vpim::Agent::NotFound
-      body = $!.to_s
-      form = "text/plain" # should be HTML!
-      status = 404
-    end
-
-    resp.status = status
-    resp.body = body
-    resp['content-type'] = form
-  end
-end
-
-server.mount( '/calendars', CalendarsServlet, $ical_folder )
-
-register( "Calendars", '/calendars' )
 
 #--------------------------------------------------------------------------------
 ## Top-level page.
 
-$vpim_title = "vAgent for #{$user}"
+$vpim_title = "vPim for #{$user}"
 
 class VpimServlet < WEBrick::HTTPServlet::AbstractServlet
   def do_GET(req, resp)
     body = <<"EOF"
 <h1>#{$vpim_title}</h1>
 
-See:
+You can access:
 <ul>
 EOF
 
@@ -305,9 +276,7 @@ server.mount( '/', VpimServlet )
 #--------------------------------------------------------------------------------
 # Run server
 
-if DNSSD
-  $services << DNSSD.register($vpim_title, '_http._tcp', 'local', $port, 'path' => '/' )
-end
+$services << DNSSD.register($vpim_title, '_http._tcp', 'local', $port, 'path' => '/' )
 
 ['INT', 'TERM'].each do |signal| 
   trap(signal) do

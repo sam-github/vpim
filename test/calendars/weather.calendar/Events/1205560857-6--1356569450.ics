@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Apple Inc.//iCal 3.0//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+SEQUENCE:1
+DESCRIPTION:Thursday Night and Friday - Mostly cloudy with a 40 percent 
+ chance of rain or snow showers. Lows in the mid 20s to lower 30s. Highs 
+ in the upper 40s to lower 50s. \n<a href=\"http://www.wunderground.com/U
+ S/WA/Leavenworth.html\">More Information</a>
+UID:1205560857-6--1356569450
+TRANSP:TRANSPARENT
+STATUS:CONFIRMED
+DTSTART;VALUE=DATE:20080314
+DTSTAMP:20080310T010500Z
+SUMMARY:Partly Cloudy 49F / 27F | 9C / -3C
+CREATED:20080316T213048Z
+DTEND;VALUE=DATE:20080315
+LOCATION:Leavenworth\, WA
+END:VEVENT
+END:VCALENDAR

@@ -892,7 +892,7 @@ __
     assert_equal("123 Sweet Home, Narrow Street", card.address('home').street)
     assert_equal("John Doe & Partners Limited", card.org.first)
     assert_equal("gtalk.john", card.value("x-google talk"))
-    assert_equal("www.homepage.com", card.url.uri)
+    assert_equal("http\\://www.homepage.com", card.url.uri)
 
   end
 

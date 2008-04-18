@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Apple Inc.//iCal 3.0//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+SEQUENCE:1
+DESCRIPTION:Tuesday - Rain and mountain snow showers likely. Light mount
+ ain snow accumulations above 4000 feet. Highs in the mid to upper 40s. C
+ hance of precipitation 60 percent. \n<a href=\"http://www.wunderground.c
+ om/US/WA/Leavenworth.html\">More Information</a>
+UID:1205301657-3--679062325
+TRANSP:TRANSPARENT
+STATUS:CONFIRMED
+DTSTART;VALUE=DATE:20080311
+DTSTAMP:20080310T010500Z
+SUMMARY:Partly Cloudy 50F / 23F | 10C / -5C
+CREATED:20080316T213048Z
+DTEND;VALUE=DATE:20080312
+LOCATION:Leavenworth\, WA
+END:VEVENT
+END:VCALENDAR

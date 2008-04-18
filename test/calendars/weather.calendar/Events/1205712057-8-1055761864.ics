@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Apple Inc.//iCal 3.0//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+SEQUENCE:1
+DESCRIPTION:Sunday - Partly cloudy with a 20 percent chance of snow show
+ ers. Highs in the lower to mid 40s.\n<a href=\"http://www.wunderground.c
+ om/US/WA/Leavenworth.html\">More Information</a>
+UID:1205712057-8-1055761864
+TRANSP:TRANSPARENT
+STATUS:CONFIRMED
+DTSTART;VALUE=DATE:20080316
+DTSTAMP:20080310T010500Z
+SUMMARY:Partly Cloudy 48F / F | 9C / C
+CREATED:20080316T213048Z
+DTEND;VALUE=DATE:20080317
+LOCATION:Leavenworth\, WA
+END:VEVENT
+END:VCALENDAR

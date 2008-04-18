@@ -1,32 +1,23 @@
-== Platypus feedback
+== RESTful paths
 
-- executable bit should be set on script
+/calendars/coding/month/atom
+/calendars/coding/month/rss
+/calendars/coding/events/month/ics              <- next month?
+/calendars/coding/events/month/2008-04/ics      <- a specified month?
 
-- selecting a folder to be added to the resource file seems to have the
-  side-effect of making the .app get generated into that folder
+/calendars/coding/week/atom
 
-- how does script know the location of the .app or it's Resources folder?
+/calendars/year/rss
 
-    From $0
+  what does blogger do with blog titles?
 
-- custom icon doesn't make it into the shell command to create the app?
-
-
-To use the tool it's preferred that you supply images at four different
-resolutions: 16x16, 32x32, 48x48, and 128x128. But, you can create a .icns file
-with as little as one image. Apple's help on this subject states: "If you give
-IconComposer only one image, it should be optimized to look best at 128x128
-pixels. This ensures it looks goods when displayed at the maximum resolution of
-128x128 pixels, and looks acceptable when scaled down to the smaller
-resolutions."
-
-Regarding image formats you can supply, the help system also states:
-"IconComposer can create icons from the following image formats: GIF, JPEG,
-PDF, PICT, PNG, TIFF, and any of the QuickTime-supported image formats."
-
+  #month/atom
+  #month  -> html
 
 
 == 3RD PARTY
+
+todo: log4j with zeroconf support
 
 todo: a OS X mail plugin that doesn't open a GUI, it just sends mail....
 
@@ -68,11 +59,6 @@ http://www.imc.org/ietf-calendar/index.html
 
 Todo:
 
-- Doesn't shut down on logout..., the LoginHook thing just isn't such a great
-	idea.
-
-- Being an "agent": see BPRuntimeConfig.pdf: LSUIElement, LSUIPresentationMode.
-
 == UTILS
 
 Note:
@@ -98,9 +84,6 @@ todo: soap/weather-to-ics
   Query weather reports using SOAP, represent as iCalendars.
 
 
-todo: log4j with with zeroconf support
-
-
 todo: ics-alarm
   A really, really fast way of adding an alarm to iCalendar, i.e., 3 min, check the kettle.
 
@@ -111,17 +94,14 @@ todo: ics-alarm
     - .ics
     - ical
 
-
 todo: local-to-rss
 
   Represent any collection of local files as a podcast, so it can be imported
   into iTunes as a podcast.
 
-
 todo: http-to-rss
 
   Also, any web location, crawl it for audio, and represent as a podcast.
-
 
 todo: ics-to-rss
   Input:
@@ -138,13 +118,10 @@ todo: ics-to-rss
   - rss versions in the URL
   - implement autodiscovery with http? what does this mean...
 
-
 todo: rss-to-jabber
-
 
 todo: ics-to-ics
   split calendars by date
-
 
 todo: ics-to-ics
   Input:
@@ -164,11 +141,9 @@ todo: ics-to-ics
   - all users, if they have a config file, like web pages
   - combine different calendars, and publish to .mac
 
-
 todo: rss-to-rss
 
   See: feedblender - http://feedblender.rubyforge.org
-
 
 todo: vcf-to-address-book
   Input:
@@ -180,7 +155,6 @@ todo: vcf-to-address-book
 
   AB can subscribe to, at least, ldap sources. Can I use this? Can the latest
   AB have plugins?
-
 
 done: mutt-aliases-to-vcf
   Input:

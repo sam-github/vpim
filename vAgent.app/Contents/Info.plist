@@ -7,19 +7,19 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
-	<string>VpimAgent</string>
+	<string>vAgent</string>
 	<key>CFBundleExecutable</key>
-	<string>VpimAgent</string>
+	<string>vAgent</string>
 	<key>CFBundleGetInfoString</key>
-	<string>VpimAgent 1.0 Copyright 2008 Sam Roberts</string>
+	<string>vAgent 1.0 Copyright 2008 Sam Roberts</string>
 	<key>CFBundleIconFile</key>
 	<string>appIcon.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>org.sam.vpimd</string>
+	<string>org.sam.vAgent</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>VpimAgent</string>
+	<string>vAgent</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -40,7 +40,7 @@
 	<key>NSAppleScriptEnabled</key>
 	<false/>
 	<key>NSHumanReadableCopyright</key>
-	<string>VpimAgent 1.0 Copyright 2008 Sam Roberts</string>
+	<string>vAgent 1.0 Copyright 2008 Sam Roberts</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>

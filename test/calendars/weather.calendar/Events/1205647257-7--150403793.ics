@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Apple Inc.//iCal 3.0//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+SEQUENCE:1
+DESCRIPTION:Saturday - Mostly cloudy. A chance of snow showers in the mo
+ rning...then a chance of rain or snow showers in the afternoon. Highs in
+  the mid 40s to lower 50s. Chance of precipitation 40 percent. \n<a href
+ =\"http://www.wunderground.com/US/WA/Leavenworth.html\">More Information
+ </a>
+UID:1205647257-7--150403793
+TRANSP:TRANSPARENT
+STATUS:CONFIRMED
+DTSTART;VALUE=DATE:20080315
+DTSTAMP:20080310T010500Z
+SUMMARY:Partly Cloudy 48F / 25F | 9C / -4C
+CREATED:20080316T213048Z
+DTEND;VALUE=DATE:20080316
+LOCATION:Leavenworth\, WA
+END:VEVENT
+END:VCALENDAR

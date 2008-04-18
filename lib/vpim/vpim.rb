@@ -9,7 +9,7 @@
 require 'vpim/version'
 
 #:main:README
-#:title:vpim - a library to manipulate vCards and iCalendars
+#:title:vPim - vCard and iCalendar support for Ruby
 module Vpim
   # Exception used to indicate that data being decoded is invalid, the message
   # should describe what is invalid.

@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Apple Inc.//iCal 3.0//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+SEQUENCE:1
+DESCRIPTION:Monday - Rain and mountain Snow. Mountain snow accumulation 
+ of 1 to 2 inches above 5500 feet in the morning...rising to 6500 feet in
+  the afternoon. Highs in the mid to upper 40s. Chance of precipitation 8
+ 0 percent. \n<a href=\"http://www.wunderground.com/US/WA/Leavenworth.htm
+ l\">More Information</a>
+UID:1205215257-2--1884536782
+TRANSP:TRANSPARENT
+STATUS:CONFIRMED
+DTSTART;VALUE=DATE:20080310
+DTSTAMP:20080310T010500Z
+SUMMARY:Chance of Rain 48F / 36F | 9C / 2C
+CREATED:20080316T213048Z
+DTEND;VALUE=DATE:20080311
+LOCATION:Leavenworth\, WA
+END:VEVENT
+END:VCALENDAR

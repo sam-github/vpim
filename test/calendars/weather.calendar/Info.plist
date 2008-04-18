@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AlarmsDisabled</key>
+	<false/>
+	<key>Checked</key>
+	<integer>1</integer>
+	<key>Color</key>
+	<string>#492BA1FF</string>
+	<key>Key</key>
+	<string>9879965F-0E3C-4F8C-A283-9E784E0A4594</string>
+	<key>Order</key>
+	<integer>9</integer>
+	<key>Title</key>
+	<string>weather/Leavenworth</string>
+	<key>Type</key>
+	<string>Local</string>
+</dict>
+</plist>

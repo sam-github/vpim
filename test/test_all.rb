@@ -1,7 +1,12 @@
 #!/usr/bin/env ruby
 
 $-w = true
+
 $:.unshift File.dirname($0)
+
+require 'pp'
+
+pp [__LINE__, $:, $"]
 
 require 'test/unit'
 

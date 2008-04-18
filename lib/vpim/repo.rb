@@ -6,109 +6,174 @@
   details.
 =end
 
+require 'enumerator'
+
+require 'plist'
+
 require 'vpim/icalendar'
 require 'vpim/duration'
 
 module Vpim
-  # A Repo is a representation of an event repository. Currently iCalv3
-  # repositories and directories containing .ics files are supported.
+  # A Repo is a representation of a calendar repository.
   #
-  # TODO - should yield them if a block is given, or return
-  # an enumerable otherwise. Later.
-  module Repo
-    def self.somethings_from_file(something, file) #:nodoc:
-      somethings = []
-      begin
-        cals = Vpim::Icalendar.decode(File.open(file))
+  # Currently supported repository types are:
+  # - Repo::Apple3, an Apple iCal3 repository.
+  # - Repo::Directory, a directory hierarchy containing .ics files
+  #
+  # All repository types support at least the methods of Repo, and all
+  # repositories return calendars that support at least the methods of
+  # Repo::Calendar.
+  class Repo
+    include Enumerable
 
-        cals.each do |cal|
-          cal.send(something).each do |x|
-            somethings << x
+    # Open a repository at location +where+.
+    def initialize(where)
+    end
+
+    # Enumerate the calendars in the repository.
+    def each #:yield: calendar
+    end
+
+    class Calendar
+      include Enumerable
+
+      # Enumerate the events in the calendar.
+      def events #:yield: Vevent
+      end
+
+      # Enumerate the todos in the calendar.
+      def todos #:yield: Vtodo
+      end
+
+      # The calendar name.
+      def name
+      end
+
+      # Whether a calendar should be displayed.
+      def displayed
+      end
+
+      # Encode into iCalendar format.
+      def encode
+      end
+
+      # The method definitions are just to fool rdoc, not to be used.
+      %w{events todos name displayed encode}.each{|m| remove_method m}
+
+      def enumerate_file(what, file) #:nodoc:
+        unless iterator?
+          return Enumerable::Enumerator.new(self, what)
+        end
+        begin
+          cals = Vpim::Icalendar.decode(File.open(file))
+
+          cals.each do |cal|
+            cal.send(what).each do |x|
+              yield x
+            end
           end
-        end
-      end
-      somethings
-    end
-
-    def self.events_from_file(file) #:nodoc:
-      self.somethings_from_file("events", file)
-    end
-
-    def self.todos_from_file(file) #:nodoc:
-      self.somethings_from_file("todos", file)
-    end
-
-    # An Apple iCal version 3 repository.
-    module Ical3
-      class Calendar
-        def initialize(dir) # :nodoc:
-          @dir = dir
-        end
-        def plist(key) #:nodoc:
-           Plist::parse_xml( @dir + "/Info.plist")[key]
-        end
-
-        # The calendar name.
-        def name
-          plist "Title"
-        end
-
-        # Whether a calendar should be displayed.
-        def displayed
-          1 == plist("Checked")
-        end
-
-        # Array of all events defined in the calendar.
-        def events #:yield: Vevent
-          Dir[ @dir + "/Events/*.ics" ].map do |ics|
-            Repo.events_from_file(ics)
-          end.flatten
-        end
-
-        # Array of all todos defined in the calendar.
-        def todos #:yield: Vevent
-          Dir[ @dir + "/Events/*.ics" ].map do |ics|
-            Repo.todos_from_file(ics)
-          end.flatten
-        end
-
-      end
-
-      def self.each(where = "~/Library/Calendars") # :yield: Apple::Calendar
-        Dir[ File.expand_path(where + "/**/*.calendar") ].each do |dir|
-          yield Calendar.new(dir)
         end
         self
       end
     end
-    module Directory
-      class Calendar
+  end
+
+  class Repo
+    # An Apple iCal version 3 repository.
+    class Apple3 < Repo
+      def initialize(where = "~/Library/Calendars")
+        @where = where.to_str
+      end
+
+      def each #:nodoc:
+        Dir[ File.expand_path(@where + "/**/*.calendar") ].each do |dir|
+          yield Calendar.new(dir)
+        end
+        self
+      end
+
+      class Calendar < Repo::Calendar
+        def initialize(dir) # :nodoc:
+          @dir = dir
+        end
+
+        def plist(key) #:nodoc:
+          Plist::parse_xml( @dir + "/Info.plist")[key]
+        end
+
+        def name #:nodoc:
+          plist "Title"
+        end
+
+        def displayed #:nodoc:
+          1 == plist("Checked")
+        end
+
+        def enumerate(what, &block) #:nodoc:
+          unless iterator?
+            return Enumerable::Enumerator.new(self, what)
+          end
+          Dir[ @dir + "/Events/*.ics" ].map do |ics|
+            enumerate_file(what, ics, &block)
+          end
+          self
+        end
+
+        def events(&block) #:nodoc:
+          enumerate("events", &block)
+        end
+
+        def todos(&block) #:nodoc:
+          enumerate("todos", &block)
+        end
+
+        def encode #:nodoc:
+          Icalendar.create2 do |cal|
+            todos  {|c| cal << c}
+            events {|c| cal << c}
+          end.encode
+        end
+      end
+
+    end
+
+    class Directory < Repo
+      class Calendar < Repo::Calendar
         def initialize(file) #:nodoc:
           @file = file
         end
 
-        def name
+        def name #:nodoc:
           File.basename(@file)
         end
 
-        def displayed
+        def displayed #:nodoc:
           true
         end
 
-        def events
-          Repo.events_from_file(@file)
+        def events(&block) #:nodoc:
+          enumerate_file("events", @file, &block)
         end
 
-        def todos
-          Repo.todos_from_file(@file)
+        def todos(&block) #:nodoc:
+          enumerate_file("todos", @file, &block)
         end
+
+        def encode
+          open(@file, "r"){|f| f.read}
+        end
+
       end
 
-      def self.each(where)
-         Dir[ File.expand_path(where + "/**/*.ics") ].each do |file|
-           yield Calendar.new(file)
-         end
-         self
+      def initialize(where = ".")
+        @where = where.to_str
+      end
+
+      def each #:nodoc:
+        Dir[ File.expand_path(@where + "/**/*.ics") ].each do |file|
+          yield Calendar.new(file)
+        end
+        self
       end
     end
   end
