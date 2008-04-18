@@ -896,5 +896,40 @@ __
 
   end
 
+  def test_title
+    title = "She Who Must Be Obeyed"
+    card = Vpim::Vcard::Maker.make2 do |m|
+      m.name do |n|
+        n.given = "Hilda"
+        n.family = "Rumpole"
+      end
+      m.title = title
+    end
+    assert_equal(title, card.title)
+    card = Vpim::Vcard.decode(card.encode).first
+    assert_equal(title, card.title)
+  end
+
+  def _test_org(*org)
+    card = Vpim::Vcard::Maker.make2 do |m|
+      m.name do |n|
+        n.given = "Hilda"
+        n.family = "Rumpole"
+      end
+      m.org = org
+    end
+    assert_equal(org, card.org)
+    card = Vpim::Vcard.decode(card.encode).first
+    assert_equal(org, card.org)
+  end
+
+  def test_org_single
+    _test_org("Megamix Corp.")
+  end
+
+  def test_org_multiple
+    _test_org("Megamix Corp.", "Marketing")
+  end
+
 end
 

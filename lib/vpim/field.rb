@@ -98,6 +98,7 @@ module Vpim
             line << value
 
           else
+            # FIXME - somewhere along here, values with special chars need escaping...
             line << value.to_str
         end
         line

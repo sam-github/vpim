@@ -868,7 +868,7 @@ module Vpim
     #
     # LOGO is a graphic image of a logo associated with the object the vCard
     # represents. Its not common, but would probably be equivalent to the logo
-    # on printed card.
+    # on a printed card.
     #
     # See Attachment for a description of the value.
     def logos(&proc) #:yield: Line.value
@@ -958,7 +958,12 @@ module Vpim
       values('TEL')
     end
 
-    ## TITLE
+    # The TITLE value, a text string specifying the job title, functional
+    # position, or function of the object the card represents. A wrapper around
+    # #value('TITLE').
+    def title
+      value('TITLE')
+    end
 
     ## UID
 
@@ -1333,6 +1338,25 @@ module Vpim
         @card << Vpim::DirectoryInfo::Field.create( 'PHOTO', value, params )
         self
       end
+
+      # Set the title field, TITLE.
+      #
+      # It can be set to a single String.
+      def title=(title)
+        delete_if { |l| l.name == 'TITLE' }
+
+        @card << Vpim::DirectoryInfo::Field.create( 'TITLE', title );
+      end
+
+      # Set the org field, ORG.
+      #
+      # It can be set to a single String or an Array of String.
+      def org=(org)
+        delete_if { |l| l.name == 'ORG' }
+
+        @card << Vpim::DirectoryInfo::Field.create( 'ORG', org );
+      end
+
 
       # Add a URL field, URL.
       def add_url(url)
