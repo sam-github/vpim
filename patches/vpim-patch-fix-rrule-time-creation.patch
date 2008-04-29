@@ -1,0 +1,15 @@
+--- vpim-0.619/lib/vpim/rrule.rb        2008-03-31 01:11:07.000000000 +0200
++++ vpim-0.619-mwe/lib/vpim/rrule.rb    2008-04-21 15:56:59.000000000 +0200
+@@ -57,11 +57,8 @@
+# from a start time, +dtstart+ (which must the first of the set of
+# recurring times). If +rrule+ is nil, the set contains only +dtstart+.
+     def initialize(dtstart, rrule = nil)
+-      # dtstart must be in local time, they say, but I think that really
+-      # means must be in a particular timezone
+-
+# Note: DTSTART is always in the recurrence set
+-       @dtstart = dtstart
++       @dtstart = dtstart.getlocal
+        @rrule = rrule
+
+# Freq is mandatory, but must occur only once.
