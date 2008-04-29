@@ -896,6 +896,44 @@ __
 
   end
 
+  def _test_gmail_vcard_export
+    # GOOGLE BUG - Whitespace before the LABEL field values is a broken
+    # line continuation.
+    # GOOGLE BUG - vCards are being exported with embedded "=" in them, so
+    # become unparseable.
+    c = <<'__'
+BEGIN:VCARD
+VERSION:3.0
+FN:Stepcase TestUser
+N:TestUser;Stepcase;;;
+EMAIL;TYPE=INTERNET:testuser@stepcase.com
+X-GTALK:gtalk.step
+X-AIM:aim.step
+X-YAHOO:yahoo.step
+X-MSN:msn.step
+X-ICQ:icq.step
+X-JABBER:jabber.step
+TEL;TYPE=FAX:44444444
+TEL;TYPE=PAGER:66666666
+TEL;TYPE=HOME:22222222
+TEL;TYPE=CELL:11111111
+TEL;TYPE=FAX:55555555
+TEL;TYPE=WORK:33333333
+LABEL;TYPE=HOME;ENCODING=QUOTED-PRINTABLE:123 Home, Home Street=0D=0A=
+Kowloon, N/A=0D=0A=
+Hong Kong
+LABEL;TYPE=HOME;ENCODING=QUOTED-PRINTABLE:321 Office, Work Road=0D=0A=
+Tsuen Wan NT=0D=0A=
+Hong Kong
+TITLE:CTO
+ORG:Stepcase.com
+NOTE:Stepcase test user is a robot.
+END:VCARD
+__
+    card = Vpim::Vcard.decode(c).first
+    assert_equal("123 Home, Home Street\r\n Kowloon, N/A\r\n Hong Kong", card.value("label"))
+  end
+
   def test_title
     title = "She Who Must Be Obeyed"
     card = Vpim::Vcard::Maker.make2 do |m|
