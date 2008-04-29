@@ -185,6 +185,13 @@ ___
     assert_equal(24*60*60, event.duration)
   end
 
+  def test_occurrence_with_date_start
+    d = Date.new(2000, 1, 21)
+    event = Icalendar::Vevent.create(d)
+    d1 = event.occurences.to_a.first
+    assert_equal(d.class, d1.class)
+  end
+
   def test_decode_duration_four_weeks
     assert_equal 4*7*86400, Icalendar.decode_duration('P4W')
   end

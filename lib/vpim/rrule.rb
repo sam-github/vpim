@@ -57,11 +57,10 @@ module Vpim
     # from a start time, +dtstart+ (which must the first of the set of
     # recurring times). If +rrule+ is nil, the set contains only +dtstart+.
     def initialize(dtstart, rrule = nil)
-      # dtstart must be in local time, they say, but I think that really
-      # means must be in a particular timezone
-
-      # Note: DTSTART is always in the recurrence set
-       @dtstart = dtstart
+       @dtstart = dtstart.getlocal
+       # The getlocal is a hack so that UTC times get converted to local,
+       # because yielded times are always local, because we don't support
+       # timezones.
        @rrule = rrule
 
        # Freq is mandatory, but must occur only once.
