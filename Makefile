@@ -32,7 +32,7 @@ dcal:
 	sh -c "./ics-dump.rb ~/Library/Calendars/Events.ics"
 
 test:
-	$(RUBY) -w -I lib $(TEST)
+	$(RUBY) $(TEST)
 	for e in ex_*.rb; do $(RUBY) -w -I lib $$e; done >/dev/null
 	#/usr/bin/ruby -w -I lib $(TEST)
 	#/opt/local/bin/ruby -w -I lib $(TEST)
@@ -43,8 +43,9 @@ test_new:
 test_old:
 	for r in /usr/bin/ruby; do $$r -w $(TEST); done
 
+.PHONY: coverage
 coverage:
-	rcov -w -I lib:test test/test_all.rb
+	rcov test/test_all.rb
 	open coverage/index.html
 
 other:
