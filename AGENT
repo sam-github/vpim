@@ -1,4 +1,30 @@
-== RESTful paths
+== vAgent
+
+todo:
+ - calendar as RSS
+ - limit calendar to events at a particular time period
+ - birthdays as calendar with alarm
+
+CalendarWindow
+  cal
+  start->end
+  filter_complete?
+
+  #components
+	Hack events so serialized.
+	Put everything without a timestamp first, then timestamped.
+	Proxy everything.
+
+Atomize
+  All todo/event components, in order.
+
+Make an ics-to-rss.
+
+Calendar:
+
+  Need a Calendar wrapper that filters events, todos, etc. based on window
+
+== RESTful path ideas
 
 /calendars/coding/month/atom
 /calendars/coding/month/rss
@@ -15,19 +41,9 @@
   #month  -> html
 
 
-== 3RD PARTY
-
-todo: log4j with zeroconf support
-
-todo: a OS X mail plugin that doesn't open a GUI, it just sends mail....
-
-todo: cmd line tool to query KeyStore
-
-todo: RSS
-
-  - add atom to rss/
-
 == UNSORTED
+
+http://topfunky.net/svn/plugins/calendar_helper
 
 Rerepresent craigslist as .xls...
 
@@ -46,6 +62,7 @@ http://en.wikipedia.org/wiki/Caldav
 
 http://www.imc.org/ietf-calendar/index.html
 
+
 == Data Sources
 
 * SOAP Weather
@@ -55,11 +72,10 @@ http://www.imc.org/ietf-calendar/index.html
 * Evolution
   http://revolution.rubyforge.org/
 
-== UTILS - vpim.rb
+* google has rss feeds for calendars that might have recurrences in them
 
-Todo:
 
-== UTILS
+== Tools
 
 Note:
   - WebDAV client-side:
@@ -68,6 +84,39 @@ Note:
 
   - WebDAV server-side:
     - implement a WEBRick servlet to handle server-side?
+
+
+== UTILS
+
+todo: ics-to-ics (filter by time period)
+
+todo: ics-to-vcf
+
+todo: ics-to-atom
+  Options:
+  - todo
+  - events
+
+
+todo: bday-to-ics
+  Input:
+  - .vcf
+  - AB
+
+  Output:
+  - .ics
+  - http
+  - RSS??! maybe only see bdays within the next month, as a reminder?
+  - cvt vcf file to ics file of birthdays
+  - pull from Address Book, or from .vcf file
+
+  Options:
+  - bday -> VTODO
+  - bday -> VEVENT
+  - bday +  VALARM  !!!
+
+
+todo: rss-to-email
 
 todo: Exchange/IMAP calendar downloads...
 
@@ -181,37 +230,6 @@ todo: rss-to-ics   convert rss feed, text or URI, to ics file of todos
   
   Notes:
   - will need a decent ics encoding api
-
-
-todo: vcf-bday-to-ics.rb
-  Input:
-  - .vcf
-  - AB
-
-  Output:
-  - .ics
-  - http
-  - RSS??! maybe only see bdays within the next month, as a reminder?
-  - cvt vcf file to ics file of birthdays
-  - pull from Address Book, or from .vcf file
-
-  Options:
-  - bday -> VTODO
-  - bday -> VEVENT
-  - bday +  VALARM
-
-
-todo:
- - an application server (with plugins?) that can do ALL of the above
-
- - http://raa.ruby-lang.org/project/plist/
-
- - web-based config?
-
- - obj-c config panel?
-
- - don't have to do it manually, can make iCal auto-subscribe, and make
-   NetNewsWire auto-subscribe, etc.
 
 
 done: vcf-to-mutt
