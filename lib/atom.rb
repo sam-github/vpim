@@ -257,7 +257,6 @@ module Atom # :nodoc:
         
         div = XML::Node.new('div')
         div['xmlns'] = XHTML
-        div
         
         p = XML::Parser.string(to_s)
         content = p.parse.root.copy(true)
@@ -595,6 +594,10 @@ module Atom # :nodoc:
       NEXT = 'next'
     end    
     
+    def length=(v)
+      @length = v.to_i
+    end
+    
     include Xml::Parseable
     attribute :href, :rel, :type, :length
         
@@ -617,10 +620,6 @@ module Atom # :nodoc:
       else
         raise ArgumentError, "Don't know how to handle #{o}"
       end        
-    end
-    
-    def length=(v)
-      @length = v.to_i
     end
     
     def to_s

@@ -196,13 +196,15 @@ module Atom
         
           names.each do |name|
             attr_accessor name
+            # FIXME - singularize is rails, not ruby
             self.element_specs[name.to_s.singularize] = ParseSpec.new(name, options)
           end
         end
       
         def attribute(*names)
           names.each do |name|
-            attr_accessor name.to_s.sub(/:/, '_').to_sym
+            n = name.to_s.sub(/:/, '_')
+            attr n.to_sym, !method_defined?("#{n}=")
             self.attributes << name.to_s
           end
         end
