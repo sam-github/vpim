@@ -1,19 +1,17 @@
 #!/usr/bin/env ruby
 
+require 'pp'
+
 $-w = true
 
-$:.unshift File.dirname($0)
+$:.unshift File.dirname(__FILE__) + "/../lib"
 
-require 'pp'
 
 pp [__LINE__, $:, $"]
 
 require 'test/unit'
 
-require 'test_date.rb'
-require 'test_dur.rb'
-require 'test_field.rb'
-require 'test_ical.rb'
-require 'test_rrule.rb'
-require 'test_vcard.rb'
+Dir[File.dirname(__FILE__) + "/test_*.rb"].each do |test|
+  require test
+end
 
