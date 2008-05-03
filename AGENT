@@ -1,3 +1,15 @@
+Investigate block evals:
+
+obj.dsl do
+  if a
+    meth_a
+  else
+    meth_b
+  end
+end
+
+What is self?
+
 == vAgent
 
 todo:
