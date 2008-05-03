@@ -3,6 +3,7 @@
 ENV['TZ'] = 'EST5EDT'
 
 require 'vpim/rrule'
+require 'vpim/icalendar'
 require 'test/unit'
 
 require 'pp'
@@ -975,5 +976,36 @@ RRULE:FREQ=MONTHLY;BYMONTH=12;INTERVAL=1;BYDAY=MO,TU,WE,TH,FR;BYMONTHDAY=26,27,2
 END:VEVENT
 =end
 
+
+  def test_reccurrence_with_utc_dtstart
+    # Its wrong that the times yielded aren't in the timezone of DTSTART, but
+    # until vPim supports timezones, its the best it'll get.
+    txt = <<'__'
+BEGIN:VCALENDAR
+BEGIN:VEVENT
+DTSTAMP:20080416T174954Z
+ORGANIZER;CN=Anonymous:MAILTO:ano@nymo.us
+CREATED:20080401T090904Z
+LAST-MODIFIED:20080401T090904Z
+SUMMARY:Very important recurring event
+RRULE:FREQ=WEEKLY;UNTIL=20080415T093000Z;BYDAY=TU;BYHOUR=9
+DTSTART:20080401T093000Z
+DTEND:20080401T110000Z
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR
+__
+    cal = Vpim::Icalendar.decode(txt).first
+    occurs = cal.events.first.occurrences.to_a
+    #p occurs
+    utc = occurs.map{|y| y.utc}
+    #p utc
+    expects = [
+      Time.utc(2008, 4, 1, 9, 30),
+      Time.utc(2008, 4, 8, 9, 30),
+      Time.utc(2008, 4,15, 9, 30),
+    ]
+    assert_equal(expects, utc)
+  end
 end
 
