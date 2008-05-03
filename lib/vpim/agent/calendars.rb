@@ -9,6 +9,15 @@
 require "cgi"
 require "uri"
 
+# The only atom-generating library I could find on rubyforge has a dependency
+# on libxml2 for parsing. But I don't want to parse... so fake it out.
+module XML
+  class Reader
+  end
+end
+
+require "atom"
+
 require "vpim/repo"
 
 module Vpim
@@ -16,6 +25,9 @@ module Vpim
     # On failure, raise this with an error message. text/plain for now,
     # text/html later. Will convert to a 404 and a message.
     class NotFound < Exception
+      def initialize(name, path)
+        super %{Resource "#{name}" under "#{path.prefix}" was not found!}
+      end
     end
 
     class Path
@@ -45,8 +57,11 @@ module Vpim
         self
       end
 
+      # TODO - call this #next
       def shift
-        @path[@mark += 1]
+        if @path[@mark]
+          @path[@mark += 1]
+        end
       end
 
       def append(name, scheme = nil)
@@ -58,28 +73,69 @@ module Vpim
         uri
       end
 
-#     def prefix
-#       @path[0, @mark].map{|p| CGI.escape(p)}.join("/") #+ "/"
-#     end
+      def prefix(len = nil)
+        len ||= @mark
+        @path[0, len].map{|p| CGI.escape(p)}.join("/") + "/"
+      end
 
     end
 
     module Form
-      # FIXME - are these right?
-      ICS   = "text/calendar"
-      VCF   = "text/vcard"
-      ATOM  = "text/xml+atom"
-      PLAIN = "text/plain"
+      ATOM  = "application/atom+xml"
       HTML  = "text/html"
+      ICS   = "text/calendar"
+      PLAIN = "text/plain"
+      VCF   = "text/directory"
+    end
 
-      # TODO items needs to include protocol and description (calendars as webcal)
-      def self.html_list(path, description, items)
-        return <<__
+
+    class Atomize
+      def initialize(cal)
+        @cal = cal
+        @@id = 0
+      end
+
+      def id
+        @@id += 1
+        "http://example.com/#{@@id}"
+      end
+
+      def get(path)
+        feed = Atom::Feed.new
+        feed.title = @cal.name
+        feed.updated = Time.now
+        feed.id = id
+        @cal.events do |e|
+          # FIXME - should implement calendar filters to do this!
+          e.occurrences do |t|
+            feed.entries << Atom::Entry.new do |entry|
+              entry.title = e.summary
+              entry.updated = t
+              entry.content = Atom::Content::Html.new e.summary
+              entry.id = id
+              entry.authors << Atom::Person.new(:name => "vAgent")
+            end
+          end
+        end
+        return feed.to_xml, Form::ATOM
+      end
+    end
+
+    # Return an HTML description of a list of resources accessible under this
+    # path.
+    class ResourceList
+      def initialize(description, items)
+        @description = description
+        @items = items
+      end
+
+      def get(path)
+        return <<__, Form::HTML
 <html><body>
-#{description}
+#{@description}
 <ul>
   #{
-    items.map do |name,description,scheme|
+    @items.map do |name,description,scheme|
       "<li><a href=\"#{path.append(name,scheme)}\">#{description || name}</a></li>\n"
     end
   }
@@ -106,34 +162,32 @@ __
       class Calendar
         def initialize(cal)
           @cal = cal
+          @list = ResourceList.new(
+              "Calendar #{@cal.name.inspect}:",
+              [
+                ["calendar", "download"],
+                ["calendar", "subscription", "webcal"],
+                ["atom",     "syndication"],
+              ]
+            )
         end
 
         def get(path)
           form = path.shift
 
+          # TODO should redirect to an object, so that extra paths can be
+          # handled more gracefully.
           case form
           when nil
-            return Form.html_list(path, "Calendar #{@cal.name.inspect}:",
-                                  [
-                                    ["calendar", "download"],
-                                    ["calendar", "subscription", "webcal"]
-                                  ]
-                   ), Form::HTML
+            return @list.get(path)
           when "calendar"
             return @cal.encode, Form::ICS
-#  TODO calendar as vCard? maybe one card per event?
-#  TODO calendar as rss feed?
+          when "atom"
+            @atom ||= Atomize.new(@cal)
+            return @atom.get(path)
           else
-            raise NotFound, "Calendar #{@cal.name} cannot convert to form #{form}"
+            raise NotFound.new(form, path)
           end
-        end
-      end
-
-      def calendar(name)
-        if cal = @repo.find{|c| c.name == name}
-          return Calendar.new(cal)
-        else
-          raise NotFound, "Calendar #{name.inspect} does not exist"
         end
       end
 
@@ -141,9 +195,14 @@ __
       def get(path)
         case name = path.to_path.shift
         when nil
-          return Form::html_list(path, "Calendars:", @repo.map{|c| c.name}), Form::HTML
+          list = ResourceList.new("Calendars:", @repo.map{|c| c.name})
+          return list.get(path)
         else
-          calendar(name).get(path)
+          if cal = @repo.find{|c| c.name == name}
+            return Calendar.new(cal).get(path)
+          else
+            raise NotFound.new(name, path)
+          end
         end
       end
     end

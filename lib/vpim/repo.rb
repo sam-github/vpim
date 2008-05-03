@@ -79,6 +79,8 @@ module Vpim
   end
 
   class Repo
+    include Enumerable
+
     # An Apple iCal version 3 repository.
     class Apple3 < Repo
       def initialize(where = "~/Library/Calendars")

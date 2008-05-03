@@ -17,6 +17,7 @@ class TestRepo < Test::Unit::TestCase
   Directory = Vpim::Repo::Directory
   Agent = Vpim::Agent
   Path = Agent::Path
+  NotFound = Agent::NotFound
 
   def setup
     @testdir = Dir.getwd + "/test" #File.dirname($0) doesn't work with rcov :-(
@@ -86,7 +87,7 @@ class TestRepo < Test::Unit::TestCase
     #assert_equal(out1, out2)
 
     assert_raise(Vpim::Agent::NotFound) do
-      rest.get(Path.new("http://host/here/weather%2fLeavenworth/atom", "/here"))
+      rest.get(Path.new("http://host/here/weather%2fLeavenworth/an_unknown_protocol", "/here"))
     end
     assert_raise(Vpim::Agent::NotFound) do
       rest.get(Path.new("http://host/here/no_such_calendar", "/here"))
@@ -98,34 +99,59 @@ class TestRepo < Test::Unit::TestCase
                  Vpim::Agent::Path.split_path("calendars/weather%2FLeavenworth"))
   end
 
-  def test_path
-    p = Path.new("http://host.ex")
-    assert_equal(nil, p.shift)
-    assert_equal(nil, p.shift)
+  def test_agent_calendar_atom
+    repo = Apple3.new(@caldir)
+    rest = Agent::Calendars.new(repo)
 
-    p = Path.new("http://host.ex/")
-    assert_equal(nil, p.shift)
-    assert_equal(nil, p.shift)
+    out, form = rest.get(Path.new("http://host/here/weather%2fLeavenworth/atom", "/here"))
+    assert_equal("application/atom+xml", form)
+    #pp out
+    #assert_is_atom(out)
+  end
 
-    p = Path.new("http://host.ex/a")
-    assert_equal("a", p.shift)
-    assert_equal(nil, p.shift)
+  def _test_path_shift(url, shifts)
+    # last shift should be a nil
+    shifts << nil
 
-    p = Path.new("http://host.ex/a/b")
-    assert_equal("a", p.shift)
-    assert_equal("b", p.shift)
-    assert_equal(nil, p.shift)
+    # presence or absence of a trailing / should not affect shifting
+    ["", "/"].each do |trailer|
+      path = Path.new(url + trailer)
+      shifts.each do |_|
+        assert_equal(_, path.shift)
+      end
+    end
+  end
 
-    p = Path.new("http://host.ex/a/b/")
-    assert_equal("a", p.shift)
-    assert_equal("b", p.shift)
-    assert_equal(nil, p.shift)
+  def test_path_shift
+    _test_path_shift("http://host.ex", [])
+    _test_path_shift("http://host.ex/a", ["a"])
+    _test_path_shift("http://host.ex/a/b", ["a", "b"])
+    _test_path_shift("http://host.ex/a/b/c", ["a", "b", "c"])
+  end
 
-    p = Path.new("http://host.ex/a/b/c")
-    assert_equal("a", p.shift)
-    assert_equal("b", p.shift)
-    assert_equal("c", p.shift)
-    assert_equal(nil, p.shift)
+  def _test_path_prefix(base, parts, shifts, prefix)
+    path = Path.new(base+parts.join("/"))
+    shifts.times{ path.shift }
+    assert_equal(prefix, path.prefix)
+  end
+
+  def test_path_prefix
+    _test_path_prefix("http://host.ex/", [], 0, "/")
+    _test_path_prefix("http://host.ex/", ["a"], 0, "/")
+    _test_path_prefix("http://host.ex/", ["a"], 1, "/")
+    _test_path_prefix("http://host.ex/", ["a"], 2, "/a/")
+    _test_path_prefix("http://host.ex/", ["a"], 3, "/a/")
+    _test_path_prefix("http://host.ex/", ["a", "b"], 0, "/")
+    _test_path_prefix("http://host.ex/", ["a", "b"], 1, "/")
+    _test_path_prefix("http://host.ex/", ["a", "b"], 2, "/a/")
+    _test_path_prefix("http://host.ex/", ["a", "b"], 3, "/a/b/")
+  end
+
+  def test_atomize
+    repo = Apple3.new(@caldir)
+    cal = repo.find{true}
+    a = Vpim::Agent::Atomize.new(cal)
+    #puts a.get("http://example.com/path")
   end
 
 end
