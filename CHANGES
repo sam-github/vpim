@@ -1,4 +1,5 @@
 
+- #occurrences will call Rrule#each if a block is provided
 
 - Recurrence rules with DTSTART in UTC will now sortof work (thanks to Max
   Werner for providing the patch).

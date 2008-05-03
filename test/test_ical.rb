@@ -232,5 +232,28 @@ ___
     assert_equal(prodid, cal.producer)
   end
 
+  def test_occurences
+    t0 = Time.at(Time.now.to_i) # Strip float aspect of time, so comparisons succeed.
+    vc = Icalendar.create2 do |vc|
+      vc.add_event do |ve|
+        ve.dtstart t0
+      end
+    end
+    ve = vc.components(Icalendar::Vevent).first
+    assert_equal(t0, ve.occurences.select{true}.first)
+    ve.occurences do |t|
+      assert_equal(t0, t)
+    end
+
+    vc = Icalendar.decode(<<__).first
+BEGIN:VCALENDAR
+BEGIN:VEVENT
+END:VEVENT
+END:VCALENDAR
+__
+    ve = vc.components(Icalendar::Vevent).first
+    assert_raises(ArgumentError) { ve.occurences }
+  end
+
 end
 

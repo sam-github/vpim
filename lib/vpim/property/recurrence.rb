@@ -10,27 +10,26 @@ module Vpim
   class Icalendar
     module Property
 
-      # Occurrences are calculated from DTSTART: and RRULE:. If there is not
+      # Occurrences are calculated from DTSTART: and RRULE:. If there is no
       # RRULE:, the component recurs only once, at the start time.
       #
       # Limitations:
       #
       # Only a single RRULE: is currently supported, this is the most common
       # case.
-      #
-      # Implementation of multiple RRULE:s, and RDATE:, EXRULE:, and EXDATE: is
-      # on the todo list.  Its not a very high priority, because I haven't seen
-      # calendars using the full range of recurrence features, and haven't
-      # received feedback from any users requesting these features. So, if you
-      # need it, contact me and implementation will get on the schedule.
       module Recurrence
-        # The times this event occurs, as a Vpim::Rrule.
-        def occurrences
+        # The times this event occurs, as a Vpim::Rrule. If a block is
+        # provided, Rrule#each is called with the block.
+        def occurrences(&block) #:yield: occurrence time
           start = dtstart
           unless start
             raise ArgumentError, "Components with no DTSTART: don't have occurrences!"
           end
-          Vpim::Rrule.new(start, propvalue('RRULE'))
+          r = Vpim::Rrule.new(start, propvalue('RRULE'))
+          if block_given?
+            r.each(&block)
+          end
+          r
         end
 
         alias occurences occurrences #:nodoc: backwards compatibility
@@ -38,7 +37,10 @@ module Vpim
         # Check if this event overlaps with the time period later than or equal to +t0+, but
         # earlier than +t1+.
         def occurs_in?(t0, t1)
-          occurrences.each_until(t1).detect { |t| tend = t + (duration || 0); tend > t0 }
+          occurrences.each_until(t1).detect do |t|
+            tend = t + (duration || 0)
+            tend > t0
+          end
         end
 
         def rdates
