@@ -1,4 +1,14 @@
 
+- Icalendar#calscale was broken, and is now unit tested, along with #version
+  and #protocol?
+
+- Icalendar#{each,events,todos,journals} all yield components, or return an
+  enumerator.
+
+- Icalendar is enumerable.
+
+- Repo and Repo::Calendar are enumerable.
+
 - #occurrences will call Rrule#each if a block is provided
 
 - Recurrence rules with DTSTART in UTC will now sortof work (thanks to Max

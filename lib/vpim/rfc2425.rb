@@ -349,7 +349,7 @@ module Vpim
   # an array of all the inner arrays of fields. Return the array [outer,
   # inner].
   def Vpim.outer_inner(fields) #:nodoc:
-    # FIXME - use Enumerable#partition
+    # TODO - use Enumerable#partition
     # seperate into the outer-level fields, and the arrays of component
     # fields
     outer = []

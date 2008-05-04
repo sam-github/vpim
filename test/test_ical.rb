@@ -3,6 +3,13 @@
 require 'vpim/icalendar'
 require 'test/unit'
 
+# Sorry for the donkey patching...
+module Enumerable
+  def first
+    find{true}
+  end
+end
+
 include Vpim
 
 Req_1 =<<___
@@ -255,5 +262,83 @@ __
     assert_raises(ArgumentError) { ve.occurences }
   end
 
+  def test_each
+    vc = Icalendar.decode(<<__).first
+BEGIN:VCALENDAR
+BEGIN:VEVENT
+END:VEVENT
+BEGIN:VTODO
+END:VTODO
+BEGIN:VJOURNAL
+END:VJOURNAL
+BEGIN:VTIMEZONE
+END:VTIMEZONE
+BEGIN:X-UNKNOWN
+END:X-UNKNOWN
+END:VCALENDAR
+__
+    count = Hash.new(0)
+
+    vc.each do |c| count[c.class] += 1 end
+
+    assert_equal(3, count.size)
+    count.each do |_,v| assert_equal(1, v) end
+
+    count = Hash.new(0)
+    vc.events do |c| count[c.class] += 1 end
+    vc.todos do |c| count[c.class] += 1 end
+    vc.journals do |c| count[c.class] += 1 end
+    assert_equal(3, count.size)
+    count.each do |_,v| assert_equal(1, v) end
+
+    assert_equal(3, vc.each.to_a.size)
+    assert_equal(1, vc.each.select{|c| Vpim::Icalendar::Vevent === c}.size)
+    assert_equal(1, vc.each.select{|c| Vpim::Icalendar::Vtodo === c}.size)
+    assert_equal(1, vc.each.select{|c| Vpim::Icalendar::Vjournal === c}.size)
+
+    assert_equal(1, vc.events.to_a.size)
+    assert_equal(1, vc.todos.to_a.size)
+    assert_equal(1, vc.journals.to_a.size)
+
+  end
+
+  def test_calscale
+    req = Icalendar.decode(<<__).first
+BEGIN:VCALENDAR
+END:VCALENDAR
+__
+    assert_equal("GREGORIAN", req.calscale)
+    req = Icalendar.decode(<<__).first
+BEGIN:VCALENDAR
+CALSCALE:GREGORIAN
+END:VCALENDAR
+__
+    assert_equal("GREGORIAN", req.calscale)
+  end
+
+  def test_version
+    req = Icalendar.decode(<<__).first
+BEGIN:VCALENDAR
+END:VCALENDAR
+__
+    assert_raises(InvalidEncodingError) { req.version }
+
+    req = Icalendar.decode(<<__).first
+BEGIN:VCALENDAR
+VERSION:2.0
+END:VCALENDAR
+__
+    assert_equal(20, req.version)
+  end
+
+  def test_protocol
+    req = Icalendar.decode(<<__).first
+BEGIN:VCALENDAR
+METHOD:GET
+END:VCALENDAR
+__
+    assert(req.protocol?("get"))
+    assert(!req.protocol?("set"))
+  end
 end
 

@@ -6,6 +6,8 @@
   details.
 =end
 
+require "enumerator"
+
 require 'vpim/rfc2425'
 require 'vpim/dirinfo'
 require 'vpim/rrule'
@@ -43,6 +45,7 @@ module Vpim
   # iCalendars are usually transmitted in files with <code>.ics</code>
   # extensions.
   class Icalendar
+    # FIXME do NOT do this!
     include Vpim
 
     # Regular expression strings for the EBNF of RFC 2445
@@ -70,6 +73,7 @@ module Vpim
 
       @components = []
 
+      # could use #constants instead of this
       factory = {
         'VEVENT' => Vevent,
         'VTODO' => Vtodo,
@@ -77,12 +81,7 @@ module Vpim
       }
 
       inner.each do |component|
-        name = component.first
-        unless name.name? 'BEGIN'
-          raise InvalidEncodingError, "calendar component begins with #{name.name}, instead of BEGIN!"
-        end
-
-        name = name.value
+        name = component.first.value
 
         if klass = factory[name]
           @components << klass.new(component)
@@ -97,6 +96,8 @@ module Vpim
       push Vevent::Maker.make( &block )
     end
 
+=begin
+TODO
     # Allows customization of calendar creation.
     class Maker
       def initialize #:nodoc:
@@ -105,6 +106,7 @@ module Vpim
 
       attr :prodid
     end
+=end
 
     # The producer ID defaults to Vpim::PRODID but you can set it to something
     # specific to your application.
@@ -265,6 +267,7 @@ module Vpim
     # is present (which is non-conformant), nil is returned. iCalendar must
     # have a version of 20, and vCalendar would have a version of 10.
     def version
+      # Hm. What was my rationale for this?
       v = @properties['VERSION']
 
       unless v
@@ -299,11 +302,11 @@ module Vpim
     # The value of the CALSCALE: property, or "GREGORIAN" if CALSCALE: is not
     # present.
     #
-    # This is of academic interest, really because there aren't any other
-    # calendar scales defined, and given that its hard enough just dealing with
-    # Gregorian calendars, there probably won't be.
+    # This is of academic interest only. There aren't any other calendar scales
+    # defined, and given that its hard enough just dealing with Gregorian
+    # calendars, there probably won't be.
     def calscale
-      proptext('CALSCALE') || 'GREGORIAN'
+      (@properties['CALSCALE'] || 'GREGORIAN').upcase
     end
 
     # The array of all supported calendar components. If a class is provided,
@@ -320,8 +323,12 @@ module Vpim
     #
     #   calendar.components {|c| c... }
     #   => yield all components
+    #
+    # Note - use of this is mildly deprecated in favour of #each, #events,
+    # #todos, #journals because those won't return timezones, and will return
+    # Enumerators if called without a block.
     def components(klass=Object) #:yields:component
-      # TODO - should this take an interval: t0,t1?
+      klass ||= Object
 
       unless block_given?
         return @components.select{|c| klass === c}.freeze
@@ -335,14 +342,34 @@ module Vpim
       self
     end
 
-    # For backwards compatibility. Use #components.
-    def events #:nodoc:
-      components Icalendar::Vevent
+    include Enumerable
+
+    # Enumerate the top-level calendar components. Yields them if a block
+    # is provided, otherwise returns an Enumerator.
+    #
+    # This skips components that are only internally meaningful to iCalendar,
+    # such as timezone definitions.
+    def each(klass=nil) # :yield: component
+      if block_given?
+        components(klass) do |c| yield c end
+      else
+        Enumerable::Enumerator.new(self, :components, klass)
+      end
     end
 
-    # For backwards compatibility. Use #components.
-    def todos #:nodoc:
-      components Icalendar::Vtodo
+    # Short-hand for #each(Icalendar::Vevent).
+    def events(&block) #:yield: Vevent
+      each(Icalendar::Vevent, &block)
+    end
+
+    # Short-hand for #each(Icalendar::Vtodo).
+    def todos(&block) #:yield: Vtodo
+      each(Icalendar::Vtodo, &block)
+    end
+
+    # Short-hand for #each(Icalendar::Vjournal).
+    def journals(&block) #:yield: Vjournal
+      each(Icalendar::Vjournal, &block)
     end
 
   end

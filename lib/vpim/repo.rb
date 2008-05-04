@@ -34,22 +34,21 @@ module Vpim
     def each #:yield: calendar
     end
 
+    # A calendar abstraction. It models a calendar in a calendar repository
+    # that may not be an iCalendar.
+    #
+    # It has methods that behave identically to Icalendar, but it also has
+    # methods like name and displayed that are not present in an iCalendar.
     class Calendar
       include Enumerable
-
-      # Enumerate the events in the calendar.
-      def events #:yield: Vevent
-      end
-
-      # Enumerate the todos in the calendar.
-      def todos #:yield: Vtodo
-      end
 
       # The calendar name.
       def name
       end
 
       # Whether a calendar should be displayed.
+      #
+      # TODO - should be #displayed?
       def displayed
       end
 
@@ -57,21 +56,33 @@ module Vpim
       def encode
       end
 
+      # Enumerate the components in the calendar, both todos and events, or
+      # the specified klass. Like Icalendar#each()
+      def each(klass=nil, &block) #:yield: component
+      end
+
+      # Enumerate the events in the calendar.
+      def events(&block) #:yield: Vevent
+        each(Vpim::Icalendar::Vevent, &block)
+      end
+
+      # Enumerate the todos in the calendar.
+      def todos(&block) #:yield: Vtodo
+        each(Vpim::Icalendar::Vtodo, &block)
+      end
+
       # The method definitions are just to fool rdoc, not to be used.
-      %w{events todos name displayed encode}.each{|m| remove_method m}
+      %w{each name displayed encode}.each{|m| remove_method m}
 
-      def enumerate_file(what, file) #:nodoc:
+      def file_each(file, klass, &block) #:nodoc:
         unless iterator?
-          return Enumerable::Enumerator.new(self, what)
+          return Enumerable::Enumerator.new(self, :each, klass)
         end
-        begin
-          cals = Vpim::Icalendar.decode(File.open(file))
 
-          cals.each do |cal|
-            cal.send(what).each do |x|
-              yield x
-            end
-          end
+        cals = Vpim::Icalendar.decode(File.open(file))
+
+        cals.each do |cal|
+          cal.each(klass, &block)
         end
         self
       end
@@ -111,28 +122,19 @@ module Vpim
           1 == plist("Checked")
         end
 
-        def enumerate(what, &block) #:nodoc:
+        def each(klass=nil, &block) #:nodoc:
           unless iterator?
-            return Enumerable::Enumerator.new(self, what)
+            return Enumerable::Enumerator.new(self, :each, klass)
           end
           Dir[ @dir + "/Events/*.ics" ].map do |ics|
-            enumerate_file(what, ics, &block)
+            file_each(ics, klass, &block)
           end
           self
         end
 
-        def events(&block) #:nodoc:
-          enumerate("events", &block)
-        end
-
-        def todos(&block) #:nodoc:
-          enumerate("todos", &block)
-        end
-
         def encode #:nodoc:
           Icalendar.create2 do |cal|
-            todos  {|c| cal << c}
-            events {|c| cal << c}
+            each{|c| cal << c}
           end.encode
         end
       end
@@ -153,15 +155,11 @@ module Vpim
           true
         end
 
-        def events(&block) #:nodoc:
-          enumerate_file("events", @file, &block)
+        def each(klass, &block) #:nodoc:
+          file_each(@file, klass, &block)
         end
 
-        def todos(&block) #:nodoc:
-          enumerate_file("todos", @file, &block)
-        end
-
-        def encode
+        def encode #:nodoc:
           open(@file, "r"){|f| f.read}
         end
 
