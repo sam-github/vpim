@@ -88,9 +88,11 @@ module Atom
   
       def Parseable.included(o)
         o.class_eval do
+          def o.ordered_element_specs;  @ordered_element_specs ||= []; end
           def o.element_specs;  @element_specs ||= {}; end
           def o.attributes; @attributes ||= []; end
           def element_specs; self.class.element_specs; end
+          def ordered_element_specs; self.class.ordered_element_specs; end
           def attributes; self.class.attributes; end
           def o.namespace(ns = @namespace); @namespace = ns; end
         end
@@ -113,29 +115,29 @@ module Atom
         namespace_map = NamespaceMap.new if namespace_map.nil?
         node = XML::Node.new(root_name)
         node['xmlns'] = self.class.namespace unless nodeonly || !self.class.respond_to?(:namespace)
-        
-        self.class.element_specs.values.select {|s| s.single? }.each do |spec|
-          if attribute = self.send(spec.attribute)
-            if attribute.respond_to?(:to_xml)
-              node << attribute.to_xml(true, spec.name, spec.options[:namespace], namespace_map)
-            else
-              n =  XML::Node.new(spec.name)
-              n['xmlns'] = spec.options[:namespace]              
-              n << (attribute.is_a?(Time)? attribute.xmlschema : attribute.to_s)
-              node << n
+
+        self.class.ordered_element_specs.each do |spec|
+          if spec.single?
+            if attribute = self.send(spec.attribute)
+              if attribute.respond_to?(:to_xml)
+                node << attribute.to_xml(true, spec.name, spec.options[:namespace], namespace_map)
+              else
+                n =  XML::Node.new(spec.name)
+                n['xmlns'] = spec.options[:namespace]              
+                n << (attribute.is_a?(Time)? attribute.xmlschema : attribute.to_s)
+                node << n
+              end
             end
-          end
-        end  
-        
-        self.class.element_specs.values.select {|s| !s.single? }.each do |spec|
-          self.send(spec.attribute).each do |attribute|
-            if attribute.respond_to?(:to_xml)
-              node << attribute.to_xml(true, spec.name.singularize, nil, namespace_map)
-            else
-              n = XML::Node.new(spec.name.singularize)
-              n['xmlns'] = spec.options[:namespace]
-              n << attribute.to_s
-              node << n
+          else
+            self.send(spec.attribute).each do |attribute|
+              if attribute.respond_to?(:to_xml)
+                node << attribute.to_xml(true, spec.name.singularize, nil, namespace_map)
+              else
+                n = XML::Node.new(spec.name.singularize)
+                n['xmlns'] = spec.options[:namespace]
+                n << attribute.to_s
+                node << n
+              end
             end
           end
         end
@@ -186,7 +188,7 @@ module Atom
         
           names.each do |name|
             attr_accessor name          
-            self.element_specs[name.to_s] = ParseSpec.new(name, options)
+            self.ordered_element_specs << self.element_specs[name.to_s] = ParseSpec.new(name, options)
           end
         end
             
@@ -196,15 +198,13 @@ module Atom
         
           names.each do |name|
             attr_accessor name
-            # FIXME - singularize is rails, not ruby
-            self.element_specs[name.to_s.singularize] = ParseSpec.new(name, options)
+            self.ordered_element_specs << self.element_specs[name.to_s.singularize] = ParseSpec.new(name, options)
           end
         end
       
         def attribute(*names)
           names.each do |name|
-            n = name.to_s.sub(/:/, '_')
-            attr n.to_sym, !method_defined?("#{n}=")
+            attr_accessor name.to_s.sub(/:/, '_').to_sym
             self.attributes << name.to_s
           end
         end

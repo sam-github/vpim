@@ -36,12 +36,8 @@ module Atom # :nodoc:
     # +localname+:: The local name of the extension element.
     #
     def [](ns, localname)
-      if @simple_extensions.nil?
+      if !defined?(@simple_extensions) || @simple_extensions.nil?
         @simple_extensions = {}
-      end
-      
-      if @simple_extension_attributes.nil?
-        @simple_extension_attributes = {}
       end
       
       key = "{#{ns},#{localname}}"
@@ -65,16 +61,25 @@ module Atom # :nodoc:
   class Generator
     include Xml::Parseable
     
-    attr_reader :name
+    attr_accessor :name
     attribute :uri, :version
     
     # Initialize a new Generator.
     #
     # +xml+:: An XML::Reader object.
     #
-    def initialize(xml)
-      @name = xml.read_string.strip
-      parse(xml, :once => true)
+    def initialize(o = nil)
+      case o
+      when XML::Reader
+        @name = o.read_string.strip
+        parse(o, :once => true)
+      when Hash
+        o.each do |k, v|
+          self.send("#{k.to_s}=", v)
+        end
+      end
+      
+      yield(self) if block_given?
     end
   end
     
@@ -233,7 +238,8 @@ module Atom # :nodoc:
       XHTML = 'http://www.w3.org/1999/xhtml'      
       attribute :type, :'xml:lang'
       
-      def initialize(xml)        
+      def initialize(xml)     
+        super("")   
         parse(xml, :once => true)
         starting_depth = xml.depth
         
@@ -241,9 +247,9 @@ module Atom # :nodoc:
         while xml.read == 1 && xml.node_type != XML::Reader::TYPE_ELEMENT; end
         
         if xml.local_name == 'div' && xml.namespace_uri == XHTML
-          super(xml.read_inner_xml.strip.gsub(/\s+/, ' '))
+          set_content(xml.read_inner_xml.strip.gsub(/\s+/, ' '))
         else
-          super(xml.read_outer_xml)
+          set_content(xml.read_outer_xml)
         end
         
         # get back to the end of the element we were created with
@@ -282,15 +288,24 @@ module Atom # :nodoc:
     elements :authors, :contributors, :class => Person
     elements :links
     
-    def initialize(xml)
-      unless current_node_is?(xml, 'source', NAMESPACE)
-        raise ArgumentError, "Invalid node for atom:source - #{xml.name}(#{xml.namespace})"
+    def initialize(o = nil)
+      @authors, @contributors, @links = [], [], Links.new
+
+      case o
+      when XML::Reader
+        unless current_node_is?(o, 'source', NAMESPACE)
+          raise ArgumentError, "Invalid node for atom:source - #{o.name}(#{o.namespace})"
+        end
+
+        o.read
+        parse(o)
+      when Hash
+        o.each do |k, v|
+          self.send("#{k.to_s}=", v)
+        end
       end
       
-      @authors, @contributors, @links = [], [], Links.new
-      
-      xml.read
-      parse(xml)
+      yield(self) if block_given?   
     end
   end
   
@@ -316,8 +331,24 @@ module Atom # :nodoc:
   #
   # A feed can be converted to XML using, the to_xml method that returns a valid atom document in a String.
   #
+  # == Attributes
+  #
+  # A feed has the following attributes:
+  #
+  # +id+:: A unique id for the feed.
+  # +updated+:: The Time the feed was updated.
+  # +title+:: The title of the feed.
+  # +subtitle+:: The subtitle of the feed.
+  # +authors+:: An array of Atom::Person objects that are authors of this feed.
+  # +contributors+:: An array of Atom::Person objects that are contributors to this feed.
+  # +generator+:: A Atom::Generator.
+  # +rights+:: A string describing the rights associated with this feed.
+  # +entries+:: An array of Atom::Entry objects.
+  # +links+:: An array of Atom:Link objects. (This is actually an Atom::Links array which is an Array with some sugar).
+  #
   # == References
   # See also http://www.atomenabled.org/developers/syndication/atom-format-spec.php#element.feed
+  #
   class Feed
     include Xml::Parseable
     include SimpleExtensions
@@ -330,8 +361,10 @@ module Atom # :nodoc:
     element :id, :rights
     element :generator, :class => Generator
     element :title, :subtitle, :class => Content
-    element :updated, :published, :class => Time, :content_only => true
-    elements :links, :entries
+    element :updated, :class => Time, :content_only => true
+    elements :links
+    elements :authors, :contributors, :class => Person
+    elements :entries
     
     # Initialize a Feed.
     #
@@ -344,7 +377,7 @@ module Atom # :nodoc:
     # +o+:: An XML Reader or a Hash of attributes.
     #
     def initialize(o = {})
-      @links, @entries = Links.new, []
+      @links, @entries, @authors, @contributors = Links.new, [], [], []
       
       case o
       when XML::Reader
@@ -434,8 +467,27 @@ module Atom # :nodoc:
   #
   # A Entry can be converted to XML using, the to_xml method that returns a valid atom entry document in a String.
   #
+  # == Attributes
+  #
+  # An entry has the following attributes:
+  #
+  # +id+:: A unique id for the entry.
+  # +updated+:: The Time the entry was updated.
+  # +published+:: The Time the entry was published.
+  # +title+:: The title of the entry.
+  # +summary+:: A short textual summary of the item.
+  # +authors+:: An array of Atom::Person objects that are authors of this entry.
+  # +contributors+:: An array of Atom::Person objects that are contributors to this entry.
+  # +rights+:: A string describing the rights associated with this entry.
+  # +links+:: An array of Atom:Link objects. (This is actually an Atom::Links array which is an Array with some sugar).
+  # +source+:: Metadata of a feed that was the source of this item, for feed aggregators, etc.
+  # +categories+:: Array of Atom::Categories.
+  # +content+:: The content of the entry. This will be one of Atom::Content::Text, Atom::Content:Html or Atom::Content::Xhtml.
+  #
   # == References
-  # See also http://www.atomenabled.org/developers/syndication/atom-format-spec.php#element.entry
+  # See also http://www.atomenabled.org/developers/syndication/atom-format-spec.php#element.entry for more detailed
+  # definitions of the attributes.
+  #
   class Entry
     include Xml::Parseable
     include SimpleExtensions
@@ -594,10 +646,6 @@ module Atom # :nodoc:
       NEXT = 'next'
     end    
     
-    def length=(v)
-      @length = v.to_i
-    end
-    
     include Xml::Parseable
     attribute :href, :rel, :type, :length
         
@@ -620,6 +668,11 @@ module Atom # :nodoc:
       else
         raise ArgumentError, "Don't know how to handle #{o}"
       end        
+    end
+    
+    remove_method :length=
+    def length=(v)
+      @length = v.to_i
     end
     
     def to_s

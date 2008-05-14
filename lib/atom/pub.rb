@@ -62,6 +62,7 @@ module Atom
         parse(o)
       end
 
+      remove_method :categories
       def categories; self; end
     end
     
