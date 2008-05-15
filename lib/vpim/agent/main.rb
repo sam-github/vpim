@@ -289,7 +289,11 @@ See:
 EOF
 
     $stuff.each do |name,path,protocol|
-      body << "<li><a href=\"#{protocol}://#{$host}:#{$port}#{path}\">#{name}</a>\n"
+      #body << "<li><a href=\"#{protocol}://#{$host}:#{$port}#{path}\">#{name}</a>\n"
+      #
+      # $host is wrong, it lacks the domain - we should derive this from how
+      # we are called, or just leave it out.
+      body << "<li><a href=\"#{path}\">#{name}</a>\n"
     end
 
     body << "</ul>\n"

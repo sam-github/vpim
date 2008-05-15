@@ -6,17 +6,18 @@
   details.
 =end
 
-require "cgi"
-require "uri"
-
 # The only atom-generating library I could find on rubyforge has a dependency
-# on libxml2 for parsing. But I don't want to parse... so fake it out.
+# on libxml2, and only a newer libxml version than OS 10.5 has... so fake
+# out the new stuff, it doesn't seem to be needed for generation.
 module XML
   class Reader
   end
 end
 
 require "atom"
+require "cgi"
+require "rss/maker"
+require "uri"
 
 require "vpim/repo"
 
@@ -53,6 +54,10 @@ module Vpim
         @base.split.size.times{ shift }
       end
 
+      def uri
+        @uri.to_s
+      end
+
       def to_path
         self
       end
@@ -81,6 +86,7 @@ module Vpim
     end
 
     module Form
+      RSS   = "application/rss+xml"
       ATOM  = "application/atom+xml"
       HTML  = "text/html"
       ICS   = "text/calendar"
@@ -88,6 +94,35 @@ module Vpim
       VCF   = "text/directory"
     end
 
+    # FIXME - remove this, atom now works.
+    class Rssize
+      def initialize(cal)
+        @cal = cal
+      end
+
+      def get(path)
+        f = RSS::Maker.make("0.9") do |maker|
+          maker.channel.title = @cal.name
+          maker.channel.link = path.uri
+          maker.channel.description = @cal.name
+          maker.channel.language = "en-us"
+
+          # These are required, or RSS::Maker silently returns nil!
+          maker.image.url = "maker.image.url"
+          maker.image.title = "maker.image.title"
+
+          @cal.events do |ve|
+            ve.occurrences do |t|
+              e = maker.items.new_item
+              e.title = ve.summary
+              e.description = ve.summary
+              e.link = path.uri
+            end
+          end
+        end
+        return f.to_xml, Form::RSS
+      end
+    end
 
     class Atomize
       def initialize(cal)
@@ -101,23 +136,28 @@ module Vpim
       end
 
       def get(path)
-        feed = Atom::Feed.new
-        feed.title = @cal.name
-        feed.updated = Time.now
-        feed.id = id
-        @cal.events do |e|
-          # FIXME - should implement calendar filters to do this!
-          e.occurrences do |t|
-            feed.entries << Atom::Entry.new do |entry|
-              entry.title = e.summary
-              entry.updated = t
-              entry.content = Atom::Content::Html.new e.summary
-              entry.id = id
-              entry.authors << Atom::Person.new(:name => "vAgent")
+        f = Atom::Feed.new
+        f.title = @cal.name
+        f.updated = Time.now
+        # Should .id be the URL to the feed?
+        f.id = id
+        f.authors << Atom::Person.new(:name => "vAgent")
+        # Should be a link:
+        # .links << Atom::Link()
+        # .icon = ?
+        @cal.events do |ve|
+          ve.occurrences do |t|
+            f.entries << Atom::Entry.new do |e|
+              e.title = ve.summary
+              e.updated = t
+              e.content = Atom::Content::Html.new ve.summary
+              # .summary = Don't need when there is content.
+              # Maybe I can use the UUID from the ventry for the ID?
+              e.id = id
             end
           end
         end
-        return feed.to_xml, Form::ATOM
+        return f.to_xml, Form::ATOM
       end
     end
 
@@ -167,7 +207,8 @@ __
               [
                 ["calendar", "download"],
                 ["calendar", "subscription", "webcal"],
-                ["atom",     "syndication"],
+                ["atom",     "syndication (atom)"],
+                ["rss",      "syndication (rss 0.9)", "feed"],
               ]
             )
         end
@@ -183,8 +224,9 @@ __
           when "calendar"
             return @cal.encode, Form::ICS
           when "atom"
-            @atom ||= Atomize.new(@cal)
-            return @atom.get(path)
+            return Atomize.new(@cal).get(path)
+          when "rss"
+            return Rssize.new(@cal).get(path)
           else
             raise NotFound.new(form, path)
           end
