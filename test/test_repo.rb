@@ -151,14 +151,7 @@ class TestRepo < Test::Unit::TestCase
     repo = Apple3.new(@caldir)
     cal = repo.find{true}
     a = Vpim::Agent::Atomize.new(cal)
-    puts a.get(Path.new("http://example.com/path"))
-  end
-
-  def test_rssize
-    repo = Apple3.new(@caldir)
-    cal = repo.find{true}
-    a = Vpim::Agent::Rssize.new(cal)
-    puts a.get(Path.new("http://example.com/path"))
+    assert( a.get(Path.new("http://example.com/path")))
   end
 
 end

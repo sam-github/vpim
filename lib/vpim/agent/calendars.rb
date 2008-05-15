@@ -16,7 +16,6 @@ end
 
 require "atom"
 require "cgi"
-require "rss/maker"
 require "uri"
 
 require "vpim/repo"
@@ -86,42 +85,11 @@ module Vpim
     end
 
     module Form
-      RSS   = "application/rss+xml"
       ATOM  = "application/atom+xml"
       HTML  = "text/html"
       ICS   = "text/calendar"
       PLAIN = "text/plain"
       VCF   = "text/directory"
-    end
-
-    # FIXME - remove this, atom now works.
-    class Rssize
-      def initialize(cal)
-        @cal = cal
-      end
-
-      def get(path)
-        f = RSS::Maker.make("0.9") do |maker|
-          maker.channel.title = @cal.name
-          maker.channel.link = path.uri
-          maker.channel.description = @cal.name
-          maker.channel.language = "en-us"
-
-          # These are required, or RSS::Maker silently returns nil!
-          maker.image.url = "maker.image.url"
-          maker.image.title = "maker.image.title"
-
-          @cal.events do |ve|
-            ve.occurrences do |t|
-              e = maker.items.new_item
-              e.title = ve.summary
-              e.description = ve.summary
-              e.link = path.uri
-            end
-          end
-        end
-        return f.to_xml, Form::RSS
-      end
     end
 
     class Atomize
@@ -189,11 +157,10 @@ __
     # paths. Input is a Vpim::Repo.
     #
     #   .../coding/month/atom
-    #   .../coding/month/rss
     #   .../coding/events/month/ics              <- next month?
     #   .../coding/events/month/2008-04/ics      <- a specified month?
     #   .../coding/week/atom
-    #   .../year/rss
+    #   .../year/atom
     class Calendars
       def initialize(repo)
         @repo = repo
@@ -207,8 +174,7 @@ __
               [
                 ["calendar", "download"],
                 ["calendar", "subscription", "webcal"],
-                ["atom",     "syndication (atom)"],
-                ["rss",      "syndication (rss 0.9)", "feed"],
+                ["atom",     "syndication"],
               ]
             )
         end
@@ -225,8 +191,6 @@ __
             return @cal.encode, Form::ICS
           when "atom"
             return Atomize.new(@cal).get(path)
-          when "rss"
-            return Rssize.new(@cal).get(path)
           else
             raise NotFound.new(form, path)
           end
