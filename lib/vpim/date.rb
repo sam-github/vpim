@@ -16,7 +16,7 @@ class Date
 
   # Converts this object to a Time object, or throws an ArgumentError if
   # conversion is not possible because it is before the start of epoch.
-  def to_time
+  def vpim_to_time
     raise ArgumentError, 'date is before the start of system time' if self < TIME_START
     days = self - TIME_START
 

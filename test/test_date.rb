@@ -8,8 +8,8 @@ class TestVpimDate < Test::Unit::TestCase
 
   def test_to_time
     # Need to test with DateTime, but I don't have that with ruby 1.6.
-    assert_equal(Time.at(0), Date.new(1970, 1, 1).to_time)
-    assert_equal(Time.at(24 * 60 * 60), Date.new(1970, 1, 2).to_time)
+    assert_equal(Time.at(0), Date.new(1970, 1, 1).vpim_to_time)
+    assert_equal(Time.at(24 * 60 * 60), Date.new(1970, 1, 2).vpim_to_time)
   end
 
   def test_date_weekstart
