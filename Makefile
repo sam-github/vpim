@@ -58,10 +58,10 @@ outline:
 
 .PHONY: tags
 tags:
-	/opt/local/bin/ctags -R --extra=+f lib #rss
-	RUBYLIB=/Users/sam/p/ruby/ruby/lib /usr/local/bin/rdoc18 -f tags lib
-	mv tags tags.ctags
-	sort tags.ctags tags.rdoc > tags
+	/sw/bin/ctags -R --extra=+f lib test
+	#RUBYLIB=/Users/sam/p/ruby/ruby/lib /usr/local/bin/rdoc18 -f tags lib
+	#mv tags tags.ctags
+	#sort tags.ctags tags.rdoc > tags
 
 ri:
 	rdoc18 -f ri lib
