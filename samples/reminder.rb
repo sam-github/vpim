@@ -118,7 +118,7 @@ end
 puts
 
 def start_of_first_occurrence(t0, t1, e)
-  e.occurrences.each_until(t1).each do |t|
+  e.occurrences(t1) do |t|
     # An event might start before t0, but end after it..., in which case
     # we are still interested.
     if (t + (e.duration || 0)) >= t0
