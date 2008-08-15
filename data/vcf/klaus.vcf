@@ -1,0 +1,22 @@
+BEGIN:VCARD
+VERSION:2.1
+N:Kohlbauer;klaus;;Dipl. Kfm.
+FN:klaus Kohlbauer
+ORG:infosense;Vorstand
+TITLE:Geschäftsführer
+NOTE:Das sind Notizen..Das sind Notizen..Das sind Notizen..Das sind Notizen..Das sind Notizen..Das sind Notizen..Das sind Notizen..
+TEL;WORK;VOICE:0173-999 777 9
+TEL;HOME;VOICE:089 74 91 10 26
+TEL;CELL;VOICE:0173 999 777 9
+TEL;HOME;FAX:089 74 91 10 27
+ADR;WORK:;Büro????;Infanteriestrasse 19/5;München;;80797;Deutschland
+LABEL;WORK;ENCODING=QUOTED-PRINTABLE:B=FCro????=0D=0AInfanteriestrasse 19/5=0D=0AM=FCnchen 80797=0D=0ADeutschland
+ADR;HOME:;;Winthirstrasse 21;München;;80639;Deutschland
+LABEL;HOME;ENCODING=QUOTED-PRINTABLE:Winthirstrasse 21=0D=0AM=FCnchen 80639=0D=0ADeutschland
+X-WAB-GENDER:2
+URL;HOME:http://www.homepade.de
+URL;WORK:http://www.infosense.de
+BDAY:19521114
+EMAIL;PREF;INTERNET:klaus.kohlbauer@infosense.de
+REV:20080730T162844Z
+END:VCARD
