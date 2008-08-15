@@ -147,10 +147,6 @@ pkg:
 	cp lib/vpim/*.rb           $R/lib/vpim/
 	cp lib/vpim/maker/*.rb     $R/lib/vpim/maker/
 	cp lib/vpim/property/*.rb  $R/lib/vpim/property/
-	cp etc/rfc2425.txt         $R/etc
-	cp etc/rfc2426.txt         $R/etc
-	cp etc/rfc2445.txt         $R/etc
-	cp etc/rrule.txt           $R/etc
 	cp samples/README.mutt     $R/samples
 	cp $(SAMPLES)              $R/samples
 	cp samples/osx-wrappers.rb $R/samples

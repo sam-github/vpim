@@ -1,3 +1,11 @@
+0.657 - 2008-08-14
+
+- Debian doesn't like RFCs. I think there is a problem with the DFG, not the
+  IETF.  The value of a standard is that it can't be modified (if anybody could
+  publish a modified version of an RFC without restriction chaos would ensue).
+  Still, we lost that argument, and I'll try and help packagers out.
+
+- View, gives various views of calendars. Experimental.
 
 - Fixed doc comment refs to common Property module.
 
