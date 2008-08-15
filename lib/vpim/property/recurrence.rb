@@ -6,44 +6,58 @@
   details.
 =end
 
+require "enumerator"
+
 module Vpim
   class Icalendar
     module Property
 
-      # Occurrences are calculated from DTSTART: and RRULE:. If there is no
-      # RRULE:, the component recurs only once, at the start time.
+      # Occurrences are calculated from DTSTART and RRULE. If there is no
+      # RRULE, the component occurs only once, at the start time.
       #
       # Limitations:
       #
       # Only a single RRULE: is currently supported, this is the most common
       # case.
       module Recurrence
-        # The times this event occurs, as a Vpim::Rrule. If a block is
-        # provided, Rrule#each is called with the block.
-        def occurrences(&block) #:yield: occurrence time
+        def rrule #:nodoc:
           start = dtstart
           unless start
-            raise ArgumentError, "Components with no DTSTART: don't have occurrences!"
+            raise ArgumentError, "Components without a DTSTART don't have occurrences!"
           end
-          r = Vpim::Rrule.new(start, propvalue('RRULE'))
-          if block_given?
-            r.each(&block)
+          Vpim::Rrule.new(start, propvalue('RRULE'))
+        end
+
+        # The times this components occurs. If a block is not provided, returns
+        # an enumerator.
+        #
+        # Occurrences may be infinite, +dountil+ can be provided to limit the
+        # iterations, see Rrule#each.
+        def occurrences(dountil = nil, &block) #:yield: occurrence time
+          rr = rrule
+          unless block_given?
+            return Enumerable::Enumerator.new(self, :occurrences, dountil)
           end
-          r
+
+          rr.each(dountil, &block)
         end
 
         alias occurences occurrences #:nodoc: backwards compatibility
 
-        # Check if this event overlaps with the time period later than or equal to +t0+, but
+        # True if this components occurs in a time period later than +t0+, but
         # earlier than +t1+.
         def occurs_in?(t0, t1)
-          occurrences.each_until(t1).detect do |t|
-            tend = t + (duration || 0)
-            tend > t0
+          # TODO - deprecate this, its a hack
+          occurrences(t1).detect do |tend|
+            if respond_to? :duration
+              tend += duration || 0
+            end
+            tend >= t0
           end
         end
 
-        def rdates
+        def rdates #:nodoc:
+          # TODO - this is a hack, remove it
           Vpim.decode_date_time_list(propvalue('RDATE'))
         end
 

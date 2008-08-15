@@ -9,6 +9,7 @@
 require 'vpim/dirinfo'
 require 'vpim/field'
 require 'vpim/rfc2425'
+require 'vpim/rrule'
 require 'vpim/vpim'
 require 'vpim/property/base'
 require 'vpim/property/common'
@@ -38,7 +39,7 @@ module Vpim
         # See "TODO - fields" in dirinfo.rb
       end
 
-      # TODO - derive everything from Icalendar::Component to get this kind of stuff?
+      # TODO - derive everything from Icalendar::Component to get rid of this kind of stuff?
       def fields #:nodoc:
         f = @properties.to_a
         last = f.pop
@@ -50,10 +51,8 @@ module Vpim
         @properties
       end
 
-
       # Create a new Vevent object. All events must have a DTSTART field,
       # specify it as either a Time or a Date in +start+, it defaults to "now"
-      # (is this useful?).
       #
       # If specified, +fields+ must be either an array of Field objects to
       # add, or a Hash of String names to values that will be used to build
@@ -62,10 +61,13 @@ module Vpim
       #
       #   Vevent.create(Date.today, 'SUMMARY' => "today's event")
       #
-      # TODO - maybe events are usually created in a particular way? With a
-      # start/duration or a start/end? Maybe I can make it easier. Ideally, I
-      # would like to make it hard to encode an invalid Event.
       def Vevent.create(start = Time.now, fields=[])
+        # TODO
+        # - maybe events are usually created in a particular way? With a
+        # start/duration or a start/end? Maybe I can make it easier. Ideally, I
+        # would like to make it hard to encode an invalid Event.
+        # - I don't think its useful to have a default dtstart for events
+        # - also, I don't think dstart is mandatory
         dtstart = DirectoryInfo::Field.create('DTSTART', start)
         di = DirectoryInfo.create([ dtstart ], 'VEVENT')
 
@@ -114,50 +116,23 @@ module Vpim
         proptoken 'TRANSP', ["OPAQUE", "TRANSPARENT"], "OPAQUE"
       end
 
-      # The duration in seconds of a Event, Todo, or Vfreebusy component, or
-      # for Alarms, the delay period prior to repeating the alarm. The
-      # duration is calculated from the DTEND and DTBEGIN fields if the
-      # DURATION field is not present. Durations of zero seconds are possible.
+      # The duration in seconds of an Event, or nil if unspecified. If the
+      # DURATION field is not present, but the DTEND field is, the duration is
+      # calculated from DTSTART and DTEND.  Durations of zero seconds are
+      # possible.
       def duration
-        dur = @properties.field 'DURATION'
-        dte = @properties.field 'DTEND'
-        if !dur
-          return nil unless dte
-
-          b = dtstart
-          e = dtend
-
-          return (e - b).to_i
-        end
-
-        Icalendar.decode_duration(dur.value_raw)
+        propduration 'DTEND'
       end
 
-      # The end time for this calendar component. For an Event, if there is no
-      # end time, then nil is returned, and the event takes up no time.
-      # However, the end time will be calculated from the event duration, if
-      # present.
+      # The end time for this Event. If the DTEND field is not present, but the
+      # DURATION field is, the end will be calculated from DTSTART and
+      # DURATION.
       def dtend
-        dte = @properties.field 'DTEND'
-        if dte
-          dte.to_time.first
-        elsif duration
-            dtstart + duration
-        else
-          nil
-        end
+        propend 'DTEND'
       end
 
       # Make a new Vevent, or make changes to an existing Vevent.
       class Maker
-        # TODO - should I automatically set
-        #   #created
-        #   #dtstamp
-        #   #sequence
-        #   ...?
-        #
-        # Many have pretty specific meanings in iTIP, perhaps I should leave
-        # them alone.
         include Vpim::Icalendar::Set::Util #:nodoc:
         include Vpim::Icalendar::Set::Common
 
@@ -187,16 +162,23 @@ module Vpim
           set_date_or_datetime 'DTEND', 'DATE-TIME', dtend
         end
 
-        # Yields a selector that allows the duration to be set.
-        #
-        # TODO - syntax is:
-        #   dur-value =  (["+"] / "-") "P" (dur-date / dur-time / dur-week)
-        #   dur-date  = dur-day [ "T" (dur-hour / dur-minute / dur-second) ]
-        #   dur-time  = "T" (dur-hour / dur-minute / dur-second)
-        #   dur-week  = 1*DIGIT "W"
-        def duration(dur) #:yield:selector
-          raise Vpim::Unsupported
+        # Add a RRULE to this event. The rule can be provided as a pre-build
+        # RRULE value, or the RRULE maker can be used.
+        def add_rrule(rule = nil, &block) #:yield: Rrule::Maker
+          # TODO - should be in Property::Reccurrence::Set
+          unless rule
+            rule = Rrule::Maker.new(&block).encode
+          end
+          @comp.properties.push(Vpim::DirectoryInfo::Field.create("RRULE", rule))
+          self
         end
+
+        # Set the RRULE for this event. See #add_rrule
+        def set_rrule(rule = nil, &block) #:yield: Rrule::Maker
+          rm_all("RRULE")
+          add_rrule(rule, &block)
+        end
+
       end
 
     end

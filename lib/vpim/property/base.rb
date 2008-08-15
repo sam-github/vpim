@@ -10,6 +10,7 @@ module Vpim
   class Icalendar
     module Set #:nodoc:
       module Util #:nodoc:
+        # TODO - rename module to Private?
 
         def rm_all(name)
           rm = @comp.properties.select { |f| f.name? name }
@@ -114,7 +115,7 @@ module Vpim
         end
 
         def proptoken(name, allowed, default_token = nil) #:nodoc:
-          prop = propvalue name
+          prop = propvalue(name)
 
           if prop
             prop = prop.to_str.upcase
@@ -155,6 +156,35 @@ module Vpim
         def proptextlistarray(name) #:nodoc:
           @properties.select{ |f| f.name? name }.map{ |p| Vpim.decode_text_list(p.value_raw) }.flatten
         end
+
+        # Duration has "almost" the same definition for Event and Todo
+        def propduration(endfield)
+          dur = @properties.field 'DURATION'
+          dte = @properties.field endfield
+
+          if !dur
+            return nil unless dte
+
+            b = dtstart
+            e = send(endfield.downcase.to_sym)
+
+            return (e - b).to_i
+          end
+
+          Icalendar.decode_duration(dur.value_raw)
+        end
+
+        def propend(endfield)
+          dte = @properties.field endfield.to_s.upcase
+          if dte
+            dte.to_time.first
+          elsif duration
+            dtstart + duration
+          else
+            nil
+          end
+        end
+
 
       end
     end

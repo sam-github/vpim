@@ -3,6 +3,7 @@
 require 'vpim/icalendar'
 require 'test/unit'
 
+
 # Sorry for the donkey patching...
 module Enumerable
   def first
@@ -93,6 +94,10 @@ ___
 
 class TestIcal < Test::Unit::TestCase
 
+  def assert_time(expected, actual, msg = nil)
+    assert_in_delta(expected, actual, 1, msg)
+  end
+
   # Reported by Kyle Maxwell
   def test_serialize_todo
 icstodo =<<___
@@ -178,10 +183,12 @@ ___
 
   # FIXME - test bad durations, like 'PT1D'
 
-  def test_duration
-    event = Icalendar::Vevent.create(Date.new(2000, 1, 21))
-    assert_equal(nil,  event.duration)
-    assert_equal(nil,  event.dtend)
+  def test_event_duration
+    now = Time.now
+    event = Icalendar::Vevent.create(now)
+    assert_time(now, event.dtstart)
+    assert_nil(event.duration)
+    assert_nil(event.dtend)
 
     event = Icalendar::Vevent.create(Date.new(2000, 1, 21),
                                     'DURATION' => 'PT1H')
@@ -190,6 +197,26 @@ ___
     event = Icalendar::Vevent.create(Date.new(2000, 1, 21),
                                     'DTEND' => Date.new(2000, 1, 22))
     assert_equal(24*60*60, event.duration)
+  end
+
+  def test_todo_duration
+    todo = Icalendar::Vtodo.create()
+    assert_nil(todo.dtstart)
+    assert_nil(todo.duration)
+    assert_nil(todo.due)
+
+    todo = Icalendar::Vtodo.create('DTSTART' => Date.new(2000, 1, 21),
+                                    'DURATION' => 'PT1H')
+    assert_equal(Time.gm(2000, 1, 21, 1),  todo.due)
+
+    todo = Icalendar::Vtodo.create('DTSTART' => Date.new(2000, 1, 21),
+                                    'DUE' => Date.new(2000, 1, 22))
+    assert_equal(24*60*60, todo.duration)
+  end
+
+  def test_journal_create
+    vj = Icalendar::Vjournal.create('DESCRIPTION' => "description")
+    assert_equal("description", vj.description)
   end
 
   def TODO_test_occurrence_with_date_start
@@ -240,16 +267,16 @@ ___
   end
 
   def test_occurences
-    t0 = Time.at(Time.now.to_i) # Strip float aspect of time, so comparisons succeed.
+    t0 = Time.now
     vc = Icalendar.create2 do |vc|
       vc.add_event do |ve|
         ve.dtstart t0
       end
     end
     ve = vc.components(Icalendar::Vevent).first
-    assert_equal(t0, ve.occurences.select{true}.first)
+    assert_time(t0, ve.occurences.select{true}.first)
     ve.occurences do |t|
-      assert_equal(t0, t)
+      assert_time(t0, t)
     end
 
     vc = Icalendar.decode(<<__).first
@@ -299,7 +326,10 @@ __
     assert_equal(1, vc.events.to_a.size)
     assert_equal(1, vc.todos.to_a.size)
     assert_equal(1, vc.journals.to_a.size)
-
+    
+    vc.to_s # Shouldn't raise...
+    # TODO - encode isn't round-tripping, unknown components are lost, which is
+    # not good.
   end
 
   def test_calscale
@@ -340,5 +370,46 @@ __
     assert(req.protocol?("get"))
     assert(!req.protocol?("set"))
   end
+
+  def test_transparency
+    transparency = Icalendar.decode(<<__).first.to_a.first.transparency
+BEGIN:VCALENDAR
+BEGIN:VEVENT
+END:VEVENT
+END:VCALENDAR
+__
+    assert_equal("OPAQUE", transparency, "check default")
+
+    transparency = Icalendar.decode(<<__).first.to_a.first.transparency
+BEGIN:VCALENDAR
+BEGIN:VEVENT
+TRANSP:Opaque
+END:VEVENT
+END:VCALENDAR
+__
+    assert_equal("OPAQUE", transparency, "check opaque")
+
+    transparency = Icalendar.decode(<<__).first.to_a.first.transparency
+BEGIN:VCALENDAR
+BEGIN:VEVENT
+TRANSP:TrANSPARENT
+END:VEVENT
+END:VCALENDAR
+__
+    assert_equal("TRANSPARENT", transparency, "check transparent")
+
+  end
+
+  def test_event_maker_w_rrule
+    vc = Icalendar.create2 do |vc|
+      vc.add_event do |m|
+        m.add_rrule("freq=monthly")
+        m.set_rrule do |_| _.frequency = "daily" end
+      end
+    end
+    assert_no_match(/RRULE:FREQ=MONTHLY/, vc.to_s)
+    assert_match(/RRULE:FREQ=DAILY/, vc.to_s)
+  end
+
 end
 

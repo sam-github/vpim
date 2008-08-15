@@ -510,7 +510,7 @@ module Vpim
       dates
     end
 
-    def byday_in_weekly(year, mon, day, wkst, byday)
+    def byday_in_weekly(year, mon, day, wkst, byday) #:nodoc:
       #    debug ["day", year,mon,day,wkst,byday]
       days = byday.map{ |_, byday| Date.str2wday(byday) }
       week = DateGen.weekofdate(year, mon, day, wkst)
@@ -521,7 +521,71 @@ module Vpim
       week
     end
 
-  end
+    # Help encode an RRULE value.
+    #
+    # TODO - the Maker is both incomplete, and its a bit cheesy, I'd like to do
+    # something that is a kind of programmatic version of the UI that iCal has.
+    class Maker
+      def initialize(&block) #:yield: self
+        @freq = nil
+        @until = nil
+        @count = nil
+        @interval = nil
+        @wkst = nil
+        @by = {}
 
+        if block
+          yield self
+        end
+      end
+
+      FREQ = %w{ YEARLY WEEKLY MONTHLY DAILY } #:nodoc: incomplete!
+
+      def frequency=(freq)
+        freq = freq.to_str.upcase
+        unless FREQ.include? freq
+          raise ArgumentError, "Frequency #{freq} is not valid"
+        end
+        @freq = freq
+      end
+
+      # +runtil+ is Time, Date, or DateTime
+      def until=(runtil)
+        if @count
+          raise ArgumentError, "Cannot specify UNTIL if COUNT was specified"
+        end
+        @until = runtil
+      end
+
+      # +count+ is integral
+      def count=(rcount)
+        if @until
+          raise ArgumentError, "Cannot specify COUNT if UNTIL was specified"
+        end
+        @count = rcount.to_int
+      end
+
+      # TODO - BY....
+
+      def encode
+        unless @freq
+          raise ArgumentError, "Must specify FREQUENCY"
+        end
+
+        rrule = "FREQ=#{@freq}"
+
+        [
+          ["COUNT", @count],
+          ["UNTIL", @until],
+          # TODO...
+        ].each do |k,v|
+          if v
+            rrule += ";#{k}=#{v}"
+          end
+        end
+        rrule
+      end
+    end
+  end
 end
 

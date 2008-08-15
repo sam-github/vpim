@@ -1,6 +1,30 @@
 
+- Fixed doc comment refs to common Property module.
+
+- Vtodo#duration and #due now work correctly (the missing one will be calculated
+  from the other).
+
+- Vevent::Maker#add_rrule, #set_rrule are new, using Rrule::Maker.
+
+- There is now (half-of) an Rrule::Maker class to help construct RRULE values.
+
+- Vjournal can be encoded now (it was broken).
+
+- Better code coverage by the tests.
+
+- Recurrence#occurrences now returns an Enumerator instead of an Rrule. Both
+  have #each, and both yield the same thing, so that isn't an API change. However,
+  Rrule had an each_until, and the Enumerator doesn't. Use the dountil argument
+  to #occurrences to get the same effect. The asymetry of this API caused me
+  (non-aesthetic) trouble, now Rrule is an internal implementation detail.
+  Also, this would have had to change eventually, because occurrences need to
+  be the union of multiple RRULE and RDATE fields.
+
+- Recurrence#rrule, returns an Rrule for the first RRULE field. Can be used
+  as transition.
+
 - Icalendar#calscale was broken, and is now unit tested, along with #version
-  and #protocol?
+  and #protocol?.
 
 - Icalendar#{each,events,todos,journals} all yield components, or return an
   enumerator.

@@ -78,6 +78,7 @@ module Vpim
         'VEVENT' => Vevent,
         'VTODO' => Vtodo,
         'VJOURNAL' => Vjournal,
+        # TODO - VTIMEZONE
       }
 
       inner.each do |component|
@@ -89,12 +90,14 @@ module Vpim
       end
     end
 
-    # Add and event to this calendar.
+    # Add an event to this calendar.
     #
     # Yields an event maker, Icalendar::Vevent::Maker.
     def add_event(&block) #:yield:event
       push Vevent::Maker.make( &block )
     end
+
+    # TODO add_todo, add_journal
 
 =begin
 TODO
@@ -164,7 +167,10 @@ TODO
     def fields # :nodoc:
       f = @properties.to_a
       last = f.pop
-      @components.each { |c| f << c.fields }
+      # Use of #each means we won't encode components in our View, but also
+      # that we won't encode timezones... but we don't decode/support timezones
+      # anyhow, so fix later.
+      each { |c| f << c.fields }
       f.push last
     end
 
@@ -263,11 +269,9 @@ TODO
       calendars
     end
 
-    # The iCalendar version multiplied by 10 as an Integer.  If no VERSION field
-    # is present (which is non-conformant), nil is returned. iCalendar must
-    # have a version of 20, and vCalendar would have a version of 10.
+    # The iCalendar version multiplied by 10 as an Integer. iCalendar must have
+    # a version of 20, and vCalendar must have a version of 10.
     def version
-      # Hm. What was my rationale for this?
       v = @properties['VERSION']
 
       unless v
@@ -349,12 +353,11 @@ TODO
     #
     # This skips components that are only internally meaningful to iCalendar,
     # such as timezone definitions.
-    def each(klass=nil) # :yield: component
-      if block_given?
-        components(klass) do |c| yield c end
-      else
-        Enumerable::Enumerator.new(self, :components, klass)
+    def each(klass=nil, &block) # :yield: component
+      unless block
+        return Enumerable::Enumerator.new(self, :each, klass)
       end
+      components(klass, &block)
     end
 
     # Short-hand for #each(Icalendar::Vevent).

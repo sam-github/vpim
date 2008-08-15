@@ -15,6 +15,8 @@ end
 =end
 
 class TestRrule < Test::Unit::TestCase
+  Rrule = Vpim::Rrule
+
 #=begin
   # Comment out these if you want printing!
   def puts(*args)
@@ -996,7 +998,7 @@ END:VEVENT
 END:VCALENDAR
 __
     cal = Vpim::Icalendar.decode(txt).first
-    occurs = cal.events.first.occurrences.to_a
+    occurs = cal.events.to_a.first.occurrences.to_a
     #p occurs
     utc = occurs.map{|y| y.utc}
     #p utc
@@ -1007,5 +1009,22 @@ __
     ]
     assert_equal(expects, utc)
   end
+
+  def test_maker
+    assert_equal("FREQ=WEEKLY",
+                 Rrule::Maker.new{|m|m.frequency = "WEEKLY"}.encode)
+    assert_equal("FREQ=WEEKLY;COUNT=2",
+                 Rrule::Maker.new{|m|m.frequency = "WEEKLY"; m.count = 2}.encode)
+    assert_raises(ArgumentError) do
+      Rrule::Maker.new{|m|m.count = 2; m.until = Time.now}
+    end
+    assert_raises(ArgumentError) do
+      Rrule::Maker.new{|m|m.until = Time.now; m.count = 4}
+    end
+    assert_raises(ArgumentError) do
+      Rrule::Maker.new.encode
+    end
+  end
+
 end
 

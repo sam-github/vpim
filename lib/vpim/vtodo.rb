@@ -68,9 +68,18 @@ module Vpim
         new(di.to_a)
       end
 
-      # The date and time that a to-do is expected to be completed, a Time.
+      # The duration in seconds of a Todo, or nil if unspecified. If the
+      # DURATION field is not present, but the DUE field is, the duration is
+      # calculated from DTSTART and DUE. Durations of zero seconds are
+      # possible.
+      def duration
+        propduration 'DUE'
+      end
+
+      # The time at which this Todo is due to be completed. If the DUE field is not present,
+      # but the DURATION field is, due will be calculated from DTSTART and DURATION.
       def due
-        proptime 'DUE'
+        propend 'DUE'
       end
 
       # The date and time that a to-do was actually completed, a Time.
