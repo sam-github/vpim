@@ -59,8 +59,9 @@ http://topfunky.net/svn/plugins/calendar_helper
 
 Rerepresent craigslist as .xls...
 
-Figure out how iCal stores whether a calendar is in-view or not, and use to drive
-reminder.
+Figure out how iCal stores whether a calendar is in-view or not, and use to drive reminder.
+
+http://www.npr.org/about/press/2008/071708.API.html
 
 iTip protocol binding for IM protocols
 
