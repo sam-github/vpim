@@ -180,46 +180,46 @@ seq
       # Properties common to Vevent, Vtodo, and Vjournal.
       module Common
 
-        # Set the access class of the component, see Icalendar::Get::Common#access_class.
+        # Set the access class of the component, see Icalendar::Property::Common#access_class.
         def access_class(token)
           set_token 'CLASS', ["PUBLIC", "PRIVATE", "CONFIDENTIAL"], "PUBLIC", token
         end
 
-        # Set the creation time, see Icalendar::Get::Common#created
+        # Set the creation time, see Icalendar::Property::Common#created
         def created(time)
           set_datetime 'CREATED', time
         end
 
-        # Set the description, see Icalendar::Get::Common#description.
+        # Set the description, see Icalendar::Property::Common#description.
         def description(text)
           set_text 'DESCRIPTION', text
         end
 
-        # Set the sequence number, see Icalendar::Get::Common#sequence.
+        # Set the sequence number, see Icalendar::Property::Common#sequence.
         # is no SEQUENCE; property.
         def sequence(int)
           set_integer 'SEQUENCE', int
         end
 
-        # Set the timestamp, see Icalendar::Get::Common#timestamp.
+        # Set the timestamp, see Icalendar::Property::Common#timestamp.
         def dtstamp(time)
           set_datetime 'DTSTAMP', time
           self
         end
 
-        # The start time or date, see Icalendar::Get::Common#dtstart.
+        # The start time or date, see Icalendar::Property::Common#dtstart.
         def dtstart(start)
           set_date_or_datetime 'DTSTART', 'DATE-TIME', start
           self
         end
 
-        # Set the last modification time, see Icalendar::Get::Common#lastmod.
+        # Set the last modification time, see Icalendar::Property::Common#lastmod.
         def lastmod(time)
           set_datetime 'LAST-MODIFIED', time
           self
         end
 
-        # Set the event organizer, an Icalendar::Address, see Icalendar::Get::Common#organizer.
+        # Set the event organizer, an Icalendar::Address, see Icalendar::Property::Common#organizer.
         #
         # Without an +adr+ it yields an Icalendar::Address that is a copy of
         # the current organizer (if any), allowing it to be modified.
@@ -255,12 +255,12 @@ seq
         end
 =end
 
-        # Set summary description of component, see Icalendar::Get::Common#summary.
+        # Set summary description of component, see Icalendar::Property::Common#summary.
         def summary(text)
           set_text 'SUMMARY', text
         end
 
-        # Set the unique identifier of this calendar component, see Icalendar::Get::Common#uid.
+        # Set the unique identifier of this calendar component, see Icalendar::Property::Common#uid.
         def uid(uid)
           set_text 'UID', uid
         end
@@ -269,12 +269,12 @@ seq
           set_text 'URL', url
         end
 
-        # Add an attendee Address, see Icalendar::Get::Common#attendees.
+        # Add an attendee Address, see Icalendar::Property::Common#attendees.
         def add_attendee(adr)
           add_address('ATTENDEE', adr)
         end
 
-        # Set the categories, see Icalendar::Get::Common#attendees.
+        # Set the categories, see Icalendar::Property::Common#attendees.
         #
         # If +cats+ is provided, the categories are set to cats, either a
         # String or an Array of String. Otherwise, and array of the existing
@@ -288,7 +288,7 @@ seq
           set_text_list('CATEGORIES', cats)
         end
 
-        # Set the comment, see Icalendar::Get::Common#comments.
+        # Set the comment, see Icalendar::Property::Common#comments.
         def comment(value)
           set_text 'COMMENT', value
         end
