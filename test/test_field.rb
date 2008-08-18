@@ -140,5 +140,44 @@ class TestField < Test::Unit::TestCase
     assert_equal("0:xx\n xxxx\n",     Vpim::DirectoryInfo::Field.create('0', 'x' * 6).encode(4))
     assert_equal("0:xx\n xxxx\n x\n", Vpim::DirectoryInfo::Field.create('0', 'x' * 7).encode(4))
   end
+
+  def test_field_mapping
+    f = Vpim::DirectoryInfo::Field
+
+    mapper = {
+      nil         => Vpim.method(:decode_date_to_date),
+      'date'      => Vpim.method(:decode_date_to_date),
+      'date-time' => Vpim.method(:decode_time_to_time)
+    }
+
+    assert_equal(
+                 Date.new(2005, 04, 13),
+                 f.decode("name:2005-04-13").value(mapper)
+                )
+
+    assert_equal(
+                 Date.new(2005, 04, 13),
+                 f.decode("name;value=date:2005-04-13").value(mapper)
+                )
+
+    assert_equal(
+                 Time.local(2005, 04, 13, 2),
+                 f.decode("name;value=date-time:20050413T020000").value(mapper)
+                )
+
+    assert_equal(
+                 Time.gm(2005, 04, 13, 2),
+                 f.decode("name;value=date-time:20050413T020000Z").value(mapper)
+                )
+
+    assert_raises(Vpim::InvalidEncodingError) {
+                 f.decode("name;value=date-time:2005-04-13").value(mapper)
+    }
+
+    assert_raises(Vpim::InvalidEncodingError) {
+                 f.decode("name;value=date:20050413T020000Z").value(mapper)
+    }
+
+  end
 end
 

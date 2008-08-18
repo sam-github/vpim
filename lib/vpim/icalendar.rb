@@ -43,13 +43,37 @@ module Vpim
   # iCalendars are usually transmitted in files with <code>.ics</code>
   # extensions.
   class Icalendar
-    include Vpim
+    include Vpim # FIXME - don't do this, it allows Vpim::Icalendar::DirectoryInfo.create()!
 
     # Regular expression strings for the EBNF of RFC 2445
     module Bnf #:nodoc:
       # dur-value = ["+" / "-"] "P" [ 1*DIGIT "W" ] [ 1*DIGIT "D" ] [ "T" [ 1*DIGIT "H" ]  [ 1*DIGIT "M" ] [ 1*DIGIT "S" ] ]
       DURATION = '([-+])?P(\d+W)?(\d+D)?T?(\d+H)?(\d+M)?(\d+S)?'
     end
+
+    @@known_value_kinds = {
+      'date'      => Vpim.method(:decode_date_to_date),
+      'date-time' => Vpim.method(:decode_time_to_time)
+    }
+
+    # FIXME - should be Field.mapper(known, default, others)?
+    def self.value_mapper(default, others=[]) #:nodoc:
+      mapper = {}
+      
+      others.each do |kind|
+        mapper[kind]    = @@known_value_kinds[kind]
+      end
+
+      if default
+        mapper[nil]     = @@known_value_kinds[default]
+        mapper[default] = @@known_value_kinds[default]
+      end
+
+      mapper
+    end
+
+    MAP_DATETIME_OR_DATE = value_mapper('date-time', 'date')       #:nodoc:
+    MAP_DATETIME         = value_mapper('date-time')               #:nodoc:
 
     private_class_method :new
 

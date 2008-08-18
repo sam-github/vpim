@@ -138,6 +138,7 @@ class TestIcal < Test::Unit::TestCase
     #puts cal.encode
   end
 
+
   # FIXME - test bad durations, like 'PT1D'
 
   def test_duration
@@ -147,6 +148,9 @@ class TestIcal < Test::Unit::TestCase
 
     event = Icalendar::Vevent.create(Date.new(2000, 1, 21),
                                     'DURATION' => 'PT1H')
+
+    pp event.dtstart
+
     assert_equal(Time.gm(2000, 1, 21, 1),  event.dtend)
 
     event = Icalendar::Vevent.create(Date.new(2000, 1, 21),
@@ -185,5 +189,48 @@ class TestIcal < Test::Unit::TestCase
   def test_decode_duration_with_composite_duration
     assert_equal((15*86400+5*3600+20), Icalendar.decode_duration('P15DT5H0M20S'))
   end
+
+  def test_roundtrip_dtstart
+    cal = Vpim::Icalendar.create2
+
+    dtstart = Date.new(2005, 04, 28)
+    cal.add_event do |e|
+      e.dtstart  dtstart
+    end
+    assert_equal(dtstart, cal.components.last.dtstart)
+    cal = Vpim::Icalendar.decode(cal.encode).first
+    assert_equal(dtstart, cal.components.last.dtstart)
+
+    cal = Vpim::Icalendar.create2
+    dtstart = Time.local(2005, 04, 28, 1, 2, 3)
+    cal.add_event do |e|
+      e.dtstart  dtstart
+    end
+    assert_equal(dtstart, cal.components.last.dtstart)
+    cal = Vpim::Icalendar.decode(cal.encode).first
+    assert_equal(dtstart, cal.components.last.dtstart)
+  end
+
+  def test_roundtrip_dtend
+    cal = Vpim::Icalendar.create2
+
+    dtend = Date.new(2005, 04, 28)
+    cal.add_event do |e|
+      e.dtend  dtend
+    end
+    assert_equal(dtend, cal.components.last.dtend)
+    cal = Vpim::Icalendar.decode(cal.encode).first
+    assert_equal(dtend, cal.components.last.dtend)
+
+    cal = Vpim::Icalendar.create2
+    dtend = Time.local(2005, 04, 28, 1, 2, 3)
+    cal.add_event do |e|
+      e.dtend  dtend
+    end
+    assert_equal(dtend, cal.components.last.dtend)
+    cal = Vpim::Icalendar.decode(cal.encode).first
+    assert_equal(dtend, cal.components.last.dtend)
+  end
+
 end
 

@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+$-w = true
+
 require 'getoptlong'
 require 'pp'
 

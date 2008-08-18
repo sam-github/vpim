@@ -299,28 +299,41 @@ module Vpim
       #
       # The encoding specified by the #encoding, if any, is stripped.
       #
+      # +mappers+ is a hash of String to Method. If provided, the #kind is used
+      # to look up a method, and the method is called to map the value. An
+      # absent value parameter will be nil, so if you have a default mapping,
+      # map nil to it. If there is a +mapper+ but no mapping for the #kind is
+      # found, an InvalidEncodingError is raised.
+      #
       # Note: Both the RFC 2425 encoding param ("b", meaning base-64) and the
       # vCard 2.1 encoding params ("base64", "quoted-printable", "8bit", and
       # "7bit") are supported.
-      #
-      # FIXME:
-      # - should use the VALUE parameter
-      # - should also take a default value type, so it can be converted
-      #   if VALUE parameter is not present.
-      def value
+      def value(mappers=nil)
         case encoding
-          when nil, '8BIT', '7BIT' then @value
+          when nil, '8BIT', '7BIT' then v = @value
 
           # Hack - if the base64 lines started with 2 SPC chars, which is invalid,
           # there will be extra spaces in @value. Since no SPC chars show up in
           # b64 encodings, they can be safely stripped out before unpacking.
-          when 'B', 'BASE64'       then @value.gsub(' ', '').unpack('m*').first
+          when 'B', 'BASE64'       then v = @value.gsub(' ', '').unpack('m*').first
 
-          when 'QUOTED-PRINTABLE'  then @value.unpack('M*').first
+          when 'QUOTED-PRINTABLE'  then v = @value.unpack('M*').first
 
           else
             raise Vpim::InvalidEncodingError, "unrecognized encoding (#{encoding})"
         end
+
+        if mappers
+          mapper = mappers[kind]
+
+          unless mapper
+            raise Vpim::InvalidEncodingError, "unrecognized kind of value (#{kind})"
+          end
+
+          v = mapper.call(v)
+        end
+
+        v
       end
 
       # Is the #name of this Field +name+? Names are case insensitive.
@@ -373,12 +386,12 @@ module Vpim
       # Is this field marked as preferred? A vCard field is preferred if
       # #type?('PREF'). This method is not necessarily meaningful for
       # non-vCard profiles.
-      def pref?
+      def pref? #:nodoc: deprecated
         type? 'PREF'
       end
 
       # Set whether a field is marked as preferred. See #pref?
-      def pref=(ispref)
+      def pref=(ispref) #:nodoc:deprecated
         if ispref
           pvalue_iadd('TYPE', 'PREF')
         else
@@ -414,10 +427,19 @@ module Vpim
           if v.size > 1
             raise InvalidEncodingError, "multi-valued param 'VALUE' (#{values})"
           end
-          v = v.first.downcase
+          v = v.first.downcase # FIXME - upcase?
         end
         v
       end
+
+=begin
+
+Try and deprecate all three of the following!
+
+I need to decide where to put the smarts, either in Field, or in Rfc2425, its
+too spread out, now.
+
+=end
 
       # The value as an array of Time objects (all times and dates in
       # RFC2425 are lists, even where it might not make sense, such as a
@@ -431,7 +453,7 @@ module Vpim
       # That's just wrong! So, what to do? I add a message
       # saying what the year is that breaks, so they at least know that
       # its ridiculous! I think I need my own DateTime variant.
-      def to_time
+      def to_time #:nodoc:deprecated
         begin
           Vpim.decode_date_time_list(value).collect do |d|
             # We get [ year, month, day, hour, min, sec, usec, tz ]
@@ -442,7 +464,7 @@ module Vpim
                 Time.local(*d)
               end
             rescue ArgumentError => e
-              raise Vpim::InvalidEncodingError, "Time.gm(#{d.join(', ')}) failed with #{e.message}"
+              raise Vpim::InvalidEncodingError, "Time init (#{d.join(', ')}) failed with #{e.message}"
             end
           end
         rescue Vpim::InvalidEncodingError
@@ -464,7 +486,7 @@ module Vpim
       # The field value may be a list of either DATE or DATE-TIME values,
       # decoding is tried first as a DATE-TIME, then as a DATE, if neither
       # works an InvalidEncodingError will be raised.
-      def to_date
+      def to_date #:nodoc:deprecated
         begin
           Vpim.decode_date_time_list(value).collect do |d|
             # We get [ year, month, day, hour, min, sec, usec, tz ]

@@ -662,7 +662,7 @@ module Vpim
     def Vcard.decode(card)
       if card.respond_to? :to_str
         string = card.to_str
-      elsif card.kind_of? IO
+      elsif card.respond_to? :read
         string = card.read(nil)
       else
         raise ArgumentError, "Vcard.decode cannot be called with a #{card.type}"
@@ -1187,6 +1187,8 @@ module Vpim
           raise ArgumentError, 'birthday must be a date or time object.'
         end
         delete_if { |l| l.name == 'BDAY' }
+
+        # FIXME - this won't set the ;VALUE= parameter correctly...
         @card << Vpim::DirectoryInfo::Field.create( 'BDAY', birthday );
       end
 

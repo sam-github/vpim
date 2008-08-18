@@ -66,7 +66,14 @@ module Vpim
       # start/duration or a start/end? Maybe I can make it easier. Ideally, I
       # would like to make it hard to encode an invalid Event.
       def Vevent.create(start = Time.now, fields=[])
-        dtstart = DirectoryInfo::Field.create('DTSTART', start)
+        case start
+        when Time
+          dtstart = DirectoryInfo::Field.create('DTSTART', start)
+        when Date
+          dtstart = DirectoryInfo::Field.create('DTSTART', start, 'VALUE' => 'DATE')
+        else
+          raise Vpim::Unencodeable, 'dtstart must be Date or a Time'
+        end
         di = DirectoryInfo.create([ dtstart ], 'VEVENT')
 
         Vpim::DirectoryInfo::Field.create_array(fields).each { |f| di.push_unique f }
@@ -138,14 +145,11 @@ module Vpim
       # However, the end time will be calculated from the event duration, if
       # present.
       def dtend
-        dte = @properties.field 'DTEND'
-        if dte
-          dte.to_time.first
-        elsif duration
-            dtstart + duration
-        else
-          nil
+        dte = propvalue( 'DTEND', Icalendar::MAP_DATETIME_OR_DATE )
+        if !dte && duration
+          dte = dtstart + duration
         end
+        dte
       end
 
       # Make a new Vevent, or make changes to an existing Vevent.

@@ -100,14 +100,15 @@ doc-vcf:
 	rdoc lib/vpim/vcard.rb lib/vpim/maker/vcard.rb
 	open doc/index.html
 
-V=0.$(shell ruby -rsvn -e"puts Svn.info['Revision']")
+V=0.370
+#$(shell ruby -r./svn -e"puts Svn.info['Revision']")
 P=vpim-$V
 R=releases/$P
 
 release: stamp doc pkg gem
 
 install:
-	for r in /usr/bin/ruby /opt/local/bin/ruby ruby18; do (cd $R; $$r install.rb config; sudo $$r install.rb install); done
+	for r in /usr/bin/ruby /sw/bin/ruby; do (cd $R; $$r install.rb config; sudo $$r install.rb install); done
 
 stamp:
 	svn up
@@ -119,6 +120,7 @@ gem:
 	ruby18 vpim.gemspec
 	mv vpim-$V.gem releases/
 
+.PHONY: pkg
 pkg:
 	rm -rf $R/*
 	mkdir -p releases

@@ -88,13 +88,35 @@ module Vpim
 
     module Property #:nodoc:
 
-      # FIXME - rename Base to Util
+      # FIXME - make Base into Icalendar::Component, and inherit the components
+      # from it
       module Base #:nodoc:
+        def field_create(name, value, default_value_type = nil, value_type = nil, params = {})
+          if value_type && value_type != default_value_type
+            params['VALUE'] = value_type
+          end
+          Vpim::DirectoryInfo::Field.create(name, value, params)
+        end
+
+        def set_date_or_datetime(name, default, value)
+          f = nil
+          case value
+          when Date
+            f = field_create(name, Vpim.encode_date(value), default, 'DATE')
+          when Time
+            f = field_create(name, Vpim.encode_date_time(value), default, 'DATE-TIME')
+          else
+            raise Vpim::Unencodeable, "Invalid #{name} value #{value.inspect}"
+          end
+          rm_all(name)
+          @comp.properties.push(f)
+        end
+
         # Value of first property with name +name+
-        def propvalue(name) #:nodoc:
+        def propvalue(name, mapper=nil) #:nodoc:
           prop = @properties.detect { |f| f.name? name }
           if prop
-            prop = prop.value
+            prop = prop.value(mapper)
           end
           prop
         end
@@ -103,7 +125,6 @@ module Vpim
         def propvaluearray(name) #:nodoc:
           @properties.select{ |f| f.name? name }.map{ |p| p.value }
         end
-
 
         def propinteger(name) #:nodoc:
           prop = @properties.detect { |f| f.name? name }
@@ -125,15 +146,6 @@ module Vpim
             prop = default_token
           end
 
-          prop
-        end
-
-        # Value as DATE-TIME or DATE of object of first property with name +name+
-        def proptime(name) #:nodoc:
-          prop = @properties.detect { |f| f.name? name }
-          if prop
-            prop = prop.to_time.first
-          end
           prop
         end
 

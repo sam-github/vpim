@@ -42,8 +42,14 @@ module Vpim
           proptoken 'CLASS', ["PUBLIC", "PRIVATE", "CONFIDENTIAL"], "PUBLIC"
         end
 
+        # This property specifies the date and time that the calendar
+        # information was created by the calendar user agent in the calendar
+        # store. 
+        #          
+        # Note: This is analogous to the creation date and time for a file in
+        # the file system.
         def created
-          proptime 'CREATED'
+          propvalue 'CREATED', Icalendar::MAP_DATETIME
         end
 
         # Description of the calendar component, or nil if there is no
@@ -60,16 +66,16 @@ module Vpim
 
         # The time stamp for this calendar component.
         def dtstamp
-          proptime 'DTSTAMP'
+          propvalue 'DTSTAMP', Icalendar::MAP_DATETIME
         end
 
         # The start time for this calendar component.
         def dtstart
-          proptime 'DTSTART'
+          propvalue 'DTSTART', Icalendar::MAP_DATETIME_OR_DATE
         end
 
         def lastmod
-          proptime 'LAST-MODIFIED'
+          propvalue 'LAST-MODIFIED', Icalendar::MAP_DATETIME
         end
 
         # Return the event organizer, an object of Icalendar::Address (or nil if

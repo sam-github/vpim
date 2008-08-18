@@ -58,12 +58,12 @@ module Vpim
 
       # The date and time that a to-do is expected to be completed, a Time.
       def due
-        proptime 'DUE'
+        propvalue 'DUE', Icalendar::MAP_DATETIME_OR_DATE
       end
 
       # The date and time that a to-do was actually completed, a Time.
       def completed
-        proptime 'COMPLETED'
+        propvalue 'COMPLETED', Icalendar::MAP_DATETIME
       end
 
       # The percentage completetion of the to-do, between 0 and 100. 0 means it hasn't

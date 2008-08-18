@@ -103,6 +103,18 @@ class TestRrule < Test::Unit::TestCase
     assert_equal(expected, got)
   end
 
+def test_byday
+Test(
+  'FREQ=YEARLY;COUNT=5;BYDAY=TU,TH',
+  '20060506T090000',
+  <<VEC
+#   ==> (1998 9:00 AM EST)January 1-31
+#       (1999 9:00 AM EST)January 1-31
+#       (2000 9:00 AM EST)January 1-30
+VEC
+  )
+end
+
 def test_rfc2445_examples
 
 # Daily for 10 occurrences:

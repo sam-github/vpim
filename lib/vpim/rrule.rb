@@ -32,7 +32,7 @@ module Vpim
   #
   # The implementation is pretty complete, but still lacks support for:
   #
-  # TODO - BYWEEKLY, BYWEEKNO, WKST: rules that recur by the week, or are
+  # TODO - FREQ=WEEKLY, BYWEEKNO, WKST: rules that recur by the week, or are
   # limited to particular weeks, not hard, but not trivial, I'll do it for the
   # next release
   #

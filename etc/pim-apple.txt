@@ -1,0 +1,8 @@
+
+
+When iCal publishes to a WebDAV server, it uses links like;
+
+  webcal://ensemble.local./calendars/Sam-Play.ics
+
+
+
