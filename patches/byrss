@@ -1,0 +1,366 @@
+#!/usr/bin/ruby -w
+
+require 'optparse'
+require 'ostruct'
+require 'pp'
+require 'rss/maker'
+require 'time'
+require 'open-uri'
+
+include FileTest
+
+OPTIONS = OpenStruct.new
+OPTIONS.home = '/home'
+unless directory?(OPTIONS.home + '/rel')
+	OPTIONS.home = '/mnt/home'
+end
+OPTIONS.history = 20
+OPTIONS.verbose = false
+OPTIONS.print = false
+OPTIONS.port = 8700
+OPTIONS.depot = '//depot'
+OPTIONS.cookie = '79fd1dbb0c52b4418c5b921b5ef96c1310aea11a0d2978ceba873c1836b6596e' # Anonymous login's cookie
+
+def OPTIONS.buildlog
+	self.home + '/rel/buildrequest/log/buildlog'
+end
+
+opts = OptionParser.new do |opts|
+	opts.banner = "Usage: ruby #{$0} [options]"
+
+	opts.separator ""
+	opts.separator "Specific options:"
+
+	opts.on("-b", "--bycast-home DIR", "bycast home, default is #{OPTIONS.home}") do |o|
+		OPTIONS.home = o.gsub(/\/+$/, '')
+	end
+
+	opts.on("-n", "--history INT", "history, default is #{OPTIONS.history}") do |o|
+	    OPTIONS.history = o.to_i
+	end
+
+	opts.on("-v", "--[no-]verbose", "Verbose") do |o|
+		OPTIONS.verbose = o
+	end
+
+	opts.on("-c", "--cookie COOKIE", "Value of your MANTIS_STRING_COOKIE, default is for the anonymous login") do |o|
+		OPTIONS.cookie = o
+	end
+
+	opts.on("-p", "--print FEED", "Print feed to stdout, default is false, FEED can be 'buildlog' or 'changes'") do |o|
+		OPTIONS.print = o
+	end
+
+	opts.on("-i", "--port INT", "Port to listen to, default #{OPTIONS.port}") do |o|
+		OPTIONS.port = o.to_i
+	end
+
+    opts.separator ""
+	opts.separator "Example:"
+	opts.separator "  nohup ruby byrss.rb --port=8700 --history=100 &"
+	opts.separator ""
+	opts.separator "RSS feeds are at http://localhost:#{OPTIONS.port}/"
+	opts.separator "  /buildlog     - build results"
+	opts.separator "  /buildlog/XXX - build results with the string XXX in title"
+	opts.separator "  /changes      - perforce changes"
+	opts.separator ""
+	opts.separator "Common options:"
+
+	opts.on_tail("-h", "--help", "Show this message") do
+		puts opts
+		exit
+	end
+
+end
+
+opts.parse!(ARGV)
+
+if OPTIONS.verbose
+	pp OPTIONS
+end
+
+=begin
+2006-07-27 19:05 PDT (bs-nightcrawler): build of cms/1.13.4_ecr.11391/42004 was successful.
+2006-07-27 19:14 PDT (bs-rogue2): building ade/4.8.2-suse/42007...
+2006-07-27 19:14 PDT (bs-nightcrawler): building ade/4.8.2-suse/42007...
+2006-07-27 19:26 PDT (bs-rogue2): build of ade/4.8.2-suse/42007 was successful.
+2006-07-27 19:34 PDT (bs-nightcrawler): build of cms/1.13.4/42005 was successful.
+2006-07-27 19:37 PDT (bs-cyclops2): building mi/4.0.0/42008...
+2006-07-27 19:39 PDT (bs-cyclops2): build of mi/4.0.0/42008 failed.
+2006-07-27 19:43 PDT (bs-nightcrawler): build of ade/4.8.2-suse/42007 was successful.
+2006-07-28 08:20 PDT (bs-cyclops2): building cms/1.14/cms/1.14.0/42009...
+2006-07-28 08:27 PDT (bs-cyclops2): build of cms/1.14.0/42009 failed.
+=end
+class BuildLog
+
+	class Build
+		attr_reader :changeset
+
+		def initialize(line)
+			if line.match(%r{(.*) \((.*)\): ((?:build of)|(?:building)) ([-._\w]+)/([-._/\w]+)/(\d+)(.*)})
+				match, time, env, action, project, branch, changeset, result = $~.to_a
+			elsif line.match(%r{(.*) \((.*)\): (.*)})
+				match, time, env, project = $~.to_a
+				match = line
+				action = :error
+				branch = ''
+				result = '...'
+
+				if line.match(/(\d{5})/)
+					changeset = $1
+				else
+					changeset = 99999
+				end
+			else
+				match = line
+				time = Time.now.to_s
+				env = ''
+				action = :error
+				project = line
+
+				if line.match(/(\d{5})/)
+					changeset = $1
+				else
+					changeset = 99999
+				end
+			end
+
+			@match = match
+			@time = Time.parse(time)
+			@env = env
+			@action = case action
+					  when :error then :error
+					  when "build of" then :finish
+					  when "building" then :start
+					  else raise ArgumentError, "#{match.inspect} => action? #{action.inspect}"
+					  end
+			@project = project
+			@branch = branch
+			@changeset = changeset.to_i
+			@success = case result
+					   when "..." then nil
+					   when " was successful.", " returned 0." then true
+					   when " failed.", " returned 1." then false
+					   else raise ArgumentError, "#{match.inspect} => result? #{result.inspect}"
+					   end
+		end
+
+		def finish?
+			@action == :finish
+		end
+
+		def link
+			globs = Dir.glob(OPTIONS.home + "/rel/development/cyclops/unstable/pool/*_#{changeset}/build_*_log")
+			return globs.first || "http:///build.bycast.com"
+		end
+
+		def add_rss(maker, filter)
+			if @action == :start || @action == :finish
+				title = "@#{@changeset} - #{@action} #{@project}/#{@branch}"
+			else
+				title = "@#{changeset}? - #{@action}? #{@project}?"
+			end
+			if !filter || title =~ /#{filter}/
+				item = maker.items.new_item
+				item.title = title
+				if @action == :finish
+					item.title << " => result #{@success ? "success" : "fail"}"
+				end
+				item.link = link
+				item.description = @match
+				item.date = @time
+
+				item.description << "\n\n" << `p4 describe -s #{@changeset}`
+			end
+		end
+	end
+
+	def initialize(buildlog, history)
+		@builds = {}
+
+		IO.popen("tail -n #{history} #{buildlog}") do |io|
+			io.each do |line|
+				begin
+					b = Build.new(line)
+
+					if !@builds[b.changeset] || b.finish?
+						@builds[b.changeset] = b
+					end
+
+				rescue ArgumentError
+					$stderr.puts $!.to_s
+					$!.backtrace.each do |bt|
+						$stderr.puts bt
+					end
+				end
+			end
+		end
+	end
+
+	def to_rss(filter = nil)
+		if filter
+			filter.match(%r{.*/(.*)})
+			filter = $1
+		end
+
+		rss = RSS::Maker.make("0.9") do |maker|
+			maker.channel.language = "en-ca"
+
+			maker.channel.about = "http://build.bycast.com"
+			maker.channel.link =  maker.channel.about
+
+			maker.channel.title = "Build Results"
+			if filter
+				maker.channel.title << ": " << filter
+			end
+			maker.channel.description = maker.channel.title
+
+			@builds.keys.sort.each do |key|
+				@builds[key].add_rss(maker, filter)
+			end
+		end
+
+		rss.to_s
+	end
+end
+
+=begin
+% p4 changes -t -l -m 5
+Change 42162 on 2006/08/02 09:47:24 by sroberts@sroberts
+
+        rename
+
+Change 42161 on 2006/08/01 22:12:07 by dmassop@dmassop
+
+        11518: fix check if mgr-user is already in sudoers
+
+Change 42160 on 2006/08/01 21:35:12 by dmassop@dmassop
+
+        bug fix for target directory
+
+Change 42159 on 2006/08/01 21:31:28 by dmassop@dmassop
+
+        update bom
+
+Change 42158 on 2006/08/01 21:26:29 by dmassop@dmassop
+
+        update bom
+=end
+class Changes
+
+	class Change < OpenStruct
+		def summary
+			self.description.sub(/\n\t([^\n]+).*/m) { $1 }
+		end
+
+		def short_author
+			self.author.sub(/@.*/, '')
+		end
+
+		def add_rss(maker)
+			item = maker.items.new_item
+			item.title = "@#{self.changeset} by #{self.short_author}: #{self.summary}"
+			item.link = "http://changes.bycast.com"
+			item.date = self.time
+			item.description = "\n"
+			item.description << `p4 describe -s #{self.changeset}`
+		end
+	end
+
+	def initialize(depot, history)
+		@changes = []
+
+		IO.popen("p4 changes -t -l -s submitted -m #{history}") do |io|
+			change = nil
+			io.each do |line|
+				if line.match(%r{Change (\d+) on (\d+/\d+/\d+ \d+:\d+:\d+) by (.*)})
+					@changes << change if change
+
+					change = Change.new
+					change.changeset = $1.to_i
+					change.time = Time.parse($2)
+					change.author = $3
+					change.description = ""
+
+				elsif change
+					change.description << line
+				end
+			end
+			@changes << change if change
+		end
+	end
+
+	def to_rss
+		rss = RSS::Maker.make("0.9") do |maker|
+			maker.channel.language = "en-ca"
+
+			maker.channel.about = "http://changes.bycast.com"
+			maker.channel.link =  maker.channel.about
+
+			maker.channel.title = "Repository Changes"
+			maker.channel.description = maker.channel.title
+
+			@changes.each do |change|
+				change.add_rss(maker)
+			end
+		end
+
+		rss.to_s
+	end
+end
+
+case OPTIONS.print
+when /^buildlog/
+	puts BuildLog.new(OPTIONS.buildlog, OPTIONS.history).to_rss(OPTIONS.print)
+
+when 'changes'
+	puts Changes.new(OPTIONS.depot, OPTIONS.history).to_rss
+
+when false
+	require 'webrick'
+
+	server = WEBrick::HTTPServer.new( :Port => OPTIONS.port )
+
+	['INT', 'TERM'].each { |signal|
+		trap(signal) { server.shutdown }
+	}
+
+	class BuildLogRssServlet < WEBrick::HTTPServlet::AbstractServlet
+		def do_GET(req, resp)
+			puts "BuildLog - path #{req.path_info}"
+			resp.body = BuildLog.new(OPTIONS.buildlog, OPTIONS.history).to_rss(req.path_info)
+			resp['content-type'] = 'text/xml'
+			raise WEBrick::HTTPStatus::OK
+		end
+	end
+
+	server.mount( '/buildlog', BuildLogRssServlet )
+
+	class ChangesRssServlet < WEBrick::HTTPServlet::AbstractServlet
+		def do_GET(req, resp)
+			resp.body = Changes.new(OPTIONS.depot, OPTIONS.history).to_rss
+			resp['content-type'] = 'text/xml'
+			raise WEBrick::HTTPStatus::OK
+		end
+	end
+
+	server.mount( '/changes', ChangesRssServlet )
+
+	class IssuesRssServlet < WEBrick::HTTPServlet::AbstractServlet
+		def do_GET(req, resp)
+			issues = open( "http://bugtracking/mantis/issues_rss.php", "Cookie" => "MANTIS_STRING_COOKIE=#{OPTIONS.cookie}" )
+			resp.body = issues.read(nil)
+			resp['content-type'] = 'text/xml'
+			raise WEBrick::HTTPStatus::OK
+		end
+	end
+
+	server.mount( '/issues', IssuesRssServlet )
+
+	server.start
+
+else
+	$stderr.print "print option #{OPTIONS.print} not recognized"
+	exit 1
+end
+
