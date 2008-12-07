@@ -65,6 +65,28 @@ was used by reminder!
 
 -= http://209.85.173.104/search?q=cache:hQRadCEdph8J:www.lightning-tree.net/2005/08/vpim-vs-icalendar.html+ruby+vpim&hl=en&ct=clnk&cd=29&client=safari
 
+- ical2 support, done?
+
+diff -ur _before/com.apple.iCal.sources.plist _after/com.apple.iCal.sources.plist
+--- _before/com.apple.iCal.sources.plist        Sat Jul 29 13:15:14 2006
++++ _after/com.apple.iCal.sources.plist Sat Jul 29 13:15:55 2006
+@@ -4,10 +4,10 @@
+ <dict>
+        <key>CurrentSelectedViews</key>
+        <array>
++               <string>040BE766-1F3D-11DB-B1B9-000393AD088C</string>
+                <string>B154E00A-5E70-11D7-A8FE-000393AD088C</string>
+                <string>852F7F61-6892-11D9-9FB9-000393AD088C</string>
+                <string>h0me</string>
+-               <string>FE9393DC-1F3C-11DB-B1B9-000393AD088C</string>
+                <string>67545A38-3769-11D9-AE19-000393AD088C</string>
+                <string>F46F0504-4C08-11D7-97C4-000393AD088C</string>
+        </array>
+
+UUID maps to key in SourcesView dictionary, which has a Repository key, which
+has a UUID mapping to a RegisteredRepositories key, which has an indexing
+path, which is the filename of the .ics file.
+
 
 - gem problem
 
