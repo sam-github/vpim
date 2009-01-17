@@ -57,8 +57,6 @@ Date: Mon, 1 Oct 2007 13:46:37 +0200
 
 - http://rubyforge.org/pipermail/icalendar-devel/2007-February/000061.html
 
-- a way to do icalendar as SQL...
-
 - event.rrule
 
 was used by reminder!
@@ -98,7 +96,7 @@ http://ragnarson.blogspot.com/2005/10/importing-vcard-contacts-to.html
 
 - ccummer
 
-remindr utility working on OS 10.5
+reminder utility working on OS 10.5
 
 - http://groups.google.com/group/phoenix-ruby/browse_thread/thread/ec3e7df198d6ca05
 
@@ -175,7 +173,7 @@ cal.protocol =
 
 def note=() - removes all the current notes and replaces with this one?
 
-Change to major.minor.buildno?
+Change to major.minor.buildno? => Change to YY.MM.DD
 
 Use standard Enumerator instead of mine.
 
