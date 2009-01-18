@@ -18,8 +18,8 @@ Usage: #{$0} [where]
 
 Shows events and todos occuring soon.
 
-By default, the Apple iCal v3 calendars are used, but if a location where
-.ics files is specified, any calendars found there will be used.
+By default, the Apple iCal v3 calendars are used, but if a location where .ics
+files can be found is specified, any calendars found there will be used.
 
 Options
   -h,--help        Print this helpful message.
@@ -29,6 +29,7 @@ Options
 EOF
 
 opt_debug = nil
+opt_dump = nil
 opt_verbose = nil
 opt_days  = 7
 
@@ -53,6 +54,9 @@ opts.each do |opt, arg|
 
     when "--debug" then
       opt_verbose = true
+      if opt_debug
+        opt_dump = true
+      end
       opt_debug = true
   end
 end
@@ -64,12 +68,12 @@ if ARGV.length > 0
     calendars << cal
   end
 else
-  Vpim::Repo::Ical3.each() do |cal|
+  Vpim::Repo::Apple3.new.each() do |cal|
     calendars << cal
   end
 end
 
-if opt_debug
+if opt_dump
   pp ARGV
   pp calendars
 end
@@ -81,7 +85,7 @@ t0[0] = t0[1] = t0[2] = 0 # sec,min,hour = 0
 t0 = Time.local(*t0)
 t1 = t0 + opt_days * SECSPERDAY
 
-if opt_debug
+if opt_dump
   puts "to: #{t0}"
   puts "t1: #{t1}"
 end
@@ -95,12 +99,13 @@ all_events = []
 all_todos  = []
 
 calendars.each do |cal|
-  if opt_debug; puts cal.name; end
+  if opt_debug; puts "Calendar: #{cal.name}"; end
 
+  # TODO - mv collection algorithm to library
   begin
     cal.events.each do |e|
       begin
-        if opt_debug; pp e; end
+        if opt_dump; pp e; end
         if e.occurs_in?(t0, t1)
           if e.summary
             all_events.push(e)
@@ -111,12 +116,13 @@ calendars.each do |cal|
       end
     end
 
-    all_todos.concat(cal.todos)
+    all_todos.concat(cal.todos.to_a)
   end
 end
 
 puts
 
+# TODO - mv sorting algorithm to library
 def start_of_first_occurrence(t0, t1, e)
   e.occurrences(t1) do |t|
     # An event might start before t0, but end after it..., in which case
@@ -137,7 +143,7 @@ all_events.each do |e|
 
   if opt_verbose
     if e.description;   puts "  description=#{e.description}"; end
-    if e.comments;      puts "  comment=#{e.comments.first}"; end
+    if e.comments.any?; puts "  comment=#{e.comments.first}"; end
     if e.location;      puts "  location=#{e.location}"; end
     if e.status;        puts "  status=#{e.status}"; end
     if e.dtstart;       puts "  dtstart=#{e.dtstart}"; end
@@ -145,15 +151,15 @@ all_events.each do |e|
   end
 
   i = 1
-  e.occurrences.each_until(t1).each do |t|
+  e.occurrences(t1) do |t|
     # An event might start before t0, but end after it..., in which case
     # we are still interested.
     dstr = ''
     if e.duration
-      d = e.duration
       dstr = " for #{Vpim::Duration.new(e.duration).to_s}"
     end
 
+    # TODO - mv to library, as variant of occurs_in?
     if (t + (e.duration || 0)) >= t0
       puts "  ##{i} on #{t}#{dstr}"
       i += 1
