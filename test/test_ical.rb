@@ -9,6 +9,9 @@ module Enumerable
   def first
     find{true}
   end
+  def last
+    inject{|memo, o| o}
+  end
 end
 
 include Vpim
@@ -399,6 +402,25 @@ __
     assert_equal("TRANSPARENT", transparency, "check transparent")
 
   end
+
+  def test_location
+    cal = Icalendar.decode(<<__).first
+BEGIN:VCALENDAR
+BEGIN:VEVENT
+LOCATION:bien located
+END:VEVENT
+BEGIN:VTODO
+LOCATION:
+END:VTODO
+BEGIN:VEVENT
+END:VEVENT
+END:VCALENDAR
+__
+    assert_equal(cal.events.first.location, "bien located")
+    assert_equal(cal.todos.first.location, "")
+    assert_equal(cal.events.last.location, nil)
+  end
+
 
   def test_event_maker_w_rrule
     vc = Icalendar.create2 do |vc|
