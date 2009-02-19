@@ -15,6 +15,7 @@ end
 class TestRepo < Test::Unit::TestCase
   Apple3 = Vpim::Repo::Apple3
   Directory = Vpim::Repo::Directory
+  Uri = Vpim::Repo::Uri
   Agent = Vpim::Agent
   Path = Agent::Path
   NotFound = Agent::NotFound
@@ -25,6 +26,31 @@ class TestRepo < Test::Unit::TestCase
     @eventsz = Dir[@caldir + "/**/*.ics"].size
     assert(@testdir)
     assert(test(?d, @caldir), "no caldir "+@caldir)
+  end
+
+  def data_on_port(port, data)
+    Thread.abort_on_exception = true
+    thrd = Thread.new do
+      require "webrick"
+      server = WEBrick::HTTPServer.new( :Port => port )
+      begin
+        server.mount_proc("/") do |req,resp|
+          resp.body = data
+        end
+        server.start
+      ensure
+        server.shutdown
+      end
+    end
+    # Wait for server socket to come up
+    while true
+      begin
+        s = TCPSocket.new("127.0.0.1", port)
+      rescue Errno::ECONNREFUSED
+        next
+      end
+      return thrd
+    end
   end
 
   def _test_each(repo, eventsz)
@@ -59,6 +85,28 @@ class TestRepo < Test::Unit::TestCase
     assert_equal(@eventsz, repo.count)
 
     _test_each(repo, 1)
+  end
+
+  def test_uri
+    server = data_on_port(9876, <<__)
+BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+END:VEVENT
+END:VCALENDAR
+__
+    begin
+      c = Vpim::Repo::Uri::Calendar.new("http://localhost:9876")
+      assert_is_text_calendar(c.encode)
+
+      repo = Vpim::Repo::Uri.new("http://localhost:9876")
+
+      assert_equal(1, repo.count)
+
+      _test_each(repo, 1)
+    ensure
+      server.kill
+    end
   end
 
   def assert_is_text_calendar(text)

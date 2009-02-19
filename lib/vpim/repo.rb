@@ -19,6 +19,7 @@ module Vpim
   # Currently supported repository types are:
   # - Repo::Apple3, an Apple iCal3 repository.
   # - Repo::Directory, a directory hierarchy containing .ics files
+  # - Repo::Uri, a URI that identifies a single iCalendar
   #
   # All repository types support at least the methods of Repo, and all
   # repositories return calendars that support at least the methods of
@@ -79,7 +80,9 @@ module Vpim
           return Enumerable::Enumerator.new(self, :each, klass)
         end
 
-        cals = Vpim::Icalendar.decode(File.open(file))
+        cals = open(file) do |io|
+          Vpim::Icalendar.decode(io)
+        end
 
         cals.each do |cal|
           cal.each(klass, &block)
@@ -173,6 +176,60 @@ module Vpim
         Dir[ File.expand_path(@where + "/**/*.ics") ].each do |file|
           yield Calendar.new(file)
         end
+        self
+      end
+    end
+
+    class Uri < Repo
+      class Calendar < Repo::Calendar
+        def body
+        end
+
+        def initialize(uri) #:nodoc:
+          @uri = URI.parse(uri)
+        end
+
+        def name #:nodoc:
+          @uri.to_s
+        end
+
+        def displayed #:nodoc:
+          true
+        end
+
+        def each(klass, &block) #:nodoc:
+          unless iterator?
+            return Enumerable::Enumerator.new(self, :each, klass)
+          end
+
+          cals = Vpim::Icalendar.decode(encode)
+
+          cals.each do |cal|
+            cal.each(klass, &block)
+          end
+          self
+        end
+
+        def encode #:nodoc:
+          Net::HTTP.get_response(@uri) do |result|
+            accum = ""
+            result.read_body do |chunk|
+              accum << chunk
+            end
+            return accum
+          end
+        end
+
+      end
+
+      def initialize(where)
+        @where = where.to_str
+
+        require "net/http"
+      end
+
+      def each #:nodoc:
+        yield Calendar.new(@where)
         self
       end
     end
