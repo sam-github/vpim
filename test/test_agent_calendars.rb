@@ -113,5 +113,14 @@ class TestAgentCalendars < Test::Unit::TestCase
     assert( a.get(Path.new("http://example.com/path")))
   end
 
+  def x_test_uri_query
+    uri = "http://example.com/ics/atom?http://localhost:9876"
+
+    repo = Uri.new("http://localhost:9876")
+    rest = Agent::Calendars.new(repo)
+    out1, form = rest.get(Path.new("http://example.com/ics", "/ics/atom"))
+    p [out1, form]
+  end
+
 end
 

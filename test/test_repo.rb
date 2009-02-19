@@ -17,31 +17,6 @@ class TestRepo < Test::Unit::TestCase
     assert(test(?d, @caldir), "no caldir "+@caldir)
   end
 
-  def data_on_port(port, data)
-    Thread.abort_on_exception = true
-    thrd = Thread.new do
-      require "webrick"
-      server = WEBrick::HTTPServer.new( :Port => port )
-      begin
-        server.mount_proc("/") do |req,resp|
-          resp.body = data
-        end
-        server.start
-      ensure
-        server.shutdown
-      end
-    end
-    # Wait for server socket to come up
-    while true
-      begin
-        s = TCPSocket.new("127.0.0.1", port)
-      rescue Errno::ECONNREFUSED
-        next
-      end
-      return thrd
-    end
-  end
-
   def _test_each(repo, eventsz)
     repo.each do |cal|
       assert_equal(eventsz, cal.events.count, cal.name)
@@ -77,14 +52,9 @@ class TestRepo < Test::Unit::TestCase
   end
 
   def test_uri
-    caldata = <<'__'
-BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VEVENT
-END:VEVENT
-END:VCALENDAR
-__
-    server = data_on_port(9876, caldata)
+    caldata = open('test/calendars/weather.calendar/Events/1205042405-0-0.ics').read
+
+    server = data_on_port(caldata, 9876)
     begin
       c = Uri::Calendar.new("http://localhost:9876")
       assert_equal(caldata, c.encode)
