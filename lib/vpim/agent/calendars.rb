@@ -6,19 +6,11 @@
   details.
 =end
 
-# The only atom-generating library I could find on rubyforge has a dependency
-# on libxml2, and only a newer libxml version than OS 10.5 has... so fake
-# out the new stuff, it doesn't seem to be needed for generation.
-module XML
-  class Reader
-  end
-end
-
-require "atom"
 require "cgi"
 require "uri"
 
 require "vpim/repo"
+require "vpim/agent/atomize"
 
 module Vpim
   module Agent
@@ -40,6 +32,7 @@ module Vpim
         path.map{|w| CGI.unescape(w)}
       end
 
+      # URI is the uri being queried, base is where this path is mounted under?
       def initialize(uri, base = "")
         @uri  = URI.parse(uri.to_s)
         #pp [uri, base, @uri]
@@ -85,48 +78,11 @@ module Vpim
     end
 
     module Form
-      ATOM  = "application/atom+xml"
+      ATOM  = Atomize::MIME
       HTML  = "text/html"
       ICS   = "text/calendar"
       PLAIN = "text/plain"
       VCF   = "text/directory"
-    end
-
-    class Atomize
-      def initialize(cal)
-        @cal = cal
-        @@id = 0
-      end
-
-      def id
-        @@id += 1
-        "http://example.com/#{@@id}"
-      end
-
-      def get(path)
-        f = Atom::Feed.new
-        f.title = @cal.name
-        f.updated = Time.now
-        # Should .id be the URL to the feed?
-        f.id = id
-        f.authors << Atom::Person.new(:name => "vAgent")
-        # Should be a link:
-        # .links << Atom::Link()
-        # .icon = ?
-        @cal.events do |ve|
-          ve.occurrences do |t|
-            f.entries << Atom::Entry.new do |e|
-              e.title = ve.summary
-              e.updated = t
-              e.content = Atom::Content::Html.new ve.summary
-              # .summary = Don't need when there is content.
-              # Maybe I can use the UUID from the ventry for the ID?
-              e.id = id
-            end
-          end
-        end
-        return f.to_xml, Form::ATOM
-      end
     end
 
     # Return an HTML description of a list of resources accessible under this
@@ -153,7 +109,7 @@ __
       end
     end
 
-    # Return calendar information based on RESTful (lovein the jargon...)
+    # Return calendar information based on RESTful (lovein' the jargon...)
     # paths. Input is a Vpim::Repo.
     #
     #   .../coding/month/atom
@@ -190,7 +146,7 @@ __
           when "calendar"
             return @cal.encode, Form::ICS
           when "atom"
-            return Atomize.new(@cal).get(path)
+            return Atomize.new(@cal).get(path), Form::ATOM
           else
             raise NotFound.new(form, path)
           end
