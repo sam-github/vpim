@@ -1,11 +1,12 @@
 # Copyright (c) 2008 The Kaphan Foundation
 #
-# Possession of a copy of this file grants no permission or license
-# to use, modify, or create derivate works.
-# Please contact info@peerworks.org for further information.
+# For licensing information see LICENSE.txt.
+#
+# Please visit http://www.peerworks.org/contact for further information.
 #
 
 require 'atom'
+require 'atom/configuration'
 require 'atom/xml/parser'
 require 'atom/version'
 require 'xml/libxml'
@@ -113,17 +114,27 @@ module Atom
         yield(self) if block_given?
       end
       
-      def feed
+      def feed(opts = {})
         if href
-          Atom::Feed.load_feed(URI.parse(href))
+          Atom::Feed.load_feed(URI.parse(href), opts)
         end
       end
       
-      def publish(entry)
+      def publish(entry, opts = {})
         uri = URI.parse(href)
         response = nil
         Net::HTTP.start(uri.host, uri.port) do |http|
-          response = http.post(uri.path, entry.to_xml.to_s, headers)
+          request = Net::HTTP::Post.new(uri.path, headers)
+          if opts[:user] && opts[:pass]
+            request.basic_auth(opts[:user], opts[:pass])
+          elsif opts[:hmac_access_id] && opts[:hmac_secret_key]
+            if Atom::Configuration.auth_hmac_enabled?
+              AuthHMAC.sign!(request, opts[:hmac_access_id], opts[:hmac_secret_key])
+            else
+              raise ArgumentError, "AuthHMAC credentials provides by auth-hmac gem is not installed"
+            end
+          end
+          response = http.request(request, entry.to_xml.to_s)
         end
         
         case response
@@ -159,12 +170,23 @@ module Atom
   end
   
   class Entry    
-    def save!
+    def save!(opts = {})
       if edit = edit_link
         uri = URI.parse(edit.href)
         response = nil
         Net::HTTP.start(uri.host, uri.port) do |http|
-          response = http.put(uri.path, self.to_xml, headers)
+          request = Net::HTTP::Put.new(uri.path, headers)
+          if opts[:user] && opts[:pass]
+            request.basic_auth(opts[:user], opts[:pass])
+          elsif opts[:hmac_access_id] && opts[:hmac_secret_key]
+            if Atom::Configuration.auth_hmac_enabled?
+              AuthHMAC.sign!(request, opts[:hmac_access_id], opts[:hmac_secret_key])
+            else
+              raise ArgumentError, "AuthHMAC credentials provides by auth-hmac gem is not installed"
+            end
+          end
+          
+          response = http.request(request, self.to_xml)
         end
         
         case response
@@ -177,12 +199,23 @@ module Atom
       end
     end
     
-    def destroy!
+    def destroy!(opts = {})
       if edit = edit_link
         uri = URI.parse(edit.href)
         response = nil
         Net::HTTP.start(uri.host, uri.port) do |http|
-          response = http.delete(uri.path, {'Accept' => 'application/atom+xml', 'User-Agent' => "rAtom #{Atom::VERSION::STRING}"})
+          request = Net::HTTP::Delete.new(uri.path, {'Accept' => 'application/atom+xml', 'User-Agent' => "rAtom #{Atom::VERSION::STRING}"})
+          if opts[:user] && opts[:pass]
+            request.basic_auth(opts[:user], opts[:pass])
+          elsif opts[:hmac_access_id] && opts[:hmac_secret_key]
+            if Atom::Configuration.auth_hmac_enabled?
+              AuthHMAC.sign!(request, opts[:hmac_access_id], opts[:hmac_secret_key])
+            else
+              raise ArgumentError, "AuthHMAC credentials provides by auth-hmac gem is not installed"
+            end
+          end
+          
+          response = http.request(request)
         end
         
         case response

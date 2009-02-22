@@ -1,32 +1,14 @@
 # Copyright (c) 2008 The Kaphan Foundation
 #
 # For licensing information see LICENSE.txt.
-=begin License.txt
-Copyright (c) 2008 Peerworks
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-=end
+#
+# Please visit http://www.peerworks.org/contact for further information.
+#
 
 require 'forwardable'
 require 'delegate'
 require 'rubygems'
+gem 'libxml-ruby', '>= 0.8.0'
 require 'xml/libxml'
 require 'atom/xml/parser.rb'
 
@@ -209,7 +191,7 @@ module Atom # :nodoc:
       end
       
       def to_xml(nodeonly = true, name = 'content', namespace = nil, namespace_map = Atom::Xml::NamespaceMap.new)
-        node = XML::Node.new("#{namespace_map.get(Atom::NAMESPACE)}:#{name}")
+        node = XML::Node.new("#{namespace_map.prefix(Atom::NAMESPACE, name)}")
         node << self.to_s
         node
       end
@@ -225,7 +207,7 @@ module Atom # :nodoc:
       def initialize(o)
         case o
         when XML::Reader
-          super(o.read_string.gsub(/\s+/, ' ').strip)
+          super(o.read_string)
           parse(o, :once => true)
         when String
           super(o)
@@ -243,10 +225,10 @@ module Atom # :nodoc:
         # to try and recitfy the situation.
         #
         begin
-          node = XML::Node.new("#{namespace_map.get(Atom::NAMESPACE)}:#{name}")
-          node << Iconv.iconv('utf-8', 'utf-8', self.to_s, namespace_map = nil)
+          node = XML::Node.new("#{namespace_map.prefix(Atom::NAMESPACE, name)}")
+          node << Iconv.iconv('utf-8', 'utf-8', self.to_s)
           node['type'] = 'html'
-          node['xml:lang'] = self.xml_lang        
+          node['xml:lang'] = self.xml_lang if self.xml_lang
           node
         rescue Iconv::IllegalSequence => e
           raise SerializationError, "Content must be converted to UTF-8 before attempting to serialize to XML: #{e.message}."
@@ -278,7 +260,7 @@ module Atom # :nodoc:
       end
       
       def to_xml(nodeonly = true, name = 'content', namespace = nil, namespace_map = Atom::Xml::NamespaceMap.new)
-        node = XML::Node.new("#{namespace_map.get(Atom::NAMESPACE)}:#{name}")
+        node = XML::Node.new("#{namespace_map.prefix(Atom::NAMESPACE, name)}")
         node['type'] = 'xhtml'
         node['xml:lang'] = self.xml_lang
         
@@ -363,6 +345,7 @@ module Atom # :nodoc:
   # +authors+:: An array of Atom::Person objects that are authors of this feed.
   # +contributors+:: An array of Atom::Person objects that are contributors to this feed.
   # +generator+:: A Atom::Generator.
+  # +categories+:: A list of Atom:Category objects for the feed.
   # +rights+:: A string describing the rights associated with this feed.
   # +entries+:: An array of Atom::Entry objects.
   # +links+:: An array of Atom:Link objects. (This is actually an Atom::Links array which is an Array with some sugar).
@@ -385,6 +368,7 @@ module Atom # :nodoc:
     element :updated, :class => Time, :content_only => true
     elements :links
     elements :authors, :contributors, :class => Person
+    elements :categories
     elements :entries
     
     # Initialize a Feed.
@@ -398,7 +382,7 @@ module Atom # :nodoc:
     # +o+:: An XML Reader or a Hash of attributes.
     #
     def initialize(o = {})
-      @links, @entries, @authors, @contributors = Links.new, [], [], []
+      @links, @entries, @authors, @contributors, @categories = Links.new, [], [], [], []
       
       case o
       when XML::Reader
@@ -428,9 +412,9 @@ module Atom # :nodoc:
     end
     
     # Reloads the feed by fetching the self uri.
-    def reload!
+    def reload!(opts = {})
       if links.self
-        Feed.load_feed(URI.parse(links.self.href))
+        Feed.load_feed(URI.parse(links.self.href), opts)
       end
     end
     
@@ -440,6 +424,8 @@ module Atom # :nodoc:
     #
     # +paginate+::  If true and the feed supports pagination this will fetch each page of the feed.
     # +since+::     If a Time object is provided each_entry will iterate over all entries that were updated since that time.
+    # +user+::      User name for HTTP Basic Authentication.
+    # +pass+::      Password for HTTP Basic Authentication.
     #
     def each_entry(options = {}, &block)
       if options[:paginate]
@@ -458,7 +444,7 @@ module Atom # :nodoc:
           if since_reached || feed.next_page.nil?
             break
           else feed.next_page
-            feed = feed.next_page.fetch 
+            feed = feed.next_page.fetch(options)
           end
         end
       else
@@ -519,11 +505,11 @@ module Atom # :nodoc:
     namespace Atom::NAMESPACE
     element :title, :id, :summary
     element :updated, :published, :class => Time, :content_only => true
-    element :content, :class => Content
     element :source, :class => Source
     elements :links
     elements :authors, :contributors, :class => Person
     elements :categories, :class => Category
+    element :content, :class => Content
         
     # Initialize an Entry.
     #
@@ -559,9 +545,9 @@ module Atom # :nodoc:
     end   
     
     # Reload the Entry by fetching the self link.
-    def reload!
+    def reload!(opts = {})
       if links.self
-        Entry.load_entry(URI.parse(links.self.href))
+        Entry.load_entry(URI.parse(links.self.href), opts)
       end
     end
   end
@@ -711,13 +697,11 @@ module Atom # :nodoc:
     #
     # TODO: Handle redirects.
     #
-    def fetch
-      content = Net::HTTP.get_response(URI.parse(self.href)).body
-      
+    def fetch(options = {})
       begin
-        Atom::Feed.load_feed(content)
+        Atom::Feed.load_feed(URI.parse(self.href), options)
       rescue ArgumentError, ParseError => ae
-        content
+        Net::HTTP.get_response(URI.parse(self.href)).body
       end
     end
     
