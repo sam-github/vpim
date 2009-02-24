@@ -8,7 +8,7 @@
 require 'forwardable'
 require 'delegate'
 require 'rubygems'
-gem 'libxml-ruby', '>= 0.8.0'
+gem 'libxml-ruby'
 require 'xml/libxml'
 require 'atom/xml/parser.rb'
 
@@ -71,15 +71,16 @@ module Atom # :nodoc:
     #
     # +xml+:: An XML::Reader object.
     #
-    def initialize(o = nil)
+    def initialize(o = nil) # :yield: self
       case o
-      when XML::Reader
-        @name = o.read_string.strip
-        parse(o, :once => true)
       when Hash
         o.each do |k, v|
           self.send("#{k.to_s}=", v)
         end
+      when nil
+      else
+        @name = o.read_string.strip
+        parse(o, :once => true)
       end
       
       yield(self) if block_given?
@@ -94,7 +95,7 @@ module Atom # :nodoc:
     include SimpleExtensions
     attribute :label, :scheme, :term
     
-    def initialize(o = nil)
+    def initialize(o = nil) # :yield: self
       case o
       when XML::Reader
         parse(o, :once => true)
@@ -102,6 +103,9 @@ module Atom # :nodoc:
         o.each do |k, v|
           self.send("#{k.to_s}=", v)
         end
+      when nil
+      else
+        raise ArgumentError, "Don't know how to handle #{o}"
       end
       
       yield(self) if block_given?
@@ -123,13 +127,13 @@ module Atom # :nodoc:
     # +o+:: An XML::Reader object or a hash. Valid hash keys are +:name+, +:uri+ and +:email+.
     def initialize(o = {})
       case o
-      when XML::Reader
-        o.read
-        parse(o)
       when Hash
         o.each do |k, v|
           self.send("#{k.to_s}=", v)
         end
+      else
+        o.read
+        parse(o)
       end
     end
     
@@ -185,9 +189,15 @@ module Atom # :nodoc:
     # Text content within an Atom document.
     class Text < Base      
       attribute :type, :'xml:lang'
-      def initialize(xml)
-        super(xml.read_string)
-        parse(xml, :once => true)
+      def initialize(o)
+        case o
+        when String
+          super(o)
+          @type = 'text'
+        else
+          super(o.read_string)
+          parse(o, :once => true)
+        end
       end
       
       def to_xml(nodeonly = true, name = 'content', namespace = nil, namespace_map = Atom::Xml::NamespaceMap.new)
@@ -206,13 +216,13 @@ module Atom # :nodoc:
       #
       def initialize(o)
         case o
-        when XML::Reader
-          super(o.read_string)
-          parse(o, :once => true)
         when String
           super(o)
           @type = 'html'
-        end        
+        else
+          super(o.read_string)
+          parse(o, :once => true)
+        end
       end
       
       def to_xml(nodeonly = true, name = 'content', namespace = nil, namespace_map = Atom::Xml::NamespaceMap.new) # :nodoc:
@@ -385,16 +395,16 @@ module Atom # :nodoc:
       @links, @entries, @authors, @contributors, @categories = Links.new, [], [], [], []
       
       case o
-      when XML::Reader
+      when Hash
+        o.each do |k, v|
+          self.send("#{k.to_s}=", v)
+        end
+      else
         if next_node_is?(o, 'feed', Atom::NAMESPACE)
           o.read
           parse(o)
         else
           raise ArgumentError, "XML document was missing atom:feed: #{o.read_outer_xml}"
-        end
-      when Hash
-        o.each do |k, v|
-          self.send("#{k.to_s}=", v)
         end
       end
       
@@ -528,16 +538,16 @@ module Atom # :nodoc:
       @categories = []
       
       case o
-      when XML::Reader
+      when Hash
+        o.each do |k,v|
+          send("#{k.to_s}=", v)
+        end
+      else
         if current_node_is?(o, 'entry', Atom::NAMESPACE) || next_node_is?(o, 'entry', Atom::NAMESPACE)
           o.read
           parse(o)
         else
           raise ArgumentError, "Entry created with node other than atom:entry: #{o.name}"
-        end
-      when Hash
-        o.each do |k,v|
-          send("#{k.to_s}=", v)
         end
       end
 
@@ -660,21 +670,22 @@ module Atom # :nodoc:
     #
     # +o+:: An XML::Reader containing a link element or a Hash of attributes.
     #
-    def initialize(o)
+    def initialize(o = nil) # :yield: self
       case o
-      when XML::Reader
+      when Hash
+        [:href, :rel, :type, :length].each do |attr|
+          self.send("#{attr}=", o[attr])
+        end
+      when nil
+      else
         if current_node_is?(o, 'link')
           parse(o, :once => true)
         else
           raise ArgumentError, "Link created with node other than atom:link: #{o.name}"
         end
-      when Hash
-        [:href, :rel, :type, :length].each do |attr|
-          self.send("#{attr}=", o[attr])
-        end
-      else
-        raise ArgumentError, "Don't know how to handle #{o}"
-      end        
+      end
+
+      yield(self) if block_given?
     end
     
     remove_method :length=
