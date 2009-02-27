@@ -1,6 +1,11 @@
 require 'test/unit'
 require 'pp'
 
+begin
+  require 'rubygems'
+rescue LoadError
+end
+
 module Enumerable
   unless self.methods.include? :count
     def count
@@ -17,7 +22,7 @@ class Test::Unit::TestCase
       server = WEBrick::HTTPServer.new( :Port => port )
       begin
         server.mount_proc("/") do |req,resp|
-          resp.body = data
+          resp.body = data.to_str
         end
         server.start
       ensure

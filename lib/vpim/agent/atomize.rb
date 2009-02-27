@@ -6,57 +6,95 @@
   details.
 =end
 
-# The only atom-generating library I could find on rubyforge has a dependency
-# on libxml2, and only a newer libxml version than OS 10.5 has... so fake
-# out the new stuff, it doesn't seem to be needed for generation.
-module XML
-  class Reader
-  end
-end
-
 require "atom"
 
 module Vpim
   module Agent
 
-    class Atomize
+    module Atomize
       MIME = "application/atom+xml"
 
-      def initialize(cal)
-        @cal = cal
-        @id = 0
-      end
+      # +ical+, an icalendar, or at least a Repo calendar's subset of an Icalendar
+      # +feeduri+, the atom xml should know the URI of where the feed is available from.
+      # +caluri+, optionally, the URI of the calendar its converted from.
+      #
+      # TODO - and the URI of an alternative/html representation of this feed?
+      def self.calendar(ical, feeduri, caluri = nil, calname = nil)
+        mime = MIME
 
-      def id
-        @id += 1
-        "http://example.com/#{@id}"
-      end
+        feeduri = feeduri.to_str
+        caluri = caluri
+        calname = (calname or caluri or "Unknown").to_str
 
-      def get(path=nil)
         f = Atom::Feed.new
-        f.title = @cal.name
+        # Mandatory attributes:
+        # For ID, we should use http://.../ics/atom?....., or just the URL of the ics?
+        #   I think it can be a full URI... or maybe a sha-1 of our full URI?
+        # or like gmail, no id for feed,
+        #   <id>tag:gmail.google.com,2004:1295062805013769502</id>
+        #
+        f.id = feeduri
+        f.title = "#{calname} - atomized!"
         f.updated = Time.now
-        # Should .id be the URL to the feed?
-        f.id = id
-        f.authors << Atom::Person.new(:name => "vAgent")
-        # Should be a link:
-        # .links << Atom::Link()
-        # .icon = ?
-        @cal.events do |ve|
+        f.authors << Atom::Person.new(:name => (caluri or calname))
+        f.generator = Atom::Generator.new do |g|
+          g.name = Vpim::PRODID
+          g.uri = "http://vpim.rubyforge.org"
+          g.version = Vpim::VERSION
+        end
+
+        f.links << Atom::Link.new do |l|
+          l.href = feeduri
+          l.type = mime
+          l.rel  = :self
+        end
+
+        if caluri
+          # This is maybe better described as :via, but with :alternate being
+          # an html view of this feed.
+          f.links << Atom::Link.new do |l|
+            l.href = caluri
+            l.type = "text/calendar"
+            l.rel  = :alternate
+          end
+        end
+
+        # .icon = uri to the vAgent icon
+        entry_id = 0
+        ical.events do |ve|
+          # TODO - infinite?
           ve.occurrences do |t|
             f.entries << Atom::Entry.new do |e|
-              e.title = ve.summary
+              # iCalendar -> atom
+              # -----------------
+              # summary -> title
+              # description -> text/content
+              # uid -> id
+              # created -> published?
+              # organizer -> author?
+              # contact -> author?
+              # last-mod -> semantically, this is updated, but atom doesn't
+              #   have the notion that an entry has a relationship to a time,
+              #   other than the time the entry itself was published, and when
+              #   the entry gets updated. We'll abuse updated for the event's time.
+              # categories -> where do "tags" go in atom, if anywhere?
+              # attachment -> into a link?
+              e.title = ve.summary if ve.summary
+              e.content = Atom::Content::Text.new(ve.description) if ve.description
               e.updated = t
-              e.content = Atom::Content::Html.new ve.summary
-              # .summary = Don't need when there is content.
-              # Maybe I can use the UUID from the ventry for the ID?
-              e.id = id
+
+              # Use "tag:", as defined by RFC4151, and use event UID if possible. Otherwise,
+              # construct something. Maybe I should mix something in to make it unique for
+              # each time a feed is generated for the calendar?
+              entry_id += 1
+              tag = ve.uid || "#{entry_id}@#{feeduri}"
+              e.id = "tag:vpim.rubyforge.org,2009:#{tag}"
             end
           end
         end
-        return f.to_xml
+        return f
       end
-    end
+    end # Atomize
 
   end # Agent
 end # Vpim

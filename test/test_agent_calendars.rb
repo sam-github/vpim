@@ -106,6 +106,7 @@ class TestAgentCalendars < Test::Unit::TestCase
     _test_path_prefix("http://host.ex/", ["a", "b"], 3, "/a/b/")
   end
 
+=begin
   def test_atomize
     repo = Apple3.new(@caldir)
     cal = repo.find{true}
@@ -121,6 +122,7 @@ class TestAgentCalendars < Test::Unit::TestCase
     out1, form = rest.get(Path.new("http://example.com/ics", "/ics/atom"))
     p [out1, form]
   end
+=end
 
 end
 

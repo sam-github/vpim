@@ -146,7 +146,7 @@ __
           when "calendar"
             return @cal.encode, Form::ICS
           when "atom"
-            return Atomize.new(@cal).get(path), Form::ATOM
+            return Atomize.calendar(@cal, path.uri, nil, @cal.name).to_xml, Form::ATOM
           else
             raise NotFound.new(form, path)
           end
