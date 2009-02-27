@@ -12,8 +12,9 @@
 # ics doesn't change?
 
 require 'sinatra'
-require 'vpim/repo'
 require 'vpim/agent/atomize'
+require 'vpim/repo'
+require 'vpim/view'
 
 module Vpim
   module Agent
@@ -21,6 +22,7 @@ module Vpim
       def self.atomize(caluri, feeduri)
         repo = Vpim::Repo::Uri.new(caluri)
         cal = repo.find{true}
+        cal = View.week(cal)
         feed = Agent::Atomize.calendar(cal, feeduri, caluri, cal.name)
         return feed.to_xml,  Agent::Atomize::MIME
       end
@@ -34,9 +36,7 @@ end
 get '/ics/atom' do
   from = env['QUERY_STRING']
   port = env["SERVER_PORT"].to_i
-  here = "#{env["rack.url_scheme"]}://#{env["HTTP_HOST"] or env["SERVER_NAME"]}#{
-    env["SERVER_PORT"] == "80" ? "" : ":"+env["SERVER_PORT"]}#{
-      env["SCRIPT_NAME"]}#{env["PATH_INFO"]}?#{env["QUERY_STRING"]}"
+  here = request.url
 
   xml, xmltype = Vpim::Agent::App.atomize(from, here)
 
