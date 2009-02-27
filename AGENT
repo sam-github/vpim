@@ -1,21 +1,8 @@
 
-
-Investigate block evals:
-
-obj.dsl do
-  if a
-    meth_a
-  else
-    meth_b
-  end
-end
-
-What is self?
-
 == vAgent
 
 todo:
- - calendar as RSS
+ - calendar as Atom
  - limit calendar to events at a particular time period
  - birthdays as calendar with alarm
 
@@ -56,6 +43,16 @@ Calendar:
 
 
 == UNSORTED
+
+
+http://github.com/defunkt/subtlety/tree/master
+
+http://github.com/sr/git-ics/blob/0d45aa5698ee11910911c71f893d46c974b10165/git-ics.rb
+
+http://github.com/sr/github-calendar/tree/master
+
+github -> search for icalendar
+
 
 http://topfunky.net/svn/plugins/calendar_helper
 
