@@ -34,7 +34,7 @@ module Vpim
         #   <id>tag:gmail.google.com,2004:1295062805013769502</id>
         #
         f.id = feeduri
-        f.title = "#{calname} - atomized!"
+        f.title = calname
         f.updated = Time.now
         f.authors << Atom::Person.new(:name => (caluri or calname))
         f.generator = Atom::Generator.new do |g|
