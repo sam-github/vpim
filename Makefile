@@ -45,7 +45,7 @@ test_old:
 
 .PHONY: coverage
 coverage:
-	rcov test/test_all.rb
+	rcov -Ilib -x "^/" test/test_all.rb
 	open coverage/index.html
 
 other:
