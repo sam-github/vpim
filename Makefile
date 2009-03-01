@@ -6,8 +6,7 @@ RUBY=/usr/bin/ruby
 
 .PHONY: default doc test other
 
-do: vagent
-	open vAgent.app
+do: agent-upload
 
 reminder:
 	ruby -I lib samples/reminder.rb
@@ -19,6 +18,9 @@ bday:
 
 doc-upload:
 	cd doc; scp -r . sam@rubyforge.org:/var/www/gforge-projects/vpim/
+
+agent-upload:
+	rsync -v --archive --compress --cvs-exclude --exclude=.svn/ --del lib octet:webapps/agent/
 
 RDFLAGS = -w2
 
@@ -172,4 +174,4 @@ vagent:
 
 
 
-# vim:noexpandtab:tabstop=2:
+# vim:noexpandtab:tabstop=2:sw=2:

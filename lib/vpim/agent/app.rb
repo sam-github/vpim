@@ -6,15 +6,29 @@
   details.
 =end
 
-# I could wrap the Repo/Calendar/Atomize in a small class that would memoize
-# ical data and atom output. Maybe even do an HTTP head for fast detection of
-# change? Does a calendar have updated information? Can we memoize atom when
-# ics doesn't change?
-
 require 'sinatra'
 require 'vpim/agent/atomize'
 require 'vpim/repo'
 require 'vpim/view'
+
+configure do
+  server = Sinatra::Application.server
+  set :server, Proc.new {
+      if ENV.include?("PHP_FCGI_CHILDREN")
+        break "fastcgi" # Must NOT be the correct class name!
+      elsif ENV.include?("REQUEST_METHOD")
+        break "cgi" # Must NOT be the correct class name!
+      else
+        # Fall back on whatever it was going to be.
+        server
+      end
+  }
+end
+
+# I could wrap the Repo/Calendar/Atomize in a small class that would memoize
+# ical data and atom output. Maybe even do an HTTP head for fast detection of
+# change? Does a calendar have updated information? Can we memoize atom when
+# ics doesn't change?
 
 module Vpim
   module Agent
