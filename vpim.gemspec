@@ -3,8 +3,6 @@ require 'pp'
 require 'rake'
 require 'svn'
 
-Gem.manage_gems
-
 def info(s)
   {
     :author => "Sam Roberts",
@@ -29,7 +27,8 @@ This is a pure-ruby library for decoding and encoding vCard and iCalendar data
   s.extra_rdoc_files  = ["README", "CHANGES", "COPYING", "samples/README.mutt" ]
 
   candidates = FileList[
-    'lib/**/*.rb',
+    'lib/vpim/**/*.rb',
+    'lib/vpim.rb',
     'bin/*',
     'samples/*',
     'test/test_*.rb',
@@ -37,8 +36,6 @@ This is a pure-ruby library for decoding and encoding vCard and iCalendar data
     'README',
     'CHANGES',
   ].to_a
-
-  candidates.reject!{|path| path.include? 'agent'}
 
   s.files             = candidates
   s.test_files        = Dir.glob("test/test_*.rb")

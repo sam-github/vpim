@@ -1,3 +1,9 @@
+0.695 - 2009-03-01
+
+- Alpha versions of vPim agent (http://agent.octetcloud.com)
+- Fixed: reminder app had drifted out of sync with API change
+
+
 0.657 - 2008-08-14
 
 - Date#to_time renamed to Date#vpim_to_time. Apparently Rails also patches the core.
