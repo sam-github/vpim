@@ -11,6 +11,8 @@ require 'vpim/agent/atomize'
 require 'vpim/repo'
 require 'vpim/view'
 
+require 'cgi'
+
 configure do
   server = Sinatra::Application.server
   set :server, Proc.new {
@@ -44,33 +46,27 @@ module Vpim
   end
 end
 
-def from_is_ics(from)
-  true
-end
-
-def from_is_empty(from)
-  return from.empty?
-  not from or from =~ /^\s*$/
-end
-
 get '/ics' do
   from = env['QUERY_STRING']
 
   url = URI.parse(request.url)
   url.query = nil
   url_base = url.to_s
+  url_atom = nil
 
-  if from.empty?
-    from = nil
-    url_atom = nil
-  else
+  @url_ics  = from      # ics from here
+  @url_atom = nil
+
+  if not from.empty?
+    # Error out if we can't atomize the feed
+    Vpim::Agent::App.atomize(from, "http://example.com")
+
     url = URI.parse(request.url)
     url.path << "/atom"
     url_atom = url.to_s
   end
 
   @url_base = url_base  # clean input form
-  @url_ics  = from      # ics from here
   @url_atom = url_atom  # atomized ics from here
 
   haml :"ics.haml"
@@ -91,7 +87,11 @@ get '/ics/atom' do
   port = env["SERVER_PORT"].to_i
   here = request.url
 
-  # if from is empty, redirect to /ics
+  if from.empty?
+    url = URI.parse(here)
+    url.path.sub(/atom$/, "")
+    redirect here.to_s
+  end
 
   xml, xmltype = Vpim::Agent::App.atomize(from, here)
 
@@ -102,6 +102,11 @@ end
 get '/ics/style.css' do
   content_type 'text/css'
   sass :"ics.sass"
+end
+
+error do
+  @url_error = CGI.escapeHTML(env['sinatra.error'].inspect)
+  haml :"ics.haml"
 end
 
 use_in_file_templates!
@@ -116,6 +121,8 @@ body
   a
     :color black
     :font-style italic
+  a:hover
+    :color darkred
 
 #header
   :border-bottom 3px solid darkred
@@ -165,7 +172,7 @@ body
       %form#form{:method => 'POST', :action => '/ics'}
         %input#url{:name => 'url', :value => params[:url]}
         %input#button{:type => 'submit', :value => 'Submit'}
-    - if @url_ics
+    - if @url_atom
       #subscribe
         .text
           Subscribe to
@@ -174,8 +181,14 @@ body
         %ul.feed
           %a{:href => @url_atom}= @url_atom
           (atom feed)
+    - if @url_error
+      #error.text
+        #preamble Sorry, trying to access:
+        #source= @url_ics
+        #transition resulted in:
+        #destination= @url_error
     #footer
       .text
         :textile
-          Coming from the "Octet Cloud":http://octetcloud.com/ using "vPim":http://vpim.rubyforge.org/, with the aid of cloud monkey "Sam Roberts":mailto:vieuxtech@gmail.com
+          Coming from the "Octet Cloud":http://octetcloud.com/ using "vPim":http://vpim.rubyforge.org/, piloted by cloud monkey "Sam Roberts":mailto:vieuxtech@gmail.com
 

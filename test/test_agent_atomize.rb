@@ -26,7 +26,7 @@ __
 
   assert_equal(feed.entries.size, 1)
   assert_equal("http://example.com/feed", feed.id)
-  assert_equal("http://example.com/calendar - atomized!", feed.title)
+  assert_equal("http://example.com/calendar", feed.title)
   assert(feed.to_xml.to_str)
   assert_equal(nil, feed.entries.first.title)
   assert_equal(nil, feed.entries.first.content)
@@ -47,7 +47,7 @@ __
 
   assert_equal(feed.entries.size, 1)
   assert_equal("http://example.com/feed", feed.id)
-  assert_equal("http://example.com/calendar - atomized!", feed.title)
+  assert_equal("http://example.com/calendar", feed.title)
   assert_equal("I am summarized", feed.entries.first.title)
   assert_equal("And I am described", feed.entries.first.content)
   assert(feed.to_xml.to_str)
@@ -73,7 +73,7 @@ __
   puts feed.to_xml
   assert_equal(1, feed.entries.size)
   assert_equal("http://example.com/feed", feed.id)
-  assert_equal("http://example.com/calendar - atomized!", feed.title)
+  assert_equal("http://example.com/calendar", feed.title)
   assert_equal("I am summarized", feed.entries.first.title)
   assert_equal("And I am described", feed.entries.first.content)
   assert(feed.to_xml.to_str)

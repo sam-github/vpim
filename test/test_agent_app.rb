@@ -55,8 +55,20 @@ class IcsAgent < Test::Unit::TestCase
   end
 
   def test_ics_atom
-    # TODO redirect to ics
+    get '/ics/atom'
+    assert_equal(302, @response.status)
   end
+
+=begin
+
+WTF? Sinatra doesn't run it's error catcher in unit test mode?
+  def test_ics_atom_query_bad
+    get '/ics/atom?http://example.com'
+    assert_equal(500, @response.status)
+    assert(@response.body =~ Regexp.new(
+      Regexp.quote("error")), @response.body)
+  end
+=end
 
 end
 

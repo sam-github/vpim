@@ -19,7 +19,14 @@ class Test::Unit::TestCase
     Thread.abort_on_exception = true
     thrd = Thread.new do
       require "webrick"
-      server = WEBrick::HTTPServer.new( :Port => port )
+      l =  WEBrick::Log.new(STDOUT, WEBrick::BasicLog::WARN)
+      server = WEBrick::HTTPServer.new(
+        :Port => port,
+        :Logger => l,
+        :AccessLog => l
+      )
+      #server.logger.level = WEBrick::BasicLog::WARN
+      #pp server.logger
       begin
         server.mount_proc("/") do |req,resp|
           resp.body = data.to_str
