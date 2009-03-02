@@ -7,7 +7,6 @@ class TestRepo < Test::Unit::TestCase
   Apple3 = Vpim::Repo::Apple3
   Directory = Vpim::Repo::Directory
   Uri = Vpim::Repo::Uri
-  Agent = Vpim::Agent
 
   def setup
     @testdir = Dir.getwd + "/test" #File.dirname($0) doesn't work with rcov :-(
@@ -66,6 +65,44 @@ class TestRepo < Test::Unit::TestCase
       _test_each(repo, 1)
     ensure
       server.kill
+    end
+  end
+
+  def test_uri_invalid
+    assert_raises(ArgumentError) do
+      Uri.new("url")
+    end
+    assert_raises(ArgumentError) do
+      c = Uri::Calendar.new("url://localhost")
+    end
+    assert_raises(ArgumentError) do
+      c = Uri::Calendar.new("https://localhost")
+    end
+  end
+
+  def test_uri_unreachable
+    assert_raises(SocketError) do
+      r = Uri.new("http://example.example")
+      c = r.find{true}
+      c.events{}
+    end
+    assert_raises(Errno::ECONNREFUSED) do
+      r = Uri.new("http://rubyforge.org:81")
+      c = r.find{true}
+      c.events{}
+    end
+    assert_raises(StandardError, Vpim::InvalidEncodingError) do
+      r = Uri.new("http://rubyforge.org/lua-rocks-my-world")
+      c = r.find{true}
+      c.events{}
+    end
+  end
+
+  def test_uri_unparseable
+    assert_raises(Vpim::InvalidEncodingError) do
+      r = Uri.new("http://example.com:80")
+      c = r.find{true}
+      c.events{}
     end
   end
 

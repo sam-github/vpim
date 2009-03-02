@@ -7,6 +7,7 @@
 =end
 
 require 'enumerator'
+require "net/http"
 
 require 'plist'
 
@@ -181,12 +182,29 @@ module Vpim
     end
 
     class Uri < Repo
+      def self.uri_check(uri)
+        uri = case uri
+               when URI
+                 uri
+               else
+                 begin
+                   URI.parse(uri)
+                 rescue URI::InvalidURIError => e
+                   raise ArgumentError, "Invalid URI for #{uri.inspect} - #{e.to_s}"
+                 end
+               end
+        unless uri.scheme == "http"
+          raise ArgumentError, "Unsupported URI scheme for #{uri.inspect}"
+        end
+        uri
+      end
+
       class Calendar < Repo::Calendar
         def body
         end
 
         def initialize(uri) #:nodoc:
-          @uri = URI.parse(uri)
+          @uri = Uri.uri_check(uri)
         end
 
         def name #:nodoc:
@@ -213,6 +231,13 @@ module Vpim
         def encode #:nodoc:
           Net::HTTP.get_response(@uri) do |result|
             accum = ""
+=begin
+better to let this pass up as an invalid encoding error
+            if result.code != "200"
+              raise StandardError,
+                "HTTP GET of #{@uri.to_s.inspect} failed with #{result.code} #{result.error_type}"
+            end
+=end
             result.read_body do |chunk|
               accum << chunk
             end
@@ -223,9 +248,7 @@ module Vpim
       end
 
       def initialize(where)
-        @where = where.to_str
-
-        require "net/http"
+        @where = Uri.uri_check(where)
       end
 
       def each #:nodoc:
