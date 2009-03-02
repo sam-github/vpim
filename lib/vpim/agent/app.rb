@@ -44,17 +44,138 @@ module Vpim
   end
 end
 
+def from_is_ics(from)
+  true
+end
+
+def from_is_empty(from)
+  return from.empty?
+  not from or from =~ /^\s*$/
+end
+
+get '/ics' do
+  from = env['QUERY_STRING']
+
+  url = URI.parse(request.url)
+  url.query = nil
+  url_base = url.to_s
+
+  if from.empty?
+    from = nil
+    url_atom = nil
+  else
+    url = URI.parse(request.url)
+    url.path << "/atom"
+    url_atom = url.to_s
+  end
+
+  @url_base = url_base  # clean input form
+  @url_ics  = from      # ics from here
+  @url_atom = url_atom  # atomized ics from here
+
+  haml :"ics.haml"
+end
+
+post '/ics' do
+  from = params[:url]
+  url = URI.parse(request.url)
+  url.query = from
+  redirect url.to_s
+end
+
 # When we support other forms..
 #get '/ics/:form' do
-  #form = params[:form]
+#  form = params[:form]
 get '/ics/atom' do
   from = env['QUERY_STRING']
   port = env["SERVER_PORT"].to_i
   here = request.url
+
+  # if from is empty, redirect to /ics
 
   xml, xmltype = Vpim::Agent::App.atomize(from, here)
 
   content_type xmltype
   body xml
 end
+
+get '/ics/style.css' do
+  content_type 'text/css'
+  sass :"ics.sass"
+end
+
+use_in_file_templates!
+
+# FIXME - hard-coded :action paths below, bad!
+
+__END__
+@@ics.sass
+body
+  :background-color gray
+  :font-size medium
+  a
+    :color black
+    :font-style italic
+
+#header
+  :border-bottom 3px solid darkred
+  #title
+    :color black
+    :font-size large
+
+.text
+  :width 80%
+-#:color yellow
+
+#submit
+  :margin-top 30px
+  :margin-left 5%
+  #form
+    :padding
+      :top 10px
+      :bottom 10px
+      :left 10px
+      :right 10px
+    :text-align left
+    #url
+      :width 80%
+    #button
+      :font-weight bold
+      :text-align center
+
+#subscribe
+  :margin-left 5%
+-#.feed
+-#  :margin-left 10%
+  
+#footer
+  :border-top 3px solid darkred
+  :margin-top 20px
+@@ics.haml
+%html
+  %head
+    %title Subscribe to calendar feeds as atom feeds
+    %link{:href => '/ics/style.css', :media => 'screen', :type => 'text/css'}
+  %body
+    #header
+      %span#title Subscribe to calendar feeds as atom feeds
+    #submit
+      .text Calendar feeds are great, but sometimes all you want is an atom feed of what's coming up in the next week.
+      .text Paste the URL of the calendar below, submit it, and subscribe.
+      %form#form{:method => 'POST', :action => '/ics'}
+        %input#url{:name => 'url', :value => params[:url]}
+        %input#button{:type => 'submit', :value => 'Submit'}
+    - if @url_ics
+      #subscribe
+        .text
+          Subscribe to
+          %a{:href => @url_ics}= @url_ics
+          as:
+        %ul.feed
+          %a{:href => @url_atom}= @url_atom
+          (atom feed)
+    #footer
+      .text
+        :textile
+          Coming from the "Octet Cloud":http://octetcloud.com/ using "vPim":http://vpim.rubyforge.org/, with the aid of cloud monkey "Sam Roberts":mailto:vieuxtech@gmail.com
 

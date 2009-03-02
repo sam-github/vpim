@@ -16,9 +16,11 @@ class IcsAgent < Test::Unit::TestCase
     @thrd.kill
   end
 
-  def test_ics_rss
+  def test_ics_atom_query
     @caldata = open('test/calendars/weather.calendar/Events/1205042405-0-0.ics').read
+
     get '/ics/atom?http://127.0.0.1:9876'
+
     #pp @response
     assert(@response.body =~ /<\?xml/)
     assert_equal(Vpim::Agent::Atomize::MIME, @response['Content-Type'])
@@ -27,6 +29,33 @@ class IcsAgent < Test::Unit::TestCase
       Regexp.quote(
         "<id>http://example.org/ics/atom?http://127.0.0.1:9876</id>"
     )), @response.body)
+  end
+
+  def test_ics
+    get '/ics'
+
+    assert(@response.body =~ /<html/)
+    assert_equal('text/html', @response['Content-Type'])
+    assert_equal(200, @response.status)
+    assert(@response.body =~ Regexp.new(
+      Regexp.quote("<title>Subscribe")), @response.body)
+  end
+
+  def test_ics_query
+    @caldata = open('test/calendars/weather.calendar/Events/1205042405-0-0.ics').read
+
+    get '/ics?http://127.0.0.1:9876'
+
+    assert(@response.body =~ /<html/)
+    assert_equal('text/html', @response['Content-Type'])
+    assert_equal(200, @response.status)
+
+    assert(@response.body =~ Regexp.new(
+      Regexp.quote("Subscribe to")), @response.body)
+  end
+
+  def test_ics_atom
+    # TODO redirect to ics
   end
 
 end
