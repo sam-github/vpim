@@ -1,9 +1,10 @@
 require 'test/common'
-require 'sinatra/test/unit'
+require 'sinatra/test'
 
-require 'vpim/agent/app'
+require 'vpim/agent/ics'
 
 class IcsAgent < Test::Unit::TestCase
+  include Sinatra::Test
 
   def to_str
     @caldata
@@ -11,6 +12,7 @@ class IcsAgent < Test::Unit::TestCase
 
   def setup
     @thrd = data_on_port(self, 9876)
+    @app = Vpim::Agent::Ics
   end
   def teardown
     @thrd.kill
@@ -19,7 +21,7 @@ class IcsAgent < Test::Unit::TestCase
   def test_ics_atom_query
     @caldata = open('test/calendars/weather.calendar/Events/1205042405-0-0.ics').read
 
-    get '/ics/atom?http://127.0.0.1:9876'
+    get '/atom?http://127.0.0.1:9876'
 
     #pp @response
     assert(@response.body =~ /<\?xml/)
@@ -27,12 +29,12 @@ class IcsAgent < Test::Unit::TestCase
     assert_equal(200, @response.status)
     assert(@response.body =~ Regexp.new(
       Regexp.quote(
-        "<id>http://example.org/ics/atom?http://127.0.0.1:9876</id>"
+        "<id>http://example.org/atom?http://127.0.0.1:9876</id>"
     )), @response.body)
   end
 
   def test_ics
-    get '/ics'
+    get ''
 
     assert(@response.body =~ /<html/)
     assert_equal('text/html', @response['Content-Type'])
@@ -44,7 +46,7 @@ class IcsAgent < Test::Unit::TestCase
   def test_ics_query
     @caldata = open('test/calendars/weather.calendar/Events/1205042405-0-0.ics').read
 
-    get '/ics?http://127.0.0.1:9876'
+    get '?http://127.0.0.1:9876'
 
     assert(@response.body =~ /<html/)
     assert_equal('text/html', @response['Content-Type'])
@@ -55,7 +57,7 @@ class IcsAgent < Test::Unit::TestCase
   end
 
   def test_ics_atom
-    get '/ics/atom'
+    get '/atom'
     assert_equal(302, @response.status)
   end
 
@@ -63,7 +65,9 @@ class IcsAgent < Test::Unit::TestCase
 
 WTF? Sinatra doesn't run it's error catcher in unit test mode?
   def test_ics_atom_query_bad
-    get '/ics/atom?http://example.com'
+    Vpim::Aent::Ics.disable :raise_errors
+
+    get '/atom?http://example.com'
     assert_equal(500, @response.status)
     assert(@response.body =~ Regexp.new(
       Regexp.quote("error")), @response.body)
