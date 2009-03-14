@@ -8,66 +8,20 @@
 
 require 'cgi'
 
+require 'vpim/agent/base'
 require 'vpim/agent/atomize'
 require 'vpim/repo'
 require 'vpim/view'
 
 require 'sinatra/base'
 
-# TODO Move code into Agent base class
 # TODO Pasting of webcal links, conversion to webcal links?
 
 module Vpim
   module Agent
 
-    class Ics < Sinatra::Base
+    class Ics < Base
       use_in_file_templates!
-
-      set :haml, :format=>:html4 # Appears to do nothing, but maybe it will some day...
-
-      def css(template) # < Agent
-        render :css, template, {}
-      end
-
-      def render_css(template, data, options)
-        data
-      end
-
-      # Complete path, as requested by the client. Take care for CGI path rewriting.
-      def request_path # < Agent
-        # Using .to_s because rack/request.rb does, though I think the Rack
-        # spec requires these to be strings already.
-        begin
-          URI.parse(env["SCRIPT_URI"].to_s).path
-        rescue
-          env["SCRIPT_NAME"].to_s + env["PATH_INFO"].to_s
-        end
-      end
-
-      # Complete path, as requested by the client, without the env's PATH_INFO.
-      # This is the path to whatever is "handling" the request.
-      def script_path # < Agent
-        request_path.sub(/#{env["PATH_INFO"]}$/, "")
-      end
-
-      # URL-ready form of the host and port, where the port isn't specified if
-      # it is the default for the URL scheme.
-      def host_port # < Agent
-        r = request
-        host_port = r.host
-
-        if r.scheme == "https" && r.port != 443 ||
-          r.scheme == "http" && r.port != 80
-          host_port << ":#{r.port}"
-        end
-
-        host_port
-      end
-
-      # URL to the script
-      def script_url # < Agent
-        request.scheme + "://" + host_port + script_path
-      end
 
       def atomize(caluri, feeduri)
         repo = Vpim::Repo::Uri.new(caluri)
@@ -137,7 +91,7 @@ module Vpim
         get_style
       end
 
-    end
+    end # Ics
 
   end # Agent
 end # Vpim
