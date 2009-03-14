@@ -14,7 +14,6 @@ require 'vpim/view'
 
 require 'sinatra/base'
 
-# TODO Move code into methods
 # TODO Move code into Agent base class
 # TODO Pasting of webcal links, conversion to webcal links?
 
@@ -78,10 +77,8 @@ module Vpim
         return feed.to_xml,  Agent::Atomize::MIME
       end
 
-      get '/?' do
-
-        from = env['QUERY_STRING']
-
+      ## Route handlers:
+      def get_base(from)
         @url_base = script_url   # agent mount point
         @url_ics  = from         # ics from here
         @url_atom = nil          # atom feed from here, if ics is accessible
@@ -99,16 +96,10 @@ module Vpim
         haml :"vpim/agent/ics/view"
       end
 
-      post "/?" do
-        redirect script_url + "?" + (params[:url] || "")
-      end
-
       # When we support other forms..
       #get '/ics/:form' do
       #  form = params[:form]
-      get "/atom" do
-        caluri = env['QUERY_STRING']
-
+      def get_atom(caluri)
         if caluri.empty?
           redirect script_url
         end
@@ -124,10 +115,28 @@ module Vpim
         end
       end
 
-      get '/style.css' do
+      def get_style
         content_type 'text/css'
         css :"vpim/agent/ics/style"
       end
+
+      ## Sinatra routing:
+      get '/?' do
+        get_base(env['QUERY_STRING'])
+      end
+
+      post "/?" do
+        redirect script_url + "?" + (params[:url] || "")
+      end
+
+      get "/atom" do
+        get_atom(env['QUERY_STRING'])
+      end
+
+      get '/style.css' do
+        get_style
+      end
+
     end
 
   end # Agent
