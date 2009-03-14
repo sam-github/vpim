@@ -3,7 +3,7 @@ require 'sinatra/test'
 
 require 'vpim/agent/ics'
 
-class IcsAgent < Test::Unit::TestCase
+class TestIcsAgent < Test::Unit::TestCase
   include Sinatra::Test
 
   def to_str
