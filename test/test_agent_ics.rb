@@ -1,6 +1,5 @@
 require 'test/common'
 require 'sinatra/test'
-
 require 'vpim/agent/ics'
 
 class TestIcsAgent < Test::Unit::TestCase
@@ -24,11 +23,10 @@ class TestIcsAgent < Test::Unit::TestCase
     get '/atom?http://127.0.0.1:9876'
 
     #pp @response
-    assert(@response.body =~ /<\?xml/)
+    assert_match(/<\?xml/, @response.body)
     assert_equal(Vpim::Agent::Atomize::MIME, @response['Content-Type'])
     assert_equal(200, @response.status)
-    assert(@response.body =~ Regexp.new(
-      Regexp.quote(
+    assert_match(Regexp.new( Regexp.quote(
         "<id>http://example.org/atom?http://127.0.0.1:9876</id>"
     )), @response.body)
   end
@@ -36,11 +34,10 @@ class TestIcsAgent < Test::Unit::TestCase
   def test_ics
     get ''
 
-    assert(@response.body =~ /<html/)
+    assert_match(/<html/, @response.body)
     assert_equal('text/html', @response['Content-Type'])
     assert_equal(200, @response.status)
-    assert(@response.body =~ Regexp.new(
-      Regexp.quote("<title>Subscribe")), @response.body)
+    assert_match(Regexp.new(Regexp.quote("<title>Subscribe")), @response.body)
   end
 
   def test_ics_query
@@ -48,31 +45,45 @@ class TestIcsAgent < Test::Unit::TestCase
 
     get '?http://127.0.0.1:9876'
 
-    assert(@response.body =~ /<html/)
+    assert_match(/<html/, @response.body)
     assert_equal('text/html', @response['Content-Type'])
     assert_equal(200, @response.status)
 
-    assert(@response.body =~ Regexp.new(
-      Regexp.quote("Subscribe to")), @response.body)
+    assert_match(Regexp.new(Regexp.quote("Subscribe to")), @response.body)
+  end
+
+  def test_ics_post
+    post '/', :url => "http://example.com"
+    assert_equal(302, @response.status)
+    assert_equal("http://example.org?http://example.com", @response.headers["Location"])
   end
 
   def test_ics_atom
     get '/atom'
     assert_equal(302, @response.status)
+    assert_equal("http://example.org", @response.headers["Location"])
   end
 
-=begin
+  def test_ics_style
+    get '/style.css'
+    assert_match(/body \{/, @response.body)
+    assert_equal('text/css', @response['Content-Type'])
+    assert_equal(200, @response.status)
+  end
 
-WTF? Sinatra doesn't run it's error catcher in unit test mode?
+  def test_ics_query_bad
+    get '/?url://example.com'
+    assert_equal(200, @response.status)
+    assert_match(/Sorry/, @response.body)
+  end
+
   def test_ics_atom_query_bad
-    Vpim::Aent::Ics.disable :raise_errors
+    #Vpim::Agent::Ics.enable :raise_errors
 
-    get '/atom?http://example.com'
-    assert_equal(500, @response.status)
-    assert(@response.body =~ Regexp.new(
-      Regexp.quote("error")), @response.body)
+    get '/atom?url://example.com'
+    assert_equal(302, @response.status)
+    assert_equal("http://example.org?url://example.com", @response.headers["Location"])
   end
-=end
 
 end
 
