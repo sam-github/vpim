@@ -25,6 +25,8 @@ module Vpim
     class Ics < Sinatra::Base
       use_in_file_templates!
 
+      set :haml, :format=>:html4 # Appears to do nothing, but maybe it will some day...
+
       def css(template) # < Agent
         render :css, template, {}
       end
@@ -138,7 +140,7 @@ body {
   background-color: gray;
 }
 h1 {
-  border-bottom: 3px solid darkred;
+  border-bottom: 3px solid #8B0000;
   font-size: large;
 }
 form {
@@ -151,19 +153,21 @@ a {
   color: black;
 }
 a:hover {
-  color: darkred;
+  color: #8B0000;
 }
 tt {
   margin-left: 10%;
 }
 .footer {
-  border-top: 3px solid darkred;
+  border-top: 3px solid #8B0000;
 }
 @@ics.haml
+!!! strict
 %html
   %head
     %title Subscribe to calendar feeds as atom feeds
-    %link{:href => script_url + '/style.css', :media => 'screen', :type => 'text/css'}
+    %link{:href => script_url + "/style.css", :media => "screen", :type => "text/css"}
+    %meta{:"http-equiv" => "Content-Type", :content => "text/html;charset=utf-8"}
   %body
     %h1 Subscribe to calendar feeds as atom feeds
     %p
@@ -171,18 +175,19 @@ tt {
       in the next week, you might want those events as an atom feed.
     %p
       Paste the URL of the calendar below, submit it, and subscribe.
-    %form{:method => 'POST'}
-      %input.text{:type => 'text', :name => 'url', :value => @url_ics}
-      %input{:type => 'submit', :value => 'Submit'}
+    %form{:method => 'POST', :action => script_url}
+      %p
+        %input.text{:type => 'text', :name => 'url', :value => @url_ics}
+        %input{:type => 'submit', :value => 'Submit'}
     - if @url_atom
       %p
         Subscribe to
         %a{:href => @url_ics}= @url_ics
         as:
-        %ul.feed
-          %li
-            %a{:href => @url_atom}= @url_atom
-            (atom feed)
+      %ul.feed
+        %li
+          %a{:href => @url_atom}= @url_atom
+          (atom feed)
     - if @url_error
       %p
         Sorry, trying to access
