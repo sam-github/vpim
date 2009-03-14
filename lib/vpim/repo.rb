@@ -188,7 +188,7 @@ module Vpim
                  uri
                else
                  begin
-                   URI.parse(uri)
+                   URI.parse(uri.sub(/^webcal:/, "http:"))
                  rescue URI::InvalidURIError => e
                    raise ArgumentError, "Invalid URI for #{uri.inspect} - #{e.to_s}"
                  end

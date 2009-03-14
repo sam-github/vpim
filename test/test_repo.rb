@@ -50,7 +50,7 @@ class TestRepo < Test::Unit::TestCase
     _test_each(repo, 1)
   end
 
-  def test_uri
+  def test_uri_http
     caldata = open('test/calendars/weather.calendar/Events/1205042405-0-0.ics').read
 
     server = data_on_port(caldata, 9876)
@@ -67,6 +67,25 @@ class TestRepo < Test::Unit::TestCase
       server.kill
     end
   end
+
+  def test_uri_webcal
+    caldata = open('test/calendars/weather.calendar/Events/1205042405-0-0.ics').read
+
+    server = data_on_port(caldata, 9876)
+    begin
+      c = Uri::Calendar.new("webcal://localhost:9876")
+      assert_equal(caldata, c.encode)
+
+      repo = Uri.new("webcal://localhost:9876")
+
+      assert_equal(1, repo.count)
+
+      _test_each(repo, 1)
+    ensure
+      server.kill
+    end
+  end
+
 
   def test_uri_invalid
     assert_raises(ArgumentError) do

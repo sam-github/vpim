@@ -15,8 +15,6 @@ require 'vpim/view'
 
 require 'sinatra/base'
 
-# TODO Pasting of webcal links, conversion to webcal links?
-
 module Vpim
   module Agent
 

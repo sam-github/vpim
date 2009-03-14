@@ -70,7 +70,7 @@ END:VEVENT
 END:VCALENDAR
 __
 
-  puts feed.to_xml
+  #puts feed.to_xml
   assert_equal(1, feed.entries.size)
   assert_equal("http://example.com/feed", feed.id)
   assert_equal("http://example.com/calendar", feed.title)

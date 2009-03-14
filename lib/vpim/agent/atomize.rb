@@ -52,6 +52,9 @@ module Vpim
         if caluri
           # This is maybe better described as :via, but with :alternate being
           # an html view of this feed.
+          #
+          # TODO should I change the scheme to be webcal?
+          # TODO should I extend URI to support webcal?
           f.links << Atom::Link.new do |l|
             l.href = caluri
             l.type = "text/calendar"
