@@ -14,7 +14,6 @@ require 'vpim/view'
 
 require 'sinatra/base'
 
-# TODO Rename templates to vpim/agent/style and vpim/agent/view
 # TODO Move code into methods
 # TODO Move code into Agent base class
 # TODO Pasting of webcal links, conversion to webcal links?
@@ -97,7 +96,7 @@ module Vpim
           end
         end
 
-        haml :"ics.haml"
+        haml :"vpim/agent/ics/view"
       end
 
       post "/?" do
@@ -127,7 +126,7 @@ module Vpim
 
       get '/style.css' do
         content_type 'text/css'
-        css :"ics.css"
+        css :"vpim/agent/ics/style"
       end
     end
 
@@ -135,7 +134,7 @@ module Vpim
 end # Vpim
 
 __END__
-@@ics.css
+@@vpim/agent/ics/style
 body {
   background-color: gray;
 }
@@ -161,7 +160,7 @@ tt {
 .footer {
   border-top: 3px solid #8B0000;
 }
-@@ics.haml
+@@vpim/agent/ics/view
 !!! strict
 %html
   %head
