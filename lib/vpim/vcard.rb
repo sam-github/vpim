@@ -17,8 +17,8 @@ module Vpim
   # A vCard, a specialization of a directory info object.
   #
   # The vCard format is specified by:
-  # - RFC2426: vCard MIME Directory Profile (vCard 3.0)
-  # - RFC2425: A MIME Content-Type for Directory Information
+  # - RFC2426[http://www.ietf.org/rfc/rfc2426.txt]: vCard MIME Directory Profile (vCard 3.0)
+  # - RFC2425[http://www.ietf.org/rfc/rfc2425.txt]: A MIME Content-Type for Directory Information
   #
   # This implements vCard 3.0, but it is also capable of working with vCard 2.1
   # if used with care.
@@ -41,13 +41,10 @@ module Vpim
   # lines, and both the singular and plural forms will eventually be
   # implemented.
   #
-  # If there is sufficient demand, specific support for vCard 2.1 could be
-  # implemented.
-  #
   # For more information see:
-  # - link:rfc2426.txt: vCard MIME Directory Profile (vCard 3.0)
-  # - link:rfc2425.txt: A MIME Content-Type for Directory Information
-  # - http://www.imc.org/pdi/pdiproddev.html: vCard 2.1 Specifications
+  # - RFC2426[http://www.ietf.org/rfc/rfc2426.txt]: vCard MIME Directory Profile (vCard 3.0)
+  # - RFC2425[http://www.ietf.org/rfc/rfc2425.txt]: A MIME Content-Type for Directory Information
+  # - vCard2.1[http://www.imc.org/pdi/pdiproddev.html]: vCard 2.1 Specifications
   #
   # vCards are usually transmitted in files with <code>.vcf</code>
   # extensions.

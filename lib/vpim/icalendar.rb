@@ -30,15 +30,18 @@ module Vpim
   #
   # The iCalendar format is specified by a series of IETF documents:
   #
-  # - link:rfc2445.txt: Internet Calendaring and Scheduling Core Object Specification
-  # - link:rfc2446.txt: iCalendar Transport-Independent Interoperability Protocol
-  #   (iTIP) Scheduling Events, BusyTime, To-dos and Journal Entries
-  # - link:rfc2447.txt: iCalendar Message-Based Interoperability Protocol
+  # - RFC2445[http://www.ietf.org/rfc/rfc2445.txt]: Internet Calendaring and
+  #   Scheduling Core Object Specification
+  # - RFC2446[http://www.ietf.org/rfc/rfc2446.txt]: iCalendar
+  #   Transport-Independent Interoperability Protocol (iTIP) Scheduling Events,
+  #   BusyTime, To-dos and Journal Entries
+  # - RFC2447[http://www.ietf.org/rfc/rfc2447.txt]: iCalendar Message-Based
+  #   Interoperability Protocol
   #
   # = iCalendar and vCalendar
   #
   # iCalendar files have VERSION:2.0 and vCalendar have VERSION:1.0.  iCalendar
-  # (RFC 2445) is based on vCalendar, but but is not very compatible.  While
+  # (RFC 2445) is based on vCalendar, but is not very compatible.  While
   # much appears to be similar, the recurrence rule syntax is completely
   # different.
   #

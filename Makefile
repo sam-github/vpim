@@ -6,7 +6,7 @@ RUBY=/usr/bin/ruby
 
 .PHONY: default doc test other
 
-do: agent-upload
+do: release
 
 reminder:
 	ruby -I lib samples/reminder.rb
@@ -50,11 +50,6 @@ coverage:
 	rcov -Ilib -x "^/" test/test_all.rb
 	open coverage/index.html
 
-other:
-	ruby -w -I . ab-query.rb --me
-	ruby -w -I . mutt_ab_query.rb --file=_vcards -d Sam
-	ruby -w -I . mbox2vcard.rb _mbox
-
 outline:
 	zsh ./outline.sh > outline.txt
 
@@ -95,7 +90,6 @@ doc:
 	rm -rf doc/
 	rdoc $(RDFLAGS) lib/vpim CHANGES COPYING README samples/README.mutt
 	for s in $(SAMPLES); do cp $$s doc/`basename $$s .rb`.txt; done
-	cp etc/rfc24*.txt doc/
 	chmod u=rw doc/*.txt
 	chmod go=r doc/*.txt
 	mkdir -p $(HOME)/Sites/vpim
@@ -103,14 +97,9 @@ doc:
 	open doc/index.html
 	ruby -I lib -w -rpp ex_ics_api.rb > ex_ics_api.out
 
-.PHONY: doc-vcf
-doc-vcf:
-	rdoc lib/vpim/vcard.rb lib/vpim/maker/vcard.rb
-	open doc/index.html
-
-V=0.$(shell ruby -rsvn -e"puts Svn.info['Revision']")
-P=vpim-$V
-R=releases/$P
+V:=$(shell ruby stamp.rb)
+P:=vpim-$V
+R:=../releases/$P
 
 release: stamp doc pkg gem
 
@@ -118,60 +107,29 @@ install:
 	for r in /usr/bin/ruby /opt/local/bin/ruby ruby18; do (cd $R; $$r install.rb config; sudo $$r install.rb install); done
 
 stamp:
-	svn up
-	@echo "Stamp version:" $V
-	ruby stamp.rb > lib/vpim/version.rb
+	ruby stamp.rb $V > lib/vpim/version.rb
 
 gem:
-	mkdir -p releases
+	mkdir -p ../releases
 	mkdir -p bin
 	cp -v samples/reminder.rb bin/reminder
 	cp -v samples/rrule.rb bin/rrule
 	chmod +x bin/*
 	ruby vpim.gemspec
-	mv vpim*.gem releases/
-
-geminstall:
-	gem install -V 
+	mv vpim*.gem ../releases/
 
 pkg:
 	rm -rf $R/*
-	mkdir -p releases
-	mkdir -p $R
 	mkdir -p $R/lib
-	mkdir -p $R/lib/vpim/maker
-	mkdir -p $R/lib/vpim/property
 	mkdir -p $R/samples
 	mkdir -p $R/test
-	mkdir -p $R/etc
 	cp COPYING README CHANGES setup.rb $R/
-	cp lib/*.rb                $R/lib/
-	cp lib/vpim/*.rb           $R/lib/vpim/
-	cp lib/vpim/maker/*.rb     $R/lib/vpim/maker/
-	cp lib/vpim/property/*.rb  $R/lib/vpim/property/
+	cp -vr lib/vpim            $R/lib/
 	cp samples/README.mutt     $R/samples
 	cp $(SAMPLES)              $R/samples
 	cp samples/osx-wrappers.rb $R/samples
 	cp test/test_*.rb          $R/test
 	# no docs: cp -r  doc      $R/
-	cd releases && tar -zcf $P.tgz $P
-
-vagent:
-	mkdir -p vAgent.app/Contents/Resources/lib/vpim/agent
-	mkdir -p vAgent.app/Contents/Resources/lib/vpim/maker
-	mkdir -p vAgent.app/Contents/Resources/lib/vpim/property
-	tar -cf- `find lib -name "*.rb"` | (cd vAgent.app/Contents/Resources; tar -xvf-)
-	cp vagent.rb               vAgent.app/Contents/Resources/script
-	rm -f releases/vAgent.app.zip
-	find vAgent.app -type f | egrep -v ".svn|CVS" | zip releases/vAgent.app.zip -@
-
-
-# It's easier to just copy the resources I want into the target .app structure.
-#
-#VpimAgent.app: vpimd
-#	rm -rf "$@"
-#	/usr/local/bin/platypus -BR -a $< -t 'Ruby' -o 'TextWindow' -u 'Sam Roberts' -i '/usr/bin/ruby' -V $V -s '????' -I 'org.sam.vpimagent' -f '/Users/sam/p/ruby/vpim/root/branch/stable/lib' '/Users/sam/p/ruby/vpim/root/branch/stable/vpimd' $@
-
-
+	cd ../releases && tar -zcf $P.tgz $P
 
 # vim:noexpandtab:tabstop=2:sw=2:
