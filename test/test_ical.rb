@@ -421,6 +421,15 @@ __
     assert_equal(cal.events.last.location, nil)
   end
 
+  def test_set_location
+    vc = Icalendar.create2 do |vc|
+      vc.add_event do |m|
+        m.location("bien located")
+      end
+    end
+    assert_match(/LOCATION:bien located/, vc.to_s)
+  end
+
 
   def test_event_maker_w_rrule
     vc = Icalendar.create2 do |vc|

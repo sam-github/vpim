@@ -135,6 +135,7 @@ module Vpim
       class Maker
         include Vpim::Icalendar::Set::Util #:nodoc:
         include Vpim::Icalendar::Set::Common
+        include Vpim::Icalendar::Set::Location
 
         # The event that changes are being made to.
         attr_reader :event
