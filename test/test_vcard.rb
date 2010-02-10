@@ -896,6 +896,24 @@ __
 
   end
 
+  def test_quoted_printable
+    c = <<'__'
+BEGIN:VCARD
+VERSION:2.1
+N:Quinn;Charles
+FN:Charles Quinn
+NOTE;ENCODING=QUOTED-PRINTABLE: =0D=0Acbq+highgroove@example.com <mailto:cbq+highgroove@example.com>=0D=0A555-555-2=
+500 - Office=0D=0A555-555-2502 - Fax
+TEL;WORK;VOICE:555 555 2500
+TEL;WORK;FAX:555 555 2502
+EMAIL;PREF;INTERNET:cbq+highgroove@example.com
+REV:20100210T201157Z
+END:VCARD
+__
+    card = Vpim::Vcard.decode(c).first
+    assert_equal("Quinn", card.name.family)
+  end
+
   def _test_gmail_vcard_export
     # GOOGLE BUG - Whitespace before the LABEL field values is a broken
     # line continuation.
