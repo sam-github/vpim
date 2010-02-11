@@ -912,6 +912,10 @@ END:VCARD
 __
     card = Vpim::Vcard.decode(c).first
     assert_equal("Quinn", card.name.family)
+    assert_equal(
+      "=0D=0Acbq+highgroove@example.com <mailto:cbq+highgroove@example.com>=0D=0A555-555-2=500 - Office=0D=0A555-555-2502 - Fax",
+      card.note
+    )
   end
 
   def _test_gmail_vcard_export
