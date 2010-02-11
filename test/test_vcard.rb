@@ -718,6 +718,28 @@ END:VCARD
     assert_equal('well given', card.name.fullname)
   end
 
+  def test_add_tel
+    phones = ["1", "2", "3"]
+    card = Vpim::Vcard::Maker.make2 do |maker|
+      maker.add_name do |name|
+	name.given = "self.first_name"
+	name.family = "self.last_name"
+      end
+      phones.each do |phone|
+	maker.add_tel(phone) do |tel|
+	  tel.location = 'home'
+	  tel.preferred = true
+	end
+      end
+    end
+    card = Vpim::Vcard.decode(card.encode).first
+    # pp card
+    card.telephones.each do |phone|
+      assert_equal(phone, phones.delete(phone))
+    end
+    assert_equal(0, phones.size)
+  end
+
   def test_add_note
     note = "hi\' \  \"\",,;; \n \n field"
 
