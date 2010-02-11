@@ -76,22 +76,26 @@ module Vpim
   # This also supports the (invalid) encoding convention of allowing empty
   # lines to be inserted for readability - it does this by dropping zero-length
   # lines.
-  def Vpim.unfold(card) #:nodoc:
-      unfolded = []
-
-      card.each_line do |line|
-        line.chomp!
-        # If it's a continuation line, add it to the last.
-        # If it's an empty line, drop it from the input.
-        if( line =~ /^[ \t]/ )
-          unfolded[-1] << line[1, line.size-1]
-        elsif( line =~ /^$/ )
-        else
-          unfolded << line
-        end
+  # 
+  # Also supports an the QUOTED-PRINTABLE soft line-break as described here: 
+  # http://en.wikipedia.org/wiki/Quoted-printable
+  # 
+  def Vpim.unfold(card) # :nodoc:
+    unfolded = []
+    card.each do |line|
+      line.chomp!
+      # If it's a continuation line, add it to the last.
+      # If it's an empty line, drop it from the input.
+      if( line =~ /^[ \t]/ )
+        unfolded[-1] << line[1, line.size-1]
+      elsif (unfolded.last && unfolded.last =~ /;ENCODING=QUOTED-PRINTABLE:.*?=$/)
+        unfolded.last << line
+      elsif( line =~ /^$/ )
+      else
+        unfolded << line
       end
-
-      unfolded
+    end
+    unfolded
   end
 
   # Convert a +sep+-seperated list of values into an array of values.
