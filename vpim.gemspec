@@ -13,15 +13,18 @@ Gem::Specification.new do |s|
   s.description = %q{vCard and iCalendar support, the standard for exchange and storage of contact information and calendars}
   s.email = %q{sam@github}
   s.extra_rdoc_files = [
-    "README"
+    "README.rdoc"
   ]
   s.files = [
-    ".gitignore",
+    ".document",
+     ".gitignore",
      "CHANGES",
      "COPYING",
      "Makefile",
-     "README",
+     "README.rdoc",
+     "Rakefile",
      "THANKS",
+     "VERSION",
      "ex_fmt_convert.rb",
      "ex_ics_api.rb",
      "lib/vpim.rb",
