@@ -21,13 +21,13 @@ module Vpim
 
     # <"> <Any character except CTLs, DQUOTE> <">
     QSTR    = '"([^"]*)"'
-     
+
     # *<Any character except CTLs, DQUOTE, ";", ":", ",">
     PTEXT   = '([^";:,]+)'
-      
+
     # param-value = ptext / quoted-string
     PVALUE  = "(?:#{QSTR}|#{PTEXT})"
-    
+
     # param = name "=" param-value *("," param-value)
     # Note: v2.1 allows a type or encoding param-value to appear without the type=
     # or the encoding=. This is hideous, but we try and support it, if there
@@ -76,13 +76,13 @@ module Vpim
   # This also supports the (invalid) encoding convention of allowing empty
   # lines to be inserted for readability - it does this by dropping zero-length
   # lines.
-  # 
-  # Also supports an the QUOTED-PRINTABLE soft line-break as described here: 
+  #
+  # Also supports an the QUOTED-PRINTABLE soft line-break as described here:
   # http://en.wikipedia.org/wiki/Quoted-printable
-  # 
+  #
   def Vpim.unfold(card) # :nodoc:
     unfolded = []
-    card.each do |line|
+    card.each_line do |line|
       line.chomp!
       # If it's a continuation line, add it to the last.
       # If it's an empty line, drop it from the input.
@@ -101,7 +101,7 @@ module Vpim
   # Convert a +sep+-seperated list of values into an array of values.
   def Vpim.decode_list(value, sep = ',') # :nodoc:
     list = []
-    
+
     value.each_line(sep) do |item|
       item.chomp!(sep)
       list << yield(item)
@@ -249,14 +249,14 @@ module Vpim
     # FIXME - I think this should trim leading and trailing space
     v.gsub(/\\(.)/) do
       case $1
-      when 'n', 'N' 
+      when 'n', 'N'
         "\n"
       else
         $1
       end
     end
   end
-  
+
   def Vpim.encode_text(v) #:nodoc:
     v.to_str.gsub(/([\\,;\n])/) { $1 == "\n" ? "\\n" : "\\"+$1 }
   end
