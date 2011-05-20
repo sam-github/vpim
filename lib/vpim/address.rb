@@ -163,7 +163,7 @@ module Vpim
         value = uri.to_str.strip
 
         if value.empty?
-          raise Uencodeable, "Address#uri is zero-length"
+          raise Unencodeable, "Address#uri is zero-length"
         end
 
         params = {}
