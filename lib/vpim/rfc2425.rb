@@ -82,7 +82,10 @@ module Vpim
   # 
   def Vpim.unfold(card) # :nodoc:
     unfolded = []
-    card.each do |line|
+    # Ruby 1.9's String can no longer be iterated with #each, so the following
+    # code, which used to work with String, or Array, or File, or anything else
+    # which produced lines when iterated, now just works with String. Sucky.
+    card.each_line do |line|
       line.chomp!
       # If it's a continuation line, add it to the last.
       # If it's an empty line, drop it from the input.
