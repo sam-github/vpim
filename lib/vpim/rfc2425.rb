@@ -290,7 +290,7 @@ module Vpim
     when %r{\A#{Bnf::SAFECHAR}*\z}
       value
     else
-      raise Vpim::Unencodable, "paramtext #{value.inspect}"
+      raise Vpim::Unencodeable, "paramtext #{value.inspect}"
     end
   end
 
@@ -301,7 +301,7 @@ module Vpim
     when %r{\A#{Bnf::QSAFECHAR}*\z}
       '"' + value + '"'
     else
-      raise Vpim::Unencodable, "param-value #{value.inspect}"
+      raise Vpim::Unencodeable, "param-value #{value.inspect}"
     end
   end
 
