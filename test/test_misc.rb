@@ -7,7 +7,7 @@ require 'vpim/version'
 class TestVpimMisc < Test::Unit::TestCase
 
   def test_version
-    assert_match(/0.\d+/, Vpim.version)
+    assert_match(/\d+.\d+.\d+/, Vpim.version)
   end
 
 end
