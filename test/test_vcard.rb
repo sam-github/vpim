@@ -690,7 +690,14 @@ END:VCARD
     assert_equal('', card.name.given)
     assert_equal('', card.name.fullname)
 
-    assert_raises(TypeError) do
+    # As of Ruby 1.9, modifying a frozen object raises a RuntimeError instead of
+    # a TypeError.
+    if RUBY_VERSION >= "1.9"
+      expected_error = RuntimeError
+    else
+      expected_error = TypeError
+    end
+    assert_raises(expected_error) do
       card.name.given = 'given'
     end
 
