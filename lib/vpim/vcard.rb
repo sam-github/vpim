@@ -670,21 +670,24 @@ module Vpim
         raise ArgumentError, "Vcard.decode cannot be called with a #{card.type}"
       end
 
-      case string
-        when /^\xEF\xBB\xBF/
-          string = string.sub("\xEF\xBB\xBF", '')
-        when /^\xFE\xFF/
-          arr = string.unpack('n*')
-          arr.shift
-          string = arr.pack('U*')
-        when /^\xFF\xFE/
-          arr = string.unpack('v*')
-          arr.shift
-          string = arr.pack('U*')
-        when /^\x00B/i
-          string = string.unpack('n*').pack('U*')
-        when /^B\x00/i
-          string = string.unpack('v*').pack('U*')
+      if RUBY_VERSION >= "1.9"
+        string = string.encode("us-ascii", "utf-8",
+          :invalid => :replace,
+          :undef   => :replace,
+          :replace => ''
+        )
+      end
+
+      if string[0..2] == "\357\273\277"
+        string = string[3..-1]
+      elsif string[0..1] == "\376\377"
+        string = string[2..-1].unpack("n*").pack("U*")
+      elsif string[0..1] == "\377\376"
+        string = string[2..-1].unpack("v*").pack("U*")
+      elsif string.match /^\x00B/i
+        string = string.unpack('n*').pack('U*')
+      elsif string.match /^B\x00/i
+        string = string.unpack('v*').pack('U*')
       end
 
       entities = Vpim.expand(Vpim.decode(string))
