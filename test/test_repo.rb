@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'vpim/repo'
-require 'test/common'
+require File.expand_path('../common', __FILE__)
 
 class TestRepo < Test::Unit::TestCase
   Apple3 = Vpim::Repo::Apple3

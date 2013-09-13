@@ -1,0 +1,18 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    atom (0.3)
+    plist (3.1.0)
+    rack (1.5.2)
+    rake (10.1.0)
+    sinatra (0.9.6)
+      rack (>= 0.9.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  atom (= 0.3)
+  plist
+  rake
+  sinatra (~> 0.1)
