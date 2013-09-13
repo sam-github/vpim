@@ -669,22 +669,7 @@ module Vpim
         raise ArgumentError, "Vcard.decode cannot be called with a #{card.type}"
       end
 
-      case string
-        when /^\xEF\xBB\xBF/
-          string = string.sub("\xEF\xBB\xBF", '')
-        when /^\xFE\xFF/
-          arr = string.unpack('n*')
-          arr.shift
-          string = arr.pack('U*')
-        when /^\xFF\xFE/
-          arr = string.unpack('v*')
-          arr.shift
-          string = arr.pack('U*')
-        when /^\x00B/i
-          string = string.unpack('n*').pack('U*')
-        when /^B\x00/i
-          string = string.unpack('v*').pack('U*')
-      end
+      string.force_encoding(Encoding::UTF_8)
 
       entities = Vpim.expand(Vpim.decode(string))
 
