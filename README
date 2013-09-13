@@ -2,8 +2,7 @@ Author::     Sam Roberts <vieuxtech@gmail.com>
 Copyright::  Copyright (C) 2008 Sam Roberts
 License::    May be distributed under the same terms as Ruby
 Homepage::   http://vpim.rubyforge.org
-Download::   http://rubyforge.org/projects/vpim
-Install::    sudo gem install vpim
+Install::    gem install vpim
 
 vPim provides calendaring, scheduling, and contact support for Ruby through the
 standard iCalendar and vCard data formats for "personal information" exchange.
@@ -18,17 +17,7 @@ standard iCalendar and vCard data formats for "personal information" exchange.
 
 There is a vPim package installable using ruby-gems:
 
-  # sudo gem install vpim (may require root privilege)
-
-It is also installable in the standard way. Untar the package, and do:
-
-  $ ruby setup.rb --help
-
-or do:
-
-  $ ruby setup.rb config
-  $ ruby setup.rb setup
-  # ruby setup.rb install (may require root privilege)
+  # gem install vpim (may require root privilege)
 
 = Overview
 

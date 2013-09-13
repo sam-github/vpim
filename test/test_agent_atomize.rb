@@ -1,4 +1,4 @@
-require 'test/common'
+require File.expand_path('../common', __FILE__)
 
 require 'vpim/agent/atomize'
 require 'vpim/icalendar'
