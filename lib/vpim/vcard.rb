@@ -1,4 +1,4 @@
-# -*- encoding : utf-8 -*-
+# -*- encoding : binary -*-
 =begin
   Copyright (C) 2008 Sam Roberts
 
@@ -670,6 +670,8 @@ module Vpim
         raise ArgumentError, "Vcard.decode cannot be called with a #{card.type}"
       end
 
+      string.force_encoding "BINARY"
+
       case string
         when /^\xEF\xBB\xBF/
           string = string.sub("\xEF\xBB\xBF", '')
@@ -686,6 +688,8 @@ module Vpim
         when /^B\x00/i
           string = string.unpack('v*').pack('U*')
       end
+
+      string.force_encoding "utf-8"
 
       entities = Vpim.expand(Vpim.decode(string))
 
