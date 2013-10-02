@@ -23,7 +23,7 @@ This is a pure-ruby library for decoding and encoding vCard and iCalendar data
 ("personal information") called vPim.
 ---
   s.has_rdoc          = true
-  s.extra_rdoc_files  = ["README", "CHANGES", "COPYING", "samples/README.mutt" ]
+  s.extra_rdoc_files  = ["README.rdoc", "CHANGES", "COPYING", "samples/README.mutt" ]
 
   candidates = FileList[
     'lib/vpim/**/*.rb',
@@ -32,7 +32,7 @@ This is a pure-ruby library for decoding and encoding vCard and iCalendar data
     'samples/*',
     'test/test_*.rb',
     'COPYING',
-    'README',
+    'README.rdoc',
     'CHANGES',
   ].to_a
 

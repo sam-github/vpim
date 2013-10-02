@@ -88,7 +88,7 @@ SAMPLES := \
 .PHONY: doc
 doc:
 	rm -rf doc/
-	rdoc $(RDFLAGS) lib/vpim CHANGES COPYING README samples/README.mutt
+	rdoc $(RDFLAGS) lib/vpim CHANGES COPYING README.rdoc samples/README.mutt
 	for s in $(SAMPLES); do cp $$s doc/`basename $$s .rb`.txt; done
 	chmod u=rw doc/*.txt
 	chmod go=r doc/*.txt
@@ -123,7 +123,7 @@ pkg:
 	mkdir -p $R/lib
 	mkdir -p $R/samples
 	mkdir -p $R/test
-	cp COPYING README CHANGES setup.rb $R/
+	cp COPYING README.rdoc CHANGES setup.rb $R/
 	cp -vr lib/vpim            $R/lib/
 	cp samples/README.mutt     $R/samples
 	cp $(SAMPLES)              $R/samples
