@@ -21,5 +21,3 @@ module Vpim
     end
   end
 end
-
-

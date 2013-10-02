@@ -11,4 +11,3 @@ class TestVpimMisc < Test::Unit::TestCase
   end
 
 end
-

@@ -16,7 +16,7 @@ class TestField < Test::Unit::TestCase
     assert_equal("+\\+\n+\n+,+;+a+b+c+", dec)
     enc_out = Vpim.encode_text(dec)
     should_be = "+\\\\+\\n+\\n+\\,+\\;+a+b+c+"
-    # Note a, b, and c are allowed to be escaped, but shouldn't be and 
+    # Note a, b, and c are allowed to be escaped, but shouldn't be and
     # aren't in output
     #puts("<#{dec}> => <#{enc_out}>")
     assert_equal(should_be, enc_out)
@@ -135,7 +135,7 @@ class TestField < Test::Unit::TestCase
     assert_equal('Z.B', f.group)
 
     f.value = 'some text'
-    
+
     assert_equal('some text', f.value)
     assert_equal('some text', f.value_raw)
 

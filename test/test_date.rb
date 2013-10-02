@@ -39,16 +39,16 @@ class TestVpimDate < Test::Unit::TestCase
 
   def test_bywday
 
-    #                               2004                              
-    # 
-    #       January               February               March        
+    #                               2004
+    #
+    #       January               February               March
     #  S  M Tu  W Th  F  S   S  M Tu  W Th  F  S   S  M Tu  W Th  F  S
     #              1  2  3   1  2  3  4  5  6  7      1  2  3  4  5  6
     #  4  5  6  7  8  9 10   8  9 10 11 12 13 14   7  8  9 10 11 12 13
     # 11 12 13 14 15 16 17  15 16 17 18 19 20 21  14 15 16 17 18 19 20
     # 18 19 20 21 22 23 24  22 23 24 25 26 27 28  21 22 23 24 25 26 27
     # 25 26 27 28 29 30 31  29                    28 29 30 31
-    # 
+    #
     do_bywday([2004,  1, 4,  1], [2004,  1,  1])
     do_bywday([2004,  1, 4,  2], [2004,  1,  8])
     do_bywday([2004,  1, 4, -1], [2004,  1, 29])
@@ -75,7 +75,7 @@ class TestVpimDate < Test::Unit::TestCase
     do_bywday([2004,-12, "th", -2], [2004,  1, 22])
     do_bywday([2004,-12, "th", -5], [2004,  1,  1])
 
-    #       October               November              December      
+    #       October               November              December
     #  S  M Tu  W Th  F  S   S  M Tu  W Th  F  S   S  M Tu  W Th  F  S
     #                 1  2      1  2  3  4  5  6            1  2  3  4
     #  3  4  5  6  7  8  9   7  8  9 10 11 12 13   5  6  7  8  9 10 11

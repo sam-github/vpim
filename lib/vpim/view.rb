@@ -11,7 +11,7 @@ require "enumerator"
 
 module Vpim
   module View
-    
+
     SECSPERDAY = 24 * 60 * 60
 
     # View only events occuring in the next week.
@@ -51,7 +51,7 @@ module Vpim
           end
 __
 =begin
-        block = lambda do |dountil| 
+        block = lambda do |dountil|
             unless block_given?
               return Enumerable::Enumerator.new(self, :occurrences, dountil)
             end

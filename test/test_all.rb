@@ -14,6 +14,6 @@ $:.unshift File.dirname(__FILE__) + "/.."
 require 'test/unit'
 
 Dir[File.dirname(__FILE__) + "/test_*.rb"].each do |test|
-  require test unless test =~ /test_all|agent|repo/
+  require test unless test =~ /test_all|agent|repo|view/
 end
 

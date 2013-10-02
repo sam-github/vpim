@@ -41,7 +41,7 @@ class Date
   #    February
   #  Date.bywday(2004, 2, Date.str2wday(2)) => the same day, but notice
   #    that a valid wday integer can be passed right through.
-  #   
+  #
   def Date.str2wday(wdaystr)
     return wdaystr unless wdaystr.respond_to? :to_str
 
@@ -57,7 +57,7 @@ class Date
     raise ArgumentError, 'wday #{wdaystr} was not a recognizable weekday name'
   end
 
-  
+
   # Create a new Date object for the date specified by year +year+, month
   # +mon+, and day-of-the-week +wday+.
   #

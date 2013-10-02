@@ -140,7 +140,7 @@ module Vpim
         if partstat
           adr.partstat = partstat.first.strip.upcase
         end
-        
+
         rsvp = field.param('RSVP')
 
         if rsvp

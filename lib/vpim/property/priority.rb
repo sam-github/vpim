@@ -24,7 +24,7 @@ module Vpim
         #   comparison operators?
         def priority
           p = @properties.detect { |f| f.name? 'PRIORITY' }
-          
+
           if !p
             p = 0
           else
