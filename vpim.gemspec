@@ -1,19 +1,9 @@
 require 'ubygems'
 require 'pp'
 require 'rake'
+require './gemspec'
 
-def info(s)
-  {
-    :author => "Sam Roberts",
-    :email => "vieuxtech@gmail.com",
-    :homepage => "http://vpim.rubyforge.org",
-    :rubyforge_project => "vpim",
-  }.each do |k,v|
-    s.send(k.to_s+"=", v)
-  end
-end
-
-spec_vpim = Gem::Specification.new do |s|
+Gem::Specification.new do |s|
   info(s)
   s.name              = "vpim"
   s.version           = `ruby stamp.rb`
