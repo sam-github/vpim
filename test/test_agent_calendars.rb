@@ -3,7 +3,7 @@
 
 require 'vpim/repo'
 require 'vpim/agent/calendars'
-require 'test/common'
+require File.expand_path('../common', __FILE__)
 
 class TestAgentCalendars < Test::Unit::TestCase
   Apple3 = Vpim::Repo::Apple3
