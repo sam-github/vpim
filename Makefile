@@ -101,7 +101,7 @@ V:=$(shell ruby stamp.rb)
 P:=vpim-$V
 R:=../releases/$P
 
-release: stamp doc pkg gem
+release: stamp gem
 
 install:
 	for r in /usr/bin/ruby /opt/local/bin/ruby ruby18; do (cd $R; $$r install.rb config; sudo $$r install.rb install); done
@@ -115,8 +115,7 @@ gem:
 	cp -v samples/reminder.rb bin/reminder
 	cp -v samples/rrule.rb bin/rrule
 	chmod +x bin/*
-	ruby vpim.gemspec
-	mv vpim*.gem ../releases/
+	gem build vpim.gemspec
 
 pkg:
 	rm -rf $R/*

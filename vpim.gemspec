@@ -2,7 +2,7 @@ require 'ubygems'
 require 'pp'
 require 'rake'
 require './gemspec'
-require 'vpim/version'
+require './lib/vpim/version'
 
 Gem::Specification.new do |s|
   info(s)
