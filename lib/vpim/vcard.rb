@@ -673,19 +673,19 @@ module Vpim
       string.force_encoding "BINARY"
 
       case string
-        when /^\xEF\xBB\xBF/
+        when /^\xEF\xBB\xBF/n
           string = string.sub("\xEF\xBB\xBF", '')
-        when /^\xFE\xFF/
+        when /^\xFE\xFF/n
           arr = string.unpack('n*')
           arr.shift
           string = arr.pack('U*')
-        when /^\xFF\xFE/
+        when /^\xFF\xFE/n
           arr = string.unpack('v*')
           arr.shift
           string = arr.pack('U*')
-        when /^\x00B/i
+        when /^\x00B/in
           string = string.unpack('n*').pack('U*')
-        when /^B\x00/i
+        when /^B\x00/in
           string = string.unpack('v*').pack('U*')
       end
 
