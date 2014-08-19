@@ -153,7 +153,7 @@ module Vpim
       def Address.decode(card, field) #:nodoc:
         adr = new
 
-        parts = Vpim.decode_text_list(field.value_raw, ';')
+        parts = Vpim.decode_text_list(field.value, ';')
 
         @@adr_parts.each_with_index do |part,i|
           adr.instance_variable_set(part, parts[i] || '')
