@@ -1,6 +1,6 @@
 Author::     Sam Roberts <vieuxtech@gmail.com>
 Copyright::  Copyright (C) 2008 Sam Roberts
-License::    May be distributed under the same terms as Ruby
+License::    MIT
 Homepage::   http://vpim.rubyforge.org
 Install::    gem install vpim
 
