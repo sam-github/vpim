@@ -101,7 +101,14 @@ module Vpim
       push Vevent::Maker.make( &block )
     end
 
-    # TODO add_todo, add_journal
+    # TODO add_journal
+
+    # Add a task/todo to this calendar.
+    #
+    # Yields a todo maker, Icalendar::Vtodo::Maker.
+    def add_todo(&block) #:yield:todo
+      push Vtodo::Maker.make( &block )
+    end
 
 =begin
 TODO

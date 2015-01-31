@@ -443,5 +443,16 @@ __
     assert_match(/RRULE:FREQ=DAILY/, vc.to_s)
   end
 
+  def test_todo_maker_w_rrule
+    vc = Icalendar.create2 do |vc|
+      vc.add_todo do |m|
+        m.add_rrule("freq=monthly")
+        m.set_rrule do |_| _.frequency = "daily" end
+      end
+    end
+    assert_no_match(/RRULE:FREQ=MONTHLY/, vc.to_s)
+    assert_match(/RRULE:FREQ=DAILY/, vc.to_s)
+  end
+
 end
 
