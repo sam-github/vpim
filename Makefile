@@ -2,7 +2,7 @@
 
 SHELL:=/bin/sh
 
-RUBY=/usr/bin/ruby
+RUBY=ruby
 
 .PHONY: default doc test other
 
