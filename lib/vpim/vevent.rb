@@ -164,7 +164,7 @@ module Vpim
           set_date_or_datetime 'DTEND', 'DATE-TIME', dtend
         end
 
-        # Add a RRULE to this event. The rule can be provided as a pre-build
+        # Add a RRULE to this event. The rule can be provided as a pre-built
         # RRULE value, or the RRULE maker can be used.
         def add_rrule(rule = nil, &block) #:yield: Rrule::Maker
           # TODO - should be in Property::Reccurrence::Set

@@ -97,6 +97,52 @@ module Vpim
         propinteger 'PERCENT-COMPLETE'
       end
 
+      # Make a new Vtodo, or make changes to an existing Vtodo.
+      class Maker
+        include Vpim::Icalendar::Set::Util #:nodoc:
+        include Vpim::Icalendar::Set::Common
+        include Vpim::Icalendar::Set::Location
+
+        # The todo that changes are being made to.
+        attr_reader :todo
+
+        def initialize(todo) #:nodoc:
+          @todo = todo
+          @comp = todo
+        end
+
+        # Make changes to +todo+. If +todo+ is not specified, creates a new
+        # todo. Yields a Vtodo::Maker, and returns +todo+.
+        def self.make(todo = Vpim::Icalendar::Vtodo.create) #:yield:maker
+          m = self.new(todo)
+          yield m
+          m.todo
+        end
+
+        # Set transparency to "OPAQUE" or "TRANSPARENT", see Vpim::Vtodo#transparency.
+        def transparency(token)
+          set_token 'TRANSP', ["OPAQUE", "TRANSPARENT"], "OPAQUE", token
+        end
+
+        # Add a RRULE to this todo. The rule can be provided as a pre-built
+        # RRULE value, or the RRULE maker can be used.
+        def add_rrule(rule = nil, &block) #:yield: Rrule::Maker
+          # TODO - should be in Property::Reccurrence::Set
+          unless rule
+            rule = Rrule::Maker.new(&block).encode
+          end
+          @comp.properties.push(Vpim::DirectoryInfo::Field.create("RRULE", rule))
+          self
+        end
+
+        # Set the RRULE for this todo. See #add_rrule
+        def set_rrule(rule = nil, &block) #:yield: Rrule::Maker
+          rm_all("RRULE")
+          add_rrule(rule, &block)
+        end
+
+      end
+
     end
 
   end
