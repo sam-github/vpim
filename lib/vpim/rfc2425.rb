@@ -1,4 +1,4 @@
-# -*- encoding : utf-8 -*-
+# -*- encoding : binary -*-
 =begin
   Copyright (C) 2008 Sam Roberts
 
@@ -299,11 +299,11 @@ module Vpim
   end
 
   def Vpim.encode_paramvalue(value)
-    case value
+    case value.force_encoding("BINARY")
     when %r{\A#{Bnf::SAFECHAR}*\z}
-      value
+      value.force_encoding("utf-8")
     when %r{\A#{Bnf::QSAFECHAR}*\z}
-      '"' + value + '"'
+      '"' + value.force_encoding("utf-8") + '"'
     else
       raise Vpim::Unencodeable, "param-value #{value.inspect}"
     end
