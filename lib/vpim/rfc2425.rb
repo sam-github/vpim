@@ -291,7 +291,7 @@ module Vpim
   # quoted-string      = DQUOTE *QSAFE-CHAR DQUOTE
   def Vpim.encode_paramtext(value)
     case value
-    when %r{\A#{Bnf::SAFECHAR}*\z}
+    when %r{\A#{Bnf::SAFECHAR}*\z}n
       value
     else
       raise Vpim::Unencodeable, "paramtext #{value.inspect}"
@@ -300,9 +300,9 @@ module Vpim
 
   def Vpim.encode_paramvalue(value)
     case value
-    when %r{\A#{Bnf::SAFECHAR}*\z}
+    when %r{\A#{Bnf::SAFECHAR}*\z}n
       value
-    when %r{\A#{Bnf::QSAFECHAR}*\z}
+    when %r{\A#{Bnf::QSAFECHAR}*\z}n
       '"' + value + '"'
     else
       raise Vpim::Unencodeable, "param-value #{value.inspect}"
