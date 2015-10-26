@@ -290,7 +290,8 @@ module Vpim
   # paramtext  = *SAFE-CHAR
   # quoted-string      = DQUOTE *QSAFE-CHAR DQUOTE
   def Vpim.encode_paramtext(value)
-    case value
+    bin_value = value.dup.force_encoding('ASCII-8BIT')
+    case bin_value
     when %r{\A#{Bnf::SAFECHAR}*\z}n
       value
     else
@@ -299,7 +300,8 @@ module Vpim
   end
 
   def Vpim.encode_paramvalue(value)
-    case value
+    bin_value = value.dup.force_encoding('ASCII-8BIT')
+    case bin_value
     when %r{\A#{Bnf::SAFECHAR}*\z}n
       value
     when %r{\A#{Bnf::QSAFECHAR}*\z}n
