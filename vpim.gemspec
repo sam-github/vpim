@@ -1,8 +1,8 @@
 require 'ubygems'
 require 'pp'
 require 'rake'
-require './gemspec'
-require './lib/vpim/version'
+require_relative 'gemspec'
+require_relative 'lib/vpim/version'
 
 Gem::Specification.new do |s|
   info(s)
