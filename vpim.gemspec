@@ -1,4 +1,4 @@
-require 'ubygems'
+require 'rubygems'
 require 'pp'
 require 'rake'
 require_relative 'gemspec'
