@@ -2,7 +2,7 @@
 
 $-w = true
 
-require 'ubygems' rescue "ignored"
+require 'rubygems' rescue "ignored"
 
 require 'getoptlong'
 require 'pp'
