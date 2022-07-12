@@ -7,7 +7,7 @@
   details.
 =end
 
-require 'enumerator'
+require 'vpim/enumerator'
 require "net/http"
 
 require 'plist'
