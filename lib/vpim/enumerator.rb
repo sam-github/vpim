@@ -7,7 +7,7 @@
   details.
 =end
 
-require "enumerator"
+require "vpim/enumerator"
 
 module Vpim
   # This is a way for an object to have multiple ways of being enumerated via

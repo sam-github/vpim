@@ -7,7 +7,7 @@
   details.
 =end
 
-require "enumerator"
+require "vpim/enumerator"
 
 require 'vpim/rfc2425'
 require 'vpim/dirinfo'
