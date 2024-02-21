@@ -1,8 +1,8 @@
 require 'rubygems'
 require 'pp'
 require 'rake'
-require './gemspec'
-require './lib/vpim/version'
+require_relative 'gemspec'
+require_relative 'lib/vpim/version'
 
 Gem::Specification.new do |s|
   info(s)
@@ -13,7 +13,6 @@ Gem::Specification.new do |s|
 This is a pure-ruby library for decoding and encoding vCard and iCalendar data
 ("personal information") called vPim.
 ---
-  s.has_rdoc          = true
   s.extra_rdoc_files  = ["README.rdoc", "CHANGES", "COPYING", "samples/README.mutt" ]
 
   candidates = FileList[
