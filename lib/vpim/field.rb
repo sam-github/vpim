@@ -353,7 +353,7 @@ module Vpim
       # - boolean:
       # - float:
       def kind?(kind)
-        Vpim::Methods.casecmp?(self.kind == kind)
+        Vpim::Methods.casecmp?(self.kind, kind)
       end
 
       # Is one of the values of the TYPE parameter of this field +type+? The
